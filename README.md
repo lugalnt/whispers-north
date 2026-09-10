@@ -1,3 +1,7 @@
+[!til](https://github.com/lugalnt/whispers-north/blob/main/danijiggy.gif?raw=true) 
+
+
+
 # Whispers of the North
 
 **Género:** Aventura, Misterio, Exploración, Fantasía, RPG  
@@ -23,6 +27,7 @@ Mientras que muchos juegos basados en la cultura y mitología nórdica tratan de
 ---
 
 ## 🏗️ Arquitectura del Proyecto — Árbol de Nodos (Godot)
+(IASIADA INVESTIGADA CAMBIAR A COMO QUEDE MEJOR SI HAY PROBLEMA)
 
 La estructura está diseñada para trabajo **asíncrono por módulos**: cada integrante puede trabajar en una rama separada sin conflictos.
 
