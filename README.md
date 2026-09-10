@@ -1,51 +1,24 @@
-# 🌲 Whispers of the North
+# Whispers of the North
 
-> *"En un mundo moderno, las tradiciones más antiguas aún respiran bajo la nieve..."*
+**Género:** Aventura, Misterio, Exploración, Fantasía, RPG  
+**Plataforma:** PC  
+**Perspectiva:** 2D / 2.5D  
 
----
+## Historia
 
-## 📋 Concepto del Juego
+En un mundo moderno un joven se muda con su familia a un pueblo misterioso de los países nórdicos donde los habitantes conviven con criaturas nunca antes vistas donde siguen reglas y tradiciones muy extrañas.
 
-| Campo | Detalle |
-|---|---|
-| **Nombre** | Whispers of the North |
-| **Género** | Aventura · Misterio · Exploración · Fantasía · RPG |
-| **Plataforma** | PC |
-| **Perspectiva** | 2D / 2.5D |
-| **Motor** | Godot 4.x |
-| **Estado** | 🚧 En desarrollo |
-
-### Historia
-
-En un mundo moderno, un joven se muda con su familia a un pueblo misterioso de los países nórdicos donde los habitantes conviven con criaturas nunca antes vistas, siguiendo reglas y tradiciones muy extrañas.
-
-### Objetivo
+## Objetivo
 
 Descubrir el origen de las criaturas y las tradiciones del pueblo.
 
-### Mecánicas Principales
+## Mecánica principal
 
-- ⚔️ **Combate por turnos** — Sistema estratégico con elementos y debilidades
-- 🔍 **Investigación** — Exploración del pueblo y recopilación de pistas
-- 🧩 **Puzzles** — Enigmas ligados a las tradiciones nórdicas
-- 📖 **Bestiario** — Registro de criaturas descubiertas con lore
-- 🌊 **Elementos** — Sistema de afinidades elementales que afectan el combate
+Combate por turnos, Investigación, Puzzles, Bestiario, Elementos
 
-### ¿Qué lo hace diferente?
+## ¿Qué lo hace diferente?
 
-Mientras que muchos juegos basados en la cultura y mitología nórdica tratan de vikingos, dioses y guerras, **Whispers of the North** busca un enfoque más doméstico y de fantasía, como si fuera un cuento de hadas. La convivencia cotidiana entre humanos y criaturas sobrenaturales es el corazón del juego.
-
-### Equipo
-
-| Integrante | Rol |
-|---|---|
-| Bojorquez Quintero Erick Saul | — |
-| Campos Salas Luis Adrian | — |
-| Gutiérrez Valenzuela Angel Gabriel | — |
-| Jimenez Valenzuela Leopoldo | — |
-| Quiroz Ayala Jose Felipe | — |
-
-> **Universidad Tecnológica de Nogales, Sonora**
+Mientras que muchos juegos basados en la cultura y mitología nórdica tratan de vikingos, dioses y guerras, este busca un enfoque más doméstico y de fantasía, como si fuera cuento de hadas.
 
 ---
 
