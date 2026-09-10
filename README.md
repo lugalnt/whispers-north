@@ -1,16 +1,11 @@
-Nombre: Whispers of the North
-Género: Aventura, Misterio, Exploración, Fantasía, RPG
-Plataforma: PC.
-Perspectiva: 2D / 2.5D
-Historia: En un mundo moderno un joven se muda con su familia a un pueblo misterioso de
-los países nórdicos donde los habitantes conviven con criaturas nunca antes vistas donde
-siguen reglas y tradiciones muy extrañas.
-Objetivo: Descubrir el origen de las criaturas y las tradiciones del pueblo.
-Mecánica principal: Combate por turnos, Investigación, Puzzles, Bestiario, Elementos
-¿Qué lo hace diferente?
-Mientras que muchos juegos basados en la cultura y mitología nórdica tratan de vikingos,
-dioses y guerras, este busca un enfoque más doméstico y de fantasía, como si fuera cuento de
-hadas.
+## Nombre: Whispers of the North
+# Género: Aventura, Misterio, Exploración, Fantasía, RPG
+# Plataforma: PC.
+# Perspectiva: 2D / 2.5D
+# Historia: En un mundo moderno un joven se muda con su familia a un pueblo misterioso de los países nórdicos donde los habitantes conviven con criaturas nunca antes vistas donde siguen reglas y tradiciones muy extrañas.
+# Objetivo: Descubrir el origen de las criaturas y las tradiciones del pueblo.
+# Mecánica principal: Combate por turnos, Investigación, Puzzles, Bestiario, Elementos
+# ¿Qué lo hace diferente? Mientras que muchos juegos basados en la cultura y mitología nórdica tratan de vikingos, dioses y guerras, este busca un enfoque más doméstico y de fantasía, como si fuera cuento de hadas.
 
 
 ## 🏗️ Arquitectura del Proyecto — Árbol de Nodos (Godot)
@@ -205,6 +200,7 @@ git commit -m "chore: track *.extension with LFS"
 git checkout dev
 git pull origin dev
 git checkout -b feat/tu-modulo
+
 
 # Al terminar tu trabajo
 git add .
