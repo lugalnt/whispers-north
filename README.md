@@ -1,4 +1,4 @@
-[!title](https://github.com/lugalnt/whispers-north/blob/main/danijiggy.gif?raw=true) 
+![teodiodani](https://github.com/lugalnt/whispers-north/blob/main/danijiggy.gif) 
 
 
 
