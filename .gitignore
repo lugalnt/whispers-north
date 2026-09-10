@@ -1,0 +1,42 @@
+# =============================================
+# Whispers of the North — Godot .gitignore
+# =============================================
+
+# Cache de Godot e imports locales
+.godot/
+
+# Archivos de exportación de binarios
+*.translation
+*.pck
+*.apk
+*.aab
+*.exe
+*.zip
+
+# Ajustes locales de usuario/editor
+.import/
+*.tmp
+
+# Archivos de IDEs
+.vscode/
+.idea/
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+
+# Archivos de crash de Godot
+crash_dump_*.txt
+
+# Exportaciones de build
+export/
+builds/
+dist/
+
+# Variables de entorno locales
+.env
+.env.local
