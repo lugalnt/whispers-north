@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://n0obeaup81ri"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y46n5"]
+albedo_color = Color(0.5529412, 0.8862745, 0.89411765, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_i7he1"]
+material = SubResource("StandardMaterial3D_y46n5")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mtg2f"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_83qgj"]
+albedo_color = Color(0, 0.54509807, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qx2y4"]
+material = SubResource("StandardMaterial3D_83qgj")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yf5fn"]
+albedo_color = Color(0.39607844, 0.24705882, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_g4v7s"]
+material = SubResource("StandardMaterial3D_yf5fn")
+
+[node name="LibreriaBloques" type="Node3D" unique_id=1758016166]
+
+[node name="BloquePasto" type="MeshInstance3D" parent="." unique_id=1846817152]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9928644, 0, 0)
+mesh = SubResource("BoxMesh_i7he1")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="BloquePasto" unique_id=348649696]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BloquePasto/StaticBody3D" unique_id=101111939]
+shape = SubResource("BoxShape3D_mtg2f")
+
+[node name="BloqueAgua" type="MeshInstance3D" parent="." unique_id=1884095481]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.2975888, 0, 0)
+mesh = SubResource("BoxMesh_qx2y4")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="BloqueAgua" unique_id=500225472]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BloqueAgua/StaticBody3D" unique_id=722225358]
+shape = SubResource("BoxShape3D_mtg2f")
+
+[node name="BloqueTierra" type="MeshInstance3D" parent="." unique_id=2129387893]
+mesh = SubResource("BoxMesh_g4v7s")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="BloqueTierra" unique_id=1388756626]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BloqueTierra/StaticBody3D" unique_id=1535737123]
+shape = SubResource("BoxShape3D_mtg2f")

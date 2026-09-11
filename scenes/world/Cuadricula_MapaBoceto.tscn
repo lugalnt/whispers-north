@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://whrnafflsvey"]
+
+[ext_resource type="MeshLibrary" uid="uid://c2fylbr31clg2" path="res://assets/library/LibreriaBloques.meshlib" id="1_tng6q"]
+
+[node name="Node3D" type="Node3D" unique_id=1857017483]
+
+[node name="GridMap" type="GridMap" parent="." unique_id=1163677344]
+mesh_library = ExtResource("1_tng6q")
+cell_size = Vector3(1, 1, 1)

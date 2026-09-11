@@ -1,6 +1,16 @@
 ; Engine configuration file.
-; It's best to edit using the Godot editor UI and not directly,
-; only edit if you know what you are doing.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 [application]
 
@@ -8,14 +18,17 @@ config/name="Whispers of the North"
 config/description="A 2D/2.5D adventure RPG set in a mysterious Nordic village where modern youth meets ancient creatures and forgotten traditions."
 config/version="0.1.0"
 run/main_scene="res://scenes/ui/MainMenu.tscn"
-config/features=PackedStringArray("4.3", "GL Compatibility")
+config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://assets/sprites/ui/icon.png"
+
+[audio]
+
+buses/default_bus_layout="res://data/default_bus_layout.tres"
 
 [display]
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/size/resizable=true
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
@@ -23,7 +36,3 @@ window/stretch/aspect="expand"
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
-
-[audio]
-
-buses/default_bus_layout="res://data/default_bus_layout.tres"
