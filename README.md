@@ -254,3 +254,5 @@ git commit -m "art(sprites): agregar spritesheet del jugador idle"
 - [GDScript style guide](https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_styleguide.html)
 - [Git LFS Documentation](https://git-lfs.com/)
 - [Godot — Best Practices](https://docs.godotengine.org/en/stable/tutorials/best_practices/index.html)
+- [Godot Shaders](https://godotshaders.com)
+- [Kenney (web de assest gratuitos 3d y 2d)](https://kenney.nl)
