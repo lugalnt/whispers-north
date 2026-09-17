@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://y7mbho686prd"]
+
+[ext_resource type="Texture2D" uid="uid://cs56a5bod4xrv" path="res://assets/sprites/environment/pokemon grass _ Nova Skin.jpg" id="1_1oml7"]
+[ext_resource type="PackedScene" uid="uid://dqgkj6m2blabm" path="res://scenes/player/player.tscn" id="2_6eebf"]
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_qxiha"]
+
+[sub_resource type="Sky" id="Sky_6eebf"]
+sky_material = SubResource("PhysicalSkyMaterial_qxiha")
+
+[sub_resource type="Environment" id="Environment_1oml7"]
+background_mode = 1
+background_color = Color(0.03529412, 0.64705884, 0.9372549, 1)
+background_energy_multiplier = 0.8
+sky = SubResource("Sky_6eebf")
+ambient_light_source = 2
+ambient_light_color = Color(0.76862746, 0.8, 0.827451, 1)
+ambient_light_energy = 0.08
+tonemap_mode = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g4v7s"]
+albedo_texture = ExtResource("1_1oml7")
+texture_filter = 0
+
+[node name="Node3D" type="Node3D" unique_id=2004163276]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=870910369]
+environment = SubResource("Environment_1oml7")
+
+[node name="Sol" type="DirectionalLight3D" parent="." unique_id=1880301585]
+transform = Transform3D(0.819152, 0.36868778, -0.439385, 0, 0.7660443, 0.6427875, 0.5735764, -0.5265407, 0.6275068, 2.1218572, 10.639449, -18.908531)
+shadow_enabled = true
+
+[node name="Piso" type="CSGBox3D" parent="." unique_id=1520496167]
+use_collision = true
+size = Vector3(20, 1, 30)
+material = SubResource("StandardMaterial3D_g4v7s")
+
+[node name="Obstaculo" type="CSGBox3D" parent="." unique_id=1492446907]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.9760346, 2.0219877, -5.19847)
+use_collision = true
+size = Vector3(5, 3, 8)
+material = SubResource("StandardMaterial3D_g4v7s")
+
+[node name="Player" parent="." unique_id=820540263 instance=ExtResource("2_6eebf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.162545, 1.7339963, -6.349406)
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=691936221]
+transform = Transform3D(0.021628752, 0.3618333, -0.9319919, -0.008394811, 0.9322428, 0.3617359, 0.9997308, -9.315733e-10, 0.02320077, -12.312956, 4.643146, 0)
+fov = 51.625008
