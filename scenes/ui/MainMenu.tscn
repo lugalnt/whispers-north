@@ -1,0 +1,125 @@
+[gd_scene format=3 uid="uid://crhjgi41ef1oc"]
+
+[ext_resource type="Texture2D" uid="uid://dli47tn1qtemp" path="res://assets/sprites/environment/Clouds.png" id="1_7vrkn"]
+[ext_resource type="Script" uid="uid://d2vaxm747413u" path="res://scripts/core/MainMenu.gd" id="1_fu7sn"]
+[ext_resource type="Shader" uid="uid://6x4r701xnsip" path="res://assets/shaders/BlurBackground.gdshader" id="2_fu7sn"]
+[ext_resource type="Texture2D" uid="uid://b3kvwc63cvokb" path="res://assets/sprites/environment/Mountain.png" id="4_glbon"]
+[ext_resource type="Texture2D" uid="uid://bo7yb3ifdrsuk" path="res://assets/sprites/environment/Trees.png" id="5_nlkkf"]
+[ext_resource type="Texture2D" uid="uid://clig80hx0lvxx" path="res://assets/sprites/environment/Snow.png" id="6_nlkkf"]
+[ext_resource type="FontFile" uid="uid://bwduet4xq73r5" path="res://assets/fonts/BridgeParapet.ttf" id="7_8qtwp"]
+[ext_resource type="AudioStream" uid="uid://njpn3ytbu2x7" path="res://assets/audio/music/bloom_trim.mp3" id="7_qe12f"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7vrkn"]
+shader = ExtResource("2_fu7sn")
+shader_parameter/blur_amount = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qe12f"]
+shader = ExtResource("2_fu7sn")
+shader_parameter/blur_amount = 4.62800021983
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8qtwp"]
+shader = ExtResource("2_fu7sn")
+shader_parameter/blur_amount = 5.0
+
+[node name="MainMenu" type="Node2D" unique_id=1549039204]
+script = ExtResource("1_fu7sn")
+
+[node name="SkyColor" type="ColorRect" parent="." unique_id=1272520165]
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.42745098, 0.7019608, 0.84705883, 1)
+
+[node name="Clouds" type="Sprite2D" parent="." unique_id=831673846]
+material = SubResource("ShaderMaterial_7vrkn")
+position = Vector2(960, 269.00006)
+scale = Vector2(3.333, 3.333)
+texture = ExtResource("1_7vrkn")
+region_enabled = true
+region_rect = Rect2(0, 0, 576, 140)
+
+[node name="Clouds2" type="Sprite2D" parent="." unique_id=1635339117]
+material = SubResource("ShaderMaterial_7vrkn")
+position = Vector2(2880, 269)
+scale = Vector2(3.333, 3.333)
+texture = ExtResource("1_7vrkn")
+region_enabled = true
+region_rect = Rect2(0, 0, 576, 140)
+
+[node name="Mountain" type="Sprite2D" parent="." unique_id=1789230153]
+position = Vector2(960, 672)
+scale = Vector2(3.333, 3.333)
+texture = ExtResource("4_glbon")
+
+[node name="Trees" type="Sprite2D" parent="." unique_id=1168632178]
+position = Vector2(959, 541.9999)
+scale = Vector2(3.333, 3.333)
+texture = ExtResource("5_nlkkf")
+
+[node name="Snow" type="Sprite2D" parent="." unique_id=1684497443]
+light_mask = 512
+material = SubResource("ShaderMaterial_qe12f")
+position = Vector2(960, 547)
+scale = Vector2(1, 1.02)
+texture = ExtResource("6_nlkkf")
+
+[node name="Snow2" type="Sprite2D" parent="." unique_id=319173094]
+material = SubResource("ShaderMaterial_8qtwp")
+position = Vector2(960, 1620)
+scale = Vector2(1, 1.021)
+texture = ExtResource("6_nlkkf")
+
+[node name="Menu" type="Control" parent="." unique_id=714977350]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Menu" unique_id=1802362802]
+layout_mode = 0
+offset_left = -113.00001
+offset_top = 25.000002
+offset_right = 187.0
+offset_bottom = 228.0
+scale = Vector2(3, 3)
+bbcode_enabled = true
+text = "[img]res://assets/sprites/ui/logo.png[img]
+"
+fit_content = true
+
+[node name="Buttons" type="VBoxContainer" parent="Menu" unique_id=854182544]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 540.0
+offset_right = 600.0
+offset_bottom = 840.0
+theme_override_constants/separation = 20
+
+[node name="PlayButton" type="Button" parent="Menu/Buttons" unique_id=201133836]
+custom_minimum_size = Vector2(500, 70)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_8qtwp")
+theme_override_font_sizes/font_size = 50
+text = "JUGAR"
+
+[node name="OptionsButton" type="Button" parent="Menu/Buttons" unique_id=767257670]
+custom_minimum_size = Vector2(500, 70)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_8qtwp")
+theme_override_font_sizes/font_size = 50
+text = "OPCIONES"
+
+[node name="ExitButton" type="Button" parent="Menu/Buttons" unique_id=1608193742]
+custom_minimum_size = Vector2(500, 70)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_8qtwp")
+theme_override_font_sizes/font_size = 50
+text = "SALIR"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1447048756]
+stream = ExtResource("7_qe12f")
+autoplay = true
+parameters/looping = true
+
+[node name="MainTitle" type="Node2D" parent="." unique_id=1833101617]
