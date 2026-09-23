@@ -24,3 +24,14 @@ func _process(delta):
 		
 	if $Snow2.position.y >= 1620.0:
 		$Snow2.position.y -= 2160.0
+
+
+func _ready() -> void:
+	## Conecta la referencia del panel del menú principal al menú de opciones.
+	## El botón "Back" del addon usa esto para saber qué mostrar al volver.
+	$Settings.MenuPanelRef = $Menu/Buttons
+
+
+func _on_options_button_pressed() -> void:
+	$Menu/Buttons.hide()
+	$Settings.show()

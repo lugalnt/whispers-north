@@ -1,13 +1,14 @@
 [gd_scene format=3 uid="uid://crhjgi41ef1oc"]
 
-[ext_resource type="Texture2D" uid="uid://dli47tn1qtemp" path="res://assets/sprites/environment/Clouds.png" id="1_7vrkn"]
-[ext_resource type="Script" uid="uid://d2vaxm747413u" path="res://scripts/core/MainMenu.gd" id="1_fu7sn"]
-[ext_resource type="Shader" uid="uid://6x4r701xnsip" path="res://assets/shaders/BlurBackground.gdshader" id="2_fu7sn"]
-[ext_resource type="Texture2D" uid="uid://b3kvwc63cvokb" path="res://assets/sprites/environment/Mountain.png" id="4_glbon"]
-[ext_resource type="Texture2D" uid="uid://bo7yb3ifdrsuk" path="res://assets/sprites/environment/Trees.png" id="5_nlkkf"]
-[ext_resource type="Texture2D" uid="uid://clig80hx0lvxx" path="res://assets/sprites/environment/Snow.png" id="6_nlkkf"]
-[ext_resource type="FontFile" uid="uid://bwduet4xq73r5" path="res://assets/fonts/BridgeParapet.ttf" id="7_8qtwp"]
-[ext_resource type="AudioStream" uid="uid://njpn3ytbu2x7" path="res://assets/audio/music/bloom_trim.mp3" id="7_qe12f"]
+[ext_resource type="Texture2D" uid="uid://cusar2yixugnl" path="res://assets/sprites/environment/Clouds.png" id="1_7vrkn"]
+[ext_resource type="Script" uid="uid://4sek8f8a33yq" path="res://scripts/core/MainMenu.gd" id="1_fu7sn"]
+[ext_resource type="Shader" uid="uid://f68arl1t8p2w" path="res://assets/shaders/BlurBackground.gdshader" id="2_fu7sn"]
+[ext_resource type="Texture2D" uid="uid://br4s2mogcr3su" path="res://assets/sprites/environment/Mountain.png" id="4_glbon"]
+[ext_resource type="Texture2D" uid="uid://e7yf0cjtphq2" path="res://assets/sprites/environment/Trees.png" id="5_nlkkf"]
+[ext_resource type="Texture2D" uid="uid://bk226vd6idnxh" path="res://assets/sprites/environment/Snow.png" id="6_nlkkf"]
+[ext_resource type="FontFile" uid="uid://didj26cvedr1f" path="res://assets/fonts/BridgeParapet.ttf" id="7_8qtwp"]
+[ext_resource type="AudioStream" uid="uid://bi83vtymplkj1" path="res://assets/audio/music/bloom_trim.mp3" id="7_qe12f"]
+[ext_resource type="PackedScene" uid="uid://px6a2dg8cawb" path="res://addons/modular-settings-menu/scenes/settings.tscn" id="9_nqjyj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7vrkn"]
 shader = ExtResource("2_fu7sn")
@@ -123,3 +124,9 @@ autoplay = true
 parameters/looping = true
 
 [node name="MainTitle" type="Node2D" parent="." unique_id=1833101617]
+
+[node name="Settings" parent="." unique_id=1304892343 instance=ExtResource("9_nqjyj")]
+visible = false
+IS_IN_GAME_MENU = false
+
+[connection signal="pressed" from="Menu/Buttons/OptionsButton" to="." method="_on_options_button_pressed"]
