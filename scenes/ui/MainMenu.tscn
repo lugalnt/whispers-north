@@ -12,6 +12,150 @@
 [ext_resource type="FontFile" uid="uid://b7fdrlxoxqo3a" path="res://assets/fonts/BridgeParapet.ttf" id="10_0k4wn"]
 [ext_resource type="AudioStream" uid="uid://cw2yj3alvtw0s" path="res://assets/audio/music/MusicaMenu.mp3" id="10_mg3m2"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kncl5"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_clp4r"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ee60a"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qjd48"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ff4wq"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nqw28"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7uy2f"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0oadh"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ayd4e"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3da5a"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8rx73"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ns3en"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
 [node name="MainMenu" type="Node2D" unique_id=1283824417]
 script = ExtResource("1_0o4t1")
 
@@ -104,38 +248,49 @@ expand_mode = 1
 
 [node name="ListaDeBotones" type="VBoxContainer" parent="Menu" unique_id=1885757247]
 layout_mode = 0
-offset_left = 27.0
-offset_top = 209.0
-offset_right = 327.0
-offset_bottom = 427.0
+offset_left = 55.0
+offset_top = 227.0
+offset_right = 355.0
+offset_bottom = 445.0
+scale = Vector2(0.8, 0.8)
 
 [node name="Inicio" type="Button" parent="Menu/ListaDeBotones" unique_id=1314068645]
 custom_minimum_size = Vector2(300, 70)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("10_0k4wn")
+theme_override_font_sizes/font_size = 25
 text = "Nueva Partida"
-flat = true
 
 [node name="Opciones" type="Button" parent="Menu/ListaDeBotones" unique_id=1727526883]
 custom_minimum_size = Vector2(300, 70)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("10_0k4wn")
+theme_override_font_sizes/font_size = 25
 text = "Opciones"
-flat = true
 
 [node name="Salir" type="Button" parent="Menu/ListaDeBotones" unique_id=1138628442]
 custom_minimum_size = Vector2(300, 70)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("10_0k4wn")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxFlat_kncl5")
 text = "Salir"
-flat = true
 
 [node name="PanelOpciones" type="Control" parent="." unique_id=2001000001]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 2000.0
-offset_right = 2500.0
-offset_bottom = 1080.0
+offset_left = 2173.0002
+offset_top = 29.000002
+offset_right = 2673.0002
+offset_bottom = 1109.0
+scale = Vector2(1.385605, 1.3180053)
+
+[node name="FondoOpciones" type="Panel" parent="PanelOpciones" unique_id=2139881819]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(13.27757, 11.500717)
+theme_override_styles/panel = SubResource("StyleBoxFlat_clp4r")
 
 [node name="TituloOpciones" type="Label" parent="PanelOpciones" unique_id=2001000002]
 layout_mode = 0
@@ -144,6 +299,9 @@ offset_top = 30.0
 offset_right = 420.0
 offset_bottom = 90.0
 theme_override_fonts/font = ExtResource("10_0k4wn")
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxFlat_ee60a")
+theme_override_styles/focus = SubResource("StyleBoxFlat_qjd48")
 text = "Opciones"
 
 [node name="ListaOpciones" type="VBoxContainer" parent="PanelOpciones" unique_id=2001000003]
@@ -156,6 +314,8 @@ offset_bottom = 600.0
 [node name="LabelVolumen" type="Label" parent="PanelOpciones/ListaOpciones" unique_id=2001000004]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("10_0k4wn")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ff4wq")
+theme_override_styles/focus = SubResource("StyleBoxFlat_nqw28")
 text = "Volumen de Música"
 
 [node name="SliderVolumen" type="HSlider" parent="PanelOpciones/ListaOpciones" unique_id=2001000005]
@@ -168,6 +328,8 @@ value = 0.8
 [node name="LabelEfectos" type="Label" parent="PanelOpciones/ListaOpciones" unique_id=2001000006]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("10_0k4wn")
+theme_override_styles/normal = SubResource("StyleBoxFlat_7uy2f")
+theme_override_styles/focus = SubResource("StyleBoxFlat_0oadh")
 text = "Volumen de Efectos"
 
 [node name="SliderEfectos" type="HSlider" parent="PanelOpciones/ListaOpciones" unique_id=2001000007]
@@ -180,6 +342,8 @@ value = 1.0
 [node name="LabelPantalla" type="Label" parent="PanelOpciones/ListaOpciones" unique_id=2001000008]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("10_0k4wn")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ayd4e")
+theme_override_styles/focus = SubResource("StyleBoxFlat_3da5a")
 text = "Pantalla Completa"
 
 [node name="CheckPantalla" type="CheckButton" parent="PanelOpciones/ListaOpciones" unique_id=2001000009]
@@ -189,6 +353,8 @@ text = "Activar"
 [node name="LabelResolucion" type="Label" parent="PanelOpciones/ListaOpciones" unique_id=2001000010]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("10_0k4wn")
+theme_override_styles/normal = SubResource("StyleBoxFlat_8rx73")
+theme_override_styles/focus = SubResource("StyleBoxFlat_ns3en")
 text = "Resolución"
 
 [node name="OpcionesResolucion" type="OptionButton" parent="PanelOpciones/ListaOpciones" unique_id=2001000011]
@@ -197,15 +363,15 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("10_0k4wn")
 
 [node name="Separador" type="Control" parent="PanelOpciones/ListaOpciones" unique_id=2001000013]
-custom_minimum_size = Vector2(0, 30)
+custom_minimum_size = Vector2(0, 3)
 layout_mode = 2
 
 [node name="Regresar" type="Button" parent="PanelOpciones/ListaOpciones" unique_id=2001000012]
 custom_minimum_size = Vector2(200, 60)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("10_0k4wn")
+theme_override_font_sizes/font_size = 22
 text = "< Regresar"
-flat = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1153281025]
 stream = ExtResource("10_mg3m2")
