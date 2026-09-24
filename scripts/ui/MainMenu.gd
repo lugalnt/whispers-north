@@ -238,11 +238,7 @@ func _on_inicio_pressed() -> void:
 
 
 func _ir_a_juego() -> void:
-	# TODO: Reemplazar con la escena real cuando esté lista
-	# get_tree().change_scene_to_file("res://scenes/world/VillageHub.tscn")
-
-	# Por ahora se recarga el menú como placeholder para ver el flujo completo
-	get_tree().reload_current_scene()
+	get_tree().change_scene_to_file("res://scenes/world/World.tscn")
 
 
 # ─────────────────────────────────────────────
