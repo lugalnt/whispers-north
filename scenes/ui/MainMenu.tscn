@@ -378,9 +378,11 @@ stream = ExtResource("10_mg3m2")
 volume_db = -19.158
 autoplay = true
 
+[connection signal="pressed" from="Menu/ListaDeBotones/Inicio" to="." method="_on_inicio_pressed"]
 [connection signal="pressed" from="Menu/ListaDeBotones/Opciones" to="." method="_on_opciones_pressed"]
 [connection signal="pressed" from="Menu/ListaDeBotones/Salir" to="." method="_on_salir_pressed"]
 [connection signal="value_changed" from="PanelOpciones/ListaOpciones/SliderVolumen" to="." method="_on_slider_volumen_changed"]
 [connection signal="value_changed" from="PanelOpciones/ListaOpciones/SliderEfectos" to="." method="_on_slider_efectos_changed"]
 [connection signal="toggled" from="PanelOpciones/ListaOpciones/CheckPantalla" to="." method="_on_check_pantalla_toggled"]
 [connection signal="pressed" from="PanelOpciones/ListaOpciones/Regresar" to="." method="_on_regresar_pressed"]
+

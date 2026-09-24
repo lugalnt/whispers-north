@@ -6,7 +6,7 @@ extends Node2D
 @export var velocidad_montanas: float = 0.0
 @export var velocidad_nubes: float = 3.0
 
-# Duración de la animación de transición (segundos)
+# Duración de la animación de transición menú ↔ opciones
 const DURACION_TRANSICION: float = 0.45
 
 # Posiciones X del menú principal
@@ -16,7 +16,7 @@ const MENU_X_OCULTO: float = -500.0
 # Posición X visible del panel de opciones
 const OPCIONES_X_VISIBLE: float = 200.0
 
-# FondoMenu ahora es hijo directo del MainMenu (sin SubViewport)
+# FondoMenu es hijo directo del MainMenu (sin SubViewport)
 @onready var fondo_menu = $FondoMenu
 
 @onready var carretera = fondo_menu.get_node("Carretera")
@@ -35,22 +35,35 @@ var slider_efectos: HSlider
 var check_pantalla: CheckButton
 var opciones_res:   OptionButton
 
+# Flags de estado
 var _animando: bool = false
+var _transicionando: bool = false
 
 # Pantalla donde estaba la ventana antes de entrar a fullscreen
 var _pantalla_antes_fs: int = 0
+
+# ColorRect para el fade a negro (se crea en _ready)
+var _fade_rect: ColorRect
 
 
 # ─────────────────────────────────────────────
 #  RESPONSIVIDAD
 # ─────────────────────────────────────────────
 
-# Calcula la X de "oculto" del panel siempre fuera de pantalla a la derecha.
 func _opciones_x_oculto() -> float:
 	return get_viewport().get_visible_rect().size.x + 100.0
 
 
 func _ready() -> void:
+	# ── Overlay de fadeout ──────────────────────────────────────────
+	# ColorRect negro que cubre toda la pantalla; empieza invisible
+	_fade_rect = ColorRect.new()
+	_fade_rect.color = Color.BLACK
+	_fade_rect.modulate.a = 0.0
+	_fade_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_fade_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_fade_rect)
+
 	# ── Construir PanelOpciones en runtime ──────────────────────────
 	var existente = get_node_or_null("PanelOpciones")
 	if existente:
@@ -75,6 +88,7 @@ func _ready() -> void:
 	if not opciones_res.item_selected.is_connected(_on_opciones_resolucion_item_selected):
 		opciones_res.item_selected.connect(_on_opciones_resolucion_item_selected)
 
+	# Conectar botón Opciones (guard por si ya lo conectó el .tscn)
 	var btn_opciones = $Menu/ListaDeBotones/Opciones
 	if not btn_opciones.pressed.is_connected(_on_opciones_pressed):
 		btn_opciones.pressed.connect(_on_opciones_pressed)
@@ -124,10 +138,8 @@ func _crear_panel_opciones() -> void:
 	slider_volumen = HSlider.new()
 	slider_volumen.name = "SliderVolumen"
 	slider_volumen.custom_minimum_size = Vector2(400, 40)
-	slider_volumen.min_value = 0.0
-	slider_volumen.max_value = 1.0
-	slider_volumen.step = 0.01
-	slider_volumen.value = 0.8
+	slider_volumen.min_value = 0.0; slider_volumen.max_value = 1.0
+	slider_volumen.step = 0.01; slider_volumen.value = 0.8
 	lista.add_child(slider_volumen)
 
 	var lbl_efx = Label.new(); lbl_efx.text = "Volumen de Efectos"
@@ -136,18 +148,15 @@ func _crear_panel_opciones() -> void:
 	slider_efectos = HSlider.new()
 	slider_efectos.name = "SliderEfectos"
 	slider_efectos.custom_minimum_size = Vector2(400, 40)
-	slider_efectos.min_value = 0.0
-	slider_efectos.max_value = 1.0
-	slider_efectos.step = 0.01
-	slider_efectos.value = 1.0
+	slider_efectos.min_value = 0.0; slider_efectos.max_value = 1.0
+	slider_efectos.step = 0.01; slider_efectos.value = 1.0
 	lista.add_child(slider_efectos)
 
 	var lbl_pant = Label.new(); lbl_pant.text = "Pantalla Completa"
 	lista.add_child(lbl_pant)
 
 	check_pantalla = CheckButton.new()
-	check_pantalla.name = "CheckPantalla"
-	check_pantalla.text = "Activar"
+	check_pantalla.name = "CheckPantalla"; check_pantalla.text = "Activar"
 	lista.add_child(check_pantalla)
 
 	var lbl_res = Label.new(); lbl_res.text = "Resolución"
@@ -163,8 +172,7 @@ func _crear_panel_opciones() -> void:
 	lista.add_child(sep)
 
 	var btn_regresar = Button.new()
-	btn_regresar.name = "Regresar"
-	btn_regresar.text = "< Regresar"
+	btn_regresar.name = "Regresar"; btn_regresar.text = "< Regresar"
 	btn_regresar.flat = true
 	btn_regresar.custom_minimum_size = Vector2(200, 60)
 	btn_regresar.pressed.connect(_on_regresar_pressed)
@@ -173,24 +181,80 @@ func _crear_panel_opciones() -> void:
 
 func _process(delta: float) -> void:
 	carretera.scroll_offset.x -= velocidad_carretera * delta
-	bosques.scroll_offset.x   -= velocidad_bosque * delta
+	bosques.scroll_offset.x   -= velocidad_bosque   * delta
 	montanas.scroll_offset.x  -= velocidad_montanas * delta
-	nubes.scroll_offset.x     -= velocidad_nubes * delta
+	nubes.scroll_offset.x     -= velocidad_nubes    * delta
 	auto.get_node("LlantaIzq").rotation += velocidad_ruedas * delta
 	auto.get_node("LlantaDer").rotation += velocidad_ruedas * delta
 
 
 # ─────────────────────────────────────────────
-#  TRANSICIONES
+#  ANIMACIÓN DE INICIO DE PARTIDA
+# ─────────────────────────────────────────────
+
+func _on_inicio_pressed() -> void:
+	# Evitar doble disparo
+	if _transicionando or _animando:
+		return
+	_transicionando = true
+
+	# Deshabilitar todos los botones de interacción inmediatamente
+	$Menu/ListaDeBotones/Inicio.disabled   = true
+	$Menu/ListaDeBotones/Opciones.disabled = true
+	$Menu/ListaDeBotones/Salir.disabled    = true
+
+	# ── FASE 1: Menú se desliza hacia la izquierda ─────────────────
+	var t_menu = create_tween()
+	t_menu.set_ease(Tween.EASE_IN_OUT)
+	t_menu.set_trans(Tween.TRANS_CUBIC)
+	t_menu.tween_property(menu, "position:x", MENU_X_OCULTO, 0.6)
+
+	# ── FASE 2: Aceleración del fondo ──────────────────────────────
+	# La carretera y las ruedas aceleran de forma progresiva (ease-in)
+	var t_accel = create_tween().set_parallel(true)
+	t_accel.set_ease(Tween.EASE_IN)
+	t_accel.set_trans(Tween.TRANS_QUAD)
+	t_accel.tween_property(self, "velocidad_carretera", 650.0, 2.0)
+	t_accel.tween_property(self, "velocidad_ruedas",    28.0, 2.0)
+	t_accel.tween_property(self, "velocidad_nubes",     18.0, 2.0)
+
+	# ── FASE 3: Carro sale por la derecha ──────────────────────────
+	# Empieza a moverse 0.35s después del click para que la aceleración
+	# del fondo ya sea visible antes de que el carro "arranque"
+	var t_carro = create_tween()
+	t_carro.tween_interval(0.35)
+	t_carro.tween_property(auto, "position:x", 1400.0, 1.8)\
+		.set_ease(Tween.EASE_IN)\
+		.set_trans(Tween.TRANS_QUAD)
+
+	# ── FASE 4: Fadeout a negro ────────────────────────────────────
+	# Comienza cuando el carro ya casi ha salido (1.6s tras el click)
+	var t_fade = create_tween()
+	t_fade.tween_interval(1.6)
+	t_fade.tween_property(_fade_rect, "modulate:a", 1.0, 0.9)\
+		.set_ease(Tween.EASE_IN_OUT)\
+		.set_trans(Tween.TRANS_CUBIC)
+	t_fade.tween_callback(_ir_a_juego)
+
+
+func _ir_a_juego() -> void:
+	# TODO: Reemplazar con la escena real cuando esté lista
+	# get_tree().change_scene_to_file("res://scenes/world/VillageHub.tscn")
+
+	# Por ahora se recarga el menú como placeholder para ver el flujo completo
+	get_tree().reload_current_scene()
+
+
+# ─────────────────────────────────────────────
+#  TRANSICIONES MENÚ ↔ OPCIONES
 # ─────────────────────────────────────────────
 
 func _ir_a_opciones() -> void:
-	if _animando:
+	if _animando or _transicionando:
 		return
 	_animando = true
 
-	var tween = create_tween()
-	tween.set_parallel(true)
+	var tween = create_tween().set_parallel(true)
 	tween.set_ease(Tween.EASE_IN_OUT)
 	tween.set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property(menu, "position:x", MENU_X_OCULTO, DURACION_TRANSICION)
@@ -201,12 +265,11 @@ func _ir_a_opciones() -> void:
 
 
 func _ir_al_menu() -> void:
-	if _animando:
+	if _animando or _transicionando:
 		return
 	_animando = true
 
-	var tween = create_tween()
-	tween.set_parallel(true)
+	var tween = create_tween().set_parallel(true)
 	tween.set_ease(Tween.EASE_IN_OUT)
 	tween.set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property(menu, "position:x", MENU_X_VISIBLE, DURACION_TRANSICION)
@@ -253,16 +316,12 @@ func _on_slider_efectos_changed(value: float) -> void:
 
 func _on_check_pantalla_toggled(button_pressed: bool) -> void:
 	if button_pressed:
-		# Guardar en qué pantalla está la ventana antes de fullscreen
 		_pantalla_antes_fs = DisplayServer.window_get_current_screen()
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-		# Forzar que el fullscreen sea en la pantalla correcta
 		DisplayServer.window_set_current_screen(_pantalla_antes_fs)
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-		# Esperar un frame para que el modo cambie antes de reposicionar
 		await get_tree().process_frame
-		# Volver a la pantalla de origen (evita que salte a otro monitor)
 		DisplayServer.window_set_current_screen(_pantalla_antes_fs)
 		_aplicar_resolucion(opciones_res.selected)
 
@@ -284,7 +343,6 @@ func _aplicar_resolucion(index: int) -> void:
 		return
 
 	var nueva_res: Vector2i = resoluciones[index]
-
 	var pantalla_idx: int = DisplayServer.window_get_current_screen()
 	var tamanio_pantalla: Vector2i = DisplayServer.screen_get_size(pantalla_idx)
 	if nueva_res.x > tamanio_pantalla.x or nueva_res.y > tamanio_pantalla.y:
@@ -292,6 +350,4 @@ func _aplicar_resolucion(index: int) -> void:
 		return
 
 	get_window().size = nueva_res
-
-	var pos_centrada: Vector2i = (tamanio_pantalla - nueva_res) / 2
-	get_window().position = pos_centrada
+	get_window().position = (tamanio_pantalla - nueva_res) / 2
