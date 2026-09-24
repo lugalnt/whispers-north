@@ -7,8 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://dvkksl3mrnoto" path="res://addons/modular-settings-menu/scenes/settings-elements/discard_changes_popup.tscn" id="4_yfemx"]
 [ext_resource type="PackedScene" uid="uid://y5oxvao3aqtb" path="res://addons/modular-settings-menu/scenes/settings-sections/audio.tscn" id="5_ayxwc"]
 
-
-
 [node name="Settings" type="Control"]
 layout_mode = 3
 anchors_preset = 15

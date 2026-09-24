@@ -29,9 +29,9 @@ func _process(delta):
 func _ready() -> void:
 	## Conecta la referencia del panel del menú principal al menú de opciones.
 	## El botón "Back" del addon usa esto para saber qué mostrar al volver.
-	$Settings.MenuPanelRef = $Menu/Buttons
+	$Menu/Settings.MenuPanelRef = $Menu/Buttons
 
 
 func _on_options_button_pressed() -> void:
 	$Menu/Buttons.hide()
-	$Settings.show()
+	$Menu/Settings.show()

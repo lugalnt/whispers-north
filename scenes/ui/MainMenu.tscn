@@ -118,15 +118,21 @@ theme_override_fonts/font = ExtResource("7_8qtwp")
 theme_override_font_sizes/font_size = 50
 text = "SALIR"
 
+[node name="Settings" parent="Menu" unique_id=1304892343 instance=ExtResource("9_nqjyj")]
+visible = false
+layout_mode = 1
+offset_left = 1030.0
+offset_top = 533.99994
+offset_right = 1030.0
+offset_bottom = 533.99994
+scale = Vector2(1.44, 1.44)
+IS_IN_GAME_MENU = false
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1447048756]
 stream = ExtResource("7_qe12f")
 autoplay = true
 parameters/looping = true
 
 [node name="MainTitle" type="Node2D" parent="." unique_id=1833101617]
-
-[node name="Settings" parent="." unique_id=1304892343 instance=ExtResource("9_nqjyj")]
-visible = false
-IS_IN_GAME_MENU = false
 
 [connection signal="pressed" from="Menu/Buttons/OptionsButton" to="." method="_on_options_button_pressed"]
