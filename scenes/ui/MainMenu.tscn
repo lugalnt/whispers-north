@@ -1,0 +1,220 @@
+[gd_scene format=3 uid="uid://d3r87rgtjs403"]
+
+[ext_resource type="Script" uid="uid://ds456xumvcmwr" path="res://scripts/ui/MainMenu.gd" id="1_0o4t1"]
+[ext_resource type="Texture2D" uid="uid://bbwqnu584qpaf" path="res://assets/sprites/ui/main_menu/Cielo.png" id="2_0k4wn"]
+[ext_resource type="Texture2D" uid="uid://cwq04dkqney3t" path="res://assets/sprites/ui/main_menu/Nubes.png" id="3_j5v2v"]
+[ext_resource type="Texture2D" uid="uid://c2c5hj2vmvw2w" path="res://assets/sprites/ui/main_menu/Montanas.png" id="4_iotk1"]
+[ext_resource type="Texture2D" uid="uid://bufq03f7jiqi4" path="res://assets/sprites/ui/main_menu/Bosques.png" id="5_w44g7"]
+[ext_resource type="Texture2D" uid="uid://37a02xtgyjyr" path="res://assets/sprites/ui/main_menu/CarreteraSemaless.png" id="6_cm266"]
+[ext_resource type="Texture2D" uid="uid://bncaupxd63ycj" path="res://assets/sprites/ui/main_menu/Auto.png" id="7_g8g3n"]
+[ext_resource type="Texture2D" uid="uid://ctxial6ffysnf" path="res://assets/sprites/ui/main_menu/Llantas_Auto.png" id="8_8u0te"]
+[ext_resource type="Texture2D" uid="uid://xqb5w825xmvd" path="res://assets/sprites/ui/main_menu/Logo.png" id="9_oiatc"]
+[ext_resource type="FontFile" uid="uid://b7fdrlxoxqo3a" path="res://assets/fonts/BridgeParapet.ttf" id="10_0k4wn"]
+[ext_resource type="AudioStream" uid="uid://cw2yj3alvtw0s" path="res://assets/audio/music/MusicaMenu.mp3" id="10_mg3m2"]
+
+[node name="MainMenu" type="Node2D" unique_id=1283824417]
+script = ExtResource("1_0o4t1")
+
+[node name="FondoMenu" type="Node2D" parent="." unique_id=1649408274]
+
+[node name="Cielo" type="Parallax2D" parent="FondoMenu" unique_id=648294397]
+scale = Vector2(1.1644841, 0.9928809)
+scroll_offset = Vector2(-86.99999, 0)
+
+[node name="Cielo2D" type="Sprite2D" parent="FondoMenu/Cielo" unique_id=1981311652]
+position = Vector2(572, 326.25)
+scale = Vector2(0.6818182, 0.69659936)
+texture = ExtResource("2_0k4wn")
+
+[node name="Nubes" type="Parallax2D" parent="FondoMenu" unique_id=1317570976]
+repeat_size = Vector2(1337.6, 0)
+
+[node name="Nubes2D" type="Sprite2D" parent="FondoMenu/Nubes" unique_id=117965722]
+position = Vector2(671, 379)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("3_j5v2v")
+
+[node name="Montanas" type="Parallax2D" parent="FondoMenu" unique_id=1606955627]
+scale = Vector2(1.1644841, 0.9928809)
+scroll_offset = Vector2(-86.99999, 0)
+
+[node name="Montanas2D" type="Sprite2D" parent="FondoMenu/Montanas" unique_id=853468206]
+position = Vector2(572, 350.00003)
+scale = Vector2(0.63576555, 0.6317747)
+texture = ExtResource("4_iotk1")
+
+[node name="Bosques" type="Parallax2D" parent="FondoMenu" unique_id=219097246]
+scale = Vector2(1.1644841, 0.9928809)
+scroll_offset = Vector2(-86.99999, 0)
+
+[node name="Bosques2D" type="Sprite2D" parent="FondoMenu/Bosques" unique_id=107160065]
+position = Vector2(569.9063, 413.21875)
+scale = Vector2(0.6829022, 0.6095244)
+texture = ExtResource("5_w44g7")
+
+[node name="Carretera" type="Parallax2D" parent="FondoMenu" unique_id=653450365]
+scroll_offset = Vector2(-679, 30)
+repeat_size = Vector2(1287.6, 0)
+repeat_times = 2
+
+[node name="Carretera2D" type="Sprite2D" parent="FondoMenu/Carretera" unique_id=576213968]
+position = Vector2(681, 320)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("6_cm266")
+centered = false
+
+[node name="Auto" type="Parallax2D" parent="FondoMenu" unique_id=387315824]
+
+[node name="Auto2D" type="Sprite2D" parent="FondoMenu/Auto" unique_id=1177756862]
+position = Vector2(257.99997, 529)
+scale = Vector2(0.22613597, 0.24775103)
+texture = ExtResource("7_g8g3n")
+
+[node name="LlantaIzq" type="Node2D" parent="FondoMenu/Auto" unique_id=1876871307]
+position = Vector2(83.675, 571)
+
+[node name="LlantaIzq2D" type="Sprite2D" parent="FondoMenu/Auto/LlantaIzq" unique_id=1114803563]
+position = Vector2(0.32499695, 0)
+scale = Vector2(0.07675869, 0.0774641)
+texture = ExtResource("8_8u0te")
+offset = Vector2(17.18, -13.94)
+
+[node name="LlantaDer" type="Node2D" parent="FondoMenu/Auto" unique_id=63439864]
+position = Vector2(265, 571)
+
+[node name="LlantaDer2D" type="Sprite2D" parent="FondoMenu/Auto/LlantaDer" unique_id=546196941]
+scale = Vector2(0.07675869, 0.0774641)
+texture = ExtResource("8_8u0te")
+offset = Vector2(15.905, -13.245)
+
+[node name="Menu" type="Control" parent="." unique_id=107006992]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Logo" type="TextureRect" parent="Menu" unique_id=1109493209]
+layout_mode = 0
+offset_left = -27.0
+offset_top = 22.0
+offset_right = 373.0
+offset_bottom = 222.0
+texture = ExtResource("9_oiatc")
+expand_mode = 1
+
+[node name="ListaDeBotones" type="VBoxContainer" parent="Menu" unique_id=1885757247]
+layout_mode = 0
+offset_left = 27.0
+offset_top = 209.0
+offset_right = 327.0
+offset_bottom = 427.0
+
+[node name="Inicio" type="Button" parent="Menu/ListaDeBotones" unique_id=1314068645]
+custom_minimum_size = Vector2(300, 70)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_0k4wn")
+text = "Nueva Partida"
+flat = true
+
+[node name="Opciones" type="Button" parent="Menu/ListaDeBotones" unique_id=1727526883]
+custom_minimum_size = Vector2(300, 70)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_0k4wn")
+text = "Opciones"
+flat = true
+
+[node name="Salir" type="Button" parent="Menu/ListaDeBotones" unique_id=1138628442]
+custom_minimum_size = Vector2(300, 70)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_0k4wn")
+text = "Salir"
+flat = true
+
+[node name="PanelOpciones" type="Control" parent="." unique_id=2001000001]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 2000.0
+offset_right = 2500.0
+offset_bottom = 1080.0
+
+[node name="TituloOpciones" type="Label" parent="PanelOpciones" unique_id=2001000002]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 30.0
+offset_right = 420.0
+offset_bottom = 90.0
+theme_override_fonts/font = ExtResource("10_0k4wn")
+text = "Opciones"
+
+[node name="ListaOpciones" type="VBoxContainer" parent="PanelOpciones" unique_id=2001000003]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 110.0
+offset_right = 500.0
+offset_bottom = 600.0
+
+[node name="LabelVolumen" type="Label" parent="PanelOpciones/ListaOpciones" unique_id=2001000004]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_0k4wn")
+text = "Volumen de Música"
+
+[node name="SliderVolumen" type="HSlider" parent="PanelOpciones/ListaOpciones" unique_id=2001000005]
+custom_minimum_size = Vector2(400, 40)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 0.8
+
+[node name="LabelEfectos" type="Label" parent="PanelOpciones/ListaOpciones" unique_id=2001000006]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_0k4wn")
+text = "Volumen de Efectos"
+
+[node name="SliderEfectos" type="HSlider" parent="PanelOpciones/ListaOpciones" unique_id=2001000007]
+custom_minimum_size = Vector2(400, 40)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="LabelPantalla" type="Label" parent="PanelOpciones/ListaOpciones" unique_id=2001000008]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_0k4wn")
+text = "Pantalla Completa"
+
+[node name="CheckPantalla" type="CheckButton" parent="PanelOpciones/ListaOpciones" unique_id=2001000009]
+layout_mode = 2
+text = "Activar"
+
+[node name="LabelResolucion" type="Label" parent="PanelOpciones/ListaOpciones" unique_id=2001000010]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_0k4wn")
+text = "Resolución"
+
+[node name="OpcionesResolucion" type="OptionButton" parent="PanelOpciones/ListaOpciones" unique_id=2001000011]
+custom_minimum_size = Vector2(300, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_0k4wn")
+
+[node name="Separador" type="Control" parent="PanelOpciones/ListaOpciones" unique_id=2001000013]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="Regresar" type="Button" parent="PanelOpciones/ListaOpciones" unique_id=2001000012]
+custom_minimum_size = Vector2(200, 60)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_0k4wn")
+text = "< Regresar"
+flat = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1153281025]
+stream = ExtResource("10_mg3m2")
+volume_db = -19.158
+autoplay = true
+
+[connection signal="pressed" from="Menu/ListaDeBotones/Opciones" to="." method="_on_opciones_pressed"]
+[connection signal="pressed" from="Menu/ListaDeBotones/Salir" to="." method="_on_salir_pressed"]
+[connection signal="value_changed" from="PanelOpciones/ListaOpciones/SliderVolumen" to="." method="_on_slider_volumen_changed"]
+[connection signal="value_changed" from="PanelOpciones/ListaOpciones/SliderEfectos" to="." method="_on_slider_efectos_changed"]
+[connection signal="toggled" from="PanelOpciones/ListaOpciones/CheckPantalla" to="." method="_on_check_pantalla_toggled"]
+[connection signal="pressed" from="PanelOpciones/ListaOpciones/Regresar" to="." method="_on_regresar_pressed"]
