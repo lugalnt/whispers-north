@@ -239,10 +239,11 @@ offset_bottom = 40.0
 
 [node name="Logo" type="TextureRect" parent="Menu" unique_id=1109493209]
 layout_mode = 0
-offset_left = -27.0
-offset_top = 22.0
-offset_right = 373.0
-offset_bottom = 222.0
+offset_left = 38.999996
+offset_top = 59.999996
+offset_right = 439.0
+offset_bottom = 260.0
+scale = Vector2(0.68000054, 0.68000054)
 texture = ExtResource("9_oiatc")
 expand_mode = 1
 
@@ -279,7 +280,6 @@ text = "Salir"
 [node name="PanelOpciones" type="Control" parent="." unique_id=2001000001]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 0.0
 offset_top = 29.0
 offset_right = 500.0
 offset_bottom = 1080.0
@@ -357,8 +357,7 @@ text = "Resolución"
 
 [node name="LabelMonitor" type="Label" parent="PanelOpciones/ListaOpciones" unique_id=2001000014]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.6, 0.8, 1.0, 0.85)
-text = ""
+theme_override_colors/font_color = Color(0.6, 0.8, 1, 0.85)
 
 [node name="OpcionesResolucion" type="OptionButton" parent="PanelOpciones/ListaOpciones" unique_id=2001000011]
 custom_minimum_size = Vector2(300, 40)
@@ -388,4 +387,3 @@ autoplay = true
 [connection signal="value_changed" from="PanelOpciones/ListaOpciones/SliderEfectos" to="." method="_on_slider_efectos_changed"]
 [connection signal="toggled" from="PanelOpciones/ListaOpciones/CheckPantalla" to="." method="_on_check_pantalla_toggled"]
 [connection signal="pressed" from="PanelOpciones/ListaOpciones/Regresar" to="." method="_on_regresar_pressed"]
-
