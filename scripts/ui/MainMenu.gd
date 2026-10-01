@@ -42,6 +42,9 @@ var _transicionando: bool = false
 # Pantalla donde estaba la ventana antes de entrar a fullscreen
 var _pantalla_antes_fs: int = 0
 
+# Rastrea si el panel de opciones está actualmente visible
+var _en_opciones: bool = false
+
 # ColorRect para el fade a negro (se crea en _ready)
 var _fade_rect: ColorRect
 
@@ -72,6 +75,7 @@ func _ready() -> void:
 		slider_efectos = panel_opciones.get_node("ListaOpciones/SliderEfectos")
 		check_pantalla = panel_opciones.get_node("ListaOpciones/CheckPantalla")
 		opciones_res   = panel_opciones.get_node("ListaOpciones/OpcionesResolucion")
+		_label_monitor = panel_opciones.get_node_or_null("ListaOpciones/LabelMonitor")
 		var btn_reg = panel_opciones.get_node_or_null("ListaOpciones/Regresar")
 		if btn_reg and not btn_reg.pressed.is_connected(_on_regresar_pressed):
 			btn_reg.pressed.connect(_on_regresar_pressed)
@@ -97,12 +101,12 @@ func _ready() -> void:
 	menu.position.x           = MENU_X_VISIBLE
 	panel_opciones.position.x = _opciones_x_oculto()
 
-	# Poblar resoluciones
-	opciones_res.clear()
-	opciones_res.add_item("1280 × 720")
-	opciones_res.add_item("1920 × 1080")
-	opciones_res.add_item("2560 × 1440")
-	opciones_res.select(1)
+	# Conectar la señal de cambio de tamaño del viewport para reposicionar
+	# los paneles cuando cambie la resolución o el modo de pantalla
+	get_viewport().size_changed.connect(_on_viewport_size_changed)
+
+	# Poblar resoluciones dinámicamente según el monitor actual
+	_poblar_resoluciones()
 
 	# Sincronizar volumen
 	slider_volumen.value = db_to_linear(audio_player.volume_db)
@@ -161,6 +165,13 @@ func _crear_panel_opciones() -> void:
 
 	var lbl_res = Label.new(); lbl_res.text = "Resolución"
 	lista.add_child(lbl_res)
+
+	# Label informativo con la resolución nativa del monitor detectado
+	_label_monitor = Label.new()
+	_label_monitor.name = "LabelMonitor"
+	_label_monitor.text = ""  # Se rellena en _poblar_resoluciones
+	_label_monitor.add_theme_color_override("font_color", Color(0.6, 0.8, 1.0, 0.85))
+	lista.add_child(_label_monitor)
 
 	opciones_res = OptionButton.new()
 	opciones_res.name = "OpcionesResolucion"
@@ -249,6 +260,11 @@ func _ir_a_opciones() -> void:
 	if _animando or _transicionando:
 		return
 	_animando = true
+	_en_opciones = true
+
+	# Re-generar la lista en caso de que el usuario haya movido
+	# la ventana a otro monitor entre visitas al panel de opciones
+	_poblar_resoluciones()
 
 	var tween = create_tween().set_parallel(true)
 	tween.set_ease(Tween.EASE_IN_OUT)
@@ -264,6 +280,7 @@ func _ir_al_menu() -> void:
 	if _animando or _transicionando:
 		return
 	_animando = true
+	_en_opciones = false
 
 	var tween = create_tween().set_parallel(true)
 	tween.set_ease(Tween.EASE_IN_OUT)
@@ -273,6 +290,20 @@ func _ir_al_menu() -> void:
 
 	await tween.finished
 	_animando = false
+
+
+# Se llama automáticamente cada vez que la resolución o modo de ventana cambia.
+# Reposiciona los paneles sin animación para que coincidan con el nuevo tamaño.
+func _on_viewport_size_changed() -> void:
+	if _animando:
+		# Si hay una animación en curso, esperamos a que termine antes de corregir
+		await get_tree().create_timer(DURACION_TRANSICION + 0.05).timeout
+	if _en_opciones:
+		menu.position.x           = MENU_X_OCULTO
+		panel_opciones.position.x = OPCIONES_X_VISIBLE
+	else:
+		menu.position.x           = MENU_X_VISIBLE
+		panel_opciones.position.x = _opciones_x_oculto()
 
 
 # ─────────────────────────────────────────────
@@ -315,35 +346,108 @@ func _on_check_pantalla_toggled(button_pressed: bool) -> void:
 		_pantalla_antes_fs = DisplayServer.window_get_current_screen()
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 		DisplayServer.window_set_current_screen(_pantalla_antes_fs)
+		# Esperar dos frames para que el viewport actualice su tamaño antes
+		# de recalcular las posiciones (evita el glitch de layout)
+		await get_tree().process_frame
+		await get_tree().process_frame
+		_on_viewport_size_changed()
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		# Esperar a que Godot procese el cambio de modo antes de mover la ventana.
+		# Sin este await el OS puede mover la ventana al monitor principal antes
+		# de que podamos corregir su posición.
 		await get_tree().process_frame
-		DisplayServer.window_set_current_screen(_pantalla_antes_fs)
+		await get_tree().process_frame
+		# Re-generar la lista para el monitor de destino y aplicar la resolución.
+		# _aplicar_resolucion ya centra en el monitor correcto usando screen_get_position.
+		_poblar_resoluciones()
 		_aplicar_resolucion(opciones_res.selected)
+		_on_viewport_size_changed()
+
+
+# ─────────────────────────────────────────────
+#  RESOLUCIONES DINÁMICAS
+# ─────────────────────────────────────────────
+
+# Todas las resoluciones estándar conocidas, ordenadas de menor a mayor.
+# Solo se mostrarán las que quepan en el monitor detectado.
+const RESOLUCIONES_ESTANDAR: Array[Vector2i] = [
+	Vector2i(1024, 576),   # 16:9  — HD mínimo
+	Vector2i(1280, 720),   # 16:9  — HD
+	Vector2i(1280, 800),   # 16:10
+	Vector2i(1366, 768),   # 16:9  — HD+ laptops
+	Vector2i(1440, 900),   # 16:10
+	Vector2i(1600, 900),   # 16:9
+	Vector2i(1680, 1050),  # 16:10
+	Vector2i(1920, 1080),  # 16:9  — Full HD
+	Vector2i(1920, 1200),  # 16:10
+	Vector2i(2560, 1080),  # 21:9  — Ultrawide FHD
+	Vector2i(2560, 1440),  # 16:9  — 2K / QHD
+	Vector2i(2560, 1600),  # 16:10
+	Vector2i(3440, 1440),  # 21:9  — Ultrawide QHD
+	Vector2i(3840, 2160),  # 16:9  — 4K UHD
+]
+
+# Array construido en runtime con las resoluciones válidas para el monitor actual.
+# Es la única fuente de verdad usada por _aplicar_resolucion y el bloque else de fullscreen.
+var _resoluciones_validas: Array[Vector2i] = []
+
+# Label que muestra la resolución nativa del monitor (se crea en _poblar_resoluciones)
+var _label_monitor: Label = null
+
+
+# Genera la lista de resoluciones que caben en el monitor donde está la ventana,
+# puebla el OptionButton y pre-selecciona la más cercana al tamaño actual.
+func _poblar_resoluciones() -> void:
+	var pantalla_idx  := DisplayServer.window_get_current_screen()
+	var nativa        := DisplayServer.screen_get_size(pantalla_idx)
+	var actual        := get_window().size
+
+	_resoluciones_validas.clear()
+	opciones_res.clear()
+
+	for res in RESOLUCIONES_ESTANDAR:
+		if res.x <= nativa.x and res.y <= nativa.y:
+			_resoluciones_validas.append(res)
+			opciones_res.add_item("%d × %d" % [res.x, res.y])
+
+	# Si no hay ninguna (monitor rarísimo), añadir al menos la nativa
+	if _resoluciones_validas.is_empty():
+		_resoluciones_validas.append(nativa)
+		opciones_res.add_item("%d × %d  ★" % [nativa.x, nativa.y])
+
+	# Pre-seleccionar la resolución más cercana a la ventana actual
+	var mejor_idx := 0
+	var mejor_diff := INF
+	for i in _resoluciones_validas.size():
+		var r := _resoluciones_validas[i]
+		var diff: int = abs(r.x - actual.x) + abs(r.y - actual.y)
+		if diff < mejor_diff:
+			mejor_diff = diff
+			mejor_idx  = i
+	opciones_res.select(mejor_idx)
+
+	# Actualizar label de resolución nativa del monitor (info al usuario)
+	if _label_monitor:
+		_label_monitor.text = "Monitor %d — nativa: %d × %d" % [pantalla_idx + 1, nativa.x, nativa.y]
 
 
 func _on_opciones_resolucion_item_selected(index: int) -> void:
-	var modo = DisplayServer.window_get_mode()
+	var modo := DisplayServer.window_get_mode()
 	if modo == DisplayServer.WINDOW_MODE_FULLSCREEN or modo == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN:
 		return
 	_aplicar_resolucion(index)
 
 
 func _aplicar_resolucion(index: int) -> void:
-	var resoluciones: Array[Vector2i] = [
-		Vector2i(1280, 720),
-		Vector2i(1920, 1080),
-		Vector2i(2560, 1440),
-	]
-	if index < 0 or index >= resoluciones.size():
+	if _resoluciones_validas.is_empty() or index < 0 or index >= _resoluciones_validas.size():
 		return
 
-	var nueva_res: Vector2i = resoluciones[index]
-	var pantalla_idx: int = DisplayServer.window_get_current_screen()
-	var tamanio_pantalla: Vector2i = DisplayServer.screen_get_size(pantalla_idx)
-	if nueva_res.x > tamanio_pantalla.x or nueva_res.y > tamanio_pantalla.y:
-		push_warning("Resolución %s supera el monitor (%s). No se aplica." % [nueva_res, tamanio_pantalla])
-		return
+	var nueva_res    := _resoluciones_validas[index]
+	var pantalla_idx := DisplayServer.window_get_current_screen()
+	var pant_size    := DisplayServer.screen_get_size(pantalla_idx)
+	var pant_pos     := DisplayServer.screen_get_position(pantalla_idx)
 
-	get_window().size = nueva_res
-	get_window().position = (tamanio_pantalla - nueva_res) / 2
+	# Centrar la ventana en el monitor correcto
+	get_window().size     = nueva_res
+	get_window().position = pant_pos + (pant_size - nueva_res) / 2

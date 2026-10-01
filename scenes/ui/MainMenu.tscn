@@ -279,17 +279,15 @@ text = "Salir"
 [node name="PanelOpciones" type="Control" parent="." unique_id=2001000001]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 2173.0002
-offset_top = 29.000002
-offset_right = 2673.0002
-offset_bottom = 1109.0
-scale = Vector2(1.385605, 1.3180053)
+offset_left = 0.0
+offset_top = 29.0
+offset_right = 500.0
+offset_bottom = 1080.0
 
 [node name="FondoOpciones" type="Panel" parent="PanelOpciones" unique_id=2139881819]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-scale = Vector2(13.27757, 11.500717)
+offset_right = 500.0
+offset_bottom = 700.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_clp4r")
 
 [node name="TituloOpciones" type="Label" parent="PanelOpciones" unique_id=2001000002]
@@ -356,6 +354,11 @@ theme_override_fonts/font = ExtResource("10_0k4wn")
 theme_override_styles/normal = SubResource("StyleBoxFlat_8rx73")
 theme_override_styles/focus = SubResource("StyleBoxFlat_ns3en")
 text = "Resolución"
+
+[node name="LabelMonitor" type="Label" parent="PanelOpciones/ListaOpciones" unique_id=2001000014]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.8, 1.0, 0.85)
+text = ""
 
 [node name="OpcionesResolucion" type="OptionButton" parent="PanelOpciones/ListaOpciones" unique_id=2001000011]
 custom_minimum_size = Vector2(300, 40)
