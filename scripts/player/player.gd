@@ -70,3 +70,10 @@ func update_animation(input_dir: Vector2):
 		anim_sprite.play("walk_up")
 	elif angle >= -67.5 and angle < -22.5:
 		anim_sprite.play("walk_up_side")
+
+# Función invocada por la puerta para cambiar la versión del personaje entre 16x16 y 32x32
+func toggle_sprite_size() -> void:
+	var world = get_tree().current_scene
+	if world and world.has_method("toggle_player_character"):
+		world.toggle_player_character()
+

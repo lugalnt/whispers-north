@@ -32,7 +32,7 @@ tonemap_mode = 3
 load_path = "res://.godot/imported/grass.png-91512acd7c8472262e229e053d91cc27.s3tc.ctex"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qh0kd"]
-albedo_color = Color(0.8992625, 0.9611773, 0.87874645, 1)
+albedo_color = Color(0.22745098, 0.6509804, 0.6039216, 1)
 albedo_texture = SubResource("CompressedTexture2D_252at")
 uv1_scale = Vector3(13, 13, 13)
 uv1_offset = Vector3(0, 2, 0)
@@ -100,7 +100,7 @@ depth = 9.23
 material = SubResource("StandardMaterial3D_yf5fn")
 
 [node name="Door" parent="Casa" unique_id=852329833 instance=ExtResource("4_16fjv")]
-transform = Transform3D(0.15845479, 0, 0, 0, 1.9722608, 0, 0, 0, 1.2564595, -3.1178994, -0.46661496, -2.092678)
+transform = Transform3D(0.1584548, 0, 0, 0, 1.9722602, 0, 0, 0, 1.2564595, -3.1461353, -0.467376, -2.0366116)
 
 [node name="Window" type="CSGBox3D" parent="Casa" unique_id=1619127348]
 transform = Transform3D(0.075142495, 0, 0, 0, 1.0442852, 0, 0, 0, 1.769835, -3.0669198, 0.06068802, 1.6531048)
