@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://ovvii6tg2sgi"]
+
+[ext_resource type="Texture2D" uid="uid://c0w8wjwfs3wmq" path="res://assets/sprites/environment/puerta.png" id="1_1ccb6"]
+[ext_resource type="Script" uid="uid://c64jalf3mwrw2" path="res://scripts/world/door.gd" id="2_omjrn"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_57qmd"]
+albedo_color = Color(0.9166373, 0.8295512, 0.71350044, 1)
+albedo_texture = ExtResource("1_1ccb6")
+texture_filter = 0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g4v7s"]
+size = Vector3(3.840332, 1, 1)
+
+[node name="Puerta" type="CSGBox3D" unique_id=852329833]
+transform = Transform3D(0.15845479, 0, 0, 0, 1.9722608, 0, 0, 0, 1.2564595, 0, 0, 0)
+material = SubResource("StandardMaterial3D_57qmd")
+script = ExtResource("2_omjrn")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=716819689]
+transform = Transform3D(1, 0, 0, 0, 1.0000001, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1850146216]
+transform = Transform3D(1, 0, 0, 0, 1.0000054, 0, 0, 0, 1, 1.420166, 0, 0)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=886648040]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=280644058]
+transform = Transform3D(1, 0, 0, 0, 1.0000054, 0, 0, 0, 1, 1.420166, 0, 0)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]

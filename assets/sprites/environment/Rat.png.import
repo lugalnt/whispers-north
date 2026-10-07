@@ -2,20 +2,21 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cs56a5bod4xrv"
-path="res://.godot/imported/pokemon grass _ Nova Skin.jpg-f8e1e4d21ee01748d938034324c46b74.ctex"
+uid="uid://cahygav0d8ebr"
+path.s3tc="res://.godot/imported/Rat.png-70dd5872ea04a518f919e46e32666d05.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
-source_file="res://assets/sprites/environment/pokemon grass _ Nova Skin.jpg"
-dest_files=["res://.godot/imported/pokemon grass _ Nova Skin.jpg-f8e1e4d21ee01748d938034324c46b74.ctex"]
+source_file="res://assets/sprites/environment/Rat.png"
+dest_files=["res://.godot/imported/Rat.png-70dd5872ea04a518f919e46e32666d05.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

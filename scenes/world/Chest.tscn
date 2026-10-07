@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://c1asuxlkxxgr"]
+
+[ext_resource type="Script" uid="uid://cnqh2yyhekbmm" path="res://scripts/world/chest.gd" id="1_2if1w"]
+[ext_resource type="Texture2D" uid="uid://bl8ykd81rrdns" path="res://assets/sprites/environment/chest_closed.png" id="1_o7y6m"]
+[ext_resource type="Texture2D" uid="uid://c0ja6r0v7uugm" path="res://assets/sprites/environment/chest_open.png" id="2_2if1w"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_g4v7s"]
+height = 0.85884094
+radius = 0.70996094
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g4v7s"]
+size = Vector3(1.9748564, 1.1918945, 1.9808779)
+
+[node name="Chest" type="Node3D" unique_id=911684628]
+script = ExtResource("1_2if1w")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1837145506]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.39983225, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1215048369]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.07379913, 0)
+shape = SubResource("CylinderShape3D_g4v7s")
+
+[node name="Closed" type="Sprite3D" parent="StaticBody3D" unique_id=738314949]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.091664374, 0)
+billboard = 1
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("1_o7y6m")
+
+[node name="Open" type="Sprite3D" parent="StaticBody3D" unique_id=2009374489]
+visible = false
+billboard = 1
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("2_2if1w")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1055145020]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.39983225, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1149172971]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.038695812, 0.022148132, -0.0052103996)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]

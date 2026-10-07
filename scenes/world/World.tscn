@@ -1,9 +1,17 @@
 [gd_scene format=3 uid="uid://y7mbho686prd"]
 
-[ext_resource type="Texture2D" uid="uid://cs56a5bod4xrv" path="res://assets/sprites/environment/pokemon grass _ Nova Skin.jpg" id="1_1oml7"]
-[ext_resource type="Script" uid="uid://cxub084w6jupc" path="res://scripts/world/world.gd" id="1_gbddb"]
+[ext_resource type="Script" uid="uid://dbt1y0neukt5h" path="res://scripts/world/world.gd" id="1_gbddb"]
 [ext_resource type="PackedScene" uid="uid://dqgkj6m2blabm" path="res://scenes/player/player.tscn" id="2_6eebf"]
+[ext_resource type="PackedScene" uid="uid://tmee1acxuci3" path="res://scenes/world/Path.tscn" id="2_16fjv"]
+[ext_resource type="Texture2D" uid="uid://x1yq4yghcqn4" path="res://assets/sprites/environment/creamwall.png" id="2_qxiha"]
 [ext_resource type="PackedScene" uid="uid://bmq2ghxhosxj" path="res://scenes/player/player_32.tscn" id="3_6eebf"]
+[ext_resource type="Texture2D" uid="uid://dntkhhaetk4m0" path="res://assets/sprites/environment/redroof.png" id="3_i1jm3"]
+[ext_resource type="PackedScene" uid="uid://ovvii6tg2sgi" path="res://scenes/world/Door.tscn" id="4_16fjv"]
+[ext_resource type="Texture2D" uid="uid://b3650kgtj8u7e" path="res://assets/sprites/environment/window.png" id="5_qh0kd"]
+[ext_resource type="PackedScene" uid="uid://bi4mty8e2lew4" path="res://scenes/world/Tree.tscn" id="8_yr1n6"]
+[ext_resource type="PackedScene" uid="uid://dxsn6l7x0h2ta" path="res://scenes/world/Tree_Pine.tscn" id="9_l5ull"]
+[ext_resource type="PackedScene" uid="uid://c1asuxlkxxgr" path="res://scenes/world/Chest.tscn" id="11_16fjv"]
+[ext_resource type="PackedScene" uid="uid://b1noknypul483" path="res://scenes/world/Rat.tscn" id="12_ckp8c"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_qxiha"]
 
@@ -20,12 +28,44 @@ ambient_light_color = Color(0.76862746, 0.8, 0.827451, 1)
 ambient_light_energy = 0.08
 tonemap_mode = 3
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g4v7s"]
-albedo_texture = ExtResource("1_1oml7")
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_252at"]
+load_path = "res://.godot/imported/grass.png-91512acd7c8472262e229e053d91cc27.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qh0kd"]
+albedo_color = Color(0.8992625, 0.9611773, 0.87874645, 1)
+albedo_texture = SubResource("CompressedTexture2D_252at")
+uv1_scale = Vector3(13, 13, 13)
+uv1_offset = Vector3(0, 2, 0)
 texture_filter = 0
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_g4v7s"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g4v7s"]
+albedo_color = Color(0.91228896, 0.9122889, 0.91228884, 1)
+albedo_texture = ExtResource("2_qxiha")
+uv1_triplanar_sharpness = 0.7320446
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yr1n6"]
+albedo_texture = ExtResource("3_i1jm3")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yf5fn"]
+albedo_texture = ExtResource("3_i1jm3")
+uv1_triplanar = true
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l5ull"]
+albedo_color = Color(0.9166373, 0.8295512, 0.71350044, 1)
+albedo_texture = ExtResource("5_qh0kd")
+texture_filter = 0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g4v7s"]
+size = Vector3(0.9116516, 1.0889893, 1.1621094)
 
 [node name="Node3D" type="Node3D" unique_id=2004163276]
 script = ExtResource("1_gbddb")
+metadata/_edit_horizontal_guides_ = [44.0]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=870910369]
 environment = SubResource("Environment_1oml7")
@@ -35,15 +75,37 @@ transform = Transform3D(0.819152, 0.36868778, -0.439385, 0, 0.7660443, 0.6427875
 shadow_enabled = true
 
 [node name="Piso" type="CSGBox3D" parent="." unique_id=1520496167]
+transform = Transform3D(1.6031103, 0, 0, 0, 1, 0, 0, 0, 2.0441163, 0, 0, 0)
 use_collision = true
 size = Vector3(20, 1, 30)
+material = SubResource("StandardMaterial3D_qh0kd")
+
+[node name="Path" type="Sprite3D" parent="Piso" unique_id=2285365]
+transform = Transform3D(-2.2024017e-07, 7.3304715, 3.6145344e-08, 0, -5.136771e-07, 1.3256276, 3.9514809, 2.5129538e-07, 1.2390959e-15, 3.2822394, 0.5184064, -4.9970746)
+texture_filter = 0
+render_priority = -1
+texture = SubResource("ViewportTexture_g4v7s")
+
+[node name="Casa" type="CSGBox3D" parent="." unique_id=1492446907]
+transform = Transform3D(0.91267926, 0, 0, 0, 1.1907148, 0, 0, 0, 1.0248224, 8.423355, 2.3168359, -17.445457)
+use_collision = true
+size = Vector3(6.061035, 3, 8)
 material = SubResource("StandardMaterial3D_g4v7s")
 
-[node name="Obstaculo" type="CSGBox3D" parent="." unique_id=1492446907]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.9760346, 2.0219877, -5.19847)
-use_collision = true
-size = Vector3(5, 3, 8)
-material = SubResource("StandardMaterial3D_g4v7s")
+[node name="Techo" type="CSGPolygon3D" parent="Casa" unique_id=1571383473]
+transform = Transform3D(1.90535, 0, 0, 0, 0.83983153, 0, 0, 0, 1.0140404, -0.0005168915, 1.4825306, 4.699321)
+material_override = SubResource("StandardMaterial3D_yr1n6")
+polygon = PackedVector2Array(-2, 0, 2, 0, 1, 1, -1, 1)
+depth = 9.23
+material = SubResource("StandardMaterial3D_yf5fn")
+
+[node name="Door" parent="Casa" unique_id=852329833 instance=ExtResource("4_16fjv")]
+transform = Transform3D(0.15845479, 0, 0, 0, 1.9722608, 0, 0, 0, 1.2564595, -3.1178994, -0.46661496, -2.092678)
+
+[node name="Window" type="CSGBox3D" parent="Casa" unique_id=1619127348]
+transform = Transform3D(0.075142495, 0, 0, 0, 1.0442852, 0, 0, 0, 1.769835, -3.0669198, 0.06068802, 1.6531048)
+size = Vector3(1, 1, 1.256958)
+material = SubResource("StandardMaterial3D_l5ull")
 
 [node name="Player" parent="." unique_id=820540263 instance=ExtResource("2_6eebf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.162545, 1.7339963, -6.349406)
@@ -52,5 +114,78 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.162545, 1.7339963, -6.3494
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.095974, 2.2202864, -6.3437843)
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=691936221]
-transform = Transform3D(0.021628752, 0.3618333, -0.9319919, -0.008394811, 0.9322428, 0.3617359, 0.9997308, -9.315733e-10, 0.02320077, -12.312956, 4.643146, 0)
-fov = 51.625008
+transform = Transform3D(-4.371139e-08, 0.2923717, -0.9563048, 0, 0.9563048, 0.2923717, 1, 1.2779973e-08, -4.180141e-08, -12.013, 5.537, -9.013)
+fov = 60.0
+
+[node name="Chest" parent="." unique_id=1324083416 instance=ExtResource("11_16fjv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7721922, 0.73356843, -2.0754673)
+
+[node name="Trees" type="StaticBody3D" parent="." unique_id=821971361]
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="Trees" unique_id=1078834004]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Trees/Bundle Trees 1" unique_id=799348909]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="Trees/Bundle Trees 1" unique_id=911684628 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="Trees/Bundle Trees 1" unique_id=205650456 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="Trees/Bundle Trees 1" unique_id=209514914 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="Trees/Bundle Trees 1" unique_id=1283001750 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="Trees" unique_id=1910344455]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Trees/Bundle Trees 2" unique_id=1303027295]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="Trees/Bundle Trees 2" unique_id=201831393 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="Trees/Bundle Trees 2" unique_id=1250188521 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="Trees/Bundle Trees 2" unique_id=680369911 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="Trees/Bundle Trees 2" unique_id=537429860 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="Trees" unique_id=75807805]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Trees/Bundle Trees 3" unique_id=1811771066]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="Trees/Bundle Trees 3" unique_id=2009788252 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="Trees/Bundle Trees 3" unique_id=1083276495 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="Trees/Bundle Trees 3" unique_id=1461526146 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="Trees/Bundle Trees 3" unique_id=2138274696 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=1997840669]
+transparent_bg = true
+size = Vector2i(256, 140)
+
+[node name="TileMapLayer" parent="SubViewport" unique_id=1545859903 instance=ExtResource("2_16fjv")]
+scale = Vector2(1, 1)
+
+[node name="Rat" parent="." unique_id=993836924 instance=ExtResource("12_ckp8c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8463783, 0.5000005, -2.9572194)
+visible = false
