@@ -2,6 +2,7 @@ extends Node3D
 
 # Sonidos requeridos para la interacción con el cofre y la rata
 @export var sonido_salida_rata: AudioStream = preload("res://assets/audio/sfx/higuys.mp3")
+@export var sonido_item: AudioStream = preload("res://assets/audio/sfx/snd_item.wav")
 @export var sonido_desvanecer_inicio: AudioStream = preload("res://assets/audio/sfx/byeguys.mp3")
 @export var sonido_desvanecer_scream: AudioStream = preload("res://assets/audio/sfx/scream.mp3")
 @export var sonido_cristal_roto: AudioStream = preload("res://assets/audio/sfx/snd_glassbreak.wav")
@@ -93,6 +94,8 @@ func _fase_1_abrir_y_saltar() -> void:
 	rata_instancia.show()
 	
 	# Reproducir Sonido 1 (Salida de la rata)
+	reproducir_sonido(sonido_item)
+	await get_tree().create_timer(0.4).timeout
 	reproducir_sonido(sonido_salida_rata)
 	
 	# Parámetros del salto parabólico
