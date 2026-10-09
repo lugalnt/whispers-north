@@ -18,6 +18,7 @@ func _setup_input_map() -> void:
 	
 	var events = InputMap.action_get_events("ui_accept")
 	var tiene_z: bool = false
+	var tiene_a: bool = false
 	for ev in events:
 		if ev is InputEventKey and ev.keycode == KEY_Z:
 			tiene_z = true
@@ -27,7 +28,16 @@ func _setup_input_map() -> void:
 		var key_z = InputEventKey.new()
 		key_z.keycode = KEY_Z
 		InputMap.action_add_event("ui_accept", key_z)
-
+		
+	for ev in events:
+		if ev is InputEventJoypadButton and ev.button_index == JOY_BUTTON_A:
+			tiene_a = true
+			break
+		
+	if not tiene_a:
+		var key_a = InputEventJoypadButton.new()
+		key_a.button_index = JOY_BUTTON_A
+		InputMap.action_add_event("ui_accept", key_a) 
 # Devuelve el nodo del jugador activo (16x16 o 32x32)
 func get_active_player() -> CharacterBody3D:
 	if player_16 and player_16.visible:
