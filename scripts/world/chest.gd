@@ -8,7 +8,7 @@ extends Node3D
 @export var sonido_cristal_roto: AudioStream = preload("res://assets/audio/sfx/snd_glassbreak.wav")
 
 # Escena de la rata para reinstanciar en el bucle cuando se requiera
-@export var escena_rata: PackedScene = preload("res://scenes/world/Rat.tscn")
+@export var escena_rata: PackedScene = preload("res://scenes/world/Entities/Rat.tscn")
 
 # Nodos hijos del cofre
 @onready var sprite_cerrado: Sprite3D = $StaticBody3D/Closed
@@ -38,7 +38,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not jugador_cerca or desvaneciendo:
 		return
 		
-	if Input.is_action_just_pressed("ui_accept"):
+	if event.is_action_pressed("interact") and not event.is_echo():
 		get_viewport().set_input_as_handled()
 		if not esta_abierto and not rata_en_cabeza:
 			_fase_1_abrir_y_saltar()

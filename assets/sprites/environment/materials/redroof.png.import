@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://biwelvgsjonu1"
-path.s3tc="res://.godot/imported/darkwood_wall.png-40c31724b752eca070839b858edf8f6d.s3tc.ctex"
+uid="uid://dntkhhaetk4m0"
+path.s3tc="res://.godot/imported/redroof.png-c56f1db9fa3250321f601f9ffe4bc7f0.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/sprites/environment/darkwood_wall.png"
-dest_files=["res://.godot/imported/darkwood_wall.png-40c31724b752eca070839b858edf8f6d.s3tc.ctex"]
+source_file="res://assets/sprites/environment/materials/redroof.png"
+dest_files=["res://.godot/imported/redroof.png-c56f1db9fa3250321f601f9ffe4bc7f0.s3tc.ctex"]
 
 [params]
 

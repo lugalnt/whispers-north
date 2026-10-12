@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://f23mix7pnijq"
-path.s3tc="res://.godot/imported/pine_background.png-cd5e4a281ccef6f9bb53f690015ba5df.s3tc.ctex"
+uid="uid://das56s57mp6qn"
+path.s3tc="res://.godot/imported/tree2.png-1ebf4df9bed44f1f736bb166debbb52f.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/sprites/environment/pine_background.png"
-dest_files=["res://.godot/imported/pine_background.png-cd5e4a281ccef6f9bb53f690015ba5df.s3tc.ctex"]
+source_file="res://assets/sprites/environment/trees/tree2.png"
+dest_files=["res://.godot/imported/tree2.png-1ebf4df9bed44f1f736bb166debbb52f.s3tc.ctex"]
 
 [params]
 

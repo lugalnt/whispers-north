@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://das56s57mp6qn"
-path.s3tc="res://.godot/imported/tree2.png-43d8d16e837157753c95a641c41e85ce.s3tc.ctex"
+uid="uid://c0ja6r0v7uugm"
+path.s3tc="res://.godot/imported/chest_open.png-e37a1b87ee2651b1da3c4d3cc64bf7ea.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/sprites/environment/tree2.png"
-dest_files=["res://.godot/imported/tree2.png-43d8d16e837157753c95a641c41e85ce.s3tc.ctex"]
+source_file="res://assets/sprites/environment/items/chest_open.png"
+dest_files=["res://.godot/imported/chest_open.png-e37a1b87ee2651b1da3c4d3cc64bf7ea.s3tc.ctex"]
 
 [params]
 

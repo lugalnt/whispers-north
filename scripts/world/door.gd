@@ -5,8 +5,8 @@ extends CSGBox3D
 @export var sonido_cerrar: AudioStream = preload("res://assets/audio/sfx/snd_doorclose.wav")
 
 # Texturas de la puerta (cerrada y abierta)
-@export var textura_cerrada: Texture2D = preload("res://assets/sprites/environment/puerta.png")
-@export var textura_abierta: Texture2D = preload("res://assets/sprites/environment/puerta_abierta.png")
+@export var textura_cerrada: Texture2D = preload("res://assets/sprites/environment/furniture/puerta.png")
+@export var textura_abierta: Texture2D = preload("res://assets/sprites/environment/furniture/puerta_abierta.png")
 
 # Referencias a nodos
 @onready var audio_player: AudioStreamPlayer3D = get_node_or_null("AudioStreamPlayer3D")
@@ -22,7 +22,7 @@ func _ready() -> void:
 	_cambiar_textura_puerta(textura_cerrada)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if jugador_cerca and not esta_animando and Input.is_action_just_pressed("ui_accept"):
+	if jugador_cerca and not esta_animando and event.is_action_pressed("interact") and not event.is_echo():
 		get_viewport().set_input_as_handled()
 		interactuar_puerta()
 

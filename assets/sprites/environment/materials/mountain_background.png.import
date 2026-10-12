@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dc5pnnl4fn80d"
-path.s3tc="res://.godot/imported/lightwood_wall.png-b01af55958db6ab708571fce1a9bcad4.s3tc.ctex"
+uid="uid://rp8vrniaj4od"
+path.s3tc="res://.godot/imported/mountain_background.png-7439f91f45bbfdcc9418bfa93a4d2d8b.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/sprites/environment/lightwood_wall.png"
-dest_files=["res://.godot/imported/lightwood_wall.png-b01af55958db6ab708571fce1a9bcad4.s3tc.ctex"]
+source_file="res://assets/sprites/environment/materials/mountain_background.png"
+dest_files=["res://.godot/imported/mountain_background.png-7439f91f45bbfdcc9418bfa93a4d2d8b.s3tc.ctex"]
 
 [params]
 

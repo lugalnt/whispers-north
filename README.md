@@ -132,6 +132,19 @@ dev            ← Rama de integración del equipo
 
 ---
 
+## 🎮 Controles (Input Map estándar)
+
+Los controles se definen **solo** en Project Settings → Input Map (nunca por código).
+
+| Acción | Teclado | Gamepad |
+|---|---|---|
+| `move_up/down/left/right` | WASD / Flechas | Stick izq. / D-pad |
+| `interact` | Z / E / Enter / Espacio | Botón A |
+
+Guía completa (cómo usarlas, añadir acciones y preparar el remapeo): [docs/INPUT_MAP.md](docs/INPUT_MAP.md)
+
+---
+
 ## ⚙️ Configuración Inicial del Repositorio
 
 ### 1. Clonar el repositorio

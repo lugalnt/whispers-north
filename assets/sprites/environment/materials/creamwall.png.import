@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b3650kgtj8u7e"
-path.s3tc="res://.godot/imported/window.png-2c90f77317e52d5759243bde111f6abd.s3tc.ctex"
+uid="uid://x1yq4yghcqn4"
+path.s3tc="res://.godot/imported/creamwall.png-47451314a324dc98c6382dd9b2592f5b.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/sprites/environment/window.png"
-dest_files=["res://.godot/imported/window.png-2c90f77317e52d5759243bde111f6abd.s3tc.ctex"]
+source_file="res://assets/sprites/environment/materials/creamwall.png"
+dest_files=["res://.godot/imported/creamwall.png-47451314a324dc98c6382dd9b2592f5b.s3tc.ctex"]
 
 [params]
 

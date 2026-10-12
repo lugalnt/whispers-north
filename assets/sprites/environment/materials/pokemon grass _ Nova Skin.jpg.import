@@ -2,21 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c0110hwg7u86m"
-path.s3tc="res://.godot/imported/puerta_abierta.png-2df20024a2157d6901bb7632427031a4.s3tc.ctex"
+uid="uid://cs56a5bod4xrv"
+path="res://.godot/imported/pokemon grass _ Nova Skin.jpg-a14dca1c2236fb79aa3dee690c192bb2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/environment/puerta_abierta.png"
-dest_files=["res://.godot/imported/puerta_abierta.png-2df20024a2157d6901bb7632427031a4.s3tc.ctex"]
+source_file="res://assets/sprites/environment/materials/pokemon grass _ Nova Skin.jpg"
+dest_files=["res://.godot/imported/pokemon grass _ Nova Skin.jpg-a14dca1c2236fb79aa3dee690c192bb2.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

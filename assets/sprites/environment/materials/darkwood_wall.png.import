@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d14wbeojuwixe"
-path.s3tc="res://.godot/imported/tree1.png-da331b569ecf485c7157fb3c19e7c781.s3tc.ctex"
+uid="uid://biwelvgsjonu1"
+path.s3tc="res://.godot/imported/darkwood_wall.png-dffac870c7322a32ae19a3928aad0a51.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/sprites/environment/tree1.png"
-dest_files=["res://.godot/imported/tree1.png-da331b569ecf485c7157fb3c19e7c781.s3tc.ctex"]
+source_file="res://assets/sprites/environment/materials/darkwood_wall.png"
+dest_files=["res://.godot/imported/darkwood_wall.png-dffac870c7322a32ae19a3928aad0a51.s3tc.ctex"]
 
 [params]
 

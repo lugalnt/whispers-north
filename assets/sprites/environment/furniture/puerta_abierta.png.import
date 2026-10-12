@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://x1yq4yghcqn4"
-path.s3tc="res://.godot/imported/creamwall.png-3ce1b31025980e6ad6877a74e5146165.s3tc.ctex"
+uid="uid://c0110hwg7u86m"
+path.s3tc="res://.godot/imported/puerta_abierta.png-6acdf34905856ae4afe1a690d6b9ccbe.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/sprites/environment/creamwall.png"
-dest_files=["res://.godot/imported/creamwall.png-3ce1b31025980e6ad6877a74e5146165.s3tc.ctex"]
+source_file="res://assets/sprites/environment/furniture/puerta_abierta.png"
+dest_files=["res://.godot/imported/puerta_abierta.png-6acdf34905856ae4afe1a690d6b9ccbe.s3tc.ctex"]
 
 [params]
 

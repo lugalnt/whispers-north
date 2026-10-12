@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d3nuurfp76m36"
-path.s3tc="res://.godot/imported/grass.png-91512acd7c8472262e229e053d91cc27.s3tc.ctex"
+uid="uid://dtw2c6ubxyf6"
+path.s3tc="res://.godot/imported/dirtpath.png-1ceb2b9e9382787caf9973864995615e.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/sprites/environment/grass.png"
-dest_files=["res://.godot/imported/grass.png-91512acd7c8472262e229e053d91cc27.s3tc.ctex"]
+source_file="res://assets/sprites/environment/materials/dirtpath.png"
+dest_files=["res://.godot/imported/dirtpath.png-1ceb2b9e9382787caf9973864995615e.s3tc.ctex"]
 
 [params]
 

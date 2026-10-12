@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dntkhhaetk4m0"
-path.s3tc="res://.godot/imported/redroof.png-049759b062d1180b1e2a41b2c67e1563.s3tc.ctex"
+uid="uid://bni7dur8u1ddh"
+path.s3tc="res://.godot/imported/woodTexture.png-4ded6a02525a76ac1964da19c068fbc6.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/sprites/environment/redroof.png"
-dest_files=["res://.godot/imported/redroof.png-049759b062d1180b1e2a41b2c67e1563.s3tc.ctex"]
+source_file="res://assets/sprites/environment/materials/woodTexture.png"
+dest_files=["res://.godot/imported/woodTexture.png-4ded6a02525a76ac1964da19c068fbc6.s3tc.ctex"]
 
 [params]
 

@@ -5,39 +5,11 @@ extends Node3D
 @onready var player_32: CharacterBody3D = $Player32 
 
 func _ready() -> void:
-	# Asegura que la tecla 'Z' esté mapeada a la acción 'ui_accept'
-	_setup_input_map()
+	# Los controles (move_*, interact) se definen en Project Settings > Input Map
 	# El juego empieza solo con el personaje de 16x16 activo
 	player_32.hide() 
 	player_32.process_mode = Node.PROCESS_MODE_DISABLED 
 
-# Configura la tecla 'Z' como evento de la acción ui_accept si no está configurada
-func _setup_input_map() -> void:
-	if not InputMap.has_action("ui_accept"):
-		InputMap.add_action("ui_accept")
-	
-	var events = InputMap.action_get_events("ui_accept")
-	var tiene_z: bool = false
-	var tiene_a: bool = false
-	for ev in events:
-		if ev is InputEventKey and ev.keycode == KEY_Z:
-			tiene_z = true
-			break
-			
-	if not tiene_z:
-		var key_z = InputEventKey.new()
-		key_z.keycode = KEY_Z
-		InputMap.action_add_event("ui_accept", key_z)
-		
-	for ev in events:
-		if ev is InputEventJoypadButton and ev.button_index == JOY_BUTTON_A:
-			tiene_a = true
-			break
-		
-	if not tiene_a:
-		var key_a = InputEventJoypadButton.new()
-		key_a.button_index = JOY_BUTTON_A
-		InputMap.action_add_event("ui_accept", key_a) 
 # Devuelve el nodo del jugador activo (16x16 o 32x32)
 func get_active_player() -> CharacterBody3D:
 	if player_16 and player_16.visible:

@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c0vk0qhdkjpi"
-path.s3tc="res://.godot/imported/moldy_oak.png-71bd1388cd445868e71a7912f05e74d4.s3tc.ctex"
+uid="uid://d14wbeojuwixe"
+path.s3tc="res://.godot/imported/tree1.png-f5dc82ce7d576c326e4af3368c7c6f79.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/sprites/environment/moldy_oak.png"
-dest_files=["res://.godot/imported/moldy_oak.png-71bd1388cd445868e71a7912f05e74d4.s3tc.ctex"]
+source_file="res://assets/sprites/environment/trees/tree1.png"
+dest_files=["res://.godot/imported/tree1.png-f5dc82ce7d576c326e4af3368c7c6f79.s3tc.ctex"]
 
 [params]
 
