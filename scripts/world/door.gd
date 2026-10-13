@@ -46,6 +46,13 @@ func interactuar_puerta() -> void:
 		
 	esta_animando = true
 	
+	# 0. Animación de interacción del jugador (solo si su modelo la tiene)
+	if jugador_actual.has_method("play_interact"):
+		await jugador_actual.play_interact(global_position)
+		if not is_instance_valid(jugador_actual):
+			esta_animando = false
+			return
+	
 	# 1. Reproducir sonido de apertura
 	reproducir_sonido(sonido_abrir)
 	

@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://37a02xtgyjyr" path="res://assets/sprites/ui/main_menu/CarreteraSemaless.png" id="6_cm266"]
 [ext_resource type="Texture2D" uid="uid://bncaupxd63ycj" path="res://assets/sprites/ui/main_menu/Auto.png" id="7_g8g3n"]
 [ext_resource type="Texture2D" uid="uid://ctxial6ffysnf" path="res://assets/sprites/ui/main_menu/Llantas_Auto.png" id="8_8u0te"]
-[ext_resource type="Texture2D" uid="uid://xqb5w825xmvd" path="res://assets/sprites/ui/main_menu/Logo.png" id="9_oiatc"]
+[ext_resource type="Texture2D" uid="uid://ryqwf8qm465g" path="res://assets/sprites/ui/main_menu/Logo.png" id="9_oiatc"]
 [ext_resource type="FontFile" uid="uid://b7fdrlxoxqo3a" path="res://assets/fonts/BridgeParapet.ttf" id="10_0k4wn"]
 [ext_resource type="AudioStream" uid="uid://cw2yj3alvtw0s" path="res://assets/audio/music/MusicaMenu.mp3" id="10_mg3m2"]
 
@@ -239,11 +239,11 @@ offset_bottom = 40.0
 
 [node name="Logo" type="TextureRect" parent="Menu" unique_id=1109493209]
 layout_mode = 0
-offset_left = 38.999996
-offset_top = 59.999996
-offset_right = 439.0
-offset_bottom = 260.0
-scale = Vector2(0.68000054, 0.68000054)
+offset_left = -81.0
+offset_top = 10.0
+offset_right = 319.0
+offset_bottom = 210.0
+scale = Vector2(1.3200006, 1.3200006)
 texture = ExtResource("9_oiatc")
 expand_mode = 1
 

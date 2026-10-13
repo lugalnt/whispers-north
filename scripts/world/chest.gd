@@ -69,6 +69,12 @@ func _fase_1_abrir_y_saltar() -> void:
 		
 	esta_abierto = true
 	
+	# Animación de interacción del jugador (solo si su modelo la tiene)
+	if jugador_actual.has_method("play_interact"):
+		await jugador_actual.play_interact(global_position)
+		if not is_instance_valid(jugador_actual):
+			return
+	
 	# Cambiar visibilidad de los sprites del cofre
 	sprite_cerrado.hide()
 	sprite_abierto.show()
@@ -129,6 +135,13 @@ func _fase_2_desvanecer_y_explotar_rata() -> void:
 		return
 		
 	desvaneciendo = true
+	
+	# Animación de interacción del jugador (solo si su modelo la tiene)
+	if is_instance_valid(jugador_actual) and jugador_actual.has_method("play_interact"):
+		await jugador_actual.play_interact(global_position)
+		if not is_instance_valid(rata_instancia):
+			desvaneciendo = false
+			return
 	
 	# 1. Reproducir Sonido 2 (byeguys.mp3 - inicio interacción)
 	reproducir_sonido(sonido_desvanecer_inicio)

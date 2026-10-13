@@ -111,6 +111,46 @@ func _ready() -> void:
 	# Sincronizar volumen
 	slider_volumen.value = db_to_linear(audio_player.volume_db)
 
+	# Navegación con teclado / gamepad (acciones ui_*): solo el menú principal es
+	# enfocable al inicio; el panel de opciones está fuera de pantalla
+	_set_foco_habilitado(_controles_opciones(), false)
+	_set_foco_habilitado(_controles_menu(), true)
+	$Menu/ListaDeBotones/Inicio.grab_focus()
+
+
+# ─────────────────────────────────────────────
+#  NAVEGACIÓN CON TECLADO / GAMEPAD
+# ─────────────────────────────────────────────
+
+func _controles_menu() -> Array[Control]:
+	return [
+		$Menu/ListaDeBotones/Inicio,
+		$Menu/ListaDeBotones/Opciones,
+		$Menu/ListaDeBotones/Salir,
+	]
+
+
+func _controles_opciones() -> Array[Control]:
+	var lista: Array[Control] = [slider_volumen, slider_efectos, check_pantalla, opciones_res]
+	var btn_regresar = panel_opciones.get_node_or_null("ListaOpciones/Regresar")
+	if btn_regresar:
+		lista.append(btn_regresar)
+	return lista
+
+
+# Activa o desactiva el foco de un grupo de controles. Los que están fuera de pantalla
+# no deben poder recibir foco (si no, las flechas saltarían a ellos).
+func _set_foco_habilitado(controles: Array[Control], habilitado: bool) -> void:
+	for c in controles:
+		c.focus_mode = Control.FOCUS_ALL if habilitado else Control.FOCUS_NONE
+
+
+# ui_cancel (Esc / B del gamepad) regresa al menú desde las opciones
+func _unhandled_input(event: InputEvent) -> void:
+	if _en_opciones and event.is_action_pressed("ui_cancel") and not event.is_echo():
+		get_viewport().set_input_as_handled()
+		_ir_al_menu()
+
 
 # ─────────────────────────────────────────────
 #  CREAR PANEL EN RUNTIME (fallback)
@@ -213,6 +253,7 @@ func _on_inicio_pressed() -> void:
 	$Menu/ListaDeBotones/Inicio.disabled   = true
 	$Menu/ListaDeBotones/Opciones.disabled = true
 	$Menu/ListaDeBotones/Salir.disabled    = true
+	_set_foco_habilitado(_controles_menu(), false)
 
 	# ── FASE 1: Menú se desliza hacia la izquierda ─────────────────
 	var t_menu = create_tween()
@@ -262,6 +303,11 @@ func _ir_a_opciones() -> void:
 	_animando = true
 	_en_opciones = true
 
+	# El foco pasa al panel de opciones
+	_set_foco_habilitado(_controles_menu(), false)
+	_set_foco_habilitado(_controles_opciones(), true)
+	slider_volumen.grab_focus()
+
 	# Re-generar la lista en caso de que el usuario haya movido
 	# la ventana a otro monitor entre visitas al panel de opciones
 	_poblar_resoluciones()
@@ -281,6 +327,11 @@ func _ir_al_menu() -> void:
 		return
 	_animando = true
 	_en_opciones = false
+
+	# El foco regresa al menú principal (en el botón Opciones, de donde venimos)
+	_set_foco_habilitado(_controles_opciones(), false)
+	_set_foco_habilitado(_controles_menu(), true)
+	$Menu/ListaDeBotones/Opciones.grab_focus()
 
 	var tween = create_tween().set_parallel(true)
 	tween.set_ease(Tween.EASE_IN_OUT)

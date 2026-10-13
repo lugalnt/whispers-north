@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://qcuc2g14unqg" path="res://assets/sprites/environment/materials/pokemon_grass.png" id="2_8xm5o"]
 [ext_resource type="PackedScene" uid="uid://tmee1acxuci3" path="res://scenes/world/Path.tscn" id="2_16fjv"]
 [ext_resource type="Texture2D" uid="uid://biwelvgsjonu1" path="res://assets/sprites/environment/materials/darkwood_wall.png" id="2_ckp8c"]
-[ext_resource type="Texture2D" uid="uid://f23mix7pnijq" path="res://assets/sprites/environment/materials/pine_background.png" id="2_fe1rh"]
+[ext_resource type="Texture2D" uid="uid://ds6en71aom1gh" path="res://assets/sprites/environment/backgrounds/mountain_snowy_background.png" id="2_fe1rh"]
 [ext_resource type="PackedScene" uid="uid://bmq2ghxhosxj" path="res://scenes/player/player_32.tscn" id="3_6eebf"]
 [ext_resource type="Texture2D" uid="uid://dntkhhaetk4m0" path="res://assets/sprites/environment/materials/redroof.png" id="3_i1jm3"]
 [ext_resource type="PackedScene" uid="uid://ovvii6tg2sgi" path="res://scenes/world/Entities/Door.tscn" id="4_16fjv"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://dxsn6l7x0h2ta" path="res://scenes/world/Entities/Tree_Pine.tscn" id="9_l5ull"]
 [ext_resource type="PackedScene" uid="uid://c1asuxlkxxgr" path="res://scenes/world/Entities/Chest.tscn" id="11_16fjv"]
 [ext_resource type="PackedScene" uid="uid://b1noknypul483" path="res://scenes/world/Entities/Rat.tscn" id="12_ckp8c"]
+[ext_resource type="PackedScene" path="res://scenes/world/Snow.tscn" id="13_snow"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_qxiha"]
 
@@ -86,13 +87,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35113525, 9.208674, -7.4561
 shape = SubResource("BoxShape3D_yf5fn")
 
 [node name="Sprite3D" type="Sprite3D" parent="Background" unique_id=641074192]
-transform = Transform3D(89.81132, 0, 0, 0, 49.69762, 0, 0, 0, 6.247612, -2.414517, -6.9719753, 182.84868)
+transform = Transform3D(89.81132, 0, 0, 0, 49.69762, 0, 0, 0, 6.247612, -2.4145203, 11.26092, 182.84868)
 cast_shadow = 0
 texture_filter = 0
 texture = ExtResource("2_fe1rh")
 
 [node name="Sprite3D2" type="Sprite3D" parent="Background" unique_id=1838865999]
-transform = Transform3D(87.81964, 0, 0, 0, 49.69762, 0, 0, 0, 6.247612, -29.095064, -6.9719753, 205.87383)
+transform = Transform3D(87.81964, 0, 0, 0, 49.69762, 0, 0, 0, 6.247612, -38.929512, 38.53347, 205.87383)
 cast_shadow = 0
 texture_filter = 0
 texture = ExtResource("2_fe1rh")
@@ -800,6 +801,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7721922, 0.73356843, -2.07
 [node name="Rat" parent="." unique_id=993836924 instance=ExtResource("12_ckp8c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8463783, 0.5000005, -2.9572194)
 visible = false
+
+[node name="Snow" parent="." unique_id=1758551592 instance=ExtResource("13_snow")]
 
 [node name="SubViewport" type="SubViewport" parent="." unique_id=1997840669]
 transparent_bg = true
