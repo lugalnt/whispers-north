@@ -10,7 +10,7 @@ height = 0.85884094
 radius = 0.70996094
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_g4v7s"]
-size = Vector3(3.0174716, 1.1918945, 3.295863)
+size = Vector3(2.2847023, 1.1918945, 2.0139682)
 
 [node name="Chest" type="Node3D" unique_id=911684628]
 script = ExtResource("1_2if1w")
@@ -45,7 +45,7 @@ visible = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.39983225, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1149172971]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.038962483, 0.022148132, 0.040741324)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.272012, 0.022148132, 0.10516846)
 shape = SubResource("BoxShape3D_g4v7s")
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

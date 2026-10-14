@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://2lft3e0fn25g"]
+
+[ext_resource type="PackedScene" uid="uid://csbq60t1b06rd" path="res://assets/models/Generic Pot/pot.dae" id="1_7ixpt"]
+
+[node name="pot" unique_id=1445069752 instance=ExtResource("1_7ixpt")]
+
+[node name="Armature" parent="." index="0" unique_id=1672110143]
+transform = Transform3D(1, 0, 0, 0, -1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0)

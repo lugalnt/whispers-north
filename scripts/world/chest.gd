@@ -26,6 +26,9 @@ var jugador_actual: CharacterBody3D = null
 var rata_instancia: Node3D = null
 
 func _ready() -> void:
+	# Permite que otros eventos (p. ej. el jarrón) reinicien el cofre cuando la rata desaparece
+	add_to_group("cofre")
+	
 	if audio_player == null and has_node("AudioStreamPlayer3D"):
 		audio_player = $AudioStreamPlayer3D
 		
@@ -155,6 +158,11 @@ func _fase_2_desvanecer_y_explotar_rata() -> void:
 	# Esperar el punto culminante del sonido scream
 	await get_tree().create_timer(0.6).timeout
 	
+	# La rata pudo ser eliminada por otro evento durante la espera (p. ej. el jarrón)
+	if not is_instance_valid(rata_instancia):
+		desvaneciendo = false
+		return
+	
 	# 4. Reproducir sonido de cristal roto / explosión
 	reproducir_sonido(sonido_cristal_roto)
 	
@@ -178,6 +186,18 @@ func _fase_2_desvanecer_y_explotar_rata() -> void:
 		rata_instancia = null
 		
 	# 8. Reiniciar estado del cofre para permitir repetir la interacción (bucle)
+	esta_abierto = false
+	rata_en_cabeza = false
+	desvaneciendo = false
+	sprite_abierto.hide()
+	sprite_cerrado.show()
+
+# Reinicia el cofre cuando la rata desaparece por otro evento (p. ej. se sacrifica contra el jarrón):
+# queda cerrado y sin rata para poder repetir el bucle de interacción
+func reiniciar_estado() -> void:
+	if is_instance_valid(rata_instancia):
+		rata_instancia.queue_free()
+	rata_instancia = null
 	esta_abierto = false
 	rata_en_cabeza = false
 	desvaneciendo = false

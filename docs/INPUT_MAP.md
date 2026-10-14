@@ -19,7 +19,7 @@ implemente el remapeo desde Opciones solo hay que modificar estas mismas accione
 | `move_down` | Mover abajo | `S`, `↓` | Stick izq. ↓, D-pad ↓ |
 | `move_left` | Mover izquierda | `A`, `←` | Stick izq. ←, D-pad ← |
 | `move_right` | Mover derecha | `D`, `→` | Stick izq. →, D-pad → |
-| `interact` | Interactuar (puertas, cofres, NPCs, etc.) | `Z`, `E`, `Enter`, `Espacio` | Botón A (abajo) |
+| `interact` | Interactuar (puertas, cofres, arbustos, NPCs, empujar al jarrón embrujado, etc.) | `Z`, `E`, `Enter`, `Espacio` | Botón A (abajo) |
 
 - Las teclas usan `physical_keycode` (posición física), por lo que WASD funciona
   igual en teclados QWERTY, AZERTY, etc.
@@ -133,3 +133,4 @@ Recomendaciones para implementarlo:
 - Se eliminó `_setup_input_map()` de `world.gd` (creaba `ui_accept` con Z/A en cada ejecución).
 - Se eliminó la acción de prueba `A` de `project.godot`.
 - `player.gd`, `door.gd` y `chest.gd` migrados a `move_*` / `interact`.
+- `pot.gd` (jarrón embrujado) usa `interact` dentro de `_unhandled_input` para empujar al jarrón.

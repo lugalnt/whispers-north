@@ -1,0 +1,188 @@
+fireshaft
+=========
+  Textures:
+    - AK_fireshaft00
+        Scale: 3, 3
+    - AK_fireshaft01
+        Scale: 3, 3
+        Rotation: 0.38523514511551255
+    - AK_fireshaft02
+        Offset: 0, 1.75
+        Scale: 3, 3.5
+
+  Ambient Colors:
+    - 50, 50, 50, 50
+
+  Constant Colors:
+    - 255, 255, 255, 147
+
+  Material Colors:
+    - 204, 204, 204, 255
+    - 204, 204, 204, 255
+
+  Color Registers:
+    - 255, 197, 92, 155
+    - 255, 197, 92, 254
+
+  Steps:
+    1: RGB = (0, 0, 0)
+         A = (254 * (tex #1 A))
+    2: RGB = (0, 0, 0)
+         A = (254 * (tex #2 A)), then add (prev. A)
+    3: RGB = (0, 0, 0)
+         A = ((tex #3 A) * (prev. A))
+    4: RGB = (0, 0, 0), then add (255, 197, 92)
+         A = if (prev. A) > 155, use (vertex A), otherwise 0
+
+
+
+fireshaft(2)
+============
+  Textures:
+    - AK_fireshaft00
+    - AK_fireshaft01
+        Scale: 2, 3
+        Rotation: -0.3618579668568987
+    - AK_fireshaft02
+        Offset: 0, 1.75
+        Scale: 3, 3.5
+
+  Ambient Colors:
+    - 50, 50, 50, 50
+
+  Constant Colors:
+    - 255, 255, 255, 147
+
+  Material Colors:
+    - 204, 204, 204, 255
+    - 204, 204, 204, 255
+
+  Color Registers:
+    - 255, 234, 137, 180
+    - 255, 133, 44, 254
+
+  Steps:
+    1: RGB = (0, 0, 0)
+         A = (254 * (tex #1 A))
+    2: RGB = (0, 0, 0)
+         A = (254 * (tex #2 A)), then add (prev. A)
+    3: RGB = (0, 0, 0)
+         A = ((tex #3 A) * (prev. A))
+    4: RGB = ((128, 128, 128) * (vertex RGB)), then add (255, 234, 137)
+         A = if (prev. A) > 180, use (vertex A), otherwise 0
+
+
+
+fireshaft(3)
+============
+  Textures:
+    - AK_fireshaft00
+        Scale: -4, 3
+    - AK_fireshaft01
+        Scale: -2.828399896621704, 3
+        Rotation: -0.250038148136845
+    - AK_fireshaft02
+        Offset: 0, 1.600000023841858
+        Scale: 3, 3.5
+
+  Ambient Colors:
+    - 50, 50, 50, 50
+
+  Constant Colors:
+    - 255, 255, 255, 254
+
+  Material Colors:
+    - 204, 204, 204, 255
+    - 204, 204, 204, 255
+
+  Color Registers:
+    - 255, 64, 48, 170
+    - 255, 133, 44, 254
+
+  Steps:
+    1: RGB = (0, 0, 0)
+         A = (254 * (tex #1 A))
+    2: RGB = (0, 0, 0)
+         A = (254 * (tex #2 A)), then add (prev. A)
+    3: RGB = (0, 0, 0)
+         A = ((tex #3 A) * (prev. A))
+    4: RGB = if R of (prev. A) > (254, 254, 254), use (255, 64, 48), otherwise (0, 0, 0), then add (255, 133, 44)
+         A = if (prev. A) > 170, use 255, otherwise 0
+
+
+
+fireshaft(4)
+============
+  Textures:
+    - AK_fireshaft00
+        Center: 0, 0
+        Scale: 4, 6
+    - AK_fireShaftBack
+        Center: 0, 0
+        Scale: 2, 8
+    - AK_fireshaft02
+        Offset: 0, 1.399999976158142
+        Scale: 6, 3.5
+
+  Ambient Colors:
+    - 50, 50, 50, 50
+
+  Constant Colors:
+    - 255, 255, 255, 254
+
+  Material Colors:
+    - 204, 204, 204, 255
+    - 204, 204, 204, 255
+
+  Color Registers:
+    - 255, 64, 48, 210
+    - 255, 133, 44, 254
+
+  Steps:
+    1: RGB = (0, 0, 0)
+         A = (254 * (tex #1 A))
+    2: RGB = (0, 0, 0)
+         A = (254 * (tex #2 A)), then add (prev. A)
+    3: RGB = (0, 0, 0)
+         A = ((tex #3 A) * (prev. A))
+    4: RGB = if R of (prev. A) > (254, 254, 254), use (255, 64, 48), otherwise (0, 0, 0), then add (255, 133, 44)
+         A = if (prev. A) > 210, use 255, otherwise 0
+
+
+
+fireshaft(5)
+============
+  Textures:
+    - AK_fireshaft00
+        Center: 0, 0
+        Scale: 4, 6
+    - AK_fireShaftBack
+        Center: 0, 0
+        Scale: 2, 8
+    - AK_fireshaft02
+        Offset: 0, 1.399999976158142
+        Scale: 6, 3.5
+
+  Ambient Colors:
+    - 50, 50, 50, 50
+
+  Constant Colors:
+    - 255, 255, 255, 254
+
+  Material Colors:
+    - 204, 204, 204, 255
+    - 204, 204, 204, 255
+
+  Color Registers:
+    - 255, 64, 48, 210
+    - 255, 133, 44, 254
+
+  Steps:
+    1: RGB = (0, 0, 0)
+         A = (254 * (tex #1 A))
+    2: RGB = (0, 0, 0)
+         A = (254 * (tex #2 A)), then add (prev. A)
+    3: RGB = (0, 0, 0)
+         A = ((tex #3 A) * (prev. A))
+    4: RGB = if R of (prev. A) > (254, 254, 254), use (255, 64, 48), otherwise (0, 0, 0), then add (255, 133, 44)
+         A = if (prev. A) > 210, use 255, otherwise 0

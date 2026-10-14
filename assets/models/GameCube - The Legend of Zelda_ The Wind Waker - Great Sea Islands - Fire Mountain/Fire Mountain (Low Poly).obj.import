@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bkcqd8wusv1hl"
+path="res://.godot/imported/Fire Mountain (Low Poly).obj-ec609dcdebd2d4cac02e535af9b7636d.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Fire Mountain (Low Poly).obj-ec609dcdebd2d4cac02e535af9b7636d.mesh"]
+
+source_file="res://assets/models/GameCube - The Legend of Zelda_ The Wind Waker - Great Sea Islands - Fire Mountain/Fire Mountain (Low Poly).obj"
+dest_files=["res://.godot/imported/Fire Mountain (Low Poly).obj-ec609dcdebd2d4cac02e535af9b7636d.mesh", "res://.godot/imported/Fire Mountain (Low Poly).obj-ec609dcdebd2d4cac02e535af9b7636d.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

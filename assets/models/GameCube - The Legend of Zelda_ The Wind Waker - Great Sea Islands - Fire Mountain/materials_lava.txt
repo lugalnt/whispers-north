@@ -1,0 +1,132 @@
+Qkzyg_yougn_only_Qmoya_v_x
+==========================
+  Textures:
+    - Txq_kumo_moya3
+        Offset: 0.9687539935112, 0
+    - Txq_kumo_moya
+        Offset: 0.48750001192092896, 2.9250001907348633
+        Scale: 1, 2
+    - Txq_kumo_moya
+        Offset: -0.9687539935112, 3.8750159740448
+        Scale: 2, 3
+    - Txq_hokan_iro_hanten
+        Scale: -1, -1
+
+  Ambient Colors:
+    - 50, 50, 50, 50
+
+  Constant Colors:
+    - 255, 215, 166, 255
+    - 0, 36, 83, 255
+
+  Color Registers:
+    - 0, 137, 178, 255
+    - 255, 128, 50, 255
+    - 208, 48, 84, 255
+
+  Steps:
+    1: RGB = (tex #1 RGB)
+         A = (tex #1 A)
+    2: RGB = ((tex #2 RGB) * (prev. RGB))
+         A = ((tex #2 A) * (prev. A))
+    3: RGB = (lerp from (0, 137, 178) to (prev. RGB) using (255, 128, 50))
+         A = ((tex #3 A) * (prev. A))
+    4: RGB = ((prev. RGB) * (tex #4 RGB))
+         A = (prev. A)
+
+
+
+Qkzyg_yougn_only_a_yougan_v_x
+=============================
+  Textures:
+    - Txy_sitayougan4
+        Offset: -0.012909375131130219, -0.07871484756469727
+    - Txy_sitayougan4
+        Offset: 1.087414264678955, -0.5437071323394775
+        Scale: 0.009999999776482582, 0.009999999776482582
+    - Txy_yougantubu3
+        Offset: 0.14325203001499176, -0.2103414684534073
+        Scale: 1.9934715032577515, 2.0610873699188232
+
+  Ambient Colors:
+    - 50, 50, 50, 50
+
+  Constant Colors:
+    - 228, 92, 0, 255
+    - 255, 113, 0, 255
+
+  Color Registers:
+    - 27, 0, 0, 255
+
+  Steps:
+    1: RGB = ((228, 92, 0) * (tex #2 RGB))
+         A = (vertex A)
+    2: RGB = (lerp from (prev. RGB) to (255, 113, 0) using (tex #3 RGB))
+         A = (prev. A)
+    3: RGB = (lerp from (27, 0, 0) to (tex #1 RGB) using (prev. RGB))
+         A = (prev. A)
+
+
+
+Qkzyg_yougn_only_b_yougan_v
+===========================
+  Textures:
+    - Txy_yougan2
+    - Txy_sitayougan4
+        Offset: 0, -6.939998626708984
+        Scale: 3, 2
+    - Txy_yougantubu3
+        Offset: 0, -1.656011700630188
+
+  Ambient Colors:
+    - 50, 50, 50, 50
+
+  Constant Colors:
+    - 255, 50, 0, 37
+    - 255, 199, 0, 82
+
+  Color Registers:
+    - 120, 0, 0, 255
+
+  Steps:
+    1: RGB = (255, 50, 0)
+         A = (tex #1 A), then add 37
+    2: RGB = (lerp from (prev. RGB) to (120, 0, 0) using (tex #2 RGB))
+         A = (prev. A)
+    3: RGB = (lerp from (prev. RGB) to (255, 199, 0) using (tex #3 RGB))
+         A = (prev. A)
+
+
+
+SC_00_umi
+=========
+  Textures:
+    - Txa_test_sibuki_youganyou
+        Offset: -9.59999942779541, 0
+        Scale: -3, 1
+    - Txa_test_sibuki_youganyou
+        Offset: -5.515152454376221, 0
+        Scale: 2, 1
+
+  Ambient Colors:
+    - 50, 50, 50, 50
+
+  Constant Colors:
+    - 255, 128, 50, 255
+    - 255, 182, 90, 255
+
+  Material Colors:
+    - 204, 204, 204, 255
+    - 204, 204, 204, 255
+
+  Color Registers:
+    - 255, 128, 50, 128
+    - 200, 200, 255, 255
+
+  Steps:
+    1: RGB = (0, 0, 0)
+         A = (tex #1 A)
+    2: RGB = (255, 128, 50)
+         A = ((tex #2 A) * (prev. A))
+    3: RGB = ((255, 182, 90) * (prev. RGB))
+         A = ((vertex A) * (prev. A))

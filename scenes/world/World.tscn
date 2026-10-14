@@ -10,15 +10,22 @@
 [ext_resource type="Texture2D" uid="uid://dntkhhaetk4m0" path="res://assets/sprites/environment/materials/redroof.png" id="3_i1jm3"]
 [ext_resource type="PackedScene" uid="uid://ovvii6tg2sgi" path="res://scenes/world/Entities/Door.tscn" id="4_16fjv"]
 [ext_resource type="Texture2D" uid="uid://b3650kgtj8u7e" path="res://assets/sprites/environment/furniture/window.png" id="5_qh0kd"]
+[ext_resource type="PackedScene" uid="uid://2lshed6yy75" path="res://scenes/world/Entities/Bush.tscn" id="8_mmgww"]
 [ext_resource type="PackedScene" uid="uid://bi4mty8e2lew4" path="res://scenes/world/Entities/Tree.tscn" id="8_yr1n6"]
 [ext_resource type="PackedScene" uid="uid://dxsn6l7x0h2ta" path="res://scenes/world/Entities/Tree_Pine.tscn" id="9_l5ull"]
 [ext_resource type="PackedScene" uid="uid://c1asuxlkxxgr" path="res://scenes/world/Entities/Chest.tscn" id="11_16fjv"]
+[ext_resource type="AudioStream" uid="uid://3sywwbl7jfo3" path="res://assets/audio/sfx/snd_mysterygo.wav" id="11_jy5j1"]
 [ext_resource type="PackedScene" uid="uid://b1noknypul483" path="res://scenes/world/Entities/Rat.tscn" id="12_ckp8c"]
 [ext_resource type="PackedScene" path="res://scenes/world/Snow.tscn" id="13_snow"]
 [ext_resource type="Script" uid="uid://ojlc0i8sf3xn" path="res://scripts/world/path_patch.gd" id="16_0duuj"]
 [ext_resource type="PackedScene" uid="uid://cd8057ionvm5d" path="res://scenes/world/Main_Path_Section1.tscn" id="17_d0ueh"]
 [ext_resource type="PackedScene" uid="uid://dxn6wcvk074i1" path="res://scenes/world/Main_Path_Section2.tscn" id="18_d0ueh"]
 [ext_resource type="PackedScene" uid="uid://d2xgydtkx3q60" path="res://scenes/world/Main_Path_Section3.tscn" id="19_i08rc"]
+[ext_resource type="PackedScene" uid="uid://dbggfxbe2xhfc" path="res://assets/models/GameCube - The Legend of Zelda_ The Wind Waker - Great Sea Islands - Fire Mountain/fire_mountain.tscn" id="20_o0dc1"]
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/Pot.tscn" id="23_pot"]
+[ext_resource type="AudioStream" uid="uid://dhmy8wgyl8emk" path="res://assets/audio/sfx/Roar_0.wav" id="24_d6tky"]
+[ext_resource type="AudioStream" uid="uid://vlmithwrbs2j" path="res://assets/audio/sfx/snd_ralsei_yell.wav" id="24_juaju"]
+[ext_resource type="AudioStream" uid="uid://5jv27887xvb2" path="res://assets/audio/sfx/snd_bell_bounce_short.wav" id="25_6mhxi"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_qxiha"]
 
@@ -69,8 +76,11 @@ albedo_texture = ExtResource("3_i1jm3")
 uv1_triplanar = true
 texture_filter = 0
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_d0u6y"]
+size = Vector3(4.7639837, 2.1929321, 2.2996826)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_g4v7s"]
-size = Vector3(0.9116516, 1.0889893, 1.1621094)
+size = Vector3(0.9116516, 1.0889893, 1.1767044)
 
 [node name="Node3D" type="Node3D" unique_id=2004163276]
 script = ExtResource("1_gbddb")
@@ -91,19 +101,25 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35113525, 9.208674, -7.4561
 shape = SubResource("BoxShape3D_yf5fn")
 
 [node name="Sprite3D" type="Sprite3D" parent="Background" unique_id=641074192]
-transform = Transform3D(89.81132, 0, 0, 0, 49.69762, 0, 0, 0, 6.247612, -2.4145203, 11.26092, 182.84868)
+transform = Transform3D(89.81132, 0, 0, 0, 49.69762, 0, 0, 0, 6.247612, -9.601983, 11.26092, 182.84868)
 cast_shadow = 0
 texture_filter = 0
 texture = ExtResource("2_fe1rh")
 
 [node name="Sprite3D2" type="Sprite3D" parent="Background" unique_id=1838865999]
-transform = Transform3D(87.81964, 0, 0, 0, 49.69762, 0, 0, 0, 6.247612, -38.929512, 38.53347, 205.87383)
+transform = Transform3D(137.14447, 0, 0, 0, 60.60583, 0, -4.5474735e-13, 0, 6.247612, -38.929512, 38.53347, 205.87383)
 cast_shadow = 0
 texture_filter = 0
 texture = ExtResource("2_fe1rh")
 
 [node name="Sprite3D3" type="Sprite3D" parent="Background" unique_id=494791737]
-transform = Transform3D(87.81964, 0, 0, 0, 49.69762, 0, 0, 0, 6.247612, -55.672512, -23.31043, 205.87383)
+transform = Transform3D(95.31145, 0, 0, 0, 49.69762, 0, 0, 0, 6.247612, -55.672516, -23.31043, 205.87383)
+cast_shadow = 0
+texture_filter = 0
+texture = ExtResource("2_fe1rh")
+
+[node name="Sprite3D4" type="Sprite3D" parent="Background" unique_id=1211386434]
+transform = Transform3D(87.81964, 0, 0, 0, 49.69762, 0, 0, 0, 6.247612, -174.44754, -13.905706, 121.770615)
 cast_shadow = 0
 texture_filter = 0
 texture = ExtResource("2_fe1rh")
@@ -122,15 +138,15 @@ render_priority = -1
 texture = SubResource("ViewportTexture_g4v7s")
 
 [node name="Piso2" type="CSGBox3D" parent="." unique_id=1047987089]
-transform = Transform3D(1.6031103, 0, 0, 0, 1, 0, 0, 0, 2.0441163, -11.37184, 0, 25.869205)
+transform = Transform3D(1.6031103, 0, 0, 0, 1, 0, 0, 0, 2.0441163, -11.37184, 0, 26.778976)
 use_collision = true
-size = Vector3(34.118896, 1, 16.8125)
+size = Vector3(34.118896, 1, 17.702637)
 material = SubResource("StandardMaterial3D_qh0kd")
 
 [node name="Piso3" type="CSGBox3D" parent="." unique_id=245053239]
-transform = Transform3D(1.6031103, 0, 0, 0, 1, 0, 0, 0, 2.0441163, 31.108126, 0, 31.911724)
+transform = Transform3D(1.6031103, 0, 0, 0, 1, 0, 0, 0, 2.0441163, 31.108126, 0, 30.091183)
 use_collision = true
-size = Vector3(20, 1, 22.72461)
+size = Vector3(20, 1, 24.50586)
 material = SubResource("StandardMaterial3D_qh0kd")
 
 [node name="Piso4" type="CSGBox3D" parent="." unique_id=76841319]
@@ -211,9 +227,78 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.528346, 1.7339963, -19.5574
 [node name="Player32" parent="." unique_id=1026564177 instance=ExtResource("3_6eebf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5949173, 2.2202864, -19.551788)
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=691936221]
+[node name="Camera1" type="Camera3D" parent="." unique_id=691936221]
 transform = Transform3D(-4.371139e-08, 0.2923717, -0.9563048, 0, 0.9563048, 0.2923717, 1, 1.2779973e-08, -4.180141e-08, -12.013, 5.537, -9.013)
 fov = 60.0
+
+[node name="Camera2" type="Camera3D" parent="." unique_id=473977438]
+transform = Transform3D(-4.371139e-08, 0.2923717, -0.9563048, 0, 0.9563048, 0.2923717, 1, 1.2779973e-08, -4.180141e-08, -12.598411, 5.537, 17.91828)
+fov = 60.0
+
+[node name="Camera3" type="Camera3D" parent="." unique_id=1699316676]
+transform = Transform3D(-4.371139e-08, 0.2923717, -0.9563048, 0, 0.9563048, 0.2923717, 1, 1.2779973e-08, -4.180141e-08, -0.6318054, 5.537, 22.871164)
+fov = 60.0
+
+[node name="Camera4" type="Camera3D" parent="." unique_id=328948635]
+transform = Transform3D(-4.371139e-08, 0.2923717, -0.9563048, 0, 0.9563048, 0.2923717, 1, 1.2779973e-08, -4.180141e-08, 20.763754, 5.1769443, 30.080254)
+fov = 60.0
+
+[node name="Camera5" type="Camera3D" parent="." unique_id=1752241327]
+transform = Transform3D(-4.371139e-08, 0.2923717, -0.9563048, 0, 0.9563048, 0.2923717, 1, 1.2779973e-08, -4.180141e-08, -20.286987, 5.537, 30.915882)
+fov = 60.0
+
+[node name="Camera6" type="Camera3D" parent="." unique_id=405907364]
+transform = Transform3D(-4.371139e-08, 0.2923717, -0.9563048, 0, 0.9563048, 0.2923717, 1, 1.2779973e-08, -4.180141e-08, -36.147396, 5.537, 18.756548)
+fov = 60.0
+
+[node name="Bush" parent="." unique_id=911684628 instance=ExtResource("8_mmgww")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5609236, 0.78624725, -1.149291)
+interactuable = false
+
+[node name="Bush2" parent="." unique_id=1166958999 node_paths=PackedStringArray("destino", "camara_destino") instance=ExtResource("8_mmgww")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.876286, 0.78624725, 13.089694)
+destino = NodePath("../Bush")
+camara_destino = NodePath("../Camera1")
+sonido_entrar = ExtResource("11_jy5j1")
+
+[node name="Marker" type="CSGBox3D" parent="." unique_id=1490321927]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.131546, 8.57667, 23.79941)
+visible = false
+
+[node name="SwitchC_1_2" type="Area3D" parent="." unique_id=734366742]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9837251, 1.8802006)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SwitchC_1_2" unique_id=1874247005]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.36968994, -0.25301838, 3.1038187)
+shape = SubResource("BoxShape3D_d0u6y")
+
+[node name="SwitchC_2_3" type="Area3D" parent="." unique_id=1828710916]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3514185, 1.9837251, 20.30675)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SwitchC_2_3" unique_id=1364907261]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2.3175006, -0.25301838, 3.9606457)
+shape = SubResource("BoxShape3D_d0u6y")
+
+[node name="SwitchC_3_4" type="Area3D" parent="." unique_id=1179126073]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.345657, 1.9837251, 20.30675)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SwitchC_3_4" unique_id=1898023062]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2.9852543, -0.28490925, 5.6622257)
+shape = SubResource("BoxShape3D_d0u6y")
+
+[node name="SwitchC_2_5" type="Area3D" parent="." unique_id=1573987465]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.584112, 1.9837251, 20.30675)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SwitchC_2_5" unique_id=531842863]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2.1664572, -0.28490925, 4.1178703)
+shape = SubResource("BoxShape3D_d0u6y")
+
+[node name="SwitchC_5_6" type="Area3D" parent="." unique_id=805273928]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.584112, 1.9837251, 20.30675)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SwitchC_5_6" unique_id=845952764]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -4.2644444, -0.28490925, 3.570528)
+shape = SubResource("BoxShape3D_d0u6y")
 
 [node name="BunchaTrees" type="Node3D" parent="." unique_id=1048316915]
 
@@ -335,6 +420,1102 @@ transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784
 transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
 
 [node name="TreeP2" parent="BunchaTrees/Trees/Bundle Trees 3" unique_id=2138274696 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees4" type="StaticBody3D" parent="BunchaTrees" unique_id=1984874445]
+transform = Transform3D(0.26180816, 0, 0, 0, 1, 0, 0, 0, 1, 4.069097, 0, 18.978416)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="BunchaTrees/Trees4" unique_id=1609172288]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees4/Bundle Trees 1" unique_id=779456807]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees4/Bundle Trees 1" unique_id=1718534557 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees4/Bundle Trees 1" unique_id=591937082 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees4/Bundle Trees 1" unique_id=995359840 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees4/Bundle Trees 1" unique_id=980695122 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="BunchaTrees/Trees4" unique_id=215689068]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees4/Bundle Trees 2" unique_id=1476451649]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees4/Bundle Trees 2" unique_id=1001610802 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees4/Bundle Trees 2" unique_id=466071692 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees4/Bundle Trees 2" unique_id=836250227 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees4/Bundle Trees 2" unique_id=923113886 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="BunchaTrees/Trees4" unique_id=1521411079]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees4/Bundle Trees 3" unique_id=1294780866]
+transform = Transform3D(0.053850688, 0, -3.201108, 0, 1.0000005, 0, 3.7652383, 0, 0.045782596, 2.2664423, 0.09393698, 1.1338844)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees4/Bundle Trees 3" unique_id=874638060 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees4/Bundle Trees 3" unique_id=1775512498 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP2" parent="BunchaTrees/Trees4/Bundle Trees 3" unique_id=40841311 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees5" type="StaticBody3D" parent="BunchaTrees" unique_id=1037770234]
+transform = Transform3D(0.26180816, 0, 0, 0, 1, 0, 0, 0, 1, -8.810949, 0, 39.590862)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="BunchaTrees/Trees5" unique_id=1081675527]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees5/Bundle Trees 1" unique_id=356537599]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees5/Bundle Trees 1" unique_id=149600077 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees5/Bundle Trees 1" unique_id=650891856 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees5/Bundle Trees 1" unique_id=1470796284 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees5/Bundle Trees 1" unique_id=1895306675 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="BunchaTrees/Trees5" unique_id=2019262039]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees5/Bundle Trees 2" unique_id=1329819624]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees5/Bundle Trees 2" unique_id=484872073 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees5/Bundle Trees 2" unique_id=1153946543 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees5/Bundle Trees 2" unique_id=71264509 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees5/Bundle Trees 2" unique_id=341226590 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="BunchaTrees/Trees5" unique_id=2109267159]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees5/Bundle Trees 3" unique_id=593240771]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees5/Bundle Trees 3" unique_id=2060171026 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees5/Bundle Trees 3" unique_id=372844851 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees5/Bundle Trees 3" unique_id=13343293 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees5/Bundle Trees 3" unique_id=403338598 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees20" type="StaticBody3D" parent="BunchaTrees" unique_id=633405948]
+transform = Transform3D(0.26180816, 0, 0, 0, 1, 0, 0, 0, 1, -11.50078, 0, 15.048313)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="BunchaTrees/Trees20" unique_id=969606129]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees20/Bundle Trees 1" unique_id=1990804945]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees20/Bundle Trees 1" unique_id=682315691 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees20/Bundle Trees 1" unique_id=1240530949 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees20/Bundle Trees 1" unique_id=278164225 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees20/Bundle Trees 1" unique_id=1564440388 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="BunchaTrees/Trees20" unique_id=2080291126]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees20/Bundle Trees 2" unique_id=1468005653]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees20/Bundle Trees 2" unique_id=1442948589 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees20/Bundle Trees 2" unique_id=1523833446 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees20/Bundle Trees 2" unique_id=962704899 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees20/Bundle Trees 2" unique_id=1530527244 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="BunchaTrees/Trees20" unique_id=1415022039]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees20/Bundle Trees 3" unique_id=2082169944]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees20/Bundle Trees 3" unique_id=1859900645 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees20/Bundle Trees 3" unique_id=623747053 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees20/Bundle Trees 3" unique_id=987417542 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees20/Bundle Trees 3" unique_id=516228687 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees21" type="StaticBody3D" parent="BunchaTrees" unique_id=1491793072]
+transform = Transform3D(-1.1443998e-08, 0, 1, 0, 1, 0, -0.26180816, 0, -4.371139e-08, -14.830973, 0, 21.778933)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="BunchaTrees/Trees21" unique_id=516013897]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees21/Bundle Trees 1" unique_id=657526202]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees21/Bundle Trees 1" unique_id=889797089 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees21/Bundle Trees 1" unique_id=389565883 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees21/Bundle Trees 1" unique_id=179825464 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees21/Bundle Trees 1" unique_id=1137060270 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="BunchaTrees/Trees21" unique_id=1642288367]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees21/Bundle Trees 2" unique_id=306211727]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees21/Bundle Trees 2" unique_id=106088445 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees21/Bundle Trees 2" unique_id=1673980963 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees21/Bundle Trees 2" unique_id=337979576 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees21/Bundle Trees 2" unique_id=149317925 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="BunchaTrees/Trees21" unique_id=652288214]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees21/Bundle Trees 3" unique_id=1556071480]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees21/Bundle Trees 3" unique_id=1123612243 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees21/Bundle Trees 3" unique_id=1504093294 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees21/Bundle Trees 3" unique_id=1987636482 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees21/Bundle Trees 3" unique_id=261479752 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees29" type="StaticBody3D" parent="BunchaTrees" unique_id=1388675042]
+transform = Transform3D(-1.1443998e-08, 0, 1, 0, 1, 0, -0.26180816, 0, -4.371139e-08, -20.220089, 0, 36.580833)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="BunchaTrees/Trees29" unique_id=761568812]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees29/Bundle Trees 1" unique_id=707060339]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees29/Bundle Trees 1" unique_id=1653868655 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees29/Bundle Trees 1" unique_id=1239065332 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees29/Bundle Trees 1" unique_id=336687920 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees29/Bundle Trees 1" unique_id=41596833 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="BunchaTrees/Trees29" unique_id=2079731643]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees29/Bundle Trees 2" unique_id=379751455]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees29/Bundle Trees 2" unique_id=869407336 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees29/Bundle Trees 2" unique_id=1269563445 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees29/Bundle Trees 2" unique_id=740224231 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees29/Bundle Trees 2" unique_id=693755028 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="BunchaTrees/Trees29" unique_id=1732462676]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees29/Bundle Trees 3" unique_id=2082591527]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees29/Bundle Trees 3" unique_id=755524726 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees29/Bundle Trees 3" unique_id=1399281105 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees29/Bundle Trees 3" unique_id=458706230 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees29/Bundle Trees 3" unique_id=665144093 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees30" type="StaticBody3D" parent="BunchaTrees" unique_id=5396820]
+transform = Transform3D(-1.1443998e-08, 0, 1, 0, 1, 0, -0.26180816, 0, -4.371139e-08, -23.292763, 0, 33.58767)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="BunchaTrees/Trees30" unique_id=62135853]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees30/Bundle Trees 1" unique_id=324000320]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees30/Bundle Trees 1" unique_id=63607345 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees30/Bundle Trees 1" unique_id=1899963265 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees30/Bundle Trees 1" unique_id=1279577776 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees30/Bundle Trees 1" unique_id=198040376 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="BunchaTrees/Trees30" unique_id=1136511665]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees30/Bundle Trees 2" unique_id=1179795792]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees30/Bundle Trees 2" unique_id=748605902 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees30/Bundle Trees 2" unique_id=268674309 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees30/Bundle Trees 2" unique_id=1464077525 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees30/Bundle Trees 2" unique_id=1594046170 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="BunchaTrees/Trees30" unique_id=61583334]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees30/Bundle Trees 3" unique_id=202699646]
+transform = Transform3D(0.053850833, 0, -3.201107, 0, 1.0000005, 0, 3.7652383, 0, 0.04578261, -0.3217497, 0.09393692, 1.1708679)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees30/Bundle Trees 3" unique_id=1628375801 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees30/Bundle Trees 3" unique_id=1758162230 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees30/Bundle Trees 3" unique_id=348360680 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees30/Bundle Trees 3" unique_id=357231597 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees33" type="StaticBody3D" parent="BunchaTrees" unique_id=1432128689]
+transform = Transform3D(0.26180816, 0, 0, 0, 1, 0, 0, 0, 1, -18.04546, 0, 38.570515)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="BunchaTrees/Trees33" unique_id=175672569]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees33/Bundle Trees 1" unique_id=1394853890]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees33/Bundle Trees 1" unique_id=2121416526 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.003606021, 0, 1.1854533, 0, 0.10004585, 0, 0.18281186, 1.3421173, -0.5527455, 1.0251389)
+
+[node name="Tree2" parent="BunchaTrees/Trees33/Bundle Trees 1" unique_id=350740514 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees33/Bundle Trees 1" unique_id=1135253224 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, 0, 0, 1.0000001, 0, 0, 0, 0.13681674, 0, -0.43343046, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees33/Bundle Trees 1" unique_id=809472872 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="BunchaTrees/Trees33" unique_id=436117387]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees33/Bundle Trees 2" unique_id=473454256]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees33/Bundle Trees 2" unique_id=838863370 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.003606021, 0, 1.1854533, 0, 0.10004585, 0, 0.18281186, 1.3421173, -0.8429149, 1.0251389)
+
+[node name="Tree2" parent="BunchaTrees/Trees33/Bundle Trees 2" unique_id=1837527207 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees33/Bundle Trees 2" unique_id=1107189532 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees33/Bundle Trees 2" unique_id=1822254089 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="BunchaTrees/Trees33" unique_id=78411902]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees33/Bundle Trees 3" unique_id=1810861826]
+transform = Transform3D(0.053850833, 0, -3.201107, 0, 1.0000005, 0, 3.7652383, 0, 0.04578261, -0.3217497, 0.09393692, 1.1708679)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees33/Bundle Trees 3" unique_id=1451434749 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees33/Bundle Trees 3" unique_id=429536425 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees33/Bundle Trees 3" unique_id=291920802 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees33/Bundle Trees 3" unique_id=481201039 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees31" type="StaticBody3D" parent="BunchaTrees" unique_id=372301553]
+transform = Transform3D(-1.1443998e-08, 0, 1, 0, 1, 0, -0.26180816, 0, -4.371139e-08, -20.293594, 0, 29.967949)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="BunchaTrees/Trees31" unique_id=2016720599]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees31/Bundle Trees 1" unique_id=1329326830]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees31/Bundle Trees 1" unique_id=225042222 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees31/Bundle Trees 1" unique_id=1844062983 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees31/Bundle Trees 1" unique_id=369778918 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees31/Bundle Trees 1" unique_id=1681723034 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 4" type="StaticBody3D" parent="BunchaTrees/Trees31" unique_id=1660215882]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.6794357, 1.3890547, -11.826292)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees31/Bundle Trees 4" unique_id=483300327]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees31/Bundle Trees 4" unique_id=686747088 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees31/Bundle Trees 4" unique_id=243412270 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees31/Bundle Trees 4" unique_id=1891703675 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees31/Bundle Trees 4" unique_id=1344035151 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="BunchaTrees/Trees31" unique_id=2068336112]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees31/Bundle Trees 2" unique_id=662697922]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees31/Bundle Trees 2" unique_id=727639723 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees31/Bundle Trees 2" unique_id=1085360747 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees31/Bundle Trees 2" unique_id=1333145488 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees31/Bundle Trees 2" unique_id=1417632142 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="BunchaTrees/Trees31" unique_id=1145422650]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees31/Bundle Trees 3" unique_id=2058563471]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees31/Bundle Trees 3" unique_id=1726827045 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees31/Bundle Trees 3" unique_id=119383736 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees31/Bundle Trees 3" unique_id=2080464492 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees31/Bundle Trees 3" unique_id=314049438 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees22" type="StaticBody3D" parent="BunchaTrees" unique_id=1105891144]
+transform = Transform3D(0.26180816, 0, 0, 0, 1, 0, 0, 0, 1, -26.040659, 0, 14.358976)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="BunchaTrees/Trees22" unique_id=55382717]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees22/Bundle Trees 1" unique_id=102799411]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees22/Bundle Trees 1" unique_id=459862735 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees22/Bundle Trees 1" unique_id=357026585 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees22/Bundle Trees 1" unique_id=191917056 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees22/Bundle Trees 1" unique_id=1527550501 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="BunchaTrees/Trees22" unique_id=1517419459]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees22/Bundle Trees 2" unique_id=1043291779]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees22/Bundle Trees 2" unique_id=1582768900 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees22/Bundle Trees 2" unique_id=2113482097 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees22/Bundle Trees 2" unique_id=1230785109 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees22/Bundle Trees 2" unique_id=1048175216 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="BunchaTrees/Trees22" unique_id=373434776]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees22/Bundle Trees 3" unique_id=186689781]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees22/Bundle Trees 3" unique_id=24332909 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees22/Bundle Trees 3" unique_id=1545295314 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees22/Bundle Trees 3" unique_id=985771445 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees22/Bundle Trees 3" unique_id=1531970647 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees32" type="StaticBody3D" parent="BunchaTrees" unique_id=935704257]
+transform = Transform3D(0.26180816, 0, 0, 0, 1, 0, 0, 0, 1, -37.078705, 0, 38.223145)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="BunchaTrees/Trees32" unique_id=1031146454]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees32/Bundle Trees 1" unique_id=323033396]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees32/Bundle Trees 1" unique_id=1064715903 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees32/Bundle Trees 1" unique_id=468931320 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees32/Bundle Trees 1" unique_id=183233376 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees32/Bundle Trees 1" unique_id=1832314841 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="BunchaTrees/Trees32" unique_id=824222561]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees32/Bundle Trees 2" unique_id=1329820918]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees32/Bundle Trees 2" unique_id=1250712652 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees32/Bundle Trees 2" unique_id=178341554 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees32/Bundle Trees 2" unique_id=1798877297 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees32/Bundle Trees 2" unique_id=1358063713 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="BunchaTrees/Trees32" unique_id=1772506702]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees32/Bundle Trees 3" unique_id=90752731]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees32/Bundle Trees 3" unique_id=1904469427 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees32/Bundle Trees 3" unique_id=1817069252 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees32/Bundle Trees 3" unique_id=265947632 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees32/Bundle Trees 3" unique_id=1019537073 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees25" type="StaticBody3D" parent="BunchaTrees" unique_id=71519295]
+transform = Transform3D(-1.1443998e-08, 0, 1, 0, 1, 0, -0.26180816, 0, -4.371139e-08, -28.93402, 0, 4.8801117)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="BunchaTrees/Trees25" unique_id=1638370550]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees25/Bundle Trees 1" unique_id=1602506845]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees25/Bundle Trees 1" unique_id=1454911139 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees25/Bundle Trees 1" unique_id=650341795 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees25/Bundle Trees 1" unique_id=1810226197 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees25/Bundle Trees 1" unique_id=760238003 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="BunchaTrees/Trees25" unique_id=2088114970]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees25/Bundle Trees 2" unique_id=307713635]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees25/Bundle Trees 2" unique_id=1906730563 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees25/Bundle Trees 2" unique_id=655272410 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees25/Bundle Trees 2" unique_id=1071670623 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees25/Bundle Trees 2" unique_id=170162196 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="BunchaTrees/Trees25" unique_id=1627846439]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees25/Bundle Trees 3" unique_id=1551835673]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees25/Bundle Trees 3" unique_id=1801646925 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees25/Bundle Trees 3" unique_id=628932532 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees25/Bundle Trees 3" unique_id=1589207020 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees25/Bundle Trees 3" unique_id=1824982389 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees26" type="StaticBody3D" parent="BunchaTrees" unique_id=290849812]
+transform = Transform3D(0.26180816, 0, 0, 0, 1, 0, 0, 0, 1, -36.631653, 0, 17.053148)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="BunchaTrees/Trees26" unique_id=826830355]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees26/Bundle Trees 1" unique_id=994100756]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees26/Bundle Trees 1" unique_id=1650216876 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees26/Bundle Trees 1" unique_id=215695735 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees26/Bundle Trees 1" unique_id=307075785 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees26/Bundle Trees 1" unique_id=1342652421 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="BunchaTrees/Trees26" unique_id=1691019518]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees26/Bundle Trees 2" unique_id=1133532029]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees26/Bundle Trees 2" unique_id=1425374796 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees26/Bundle Trees 2" unique_id=247740948 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees26/Bundle Trees 2" unique_id=913524479 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees26/Bundle Trees 2" unique_id=1907783756 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="BunchaTrees/Trees26" unique_id=1011572440]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees26/Bundle Trees 3" unique_id=2014368563]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees26/Bundle Trees 3" unique_id=1589734162 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees26/Bundle Trees 3" unique_id=1940739306 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees26/Bundle Trees 3" unique_id=1950953576 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees26/Bundle Trees 3" unique_id=175451970 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees23" type="StaticBody3D" parent="BunchaTrees" unique_id=333926275]
+transform = Transform3D(0.26180816, 0, 0, 0, 1, 0, 0, 0, 1, -23.69827, 0, 12.647392)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="BunchaTrees/Trees23" unique_id=258124161]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees23/Bundle Trees 1" unique_id=1989922262]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees23/Bundle Trees 1" unique_id=1688658262 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees23/Bundle Trees 1" unique_id=1506019462 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees23/Bundle Trees 1" unique_id=152423283 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees23/Bundle Trees 1" unique_id=1810017568 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="BunchaTrees/Trees23" unique_id=1948470570]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees23/Bundle Trees 2" unique_id=1312950991]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees23/Bundle Trees 2" unique_id=347260170 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees23/Bundle Trees 2" unique_id=1268411396 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees23/Bundle Trees 2" unique_id=117748941 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees23/Bundle Trees 2" unique_id=59147269 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="BunchaTrees/Trees23" unique_id=649749342]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees23/Bundle Trees 3" unique_id=1239147759]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees23/Bundle Trees 3" unique_id=720438491 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees23/Bundle Trees 3" unique_id=1701879583 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees23/Bundle Trees 3" unique_id=1720668192 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees23/Bundle Trees 3" unique_id=958500614 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees24" type="StaticBody3D" parent="BunchaTrees" unique_id=111647706]
+transform = Transform3D(0.26180816, 0, 0, 0, 1, 0, 0, 0, 1, -21.508522, 0, 14.69618)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="BunchaTrees/Trees24" unique_id=620416242]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees24/Bundle Trees 1" unique_id=512388729]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees24/Bundle Trees 1" unique_id=2004370641 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees24/Bundle Trees 1" unique_id=894104613 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees24/Bundle Trees 1" unique_id=1197618868 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees24/Bundle Trees 1" unique_id=710067545 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="BunchaTrees/Trees24" unique_id=157516792]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees24/Bundle Trees 2" unique_id=2100211755]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees24/Bundle Trees 2" unique_id=1869824335 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees24/Bundle Trees 2" unique_id=142219027 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees24/Bundle Trees 2" unique_id=1605072043 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees24/Bundle Trees 2" unique_id=1422557010 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="BunchaTrees/Trees24" unique_id=904358291]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees24/Bundle Trees 3" unique_id=848251636]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees24/Bundle Trees 3" unique_id=594079764 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees24/Bundle Trees 3" unique_id=116031 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees24/Bundle Trees 3" unique_id=210283661 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees24/Bundle Trees 3" unique_id=1055516030 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees6" type="StaticBody3D" parent="BunchaTrees" unique_id=1705788017]
+transform = Transform3D(0.26180816, 0, 0, 0, 1, 0, 0, 0, 1, -5.916565, 0, 38.041046)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="BunchaTrees/Trees6" unique_id=508978867]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees6/Bundle Trees 1" unique_id=1943013405]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees6/Bundle Trees 1" unique_id=431060325 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees6/Bundle Trees 1" unique_id=646575650 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees6/Bundle Trees 1" unique_id=337650726 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees6/Bundle Trees 1" unique_id=1248550083 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="BunchaTrees/Trees6" unique_id=121813524]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees6/Bundle Trees 2" unique_id=825986192]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees6/Bundle Trees 2" unique_id=247322118 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees6/Bundle Trees 2" unique_id=1736771478 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees6/Bundle Trees 2" unique_id=217821110 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees6/Bundle Trees 2" unique_id=1029315900 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="BunchaTrees/Trees6" unique_id=847305620]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees6/Bundle Trees 3" unique_id=627066205]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees6/Bundle Trees 3" unique_id=2001665658 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees6/Bundle Trees 3" unique_id=96544461 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees6/Bundle Trees 3" unique_id=758578805 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees6/Bundle Trees 3" unique_id=1127096367 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees16" type="StaticBody3D" parent="BunchaTrees" unique_id=1079000823]
+transform = Transform3D(0.26180816, 0, 0, 0, 1, 0, 0, 0, 1, 22.784904, 0, 42.807236)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="BunchaTrees/Trees16" unique_id=552338375]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees16/Bundle Trees 1" unique_id=1193727201]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees16/Bundle Trees 1" unique_id=1894627623 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.003606021, 0, 1.1854533, 0, 0.10004585, 0, 0.18281186, 1.3421173, -0.7078308, 1.0251312)
+
+[node name="Tree2" parent="BunchaTrees/Trees16/Bundle Trees 1" unique_id=1153189147 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees16/Bundle Trees 1" unique_id=1110217691 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees16/Bundle Trees 1" unique_id=1311637582 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="BunchaTrees/Trees16" unique_id=858654204]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees16/Bundle Trees 2" unique_id=1030920175]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees16/Bundle Trees 2" unique_id=239027230 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees16/Bundle Trees 2" unique_id=671751177 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees16/Bundle Trees 2" unique_id=136613794 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees16/Bundle Trees 2" unique_id=1128831772 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="BunchaTrees/Trees16" unique_id=1684654558]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees16/Bundle Trees 3" unique_id=1517826967]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees16/Bundle Trees 3" unique_id=276936726 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees16/Bundle Trees 3" unique_id=175246210 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees16/Bundle Trees 3" unique_id=1538536133 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees16/Bundle Trees 3" unique_id=931026408 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees17" type="StaticBody3D" parent="BunchaTrees" unique_id=628947153]
+transform = Transform3D(0.26180816, 0, 0, 0, 1, 0, 0, 0, 1, 19.704851, 0, 39.680798)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="BunchaTrees/Trees17" unique_id=2040871189]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees17/Bundle Trees 1" unique_id=2005562436]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees17/Bundle Trees 1" unique_id=1517938546 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees17/Bundle Trees 1" unique_id=907447375 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees17/Bundle Trees 1" unique_id=2031873725 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees17/Bundle Trees 1" unique_id=290332129 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="BunchaTrees/Trees17" unique_id=1047694105]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees17/Bundle Trees 2" unique_id=248986469]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees17/Bundle Trees 2" unique_id=2029206786 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees17/Bundle Trees 2" unique_id=1923650637 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees17/Bundle Trees 2" unique_id=736432831 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees17/Bundle Trees 2" unique_id=933852155 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="BunchaTrees/Trees17" unique_id=1074398129]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees17/Bundle Trees 3" unique_id=385170977]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees17/Bundle Trees 3" unique_id=664517576 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees17/Bundle Trees 3" unique_id=1990300105 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees17/Bundle Trees 3" unique_id=607025190 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees17/Bundle Trees 3" unique_id=1209194983 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees19" type="StaticBody3D" parent="BunchaTrees" unique_id=1514899513]
+transform = Transform3D(0.26180816, 0, 0, 0, 1, 0, 0, 0, 1, 17.007244, 0, 42.06852)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="BunchaTrees/Trees19" unique_id=348417087]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees19/Bundle Trees 1" unique_id=1911355410]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees19/Bundle Trees 1" unique_id=379566503 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees19/Bundle Trees 1" unique_id=447702693 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees19/Bundle Trees 1" unique_id=1356124913 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees19/Bundle Trees 1" unique_id=349935835 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="BunchaTrees/Trees19" unique_id=500220286]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees19/Bundle Trees 2" unique_id=1916330426]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees19/Bundle Trees 2" unique_id=1966816116 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees19/Bundle Trees 2" unique_id=1503165697 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees19/Bundle Trees 2" unique_id=592462118 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees19/Bundle Trees 2" unique_id=1120720983 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="BunchaTrees/Trees19" unique_id=1382170408]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees19/Bundle Trees 3" unique_id=901835126]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees19/Bundle Trees 3" unique_id=1251695850 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees19/Bundle Trees 3" unique_id=101382409 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees19/Bundle Trees 3" unique_id=90013868 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees19/Bundle Trees 3" unique_id=706786603 instance=ExtResource("9_l5ull")]
 transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
 
 [node name="Trees2" type="StaticBody3D" parent="BunchaTrees" unique_id=342673480]
@@ -637,11 +1818,795 @@ transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0,
 [node name="TreeP2" parent="BunchaTrees/Trees10/Bundle Trees 3" unique_id=1346159904 instance=ExtResource("9_l5ull")]
 transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
 
+[node name="Trees11" type="StaticBody3D" parent="BunchaTrees" unique_id=600198649]
+transform = Transform3D(-1.1215528e-08, 0, 1.2925951, 0, 0.91389847, 0, -0.25658137, 0, -5.6501126e-08, 24.685226, -0.19739723, 16.74322)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="BunchaTrees/Trees11" unique_id=240850531]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees11/Bundle Trees 1" unique_id=1538883678]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees11/Bundle Trees 1" unique_id=343808326 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees11/Bundle Trees 1" unique_id=29514685 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees11/Bundle Trees 1" unique_id=325742165 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees11/Bundle Trees 1" unique_id=524973787 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="BunchaTrees/Trees11" unique_id=2121700798]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees11/Bundle Trees 2" unique_id=1457342162]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees11/Bundle Trees 2" unique_id=2139716657 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees11/Bundle Trees 2" unique_id=949869833 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees11/Bundle Trees 2" unique_id=1642697841 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees11/Bundle Trees 2" unique_id=177285284 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="BunchaTrees/Trees11" unique_id=1585672226]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees11/Bundle Trees 3" unique_id=1854209417]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees11/Bundle Trees 3" unique_id=1365648952 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees11/Bundle Trees 3" unique_id=404948526 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees11/Bundle Trees 3" unique_id=1744557971 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees11/Bundle Trees 3" unique_id=2090752950 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 4" type="StaticBody3D" parent="BunchaTrees/Trees11" unique_id=1596964675]
+transform = Transform3D(0.05238173, 0, 0.90700316, 0, 1.8731937, 0, -1.8481033, 0, 0.025707643, 4.679428, 1.3890548, 8.780449)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees11/Bundle Trees 4" unique_id=260258134]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees11/Bundle Trees 4" unique_id=824232837 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees11/Bundle Trees 4" unique_id=1333222091 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees11/Bundle Trees 4" unique_id=236770321 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees11/Bundle Trees 4" unique_id=296571088 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 5" type="StaticBody3D" parent="BunchaTrees/Trees11" unique_id=1332885910]
+transform = Transform3D(0.05238173, 0, 0.9070032, 0, 1.8731939, 0, -1.8481033, 0, 0.025707643, 4.679432, 1.3890549, 14.53624)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees11/Bundle Trees 5" unique_id=1369864349]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees11/Bundle Trees 5" unique_id=1892091820 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees11/Bundle Trees 5" unique_id=471583895 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees11/Bundle Trees 5" unique_id=275520097 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees11/Bundle Trees 5" unique_id=850164051 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees12" type="StaticBody3D" parent="BunchaTrees" unique_id=1023710887]
+transform = Transform3D(-1.1215528e-08, 0, 1.303828, 0, 0.91389847, 0, -0.25658137, 0, -5.699213e-08, 23.41997, -0.19739723, 12.567617)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="BunchaTrees/Trees12" unique_id=273476079]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees12/Bundle Trees 1" unique_id=988162438]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees12/Bundle Trees 1" unique_id=1088611246 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees12/Bundle Trees 1" unique_id=1494983534 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees12/Bundle Trees 1" unique_id=1818742539 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees12/Bundle Trees 1" unique_id=1669803495 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="BunchaTrees/Trees12" unique_id=14231966]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees12/Bundle Trees 2" unique_id=77177804]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees12/Bundle Trees 2" unique_id=1639739302 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees12/Bundle Trees 2" unique_id=133278991 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees12/Bundle Trees 2" unique_id=1947386251 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees12/Bundle Trees 2" unique_id=659033387 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="BunchaTrees/Trees12" unique_id=1639650411]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees12/Bundle Trees 3" unique_id=2123322960]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees12/Bundle Trees 3" unique_id=1142155108 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees12/Bundle Trees 3" unique_id=2030158719 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees12/Bundle Trees 3" unique_id=511288363 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees12/Bundle Trees 3" unique_id=274400089 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 4" type="StaticBody3D" parent="BunchaTrees/Trees12" unique_id=1430167030]
+transform = Transform3D(0.05238173, 0, 0.90700316, 0, 1.8731937, 0, -1.8481034, 0, 0.025707642, 4.6794243, 1.3890548, 9.273874)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees12/Bundle Trees 4" unique_id=254542406]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees12/Bundle Trees 4" unique_id=1115988518 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees12/Bundle Trees 4" unique_id=360713801 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees12/Bundle Trees 4" unique_id=1789158809 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees12/Bundle Trees 4" unique_id=537328447 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 5" type="StaticBody3D" parent="BunchaTrees/Trees12" unique_id=342334836]
+transform = Transform3D(0.052381735, 0, 0.9070032, 0, 1.8731939, 0, -1.8481035, 0, 0.025707642, 4.6794205, 1.3890549, 15.444441)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees12/Bundle Trees 5" unique_id=1145938363]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees12/Bundle Trees 5" unique_id=1842028144 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees12/Bundle Trees 5" unique_id=243478967 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees12/Bundle Trees 5" unique_id=455048888 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees12/Bundle Trees 5" unique_id=763577675 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees13" type="StaticBody3D" parent="BunchaTrees" unique_id=1527458016]
+transform = Transform3D(-1.1215528e-08, 0, 1.1467714, 0, 0.91389847, 0, -0.25658137, 0, -5.012697e-08, 20.594492, -0.19739723, 20.753311)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="BunchaTrees/Trees13" unique_id=170349735]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees13/Bundle Trees 1" unique_id=1257401280]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees13/Bundle Trees 1" unique_id=225325573 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees13/Bundle Trees 1" unique_id=645140564 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees13/Bundle Trees 1" unique_id=799909995 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees13/Bundle Trees 1" unique_id=1739927838 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="BunchaTrees/Trees13" unique_id=1235303043]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees13/Bundle Trees 2" unique_id=407782950]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees13/Bundle Trees 2" unique_id=1269720397 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees13/Bundle Trees 2" unique_id=2144387925 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees13/Bundle Trees 2" unique_id=1760612594 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees13/Bundle Trees 2" unique_id=1850899943 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="BunchaTrees/Trees13" unique_id=834954159]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees13/Bundle Trees 3" unique_id=1148128405]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees13/Bundle Trees 3" unique_id=1619721464 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees13/Bundle Trees 3" unique_id=1600276189 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees13/Bundle Trees 3" unique_id=1330118393 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees13/Bundle Trees 3" unique_id=105091759 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 4" type="StaticBody3D" parent="BunchaTrees/Trees13" unique_id=1494428712]
+transform = Transform3D(0.052381724, 0, 0.90700305, 0, 1.8731935, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 8.918207)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees13/Bundle Trees 4" unique_id=1599907144]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees13/Bundle Trees 4" unique_id=1077977653 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees13/Bundle Trees 4" unique_id=193611828 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees13/Bundle Trees 4" unique_id=1567108913 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees13/Bundle Trees 4" unique_id=232065997 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 5" type="StaticBody3D" parent="BunchaTrees/Trees13" unique_id=1904745258]
+transform = Transform3D(0.05238172, 0, 0.907003, 0, 1.8731934, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 15.049515)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees13/Bundle Trees 5" unique_id=1385823216]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees13/Bundle Trees 5" unique_id=1721217842 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees13/Bundle Trees 5" unique_id=2099292884 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees13/Bundle Trees 5" unique_id=1595699312 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees13/Bundle Trees 5" unique_id=327148341 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 6" type="StaticBody3D" parent="BunchaTrees/Trees13" unique_id=846530358]
+transform = Transform3D(0.05238172, 0, 0.9070029, 0, 1.8731933, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 20.751694)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees13/Bundle Trees 6" unique_id=406440910]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees13/Bundle Trees 6" unique_id=1219775077 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees13/Bundle Trees 6" unique_id=1908562689 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees13/Bundle Trees 6" unique_id=1863232524 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees13/Bundle Trees 6" unique_id=616893956 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees14" type="StaticBody3D" parent="BunchaTrees" unique_id=1587004708]
+transform = Transform3D(-0.25658137, 0, -1.0025394e-07, 0, 0.91389847, 0, 2.2431056e-08, 0, -1.1467714, 41.048428, -0.19739723, 46.594833)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="BunchaTrees/Trees14" unique_id=660788644]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees14/Bundle Trees 1" unique_id=1793996940]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees14/Bundle Trees 1" unique_id=99258559 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees14/Bundle Trees 1" unique_id=1246718314 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees14/Bundle Trees 1" unique_id=1209101301 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees14/Bundle Trees 1" unique_id=1246058010 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="BunchaTrees/Trees14" unique_id=1042830719]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees14/Bundle Trees 2" unique_id=1740618808]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees14/Bundle Trees 2" unique_id=94257617 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees14/Bundle Trees 2" unique_id=975416512 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees14/Bundle Trees 2" unique_id=1888000422 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees14/Bundle Trees 2" unique_id=1712185511 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="BunchaTrees/Trees14" unique_id=1839998811]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees14/Bundle Trees 3" unique_id=1200854545]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees14/Bundle Trees 3" unique_id=1719746869 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees14/Bundle Trees 3" unique_id=1022377599 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees14/Bundle Trees 3" unique_id=340926612 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees14/Bundle Trees 3" unique_id=1606164214 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 4" type="StaticBody3D" parent="BunchaTrees/Trees14" unique_id=842165974]
+transform = Transform3D(0.052381724, 0, 0.90700305, 0, 1.8731935, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 8.918207)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees14/Bundle Trees 4" unique_id=1360788350]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees14/Bundle Trees 4" unique_id=565575977 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees14/Bundle Trees 4" unique_id=884125594 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees14/Bundle Trees 4" unique_id=56442491 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees14/Bundle Trees 4" unique_id=823379089 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 5" type="StaticBody3D" parent="BunchaTrees/Trees14" unique_id=1940987533]
+transform = Transform3D(0.05238172, 0, 0.907003, 0, 1.8731934, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 15.049515)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees14/Bundle Trees 5" unique_id=325935983]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees14/Bundle Trees 5" unique_id=1120558723 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees14/Bundle Trees 5" unique_id=651283390 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees14/Bundle Trees 5" unique_id=41863404 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees14/Bundle Trees 5" unique_id=144586113 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 6" type="StaticBody3D" parent="BunchaTrees/Trees14" unique_id=328054678]
+transform = Transform3D(0.05238172, 0, 0.9070029, 0, 1.8731933, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 20.751694)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees14/Bundle Trees 6" unique_id=957261363]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees14/Bundle Trees 6" unique_id=1128201122 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees14/Bundle Trees 6" unique_id=1989972395 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees14/Bundle Trees 6" unique_id=1443317711 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees14/Bundle Trees 6" unique_id=62667086 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees18" type="StaticBody3D" parent="BunchaTrees" unique_id=661803762]
+transform = Transform3D(-1.1215528e-08, 0, 1.1467714, 0, 0.91389847, 0, -0.25658137, 0, -5.012697e-08, 12.765017, -0.19739723, 50.81033)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="BunchaTrees/Trees18" unique_id=609965350]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees18/Bundle Trees 3" unique_id=1977473853]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees18/Bundle Trees 3" unique_id=1704216627 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees18/Bundle Trees 3" unique_id=834764557 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees18/Bundle Trees 3" unique_id=38822277 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees18/Bundle Trees 3" unique_id=1535219229 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 4" type="StaticBody3D" parent="BunchaTrees/Trees18" unique_id=1468535723]
+transform = Transform3D(0.052381724, 0, 0.90700305, 0, 1.8731935, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 8.918207)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees18/Bundle Trees 4" unique_id=1053833133]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees18/Bundle Trees 4" unique_id=1116188146 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees18/Bundle Trees 4" unique_id=825465293 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees18/Bundle Trees 4" unique_id=554206141 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees18/Bundle Trees 4" unique_id=1146214084 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 5" type="StaticBody3D" parent="BunchaTrees/Trees18" unique_id=875285318]
+transform = Transform3D(0.05238172, 0, 0.907003, 0, 1.8731934, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 15.049515)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees18/Bundle Trees 5" unique_id=258612408]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees18/Bundle Trees 5" unique_id=1552844792 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees18/Bundle Trees 5" unique_id=2016180413 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees18/Bundle Trees 5" unique_id=976866447 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees18/Bundle Trees 5" unique_id=481170073 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 6" type="StaticBody3D" parent="BunchaTrees/Trees18" unique_id=1676240090]
+transform = Transform3D(0.05238172, 0, 0.9070029, 0, 1.8731933, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 20.751694)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees18/Bundle Trees 6" unique_id=687520566]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees18/Bundle Trees 6" unique_id=380631095 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees18/Bundle Trees 6" unique_id=2102409471 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees18/Bundle Trees 6" unique_id=1058322890 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees18/Bundle Trees 6" unique_id=831110452 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees27" type="StaticBody3D" parent="BunchaTrees" unique_id=1271883711]
+transform = Transform3D(-1.1215528e-08, 0, 1.1467714, 0, 0.91389847, 0, -0.25658137, 0, -5.012697e-08, -33.32649, -0.19739723, 40.626762)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="BunchaTrees/Trees27" unique_id=479739653]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees27/Bundle Trees 3" unique_id=67530520]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees27/Bundle Trees 3" unique_id=124743105 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees27/Bundle Trees 3" unique_id=2145244975 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees27/Bundle Trees 3" unique_id=559110107 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees27/Bundle Trees 3" unique_id=1164195603 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 4" type="StaticBody3D" parent="BunchaTrees/Trees27" unique_id=1493586250]
+transform = Transform3D(0.052381724, 0, 0.90700305, 0, 1.8731935, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 8.918207)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees27/Bundle Trees 4" unique_id=1655762305]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees27/Bundle Trees 4" unique_id=2068321636 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees27/Bundle Trees 4" unique_id=196017723 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees27/Bundle Trees 4" unique_id=1858869789 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees27/Bundle Trees 4" unique_id=306603457 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 5" type="StaticBody3D" parent="BunchaTrees/Trees27" unique_id=1368780860]
+transform = Transform3D(0.05238172, 0, 0.907003, 0, 1.8731934, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 15.049515)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees27/Bundle Trees 5" unique_id=892638877]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees27/Bundle Trees 5" unique_id=197840258 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees27/Bundle Trees 5" unique_id=969244320 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees27/Bundle Trees 5" unique_id=1718915641 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees27/Bundle Trees 5" unique_id=1786683429 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 6" type="StaticBody3D" parent="BunchaTrees/Trees27" unique_id=2087414835]
+transform = Transform3D(0.05238172, 0, 0.9070029, 0, 1.8731933, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 20.751694)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees27/Bundle Trees 6" unique_id=161787122]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees27/Bundle Trees 6" unique_id=2129282659 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees27/Bundle Trees 6" unique_id=611852728 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees27/Bundle Trees 6" unique_id=1970310266 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees27/Bundle Trees 6" unique_id=429953551 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees28" type="StaticBody3D" parent="BunchaTrees" unique_id=1638740920]
+transform = Transform3D(-1.1215528e-08, 0, 1.1467714, 0, 0.91389847, 0, -0.25658137, 0, -5.012697e-08, -35.077087, -0.19739723, 43.734863)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="BunchaTrees/Trees28" unique_id=1750676457]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees28/Bundle Trees 3" unique_id=913485640]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees28/Bundle Trees 3" unique_id=530197434 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees28/Bundle Trees 3" unique_id=728429651 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees28/Bundle Trees 3" unique_id=926645196 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees28/Bundle Trees 3" unique_id=340380101 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 4" type="StaticBody3D" parent="BunchaTrees/Trees28" unique_id=1923533528]
+transform = Transform3D(0.052381724, 0, 0.90700305, 0, 1.8731935, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 8.918207)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees28/Bundle Trees 4" unique_id=1727944273]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees28/Bundle Trees 4" unique_id=1612540521 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees28/Bundle Trees 4" unique_id=1882141002 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees28/Bundle Trees 4" unique_id=1944160425 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees28/Bundle Trees 4" unique_id=1743427690 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 5" type="StaticBody3D" parent="BunchaTrees/Trees28" unique_id=1963498263]
+transform = Transform3D(0.05238172, 0, 0.907003, 0, 1.8731934, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 15.049515)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees28/Bundle Trees 5" unique_id=1165524012]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees28/Bundle Trees 5" unique_id=1126263407 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees28/Bundle Trees 5" unique_id=1352686492 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees28/Bundle Trees 5" unique_id=1200885928 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees28/Bundle Trees 5" unique_id=1680279277 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 6" type="StaticBody3D" parent="BunchaTrees/Trees28" unique_id=1230601118]
+transform = Transform3D(0.05238172, 0, 0.9070029, 0, 1.8731933, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 20.751694)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees28/Bundle Trees 6" unique_id=443352939]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees28/Bundle Trees 6" unique_id=1544585767 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees28/Bundle Trees 6" unique_id=1488488249 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees28/Bundle Trees 6" unique_id=470448343 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees28/Bundle Trees 6" unique_id=1052969178 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees15" type="StaticBody3D" parent="BunchaTrees" unique_id=313106989]
+transform = Transform3D(-0.25658137, 0, -1.0025394e-07, 0, 0.91389847, 0, 2.2431056e-08, 0, -1.1467714, 45.206146, -0.19739723, 45.867058)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="BunchaTrees/Trees15" unique_id=283063898]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees15/Bundle Trees 1" unique_id=331425926]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees15/Bundle Trees 1" unique_id=315688199 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees15/Bundle Trees 1" unique_id=1422255547 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees15/Bundle Trees 1" unique_id=935055596 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees15/Bundle Trees 1" unique_id=1683491329 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="BunchaTrees/Trees15" unique_id=1554483775]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees15/Bundle Trees 2" unique_id=569088685]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees15/Bundle Trees 2" unique_id=1150009686 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees15/Bundle Trees 2" unique_id=666486528 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees15/Bundle Trees 2" unique_id=201739607 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees15/Bundle Trees 2" unique_id=383785548 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="BunchaTrees/Trees15" unique_id=1871099819]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees15/Bundle Trees 3" unique_id=2095111434]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees15/Bundle Trees 3" unique_id=1503905777 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees15/Bundle Trees 3" unique_id=663322017 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees15/Bundle Trees 3" unique_id=1718317125 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees15/Bundle Trees 3" unique_id=337346673 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 4" type="StaticBody3D" parent="BunchaTrees/Trees15" unique_id=889474336]
+transform = Transform3D(0.052381724, 0, 0.90700305, 0, 1.8731935, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 8.918207)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees15/Bundle Trees 4" unique_id=320867557]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees15/Bundle Trees 4" unique_id=2003051379 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees15/Bundle Trees 4" unique_id=976012590 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees15/Bundle Trees 4" unique_id=1785637618 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees15/Bundle Trees 4" unique_id=104053010 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 5" type="StaticBody3D" parent="BunchaTrees/Trees15" unique_id=1163400314]
+transform = Transform3D(0.05238172, 0, 0.907003, 0, 1.8731934, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 15.049515)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees15/Bundle Trees 5" unique_id=1046349321]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees15/Bundle Trees 5" unique_id=68576476 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees15/Bundle Trees 5" unique_id=265138590 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees15/Bundle Trees 5" unique_id=1061027553 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees15/Bundle Trees 5" unique_id=1470664445 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 6" type="StaticBody3D" parent="BunchaTrees/Trees15" unique_id=79640554]
+transform = Transform3D(0.05238172, 0, 0.9070029, 0, 1.8731933, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 20.751694)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BunchaTrees/Trees15/Bundle Trees 6" unique_id=259678874]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_g4v7s")
+
+[node name="Tree" parent="BunchaTrees/Trees15/Bundle Trees 6" unique_id=900272656 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="BunchaTrees/Trees15/Bundle Trees 6" unique_id=1741237298 instance=ExtResource("8_yr1n6")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="BunchaTrees/Trees15/Bundle Trees 6" unique_id=1712063839 instance=ExtResource("9_l5ull")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="BunchaTrees/Trees15/Bundle Trees 6" unique_id=449145289 instance=ExtResource("9_l5ull")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
 [node name="Chest" parent="." unique_id=1324083416 instance=ExtResource("11_16fjv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7721922, 0.73356843, -2.0754673)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.803303, 0.73356843, 33.455223)
 
 [node name="Rat" parent="." unique_id=993836924 instance=ExtResource("12_ckp8c")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8463783, 0.5000005, -2.9572194)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8463783, 10.900915, -2.9572194)
 visible = false
 
 [node name="Snow" parent="." unique_id=1758551592 instance=ExtResource("13_snow")]
@@ -670,3 +2635,14 @@ transform = Transform3D(-8.06893e-08, 0, -3.6331053, 0, 0.7817187, 0, 1.845956, 
 script = ExtResource("16_0duuj")
 source_scene = ExtResource("19_i08rc")
 metadata/_custom_type_script = "uid://ojlc0i8sf3xn"
+
+[node name="Fire Mountain" parent="." unique_id=766062432 instance=ExtResource("20_o0dc1")]
+transform = Transform3D(0.0060874224, 0, 0, 0, 0.0040676347, 0, 0, 0, 0.0048463647, 7.5735207, 1.3360615, 35.981712)
+
+[node name="pot" parent="." unique_id=1445069752 node_paths=PackedStringArray("punto_respawn", "camara_respawn") instance=ExtResource("23_pot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.340336, 0.49999908, 37.339073)
+punto_respawn = NodePath("../Bush")
+camara_respawn = NodePath("../Camera1")
+sonido_avistamiento = ExtResource("24_d6tky")
+sonido_empuje = ExtResource("25_6mhxi")
+sonido_grito = ExtResource("24_juaju")
