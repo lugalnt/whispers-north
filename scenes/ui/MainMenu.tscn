@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://ryqwf8qm465g" path="res://assets/sprites/ui/main_menu/Logo.png" id="9_oiatc"]
 [ext_resource type="FontFile" uid="uid://b7fdrlxoxqo3a" path="res://assets/fonts/BridgeParapet.ttf" id="10_0k4wn"]
 [ext_resource type="AudioStream" uid="uid://cw2yj3alvtw0s" path="res://assets/audio/music/MusicaMenu.mp3" id="10_mg3m2"]
+[ext_resource type="PackedScene" path="res://scenes/ui/ControlsMenu.tscn" id="11_crmenu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kncl5"]
 content_margin_left = 4.0
@@ -145,6 +146,18 @@ corner_radius_bottom_left = 3
 corner_detail = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ns3en"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ctrl1"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -364,6 +377,14 @@ custom_minimum_size = Vector2(300, 40)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("10_0k4wn")
 
+[node name="BtnControles" type="Button" parent="PanelOpciones/ListaOpciones" unique_id=2001000015]
+custom_minimum_size = Vector2(300, 55)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_0k4wn")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_ctrl1")
+text = "Controles"
+
 [node name="Separador" type="Control" parent="PanelOpciones/ListaOpciones" unique_id=2001000013]
 custom_minimum_size = Vector2(0, 3)
 layout_mode = 2
@@ -374,6 +395,18 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("10_0k4wn")
 theme_override_font_sizes/font_size = 22
 text = "< Regresar"
+
+[node name="PanelControles" type="Control" parent="." unique_id=2001000016]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ControlsMenu" parent="PanelControles" instance=ExtResource("11_crmenu") unique_id=2001000017]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1153281025]
 stream = ExtResource("10_mg3m2")
@@ -387,3 +420,5 @@ autoplay = true
 [connection signal="value_changed" from="PanelOpciones/ListaOpciones/SliderEfectos" to="." method="_on_slider_efectos_changed"]
 [connection signal="toggled" from="PanelOpciones/ListaOpciones/CheckPantalla" to="." method="_on_check_pantalla_toggled"]
 [connection signal="pressed" from="PanelOpciones/ListaOpciones/Regresar" to="." method="_on_regresar_pressed"]
+[connection signal="pressed" from="PanelOpciones/ListaOpciones/BtnControles" to="." method="_on_controles_pressed"]
+[connection signal="regresar_pedido" from="PanelControles/ControlsMenu" to="." method="_on_controles_regresar"]

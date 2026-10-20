@@ -1,0 +1,161 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/ControlsMenu.gd" id="1_crmenu"]
+[ext_resource type="FontFile" uid="uid://b7fdrlxoxqo3a" path="res://assets/fonts/BridgeParapet.ttf" id="2_font"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+bg_color = Color(0.07, 0.07, 0.12, 0.93)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.35, 0.28, 0.55, 0.8)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tab"]
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 12.0
+content_margin_bottom = 8.0
+bg_color = Color(0.14, 0.12, 0.22, 0.95)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tab_sel"]
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 12.0
+content_margin_bottom = 8.0
+bg_color = Color(0.28, 0.18, 0.48, 1.0)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_scroll"]
+bg_color = Color(0.0, 0.0, 0.0, 0.0)
+
+[node name="ControlsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_crmenu")
+
+[node name="PanelFondo" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 40.0
+offset_right = 660.0
+offset_bottom = 640.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBox" type="VBoxContainer" parent="PanelFondo"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 18.0
+offset_right = 600.0
+offset_bottom = 610.0
+theme_override_constants/separation = 14
+
+[node name="TituloControles" type="Label" parent="PanelFondo/VBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 30
+theme_override_colors/font_color = Color(0.85, 0.75, 1.0, 1.0)
+text = "Controles"
+
+[node name="Separador1" type="HSeparator" parent="PanelFondo/VBox"]
+layout_mode = 2
+
+[node name="TabContainer" type="TabContainer" parent="PanelFondo/VBox"]
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 17
+theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_tab")
+theme_override_styles/tab_selected = SubResource("StyleBoxFlat_tab_sel")
+
+[node name="Teclado" type="Control" parent="PanelFondo/VBox/TabContainer"]
+layout_mode = 2
+
+[node name="ScrollTeclado" type="ScrollContainer" parent="PanelFondo/VBox/TabContainer/Teclado"]
+layout_mode = 0
+offset_right = 578.0
+offset_bottom = 380.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_scroll")
+
+[node name="ListaTeclado" type="VBoxContainer" parent="PanelFondo/VBox/TabContainer/Teclado/ScrollTeclado"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="JoyCon" type="Control" parent="PanelFondo/VBox/TabContainer"]
+layout_mode = 2
+
+[node name="ScrollJoycon" type="ScrollContainer" parent="PanelFondo/VBox/TabContainer/JoyCon"]
+layout_mode = 0
+offset_right = 578.0
+offset_bottom = 380.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_scroll")
+
+[node name="ListaJoycon" type="VBoxContainer" parent="PanelFondo/VBox/TabContainer/JoyCon/ScrollJoycon"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="LabelEstado" type="Label" parent="PanelFondo/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 28)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.7, 0.95, 0.7, 1.0)
+text = ""
+autowrap_mode = 3
+
+[node name="Separador2" type="HSeparator" parent="PanelFondo/VBox"]
+layout_mode = 2
+
+[node name="BotonesPie" type="HBoxContainer" parent="PanelFondo/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="BtnRestablecer" type="Button" parent="PanelFondo/VBox/BotonesPie"]
+custom_minimum_size = Vector2(180, 50)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 16
+text = "Restablecer Todo"
+
+[node name="Espaciador" type="Control" parent="PanelFondo/VBox/BotonesPie"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BtnGuardar" type="Button" parent="PanelFondo/VBox/BotonesPie"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 16
+text = "Guardar"
+
+[node name="BtnRegresar" type="Button" parent="PanelFondo/VBox"]
+custom_minimum_size = Vector2(180, 50)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 16
+text = "< Regresar"

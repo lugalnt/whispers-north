@@ -45,6 +45,13 @@ var _pantalla_antes_fs: int = 0
 # Rastrea si el panel de opciones está actualmente visible
 var _en_opciones: bool = false
 
+# Rastrea si el panel de controles está actualmente visible
+var _en_controles: bool = false
+
+# Referencia al panel de controles
+var panel_controles: Control
+var controls_menu: Control
+
 # ColorRect para el fade a negro (se crea en _ready)
 var _fade_rect: ColorRect
 
@@ -55,6 +62,10 @@ var _fade_rect: ColorRect
 
 func _opciones_x_oculto() -> float:
 	return get_viewport().get_visible_rect().size.x + 100.0
+
+func _controles_x_oculto() -> float:
+	return get_viewport().get_visible_rect().size.x + 100.0
+
 
 
 func _ready() -> void:
@@ -81,6 +92,15 @@ func _ready() -> void:
 			btn_reg.pressed.connect(_on_regresar_pressed)
 	else:
 		_crear_panel_opciones()
+
+	# ── Obtener referencia al panel de controles ─────────────────────
+	panel_controles = get_node_or_null("PanelControles")
+	if panel_controles:
+		controls_menu = panel_controles.get_node_or_null("ControlsMenu")
+		# Ocultar al inicio
+		panel_controles.position.x = _controles_x_oculto()
+		if controls_menu and not controls_menu.regresar_pedido.is_connected(_on_controles_regresar):
+			controls_menu.regresar_pedido.connect(_on_controles_regresar)
 
 	# Conectar señales del panel (con guard para no duplicar)
 	if not slider_volumen.value_changed.is_connected(_on_slider_volumen_changed):
@@ -135,6 +155,9 @@ func _controles_opciones() -> Array[Control]:
 	var btn_regresar = panel_opciones.get_node_or_null("ListaOpciones/Regresar")
 	if btn_regresar:
 		lista.append(btn_regresar)
+	var btn_ctrl = panel_opciones.get_node_or_null("ListaOpciones/BtnControles")
+	if btn_ctrl:
+		lista.append(btn_ctrl)
 	return lista
 
 
@@ -145,11 +168,15 @@ func _set_foco_habilitado(controles: Array[Control], habilitado: bool) -> void:
 		c.focus_mode = Control.FOCUS_ALL if habilitado else Control.FOCUS_NONE
 
 
-# ui_cancel (Esc / B del gamepad) regresa al menú desde las opciones
+# ui_cancel (Esc / B del gamepad) regresa al menú desde las opciones o controles
 func _unhandled_input(event: InputEvent) -> void:
-	if _en_opciones and event.is_action_pressed("ui_cancel") and not event.is_echo():
-		get_viewport().set_input_as_handled()
-		_ir_al_menu()
+	if event.is_action_pressed("ui_cancel") and not event.is_echo():
+		if _en_controles:
+			get_viewport().set_input_as_handled()
+			_ir_a_opciones_desde_controles()
+		elif _en_opciones:
+			get_viewport().set_input_as_handled()
+			_ir_al_menu()
 
 
 # ─────────────────────────────────────────────
@@ -349,12 +376,69 @@ func _on_viewport_size_changed() -> void:
 	if _animando:
 		# Si hay una animación en curso, esperamos a que termine antes de corregir
 		await get_tree().create_timer(DURACION_TRANSICION + 0.05).timeout
-	if _en_opciones:
+	if _en_controles:
+		menu.position.x           = MENU_X_OCULTO
+		panel_opciones.position.x = _opciones_x_oculto()
+		if panel_controles:
+			panel_controles.position.x = OPCIONES_X_VISIBLE
+	elif _en_opciones:
 		menu.position.x           = MENU_X_OCULTO
 		panel_opciones.position.x = OPCIONES_X_VISIBLE
+		if panel_controles:
+			panel_controles.position.x = _controles_x_oculto()
 	else:
 		menu.position.x           = MENU_X_VISIBLE
 		panel_opciones.position.x = _opciones_x_oculto()
+		if panel_controles:
+			panel_controles.position.x = _controles_x_oculto()
+
+
+func _ir_a_controles() -> void:
+	if _animando or _transicionando:
+		return
+	_animando = true
+	_en_controles = true
+
+	# Deshabilitar foco de opciones
+	_set_foco_habilitado(_controles_opciones(), false)
+
+	if controls_menu:
+		controls_menu.preparar()
+
+	# Opciones sale, controles entra
+	var tween = create_tween().set_parallel(true)
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property(panel_opciones, "position:x", _opciones_x_oculto(), DURACION_TRANSICION)
+	if panel_controles:
+		tween.tween_property(panel_controles, "position:x", OPCIONES_X_VISIBLE, DURACION_TRANSICION)
+
+	await tween.finished
+	_animando = false
+
+
+func _ir_a_opciones_desde_controles() -> void:
+	if _animando or _transicionando:
+		return
+	_animando = true
+	_en_controles = false
+
+	# Controles sale, opciones vuelve
+	var tween = create_tween().set_parallel(true)
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property(panel_opciones, "position:x", OPCIONES_X_VISIBLE, DURACION_TRANSICION)
+	if panel_controles:
+		tween.tween_property(panel_controles, "position:x", _controles_x_oculto(), DURACION_TRANSICION)
+
+	await tween.finished
+	_animando = false
+
+	# Restaurar foco en opciones (en el botón Controles, de donde venimos)
+	_set_foco_habilitado(_controles_opciones(), true)
+	var btn_ctrl = panel_opciones.get_node_or_null("ListaOpciones/BtnControles")
+	if btn_ctrl:
+		btn_ctrl.grab_focus()
 
 
 # ─────────────────────────────────────────────
@@ -371,6 +455,14 @@ func _on_opciones_pressed() -> void:
 
 func _on_regresar_pressed() -> void:
 	_ir_al_menu()
+
+
+func _on_controles_pressed() -> void:
+	_ir_a_controles()
+
+
+func _on_controles_regresar() -> void:
+	_ir_a_opciones_desde_controles()
 
 
 # ─────────────────────────────────────────────
