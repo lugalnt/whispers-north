@@ -69,11 +69,11 @@ const COLOR_ERROR         := Color(1.0,  0.45, 0.35, 1.0)
 signal regresar_pedido
 
 @onready var _tab_container:   TabContainer = $PanelFondo/VBox/TabContainer
-@onready var _btn_regresar:    Button       = $PanelFondo/VBox/BtnRegresar
+@onready var _btn_regresar:    Button       = $PanelFondo/VBox/BotonesPie/BtnRegresar
 @onready var _btn_restablecer: Button       = $PanelFondo/VBox/BotonesPie/BtnRestablecer
 @onready var _btn_guardar:     Button       = $PanelFondo/VBox/BotonesPie/BtnGuardar
-@onready var _lista_teclado:   VBoxContainer = $PanelFondo/VBox/TabContainer/Teclado/ScrollTeclado/ListaTeclado
-@onready var _lista_joycon:    VBoxContainer = $PanelFondo/VBox/TabContainer/JoyCon/ScrollJoycon/ListaJoycon
+@onready var _lista_teclado:   VBoxContainer = $PanelFondo/VBox/TabContainer/Teclado/ListaTeclado
+@onready var _lista_joycon:    VBoxContainer = $PanelFondo/VBox/TabContainer/JoyCon/ListaJoycon
 @onready var _label_estado:    Label         = $PanelFondo/VBox/LabelEstado
 
 var _remap: ControlsRemap
@@ -137,7 +137,7 @@ func _crear_fila(accion: StringName, tipo: String) -> HBoxContainer:
 	var lbl := Label.new()
 	var icono: String = ICONOS_ACCION.get(accion, "•")
 	lbl.text = "%s  %s" % [icono, NOMBRES_ACCION.get(accion, accion)]
-	lbl.custom_minimum_size = Vector2(185, 0)
+	lbl.custom_minimum_size = Vector2(150, 0)
 	lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	if _font:
@@ -155,7 +155,7 @@ func _crear_fila(accion: StringName, tipo: String) -> HBoxContainer:
 	btn.name    = "Btn_%s_%s" % [accion, tipo]
 	btn.text    = "Cambiar"
 	btn.tooltip_text = "Haz clic y luego presiona la nueva %s" % ("tecla" if tipo == "keyboard" else "botón de gamepad")
-	btn.custom_minimum_size = Vector2(110, 40)
+	btn.custom_minimum_size = Vector2(100, 40)
 	btn.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	if _font:
 		btn.add_theme_font_override("font", _font)
@@ -185,7 +185,7 @@ func _crear_fila(accion: StringName, tipo: String) -> HBoxContainer:
 func _crear_badge(accion: StringName, tipo: String) -> Panel:
 	var panel := Panel.new()
 	panel.name = "Badge_%s_%s" % [accion, tipo]
-	panel.custom_minimum_size = Vector2(160, 40)
+	panel.custom_minimum_size = Vector2(150, 40)
 	panel.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 
 	var sb := StyleBoxFlat.new()
@@ -211,8 +211,10 @@ func _crear_badge(accion: StringName, tipo: String) -> Panel:
 	lbl.text = _obtener_texto_binding(accion, tipo)
 	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	lbl.vertical_alignment   = VERTICAL_ALIGNMENT_CENTER
-	lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	lbl.size_flags_vertical   = Control.SIZE_EXPAND_FILL
+	# Panel no es un Container: anclamos la etiqueta para que ocupe todo el badge
+	lbl.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	lbl.offset_left  = 6.0
+	lbl.offset_right = -6.0
 	lbl.autowrap_mode = TextServer.AUTOWRAP_OFF
 	lbl.clip_text    = true
 	if _font:

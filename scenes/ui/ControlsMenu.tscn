@@ -59,12 +59,17 @@ offset_bottom = 640.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
 [node name="VBox" type="VBoxContainer" parent="PanelFondo"]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 offset_left = 20.0
 offset_top = 18.0
-offset_right = 600.0
-offset_bottom = 610.0
-theme_override_constants/separation = 14
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
 
 [node name="TituloControles" type="Label" parent="PanelFondo/VBox"]
 layout_mode = 2
@@ -77,7 +82,6 @@ text = "Controles"
 layout_mode = 2
 
 [node name="TabContainer" type="TabContainer" parent="PanelFondo/VBox"]
-custom_minimum_size = Vector2(0, 400)
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("2_font")
@@ -85,36 +89,23 @@ theme_override_font_sizes/font_size = 17
 theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_tab")
 theme_override_styles/tab_selected = SubResource("StyleBoxFlat_tab_sel")
 
-[node name="Teclado" type="Control" parent="PanelFondo/VBox/TabContainer"]
+[node name="Teclado" type="ScrollContainer" parent="PanelFondo/VBox/TabContainer"]
 layout_mode = 2
-
-[node name="ScrollTeclado" type="ScrollContainer" parent="PanelFondo/VBox/TabContainer/Teclado"]
-layout_mode = 0
-offset_right = 578.0
-offset_bottom = 380.0
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_scroll")
+horizontal_scroll_mode = 0
 
-[node name="ListaTeclado" type="VBoxContainer" parent="PanelFondo/VBox/TabContainer/Teclado/ScrollTeclado"]
+[node name="ListaTeclado" type="VBoxContainer" parent="PanelFondo/VBox/TabContainer/Teclado"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 10
 
-[node name="JoyCon" type="Control" parent="PanelFondo/VBox/TabContainer"]
+[node name="JoyCon" type="ScrollContainer" parent="PanelFondo/VBox/TabContainer"]
+visible = false
 layout_mode = 2
-
-[node name="ScrollJoycon" type="ScrollContainer" parent="PanelFondo/VBox/TabContainer/JoyCon"]
-layout_mode = 0
-offset_right = 578.0
-offset_bottom = 380.0
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_scroll")
+horizontal_scroll_mode = 0
 
-[node name="ListaJoycon" type="VBoxContainer" parent="PanelFondo/VBox/TabContainer/JoyCon/ScrollJoycon"]
+[node name="ListaJoycon" type="VBoxContainer" parent="PanelFondo/VBox/TabContainer/JoyCon"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 10
@@ -135,27 +126,27 @@ layout_mode = 2
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="BtnRestablecer" type="Button" parent="PanelFondo/VBox/BotonesPie"]
-custom_minimum_size = Vector2(180, 50)
+[node name="BtnRegresar" type="Button" parent="PanelFondo/VBox/BotonesPie"]
+custom_minimum_size = Vector2(150, 46)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_font")
 theme_override_font_sizes/font_size = 16
-text = "Restablecer Todo"
+text = "< Regresar"
 
 [node name="Espaciador" type="Control" parent="PanelFondo/VBox/BotonesPie"]
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="BtnRestablecer" type="Button" parent="PanelFondo/VBox/BotonesPie"]
+custom_minimum_size = Vector2(180, 46)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 16
+text = "Restablecer Todo"
+
 [node name="BtnGuardar" type="Button" parent="PanelFondo/VBox/BotonesPie"]
-custom_minimum_size = Vector2(150, 50)
+custom_minimum_size = Vector2(130, 46)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_font")
 theme_override_font_sizes/font_size = 16
 text = "Guardar"
-
-[node name="BtnRegresar" type="Button" parent="PanelFondo/VBox"]
-custom_minimum_size = Vector2(180, 50)
-layout_mode = 2
-theme_override_fonts/font = ExtResource("2_font")
-theme_override_font_sizes/font_size = 16
-text = "< Regresar"
