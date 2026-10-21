@@ -16,7 +16,31 @@ extends CharacterBody3D
 #
 # Los controles se leen con la acción `interact` del Input Map (ver docs/INPUT_MAP.md).
 
-enum Estado { DORMIDO, PERSIGUIENDO, EN_CONTACTO, ATURDIDO, REGRESANDO, EXPLOTANDO }
+enum Estado { DORMIDO, PERSIGUIENDO, EN_CONTACTO, ATURDIDO, REGRESANDO, EXPLOTANDO, COMBATIENDO }
+
+@export_group("Combate RPG")
+## Componente EncuentroCombate que orquesta la batalla. Si no se asigna, busca el hijo $EncuentroCombate.
+@export var encuentro_combate: EncuentroCombate
+## Si está activo, al tocar al jugador inicia un combate RPG estilo Paper Mario.
+## Si se desactiva en el editor, reproduce el evento original cómico del textbox.
+@export var modo_combate: bool = true
+@export var escena_arena: PackedScene = preload("res://scenes/combat/CombatArena.tscn")
+@export var escena_battler_jugador: PackedScene = preload("res://scenes/combat/battlers/PlayerBattler.tscn")
+@export var escena_battler_pot: PackedScene = preload("res://scenes/combat/battlers/PotBattler.tscn")
+## Jingle o fanfarria sonora de inicio de combate para este jarrón.
+@export var jingle_combate: AudioStream
+## Música temática para este combate de jarrón.
+@export var musica_combate: AudioStream
+## Textura de fondo personalizada para la arena cuando pelea este jarrón.
+@export var textura_fondo_combate: Texture2D
+## Mensaje al comenzar el combate contra este jarrón.
+@export var texto_inicio_combate: String = ""
+## Mensaje al ganar el combate contra este jarrón.
+@export var texto_victoria_combate: String = ""
+## Recompensas tras derrotar a este jarrón.
+@export_multiline var texto_recompensas_combate: String = ""
+## Experiencia otorgada por derrotar a este jarrón (-1 para usar la de la arena).
+@export var exp_recompensa_combate: int = -1
 
 # Modelos de fragmentos que salen volando al romperse el jarrón
 const RUTAS_FRAGMENTOS: Array[String] = [
@@ -93,6 +117,13 @@ var _textbox: Node = null
 func _ready() -> void:
 	_posicion_inicial = global_position
 	_escala_modelo = modelo.scale
+	_obtener_encuentro()
+
+func _obtener_encuentro() -> EncuentroCombate:
+	if encuentro_combate != null:
+		return encuentro_combate
+	encuentro_combate = get_node_or_null("EncuentroCombate") as EncuentroCombate
+	return encuentro_combate
 
 func _exit_tree() -> void:
 	if _textbox != null and is_instance_valid(_textbox):
@@ -161,7 +192,11 @@ func _physics_process(delta: float) -> void:
 				estado = Estado.REGRESANDO
 			elif _distancia_xz(jugador) <= distancia_contacto:
 				_frenar(delta)
-				_iniciar_contacto()
+				var enc: EncuentroCombate = _obtener_encuentro()
+				if modo_combate and (enc == null or enc.activo):
+					_iniciar_evento_combate(jugador)
+				else:
+					_iniciar_contacto()
 			else:
 				_mover_hacia(jugador.global_position, delta)
 
@@ -179,6 +214,10 @@ func _physics_process(delta: float) -> void:
 					_mover_hacia(jugador.global_position, delta)
 				else:
 					_frenar(delta)
+
+		Estado.COMBATIENDO:
+			velocity.x = 0.0
+			velocity.z = 0.0
 
 		Estado.ATURDIDO:
 			_tiempo_aturdido -= delta
@@ -277,7 +316,80 @@ func _animar_modelo() -> void:
 	modelo.scale = _escala_modelo * Vector3(1.0 + aplastado, 1.0 - aplastado, 1.0 + aplastado)
 
 # ---------------------------------------------------------------------------
-# Evento de cercanía (textbox)
+# Combate RPG (Estilo Paper Mario)
+# ---------------------------------------------------------------------------
+
+func _iniciar_evento_combate(jugador: CharacterBody3D) -> void:
+	if estado == Estado.COMBATIENDO:
+		return
+	estado = Estado.COMBATIENDO
+	velocity = Vector3.ZERO
+	_secuencia += 1
+
+	var enc: EncuentroCombate = _obtener_encuentro()
+	var resultado: CombatArena.ResultadoCombate
+	if enc != null:
+		if jingle_combate != null:
+			enc.jingle_inicio = jingle_combate
+		if musica_combate != null:
+			enc.musica_combate = musica_combate
+		if textura_fondo_combate != null:
+			enc.textura_fondo = textura_fondo_combate
+		if not texto_inicio_combate.is_empty():
+			enc.texto_inicio_combate = texto_inicio_combate
+		if not texto_victoria_combate.is_empty():
+			enc.texto_victoria = texto_victoria_combate
+		if not texto_recompensas_combate.is_empty():
+			enc.texto_recompensas = texto_recompensas_combate
+		if exp_recompensa_combate >= 0:
+			enc.exp_recompensa = exp_recompensa_combate
+		resultado = await enc.iniciar_combate(jugador, modelo)
+	else:
+		# Fallback autónomo si no existiera el componente EncuentroCombate
+		var encuentro_temp: EncuentroCombate = EncuentroCombate.new()
+		encuentro_temp.escena_arena = escena_arena
+		encuentro_temp.aliados = [escena_battler_jugador]
+		encuentro_temp.enemigos = [escena_battler_pot]
+		if jingle_combate != null:
+			encuentro_temp.jingle_inicio = jingle_combate
+		if musica_combate != null:
+			encuentro_temp.musica_combate = musica_combate
+		if textura_fondo_combate != null:
+			encuentro_temp.textura_fondo = textura_fondo_combate
+		if not texto_inicio_combate.is_empty():
+			encuentro_temp.texto_inicio_combate = texto_inicio_combate
+		if not texto_victoria_combate.is_empty():
+			encuentro_temp.texto_victoria = texto_victoria_combate
+		if not texto_recompensas_combate.is_empty():
+			encuentro_temp.texto_recompensas = texto_recompensas_combate
+		if exp_recompensa_combate >= 0:
+			encuentro_temp.exp_recompensa = exp_recompensa_combate
+		add_child(encuentro_temp)
+		resultado = await encuentro_temp.iniciar_combate(jugador, modelo)
+		encuentro_temp.queue_free()
+
+	# Procesar el resultado según las reglas pedidas:
+	match resultado:
+		CombatArena.ResultadoCombate.VICTORIA:
+			# Ganar: el jarrón se rompe con fragmentos/partículas y desaparece para siempre
+			_bloquear_jugador(jugador, false)
+			_destruir(global_position + Vector3(0.0, 0.6, 0.0))
+		CombatArena.ResultadoCombate.DERROTA:
+			# Perder: el jugador explota y reaparece junto al arbusto y el jarrón vuelve a su sitio
+			await _explotar_jugador(jugador)
+		CombatArena.ResultadoCombate.HUIDA:
+			# Huir: vuelves al mundo y el jarrón queda aturdido un rato para poder escapar
+			_bloquear_jugador(jugador, false)
+			var direccion: Vector3 = global_position - jugador.global_position
+			direccion.y = 0.0
+			if direccion.length() < 0.01:
+				direccion = Vector3.BACK
+			_vel_empuje = direccion.normalized() * (fuerza_empuje * 0.8)
+			_tiempo_aturdido = duracion_aturdimiento * 2.0
+			estado = Estado.ATURDIDO
+
+# ---------------------------------------------------------------------------
+# Evento de cercanía original (textbox)
 # ---------------------------------------------------------------------------
 
 func _iniciar_contacto() -> void:
@@ -502,7 +614,10 @@ func _destruir(posicion: Vector3) -> void:
 
 # Fragmentos físicos (RigidBody3D) con los modelos pot_brk_*, que desaparecen tras un rato
 func _crear_fragmentos(posicion: Vector3) -> void:
-	var mundo: Node = get_tree().current_scene
+	if not is_inside_tree():
+		return
+	var tree := get_tree()
+	var mundo: Node = tree.current_scene if tree else null
 	if mundo == null:
 		return
 
@@ -545,7 +660,10 @@ func _crear_fragmentos(posicion: Vector3) -> void:
 
 # Emisor procedural de partículas para simular cristal o globo explotando (igual que chest.gd)
 func _crear_explosion_cristal(posicion: Vector3) -> void:
-	var mundo: Node = get_tree().current_scene
+	if not is_inside_tree():
+		return
+	var tree := get_tree()
+	var mundo: Node = tree.current_scene if tree else null
 	if mundo == null:
 		return
 
@@ -591,9 +709,10 @@ func _obtener_sprite_rata(nodo_rata: Node) -> Sprite3D:
 
 # Reproduce un SFX global (no depende de que este nodo siga vivo)
 func _sonido_global(stream: AudioStream) -> void:
-	if stream == null:
+	if stream == null or not is_inside_tree():
 		return
-	var mundo: Node = get_tree().current_scene
+	var tree := get_tree()
+	var mundo: Node = tree.current_scene if tree else null
 	if mundo == null:
 		return
 	var reproductor: AudioStreamPlayer = AudioStreamPlayer.new()

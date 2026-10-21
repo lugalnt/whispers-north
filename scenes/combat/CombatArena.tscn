@@ -1,0 +1,249 @@
+[gd_scene format=3 uid="uid://cb3arena0001"]
+
+[ext_resource type="Script" uid="uid://bmgqghm1jp55w" path="res://scripts/combat/combat_arena.gd" id="1_arena"]
+[ext_resource type="Script" uid="uid://bsd5cpn2urk28" path="res://scripts/combat/comando_accion.gd" id="2_comando"]
+[ext_resource type="AudioStream" uid="uid://dfqlsxqls5h7l" path="res://assets/audio/music/test_battle_theme.mp3" id="2_tr5ew"]
+[ext_resource type="AudioStream" uid="uid://d11axqap2nusa" path="res://assets/audio/sfx/byeguys.mp3" id="3_7tyy2"]
+[ext_resource type="Texture2D" uid="uid://ds6en71aom1gh" path="res://assets/sprites/environment/backgrounds/mountain_snowy_background.png" id="3_bg"]
+[ext_resource type="AudioStream" uid="uid://cb6neens4q5gh" path="res://assets/audio/sfx/test_battle_start.mp3" id="3_k76re"]
+[ext_resource type="Texture2D" uid="uid://qcuc2g14unqg" path="res://assets/sprites/environment/materials/pokemon_grass.png" id="4_grass"]
+[ext_resource type="AudioStream" uid="uid://x4obrtblk8lj" path="res://assets/audio/music/test_win_theme.mp3" id="4_k76re"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_floor"]
+albedo_color = Color(0.88, 0.92, 0.95, 1)
+albedo_texture = ExtResource("4_grass")
+uv1_scale = Vector3(8, 2, 2)
+texture_filter = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_floor"]
+material = SubResource("StandardMaterial3D_floor")
+size = Vector3(16, 0.6, 5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_menu"]
+bg_color = Color(0.1, 0.12, 0.18, 0.92)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.9, 0.92, 1, 0.85)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+expand_margin_left = 12.0
+expand_margin_top = 12.0
+expand_margin_right = 12.0
+expand_margin_bottom = 12.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rewards"]
+bg_color = Color(0.08, 0.1, 0.15, 0.95)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 0.85, 0.3, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="CombatArena" type="Node3D" unique_id=1901600493 node_paths=PackedStringArray("camara", "comando", "nodo_escenario", "contenedor_aliados", "contenedor_enemigos", "ui_canvas")]
+script = ExtResource("1_arena")
+camara = NodePath("CamaraCombate")
+comando = NodePath("UICanvas/ComandoAccion")
+nodo_escenario = NodePath("Escenario")
+contenedor_aliados = NodePath("Aliados")
+contenedor_enemigos = NodePath("Enemigos")
+ui_canvas = NodePath("UICanvas")
+musica_combate = ExtResource("2_tr5ew")
+jingle_inicio = ExtResource("3_k76re")
+sonido_victoria = ExtResource("4_k76re")
+sonido_huida = ExtResource("3_7tyy2")
+
+[node name="CamaraCombate" type="Camera3D" parent="." unique_id=1655206904]
+transform = Transform3D(0.9927103, -0.027457185, 0.11735592, 0, 0.97370493, 0.22781295, -0.12052514, -0.22615226, 0.9666069, 0.562731, 2.8823898, 6.4721546)
+fov = 44.0
+
+[node name="DireccionalLight3D" type="DirectionalLight3D" parent="." unique_id=1094564117]
+transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 4, 8, 5)
+light_color = Color(1, 0.97, 0.92, 1)
+light_energy = 1.1
+
+[node name="Escenario" type="Node3D" parent="." unique_id=495196972]
+
+[node name="PlataformaSuelo" type="MeshInstance3D" parent="Escenario" unique_id=1587609118]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
+mesh = SubResource("BoxMesh_floor")
+
+[node name="FondoSprite" type="Sprite3D" parent="Escenario" unique_id=174239578]
+transform = Transform3D(3.8, 0, 0, 0, 3.8, 0, 0, 0, 3.8, 0, 4.2, -4.5)
+pixel_size = 0.015
+texture_filter = 0
+texture = ExtResource("3_bg")
+
+[node name="Aliados" type="Node3D" parent="." unique_id=1818273564]
+
+[node name="Enemigos" type="Node3D" parent="." unique_id=1132480163]
+
+[node name="MusicaPlayer" type="AudioStreamPlayer" parent="." unique_id=666664260]
+
+[node name="UICanvas" type="CanvasLayer" parent="." unique_id=535295275]
+layer = 5
+
+[node name="ComandoAccion" type="Control" parent="UICanvas" unique_id=120801072]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_comando")
+
+[node name="BannerTurno" type="Label" parent="UICanvas" unique_id=1251687235]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -250.0
+offset_top = 40.0
+offset_right = 250.0
+offset_bottom = 90.0
+grow_horizontal = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 28
+text = "¡Empieza el combate!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ContenedorDanio" type="Control" parent="UICanvas" unique_id=321834073]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="SelectorObjetivo" type="Label" parent="UICanvas" unique_id=514075437]
+custom_minimum_size = Vector2(40, 40)
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_colors/font_color = Color(1, 0.9, 0.2, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 32
+text = "▼"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HUD" type="Control" parent="UICanvas" unique_id=1667517649]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Aliados" type="VBoxContainer" parent="UICanvas/HUD" unique_id=1326178957]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 28.0
+offset_right = 220.0
+offset_bottom = 200.0
+theme_override_constants/separation = 8
+
+[node name="Enemigos" type="VBoxContainer" parent="UICanvas/HUD" unique_id=1050193830]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -220.0
+offset_top = 28.0
+offset_right = -32.0
+offset_bottom = 200.0
+grow_horizontal = 0
+theme_override_constants/separation = 8
+
+[node name="MenuAcciones" type="PanelContainer" parent="UICanvas" unique_id=1549063957]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -160.0
+offset_top = -180.0
+offset_right = 160.0
+offset_bottom = -28.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_menu")
+
+[node name="VBox" type="VBoxContainer" parent="UICanvas/MenuAcciones" unique_id=1543828342]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="LabelTitulo" type="Label" parent="UICanvas/MenuAcciones/VBox" unique_id=311386940]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "ACCIONES"
+horizontal_alignment = 1
+
+[node name="VBoxBotones" type="VBoxContainer" parent="UICanvas/MenuAcciones/VBox" unique_id=1107628406]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="HSeparator" type="HSeparator" parent="UICanvas/MenuAcciones/VBox" unique_id=430136213]
+layout_mode = 2
+
+[node name="LabelDescripcion" type="Label" parent="UICanvas/MenuAcciones/VBox" unique_id=878601017]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.85, 0.9, 1)
+theme_override_font_sizes/font_size = 12
+text = "Descripción de la acción..."
+autowrap_mode = 2
+
+[node name="PanelRecompensas" type="PanelContainer" parent="UICanvas" unique_id=2133847849]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -90.0
+offset_right = 200.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_rewards")
+
+[node name="MarginContainer" type="MarginContainer" parent="UICanvas/PanelRecompensas" unique_id=919186493]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 16
+
+[node name="VBox" type="VBoxContainer" parent="UICanvas/PanelRecompensas/MarginContainer" unique_id=260677675]
+layout_mode = 2
+
+[node name="LabelTitulo" type="Label" parent="UICanvas/PanelRecompensas/MarginContainer/VBox" unique_id=1181187924]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+theme_override_font_sizes/font_size = 20
+text = "RECOMPENSAS"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="UICanvas/PanelRecompensas/MarginContainer/VBox" unique_id=16522108]
+layout_mode = 2
+
+[node name="LabelTexto" type="Label" parent="UICanvas/PanelRecompensas/MarginContainer/VBox" unique_id=1966168780]
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "+20 EXP
+Obtuviste: [Fragmento de Cerámica Antiguo]"
+horizontal_alignment = 1

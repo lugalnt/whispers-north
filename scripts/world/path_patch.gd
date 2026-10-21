@@ -50,6 +50,7 @@ extends Node3D
 @export var freeze_at_runtime: bool = true
 
 ## Recarga la escena fuente (úsalo tras editar y guardar la escena 2D).
+@warning_ignore("unused_private_class_variable")
 @export_tool_button("Refrescar", "Reload") var _refresh_button = _rebuild
 
 const MAX_VIEWPORT_SIZE := 4096

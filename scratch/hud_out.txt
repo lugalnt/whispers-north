@@ -1,0 +1,8 @@
+Godot Engine v4.7.2.stable.steam.ed1daf0bf - https://godotengine.org
+
+--- TEST INICIO: HUD TEXTS Y JINGLE CUSTOMIZABLE ---
+[1] Arena instanciada. Jingle en nodo visual:(res://assets/audio/sfx/test_battle_start.mp3):<AudioStreamMP3#-9223372003384228343>
+[2] aplicacion de textos y jingle personalizada exitosa.
+[3] Herencia de jingle desde CombatArena.tscn visual exitosa:res://assets/audio/sfx/test_battle_start.mp3
+[4] Propagacion desde el nodo principal de Pot exitosa.
+--- TODOS LOS TESTS PASARON EXITOSAMENTE (0 ERRORES) ---

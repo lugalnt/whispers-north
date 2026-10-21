@@ -18,3 +18,10 @@ Proyecto Godot 4 (GDScript). Lee esto antes de modificar código.
   nombre en `snake_case`, y documéntala en [docs/INPUT_MAP.md](docs/INPUT_MAP.md).
 
 Detalle completo, ejemplos y plan de remapeo: [docs/INPUT_MAP.md](docs/INPUT_MAP.md).
+
+## Sistema de Combate RPG (Paper Mario)
+
+- La orquestación de encuentros se realiza a través del nodo custom `EncuentroCombate` ([scripts/combat/encuentro_combate.gd](scripts/combat/encuentro_combate.gd)), configurable desde el Inspector visual de Godot.
+- La arena de combate vive en [scenes/combat/CombatArena.tscn](scenes/combat/CombatArena.tscn) y se instancia aislada en altura (`Y = 200.0`).
+- Para disparar un combate desde una entidad o `Area3D`, añadir `EncuentroCombate` como hijo y llamar `await encuentro.iniciar_combate(jugador, nodo_a_ocultar)` (o activar `auto_iniciar_en_area`).
+- Guía completa de uso, arquitectura, creación de enemigos (`Battler`) y acciones (`BattlerAction`): [docs/SISTEMA_COMBATE.md](docs/SISTEMA_COMBATE.md).

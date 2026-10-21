@@ -104,6 +104,7 @@ func _process(delta: float) -> void:
 # Recorta del spritesheet el frame indicado
 func _mostrar_frame(indice: int) -> void:
 	var col: int = indice % columnas
+	@warning_ignore("integer_division")
 	var fila: int = indice / columnas
 	_atlas.region = Rect2(
 		col * tamano_frame.x,

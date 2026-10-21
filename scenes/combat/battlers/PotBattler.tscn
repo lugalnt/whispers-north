@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://cb3potbat002"]
+
+[ext_resource type="Script" uid="uid://dop1q8g1sik7i" path="res://scripts/combat/battler.gd" id="1_battler"]
+[ext_resource type="Script" uid="uid://dsqsl4jcuos6g" path="res://scripts/combat/battler_stats.gd" id="2_stats"]
+[ext_resource type="Script" uid="uid://bdqk86gw7keya" path="res://scripts/combat/acciones/accion_embestida.gd" id="3_embestida"]
+[ext_resource type="Script" uid="uid://cb14ax1ksjqb8" path="res://scripts/combat/battler_action.gd" id="3_jc67v"]
+[ext_resource type="PackedScene" uid="uid://2lft3e0fn25g" path="res://assets/models/Generic Pot/pot.tscn" id="4_pot_model"]
+[ext_resource type="AudioStream" uid="uid://3sywwbl7jfo3" path="res://assets/audio/sfx/snd_mysterygo.wav" id="5_fio1k"]
+[ext_resource type="AudioStream" uid="uid://cgbmhrm40vkpi" path="res://assets/audio/sfx/snd_doorclose.wav" id="5_sfx_hit"]
+[ext_resource type="AudioStream" uid="uid://dkmskaqgkjey8" path="res://assets/audio/sfx/snd_item.wav" id="6_f2lu3"]
+[ext_resource type="AudioStream" uid="uid://bajwffmse38j6" path="res://assets/audio/sfx/snd_glassbreak.wav" id="6_sfx_break"]
+
+[sub_resource type="Resource" id="Resource_pot_stats"]
+script = ExtResource("2_stats")
+max_hp = 24
+ataque = 10
+velocidad = 8
+
+[sub_resource type="Resource" id="Resource_pot_embestida"]
+script = ExtResource("3_embestida")
+ventana_antes = 0.22
+ventana_despues = 0.06
+nombre = "Embestida"
+descripcion = "Salta contra el objetivo. Se puede esquivar a tiempo con el botón de interactuar."
+poder = 1
+
+[node name="PotBattler" type="Node3D" unique_id=143971519]
+script = ExtResource("1_battler")
+nombre = "Jarroncito"
+stats = SubResource("Resource_pot_stats")
+acciones = Array[ExtResource("3_jc67v")]([SubResource("Resource_pot_embestida")])
+altura = 1.3
+sprite_mira_a_la_derecha = false
+respiracion = 0.04
+color_particulas_derrota = Color(0.85, 0.95, 1, 1)
+sonido_herido = ExtResource("5_sfx_hit")
+sonido_derrota = ExtResource("6_sfx_break")
+
+[node name="Visual" type="Node3D" parent="." unique_id=930046952]
+transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, 0, 0, 0)
+
+[node name="pot" parent="Visual" unique_id=1214964267 instance=ExtResource("4_pot_model")]

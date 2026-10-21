@@ -29,8 +29,8 @@ implemente el remapeo desde Opciones solo hay que modificar estas mismas accione
   Ya traen teclado **y** gamepad por defecto. No se redefinen en `project.godot`
   salvo que sea necesario.
 - **Excepción:** `ui_accept` está definida explícitamente en `project.godot`
-  (`Enter`, `Enter` numérico, `Espacio`, Botón A del gamepad) para garantizar que el
-  gamepad pueda activar los botones del menú principal.
+  (`Z`, `E`, `Enter`, `Enter` numérico, `Espacio`, Botón A del gamepad) para garantizar que tanto `Z`/`E` como el
+  gamepad puedan activar los botones de menús (principal, combate, diálogos).
 
 > `ui_*` = interfaz y navegación de menús. `move_*` / `interact` = gameplay en el mundo.
 > **No mezclar**: no uses `ui_accept` para interactuar en el mundo ni `interact` para menús.

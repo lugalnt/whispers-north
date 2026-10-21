@@ -1,0 +1,36 @@
+Godot Engine v4.7.2.stable.steam.ed1daf0bf - https://godotengine.org
+
+========================================
+RUNNING COMPLETE COMBAT TEST
+========================================
+
+--- 1. VERIFYING CHARACTERS' GROUND CONTACT ---
+Arena floor surface top: local Y = 0.0
+Player visual local Y: 0.95999997854233
+Player feet Y: 0.0
+Pot visual local Y: 0.0
+Pot base Y: -0.00000001750333
+>> [PASS] Neither character is buried in the floor! Both feet/base rest on Y=0.
+
+--- 2. VERIFYING HEALTH BARS INITIALIZATION & UPDATES ---
+Player HP: 15 / 15
+Pot HP: 24 / 24
+Pot HUD registered: true
+Player HUD registered: true
+Initial Pot bar value: 24.0 max: 24.0 text: '24 / 24 HP'
+Applying 3 damage to Pot...
+Pot HP: 21, HUD text: '21 / 24 HP'
+Applying 2 damage to Player...
+Player HP: 13, HUD text: '13 / 15 HP'
+>> [PASS] Health bars and text update and change accurately!
+
+--- 3. VERIFYING 'Z' KEY / INTERACT / UI_ACCEPT ---
+Input Map check for 'Z':
+  event.is_action_pressed('interact'): true
+  event.is_action_pressed('ui_accept'): true
+Option selected in combat menu via 'Z': (res://scenes/combat/battlers/PlayerBattler.tscn::Resource_player_golpe):<Resource#-9223372007108770323>
+>> [PASS] Pressing 'Z' confirms options in combat menus perfectly!
+
+========================================
+TEST COMPLETE
+========================================

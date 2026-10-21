@@ -2,13 +2,15 @@
 
 [ext_resource type="Script" path="res://scripts/world/pot.gd" id="1_pot"]
 [ext_resource type="PackedScene" uid="uid://2lft3e0fn25g" path="res://assets/models/Generic Pot/pot.tscn" id="2_model"]
+[ext_resource type="Script" path="res://scripts/combat/encuentro_combate.gd" id="3_encuentro"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_pot"]
 height = 1.2
 radius = 0.55
 
-[node name="Pot" type="CharacterBody3D"]
+[node name="Pot" type="CharacterBody3D" node_paths=PackedStringArray("encuentro_combate")]
 script = ExtResource("1_pot")
+encuentro_combate = NodePath("EncuentroCombate")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
@@ -18,3 +20,6 @@ shape = SubResource("CylinderShape3D_pot")
 transform = Transform3D(1.6039579, 0, 0, 0, 2.0022073, 0, 0, 0, 1.6912463, 0, 0, 0)
 
 [node name="pot" parent="Modelo" instance=ExtResource("2_model")]
+
+[node name="EncuentroCombate" type="Node" parent="."]
+script = ExtResource("3_encuentro")

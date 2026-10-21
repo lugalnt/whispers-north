@@ -46,10 +46,9 @@ whispers-north/
 │   │   ├── BestiaryUI.tscn
 │   │   ├── InventoryUI.tscn
 │   │   └── DialogueBox.tscn
-│   ├── combat/              ← Sistema de combate por turnos
-│   │   ├── CombatScene.tscn     [Escena raíz del combate]
-│   │   ├── TurnManager.tscn     [Nodo gestor de turnos]
-│   │   └── BattleUI.tscn
+│   ├── combat/              ← Sistema de combate por turnos (ver docs/SISTEMA_COMBATE.md)
+│   │   ├── CombatArena.tscn     [Arena de combate estilo Paper Mario]
+│   │   └── battlers/            [Combatientes: PlayerBattler.tscn, PotBattler.tscn, ...]
 │   └── cutscenes/           ← Cinemáticas / secuencias narrativas
 │
 ├── 📁 scripts/              ← Código GDScript (uno por responsable)
@@ -64,10 +63,11 @@ whispers-north/
 │   ├── enemies/
 │   │   ├── BaseEnemy.gd         [Clase base heredable]
 │   │   └── CreatureAI.gd
-│   ├── combat/
-│   │   ├── TurnManager.gd       [Lógica de turnos]
-│   │   ├── ElementSystem.gd     [Afinidades elementales]
-│   │   └── CombatCalculator.gd
+│   ├── combat/              ← Sistema de combate (Paper Mario + Open RPG)
+│   │   ├── encuentro_combate.gd [Nodo custom configurable desde el editor]
+│   │   ├── combat_arena.gd      [Gestión de turnos, HUD, QTE y arena]
+│   │   ├── battler.gd           [Combatiente base]
+│   │   └── acciones/            [BattlerAction: timing, QTE y ataques]
 │   ├── dialogue/
 │   │   ├── DialogueManager.gd   [Carga y muestra diálogos desde JSON]
 │   │   └── DialogueBox.gd

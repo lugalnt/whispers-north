@@ -593,4 +593,5 @@ func _aplicar_resolucion(index: int) -> void:
 
 	# Centrar la ventana en el monitor correcto
 	get_window().size     = nueva_res
+	@warning_ignore("integer_division")
 	get_window().position = pant_pos + (pant_size - nueva_res) / 2
