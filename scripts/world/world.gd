@@ -4,12 +4,19 @@ extends Node3D
 @onready var player_16: CharacterBody3D = $Player
 @onready var player_32: CharacterBody3D = $Player32 
 
+@export var escena_menu_pausa: PackedScene = preload("res://scenes/ui/PauseMenu.tscn")
+var _menu_pausa: PauseMenu = null
+
 func _ready() -> void:
 	_setup_camera_switches()
 	# Los controles (move_*, interact) se definen en Project Settings > Input Map
 	# El juego empieza solo con el personaje de 16x16 activo
 	player_32.hide() 
 	player_32.process_mode = Node.PROCESS_MODE_DISABLED 
+
+	if escena_menu_pausa:
+		_menu_pausa = escena_menu_pausa.instantiate() as PauseMenu
+		add_child(_menu_pausa)
 
 # --- Sistema de cámaras ---
 # Cada Area3D llamada "SwitchC_A_B" alterna entre Camera<A> y Camera<B> cuando el jugador la cruza.
@@ -72,3 +79,30 @@ func cambiar_personaje(personaje_viejo: CharacterBody3D, personaje_nuevo: Charac
 	# Enciende físicas y visibilidad del nuevo
 	personaje_nuevo.show()
 	personaje_nuevo.process_mode = Node.PROCESS_MODE_INHERIT
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("pause") and not event.is_echo():
+		var active = get_active_player()
+		if active and "is_interacting" in active and active.is_interacting:
+			return
+		if _menu_pausa and not _menu_pausa.visible:
+			get_viewport().set_input_as_handled()
+			# Sincronizar si lleva la rata
+			var tiene_rata: bool = false
+			if active:
+				for child in active.get_children():
+					if child.name.begins_with("Rat") or child.is_in_group("rat"):
+						tiene_rata = true
+						break
+			var gs = _obtener_game_state()
+			if gs:
+				gs.tiene_rata = tiene_rata
+			_menu_pausa.abrir_menu()
+
+func _obtener_game_state():
+	if Engine.has_singleton("GameState"):
+		return Engine.get_singleton("GameState")
+	var root = get_tree().root if is_inside_tree() else null
+	if root and root.has_node("GameState"):
+		return root.get_node("GameState")
+	return null

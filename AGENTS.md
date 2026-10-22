@@ -25,3 +25,11 @@ Detalle completo, ejemplos y plan de remapeo: [docs/INPUT_MAP.md](docs/INPUT_MAP
 - La arena de combate vive en [scenes/combat/CombatArena.tscn](scenes/combat/CombatArena.tscn) y se instancia aislada en altura (`Y = 200.0`).
 - Para disparar un combate desde una entidad o `Area3D`, añadir `EncuentroCombate` como hijo y llamar `await encuentro.iniciar_combate(jugador, nodo_a_ocultar)` (o activar `auto_iniciar_en_area`).
 - Guía completa de uso, arquitectura, creación de enemigos (`Battler`) y acciones (`BattlerAction`): [docs/SISTEMA_COMBATE.md](docs/SISTEMA_COMBATE.md).
+
+## Sistema de Menú de Pausa, Inventario y Estadísticas
+
+- Autoload `GameState` ([scripts/core/game_state.gd](scripts/core/game_state.gd)) gestiona la progresión, nivel, stats de Eric, compañero (rata) e inventario reactivo.
+- Menú de pausa en [scenes/ui/PauseMenu.tscn](scenes/ui/PauseMenu.tscn) / [scripts/ui/pause_menu.gd](scripts/ui/pause_menu.gd), integrado en `World.tscn` mediante la acción `pause` (`Escape`, `P`, Gamepad `Start`).
+- Los objetos heredan de `InventoryItem` ([scripts/inventory/inventory_item.gd](scripts/inventory/inventory_item.gd)) y son gestionados por `Inventory` ([scripts/inventory/inventory.gd](scripts/inventory/inventory.gd)).
+- Guía completa de arquitectura y uso: [docs/MENU_PAUSA_E_INVENTARIO.md](docs/MENU_PAUSA_E_INVENTARIO.md).
+

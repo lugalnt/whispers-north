@@ -213,6 +213,11 @@ func inicializar(escenas_aliados: Array, escenas_enemigos: Array, jugador_mundo:
 		contenedor_aliados.add_child(battler)
 		battler.inicializar_stats()
 		battler.bando = Battler.Bando.ALIADO
+		# Sincronizar vida inicial con GameState si es el jugador
+		if battler.controlado_por_jugador:
+			var gs = _obtener_game_state()
+			if gs and gs.hp_actual > 0:
+				battler.hp = clamp(gs.hp_actual, 1, battler.stats.max_hp)
 		# Posición escalonada para que si hay más de 1 aliado no se tapen
 		var offset_x: float = -3.2 - (float(i) * 1.5)
 		var offset_z: float = float(i) * 0.4
@@ -368,24 +373,16 @@ func _crear_botones_acciones(battler: Battler) -> void:
 	for i in range(_opciones_menu.size()):
 		var btn: Button = Button.new()
 		btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		btn.focus_mode = Control.FOCUS_ALL
+		btn.focus_mode = Control.FOCUS_NONE
 		btn.mouse_filter = Control.MOUSE_FILTER_PASS
 		
-		# Conectar eventos de ratón y foco
+		# Conectar eventos de ratón
 		var idx: int = i
 		btn.mouse_entered.connect(func(): _seleccionar_indice_menu(idx, false))
 		btn.pressed.connect(func(): _confirmar_opcion_menu(idx))
-		btn.focus_entered.connect(func(): _seleccionar_indice_menu(idx, false))
 		
 		lista_botones.add_child(btn)
 		_botones_menu.append(btn)
-
-	# Configurar vecinos de foco para navegación automática
-	for i in range(_botones_menu.size()):
-		var arr_idx = (i - 1 + _botones_menu.size()) % _botones_menu.size()
-		var abj_idx = (i + 1) % _botones_menu.size()
-		_botones_menu[i].focus_neighbor_top = _botones_menu[arr_idx].get_path()
-		_botones_menu[i].focus_neighbor_bottom = _botones_menu[abj_idx].get_path()
 
 	_indice_menu_accion = 0
 	_actualizar_resaltado_menu()
@@ -393,9 +390,10 @@ func _crear_botones_acciones(battler: Battler) -> void:
 func _seleccionar_indice_menu(nuevo_indice: int, reproducir_sfx: bool = true) -> void:
 	if _botones_menu.is_empty():
 		return
-	if _indice_menu_accion != nuevo_indice and reproducir_sfx:
+	var idx_valido: int = clampi(nuevo_indice, 0, _botones_menu.size() - 1)
+	if _indice_menu_accion != idx_valido and reproducir_sfx:
 		reproducir_sonido(sonido_cursor)
-	_indice_menu_accion = clampi(nuevo_indice, 0, _botones_menu.size() - 1)
+	_indice_menu_accion = idx_valido
 	_actualizar_resaltado_menu()
 
 func _actualizar_resaltado_menu() -> void:
@@ -406,7 +404,6 @@ func _actualizar_resaltado_menu() -> void:
 		if i == _indice_menu_accion:
 			btn.text = "▶  " + nombre_base
 			btn.add_theme_color_override("font_color", Color(1.0, 0.9, 0.3))
-			btn.grab_focus()
 			if opcion is BattlerAction:
 				desc_accion_label.text = opcion.descripcion
 			else:
@@ -462,45 +459,147 @@ func _elegir_objetivo(accion: BattlerAction) -> Battler:
 	selector_objetivo.hide()
 	return _objetivo_elegido
 
+var _ultimo_tiempo_stick_v: int = 0
+var _ultimo_tiempo_stick_h: int = 0
+var _stick_v_activo: bool = false
+var _stick_h_activo: bool = false
+
+# Propiedades de compatibilidad hacia atrás
+var _stick_nav_activo: bool:
+	get: return _stick_v_activo
+	set(v): _stick_v_activo = v
+var _ultimo_tiempo_nav_menu: int:
+	get: return _ultimo_tiempo_stick_v
+	set(v): _ultimo_tiempo_stick_v = v
+
+const RETARDO_INICIAL_STICK_MS: int = 280
+const REPETICION_STICK_MS: int = 180
+const UMBRAL_ACTIVACION_STICK: float = 0.45
+const UMBRAL_RETORNO_STICK: float = 0.25
+
+## Evalúa si un evento vertical del stick o entrada debe avanzar un paso en el menú
+func _debe_procesar_paso_menu_v(event: InputEvent) -> bool:
+	if event.is_echo():
+		return false
+	
+	if event is InputEventJoypadMotion:
+		if event.axis != JOY_AXIS_LEFT_Y:
+			return false
+		var axis_val := absf(event.axis_value)
+		if axis_val < UMBRAL_ACTIVACION_STICK:
+			return false
+		
+		var ahora := Time.get_ticks_msec()
+		if not _stick_v_activo:
+			_stick_v_activo = true
+			_ultimo_tiempo_stick_v = ahora
+			return true
+		else:
+			if ahora - _ultimo_tiempo_stick_v >= RETARDO_INICIAL_STICK_MS:
+				_ultimo_tiempo_stick_v = ahora - (RETARDO_INICIAL_STICK_MS - REPETICION_STICK_MS)
+				return true
+			return false
+	
+	return true
+
+## Evalúa si un evento horizontal del stick o entrada debe avanzar un paso
+func _debe_procesar_paso_menu_h(event: InputEvent) -> bool:
+	if event.is_echo():
+		return false
+	
+	if event is InputEventJoypadMotion:
+		if event.axis != JOY_AXIS_LEFT_X:
+			return false
+		var axis_val := absf(event.axis_value)
+		if axis_val < UMBRAL_ACTIVACION_STICK:
+			return false
+		
+		var ahora := Time.get_ticks_msec()
+		if not _stick_h_activo:
+			_stick_h_activo = true
+			_ultimo_tiempo_stick_h = ahora
+			return true
+		else:
+			if ahora - _ultimo_tiempo_stick_h >= RETARDO_INICIAL_STICK_MS:
+				_ultimo_tiempo_stick_h = ahora - (RETARDO_INICIAL_STICK_MS - REPETICION_STICK_MS)
+				return true
+	return true
+
+## Compatibilidad: redirige al filtro vertical por defecto
+func _debe_procesar_paso_menu(event: InputEvent) -> bool:
+	return _debe_procesar_paso_menu_v(event)
+
 func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventJoypadMotion:
+		if event.axis == JOY_AXIS_LEFT_Y and absf(event.axis_value) < UMBRAL_RETORNO_STICK:
+			_stick_v_activo = false
+		elif event.axis == JOY_AXIS_LEFT_X and absf(event.axis_value) < UMBRAL_RETORNO_STICK:
+			_stick_h_activo = false
+
 	if _estado == EstadoTurno.TURNO_JUGADOR:
 		if _botones_menu.is_empty():
 			return
 
 		# Navegación vertical: ui_up/ui_down o move_up/move_down (flechas, WASD, stick, d-pad)
 		if event.is_action_pressed("ui_up") or event.is_action_pressed("move_up"):
+			if not _debe_procesar_paso_menu_v(event):
+				return
 			get_viewport().set_input_as_handled()
 			var nuevo: int = (_indice_menu_accion - 1 + _botones_menu.size()) % _botones_menu.size()
 			_seleccionar_indice_menu(nuevo, true)
 
 		elif event.is_action_pressed("ui_down") or event.is_action_pressed("move_down"):
+			if not _debe_procesar_paso_menu_v(event):
+				return
 			get_viewport().set_input_as_handled()
 			var nuevo: int = (_indice_menu_accion + 1) % _botones_menu.size()
 			_seleccionar_indice_menu(nuevo, true)
 
 		# Confirmar: ui_accept o interact (Z, E, Enter, Espacio, Gamepad A)
 		elif event.is_action_pressed("ui_accept") or event.is_action_pressed("interact"):
+			if event.is_echo():
+				return
 			get_viewport().set_input_as_handled()
 			_confirmar_opcion_menu(_indice_menu_accion)
 
 	elif _estado == EstadoTurno.SELECCIONANDO_OBJETIVO:
 		# Navegación entre objetivos: flechas, WASD, stick, d-pad
-		if event.is_action_pressed("ui_left") or event.is_action_pressed("ui_up") or event.is_action_pressed("move_left") or event.is_action_pressed("move_up"):
+		if event.is_action_pressed("ui_left") or event.is_action_pressed("move_left"):
+			if not _debe_procesar_paso_menu_h(event):
+				return
 			get_viewport().set_input_as_handled()
 			_cambiar_objetivo(-1)
 
-		elif event.is_action_pressed("ui_right") or event.is_action_pressed("ui_down") or event.is_action_pressed("move_right") or event.is_action_pressed("move_down"):
+		elif event.is_action_pressed("ui_right") or event.is_action_pressed("move_right"):
+			if not _debe_procesar_paso_menu_h(event):
+				return
+			get_viewport().set_input_as_handled()
+			_cambiar_objetivo(1)
+
+		elif event.is_action_pressed("ui_up") or event.is_action_pressed("move_up"):
+			if not _debe_procesar_paso_menu_v(event):
+				return
+			get_viewport().set_input_as_handled()
+			_cambiar_objetivo(-1)
+
+		elif event.is_action_pressed("ui_down") or event.is_action_pressed("move_down"):
+			if not _debe_procesar_paso_menu_v(event):
+				return
 			get_viewport().set_input_as_handled()
 			_cambiar_objetivo(1)
 
 		# Confirmar objetivo: ui_accept o interact (Z, E, Enter, Espacio, Gamepad A)
 		elif event.is_action_pressed("ui_accept") or event.is_action_pressed("interact"):
+			if event.is_echo():
+				return
 			get_viewport().set_input_as_handled()
 			reproducir_sonido(sonido_cursor)
 			_objetivo_elegido = _objetivos_validos[_indice_objetivo]
 			_seleccion_objetivo_terminada = true
 
 		elif event.is_action_pressed("ui_cancel"):
+			if event.is_echo():
+				return
 			get_viewport().set_input_as_handled()
 			_objetivo_elegido = null
 			_seleccion_objetivo_terminada = true
@@ -555,12 +654,17 @@ func _procesar_turno_ia(battler: Battler) -> void:
 
 func _intentar_huida() -> void:
 	_estado = EstadoTurno.TERMINADO
+	_sincronizar_estado_global()
 	reproducir_sonido(sonido_huida)
 	await mostrar_mensaje(texto_huida, 1.2)
 	combate_terminado.emit(ResultadoCombate.HUIDA)
 
 func _finalizar_victoria() -> void:
 	_estado = EstadoTurno.TERMINADO
+	_sincronizar_estado_global()
+	var gs = _obtener_game_state()
+	if gs and exp_victoria > 0:
+		gs.agregar_exp(exp_victoria)
 	reproductor_musica.stop()
 	reproducir_sonido(sonido_victoria)
 	await mostrar_mensaje(texto_victoria, 1.0)
@@ -573,6 +677,7 @@ func _finalizar_victoria() -> void:
 
 func _finalizar_derrota() -> void:
 	_estado = EstadoTurno.TERMINADO
+	_sincronizar_estado_global()
 	reproductor_musica.stop()
 	reproducir_sonido(sonido_derrota)
 	await mostrar_mensaje(texto_derrota, 1.5)
@@ -785,3 +890,22 @@ func _todos_muertos(grupo: Array[Battler]) -> bool:
 		if b.esta_vivo():
 			return false
 	return true
+
+func _sincronizar_estado_global() -> void:
+	var gs = _obtener_game_state()
+	if gs == null:
+		return
+	for a in aliados:
+		if is_instance_valid(a) and a.controlado_por_jugador:
+			gs.actualizar_hp(a.hp)
+			break
+
+func _obtener_game_state():
+	if Engine.has_singleton("GameState"):
+		return Engine.get_singleton("GameState")
+	if not is_inside_tree():
+		return null
+	var t = get_tree()
+	if t and t.root and t.root.has_node("GameState"):
+		return t.root.get_node("GameState")
+	return null

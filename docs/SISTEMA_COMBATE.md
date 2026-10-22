@@ -191,6 +191,10 @@ El combate respeta estrictamente las directivas de entrada del proyecto ([`AGENT
 | `ui_accept` / `interact` | **Z**, **E**, Enter, Espacio | Botón Sur (A en Xbox / Cruz en PS) | Confirmar opción, confirmar objetivo, QTE / Timing |
 | `ui_cancel` | Escape, Retroceso | Botón Este (B en Xbox / Círculo en PS) | Cancelar selección de objetivo |
 
+> [!TIP]
+> **Navegación Limpia con Joystick:**
+> Los botones de combate usan `focus_mode = FOCUS_NONE` y el control por stick implementa filtrado desacoplado por eje vertical y horizontal con zona muerta y debounce (`280ms` retardo inicial / `180ms` repetición). Esto garantiza transiciones paso a paso exactas entre "Golpear" y "Huir" sin saltos dobles ni skipping indeseado.
+
 ---
 
 ## 7. Pruebas Autónomas (Standalone)

@@ -205,6 +205,14 @@ func iniciar_combate(jugador: CharacterBody3D = null, nodo_a_ocultar: Node = nul
 	arena.comenzar_combate()
 	var resultado: CombatArena.ResultadoCombate = await arena.combate_terminado
 
+	# Sincronizar vida restante del jugador de vuelta a GameState
+	var gs = _obtener_game_state()
+	if gs:
+		for a in arena.aliados:
+			if is_instance_valid(a) and a.controlado_por_jugador:
+				gs.actualizar_hp(a.hp)
+				break
+
 	# Transición de salida
 	var canvas_salida: CanvasLayer = CanvasLayer.new()
 	canvas_salida.layer = 100
@@ -281,3 +289,13 @@ func _reproducir_audio(stream: AudioStream) -> void:
 	get_tree().root.add_child(player)
 	player.finished.connect(player.queue_free)
 	player.play()
+
+func _obtener_game_state():
+	if Engine.has_singleton("GameState"):
+		return Engine.get_singleton("GameState")
+	if not is_inside_tree():
+		return null
+	var t = get_tree()
+	if t and t.root and t.root.has_node("GameState"):
+		return t.root.get_node("GameState")
+	return null

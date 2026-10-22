@@ -293,7 +293,33 @@ func _on_btn_reasignar(btn: Button) -> void:
 
 
 func _input(event: InputEvent) -> void:
+	if not visible or not is_inside_tree():
+		return
+
 	if not _escuchando:
+		var es_cancelar: bool = (event is InputEventAction and event.action == &"ui_cancel") or event.is_action_pressed("ui_cancel")
+		var es_tab_prev: bool = (event is InputEventAction and event.action == &"tab_prev") or event.is_action_pressed("tab_prev") or event.is_action_pressed("ui_page_up")
+		var es_tab_next: bool = (event is InputEventAction and event.action == &"tab_next") or event.is_action_pressed("tab_next") or event.is_action_pressed("ui_page_down")
+
+		if es_cancelar and event.is_pressed() and not event.is_echo():
+			if get_viewport():
+				get_viewport().set_input_as_handled()
+			_on_regresar()
+			return
+		elif es_tab_prev and event.is_pressed() and not event.is_echo():
+			if get_viewport():
+				get_viewport().set_input_as_handled()
+			var n_tabs: int = _tab_container.get_tab_count()
+			if n_tabs > 0:
+				_tab_container.current_tab = (_tab_container.current_tab - 1 + n_tabs) % n_tabs
+			return
+		elif es_tab_next and event.is_pressed() and not event.is_echo():
+			if get_viewport():
+				get_viewport().set_input_as_handled()
+			var n_tabs: int = _tab_container.get_tab_count()
+			if n_tabs > 0:
+				_tab_container.current_tab = (_tab_container.current_tab + 1) % n_tabs
+			return
 		return
 
 	if event.is_action("ui_cancel") and event.is_pressed():
@@ -448,7 +474,9 @@ func _refrescar_todos_los_badges() -> void:
 				lbl.text = _obtener_texto_binding(accion, tipo)
 
 
-## Llamar desde MainMenu al mostrar este panel.
+## Llamar desde MainMenu o PauseMenu al mostrar este panel.
 func preparar() -> void:
 	_label_estado.text = ""
 	_refrescar_todos_los_badges()
+	if _btn_regresar and is_inside_tree():
+		_btn_regresar.grab_focus()

@@ -1,0 +1,395 @@
+[gd_scene format=3 uid="uid://ctwoler8kbxpg"]
+
+[ext_resource type="Script" uid="uid://ct7llimmm25dy" path="res://scripts/ui/pause_menu.gd" id="1_pause"]
+[ext_resource type="Texture2D" uid="uid://45k6ixti2rk" path="res://assets/sprites/ui/icon.png" id="2_icon"]
+[ext_resource type="Texture2D" uid="uid://c45qesr1rijmr" path="res://assets/sprites/player/test_hero_portrait.png" id="2_n5dsq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_modal"]
+bg_color = Color(0.07, 0.09, 0.14, 0.95)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.85, 0.88, 1, 0.75)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_box_inner"]
+bg_color = Color(0.04, 0.05, 0.08, 0.6)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.25, 0.3, 0.4, 0.5)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hp"]
+bg_color = Color(0.2, 0.8, 0.35, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=2056425271]
+process_mode = 3
+layer = 50
+visible = false
+script = ExtResource("1_pause")
+texto_inventario_vacio = "Está vacío."
+texto_titulo_perfil = "El Fuki"
+texto_companero_activo = "La Dani🐀 "
+retrato_protagonista = ExtResource("2_n5dsq")
+
+[node name="FondoOscuro" type="ColorRect" parent="." unique_id=470923178]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.03, 0.04, 0.07, 0.75)
+
+[node name="ContenedorPrincipal" type="PanelContainer" parent="." unique_id=559294419]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -240.0
+offset_right = 400.0
+offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal")
+
+[node name="Margen" type="MarginContainer" parent="ContenedorPrincipal" unique_id=275329387]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
+
+[node name="VBox" type="VBoxContainer" parent="ContenedorPrincipal/Margen" unique_id=227417351]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Header" type="HBoxContainer" parent="ContenedorPrincipal/Margen/VBox" unique_id=1332984652]
+layout_mode = 2
+
+[node name="Titulo" type="Label" parent="ContenedorPrincipal/Margen/VBox/Header" unique_id=1417598984]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.9, 0.4, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 22
+text = "PAUSA"
+
+[node name="PistasTeclado" type="Label" parent="ContenedorPrincipal/Margen/VBox/Header" unique_id=841612628]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.7, 0.8, 1)
+theme_override_font_sizes/font_size = 12
+text = "[Q / E] Cambiar pestaña  |  [Esc / Start] Cerrar"
+
+[node name="BarraPestanas" type="HBoxContainer" parent="ContenedorPrincipal/Margen/VBox" unique_id=1498221243]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="BtnInventario" type="Button" parent="ContenedorPrincipal/Margen/VBox/BarraPestanas" unique_id=48898566]
+custom_minimum_size = Vector2(160, 36)
+layout_mode = 2
+text = "🎒 INVENTARIO"
+
+[node name="BtnStats" type="Button" parent="ContenedorPrincipal/Margen/VBox/BarraPestanas" unique_id=814638049]
+custom_minimum_size = Vector2(160, 36)
+layout_mode = 2
+text = "📊 ESTADÍSTICAS"
+
+[node name="BtnSistema" type="Button" parent="ContenedorPrincipal/Margen/VBox/BarraPestanas" unique_id=333289455]
+custom_minimum_size = Vector2(160, 36)
+layout_mode = 2
+text = "⚙️ SISTEMA"
+
+[node name="HSeparator" type="HSeparator" parent="ContenedorPrincipal/Margen/VBox" unique_id=1924566800]
+layout_mode = 2
+
+[node name="Vistas" type="Control" parent="ContenedorPrincipal/Margen/VBox" unique_id=259064140]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VistaInventario" type="Control" parent="ContenedorPrincipal/Margen/VBox/Vistas" unique_id=1354877638]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBox" type="HBoxContainer" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaInventario" unique_id=1085780348]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="PanelSlots" type="PanelContainer" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaInventario/HBox" unique_id=1843224278]
+custom_minimum_size = Vector2(440, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_box_inner")
+
+[node name="Scroll" type="ScrollContainer" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaInventario/HBox/PanelSlots" unique_id=941320853]
+layout_mode = 2
+follow_focus = true
+
+[node name="GridItems" type="GridContainer" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaInventario/HBox/PanelSlots/Scroll" unique_id=1356819740]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 5
+
+[node name="LabelVacio" type="Label" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaInventario/HBox/PanelSlots" unique_id=909397184]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.65, 0.75, 1)
+theme_override_font_sizes/font_size = 14
+text = "El zurrón está vacío."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PanelDetalle" type="PanelContainer" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaInventario/HBox" unique_id=1737319302]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_box_inner")
+
+[node name="VBox" type="VBoxContainer" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaInventario/HBox/PanelDetalle" unique_id=566623872]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="IconoGrande" type="TextureRect" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaInventario/HBox/PanelDetalle/VBox" unique_id=1392826500]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LabelNombre" type="Label" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaInventario/HBox/PanelDetalle/VBox" unique_id=1003108433]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.35, 1)
+theme_override_font_sizes/font_size = 16
+text = "Selecciona un objeto"
+horizontal_alignment = 1
+
+[node name="LabelCategoria" type="Label" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaInventario/HBox/PanelDetalle/VBox" unique_id=969448386]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.8, 0.95, 1)
+theme_override_font_sizes/font_size = 12
+horizontal_alignment = 1
+
+[node name="HSep" type="HSeparator" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaInventario/HBox/PanelDetalle/VBox" unique_id=366445683]
+layout_mode = 2
+
+[node name="LabelDescripcion" type="Label" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaInventario/HBox/PanelDetalle/VBox" unique_id=1485528319]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.85, 0.88, 0.95, 1)
+theme_override_font_sizes/font_size = 13
+autowrap_mode = 2
+
+[node name="BtnUsar" type="Button" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaInventario/HBox/PanelDetalle/VBox" unique_id=1539603953]
+visible = false
+layout_mode = 2
+text = "Consumir"
+
+[node name="VistaStats" type="Control" parent="ContenedorPrincipal/Margen/VBox/Vistas" unique_id=2105826024]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBox" type="HBoxContainer" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats" unique_id=330427125]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="PanelPerfil" type="PanelContainer" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox" unique_id=1895254866]
+custom_minimum_size = Vector2(280, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_box_inner")
+
+[node name="VBox" type="VBoxContainer" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox/PanelPerfil" unique_id=1777165909]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Retrato" type="TextureRect" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox/PanelPerfil/VBox" unique_id=1409175060]
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("2_icon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LabelNombre" type="Label" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox/PanelPerfil/VBox" unique_id=1943573680]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.4, 1)
+theme_override_font_sizes/font_size = 18
+text = "Eric"
+horizontal_alignment = 1
+
+[node name="LabelTitulo" type="Label" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox/PanelPerfil/VBox" unique_id=291109709]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.75, 0.85, 1)
+theme_override_font_sizes/font_size = 12
+text = "Explorador del Norte"
+horizontal_alignment = 1
+
+[node name="HSep" type="HSeparator" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox/PanelPerfil/VBox" unique_id=46690748]
+layout_mode = 2
+
+[node name="LabelNivel" type="Label" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox/PanelPerfil/VBox" unique_id=2014459485]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Nivel 1"
+horizontal_alignment = 1
+
+[node name="BarraEXP" type="ProgressBar" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox/PanelPerfil/VBox" unique_id=1705981223]
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+show_percentage = false
+
+[node name="LabelEXP" type="Label" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox/PanelPerfil/VBox" unique_id=2102058977]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "0 / 50 EXP"
+horizontal_alignment = 1
+
+[node name="PanelStatsValores" type="PanelContainer" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox" unique_id=285791086]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_box_inner")
+
+[node name="VBox" type="VBoxContainer" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox/PanelStatsValores" unique_id=1494558131]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="LabelSalud" type="Label" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox/PanelStatsValores/VBox" unique_id=1462056163]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.95, 0.5, 1)
+theme_override_font_sizes/font_size = 14
+text = "SALUD (HP)"
+
+[node name="BarraHP" type="ProgressBar" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox/PanelStatsValores/VBox" unique_id=824390024]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_hp")
+value = 100.0
+show_percentage = false
+
+[node name="LabelHP" type="Label" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox/PanelStatsValores/VBox" unique_id=460967767]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "15 / 15 HP"
+horizontal_alignment = 2
+
+[node name="HSep" type="HSeparator" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox/PanelStatsValores/VBox" unique_id=522175899]
+layout_mode = 2
+
+[node name="GridStats" type="GridContainer" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox/PanelStatsValores/VBox" unique_id=1876888463]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 12
+columns = 2
+
+[node name="LblAtaque" type="Label" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox/PanelStatsValores/VBox/GridStats" unique_id=1310872618]
+layout_mode = 2
+text = "⚔️  Ataque:"
+
+[node name="ValAtaque" type="Label" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox/PanelStatsValores/VBox/GridStats" unique_id=400036631]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+text = "2"
+
+[node name="LblDefensa" type="Label" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox/PanelStatsValores/VBox/GridStats" unique_id=476808037]
+layout_mode = 2
+text = "🛡️  Defensa:"
+
+[node name="ValDefensa" type="Label" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox/PanelStatsValores/VBox/GridStats" unique_id=1166918879]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.75, 1, 1)
+text = "1"
+
+[node name="LblVelocidad" type="Label" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox/PanelStatsValores/VBox/GridStats" unique_id=148867797]
+layout_mode = 2
+text = "👟  Velocidad:"
+
+[node name="ValVelocidad" type="Label" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox/PanelStatsValores/VBox/GridStats" unique_id=1468325179]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.5, 1, 1)
+text = "12"
+
+[node name="LblAcompanante" type="Label" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox/PanelStatsValores/VBox/GridStats" unique_id=1757211024]
+layout_mode = 2
+text = "🐾  Acompañante:"
+
+[node name="ValAcompanante" type="Label" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox/PanelStatsValores/VBox/GridStats" unique_id=488393641]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.85, 0.9, 1)
+text = "Ninguno"
+
+[node name="VistaSistema" type="Control" parent="ContenedorPrincipal/Margen/VBox/Vistas" unique_id=681914271]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaSistema" unique_id=1520644818]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -80.0
+offset_right = 150.0
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="BtnReanudar" type="Button" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaSistema/VBox" unique_id=205022460]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "▶  Continuar Aventura"
+
+[node name="BtnControles" type="Button" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaSistema/VBox" unique_id=1445292294]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "🎮  Guía de Controles"
+
+[node name="BtnSalirMenu" type="Button" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaSistema/VBox" unique_id=282187247]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "🚪  Volver al Menú Principal"

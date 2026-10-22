@@ -1,0 +1,25 @@
+=== INICIANDO TEST DE CORRECCIONES ===
+
+--- TEST 1: Persistencia de Salud ---
+✔ HP inicial en GameState: 15 / 15
+✔ Battler del jugador inicializado con 15 HP
+✔ Battler recibió daño en combate: HP actual = 9
+✔ GameState sincronizó HP tras combate: 9 / 15
+✔ PauseMenu muestra vida correcta: 9 / 15 HP
+✔ Consumir Queso Nórdico cura HP a: 14 / 15 HP
+✔ Nuevo combate inicia con la vida persistida del jugador: 14 HP
+
+--- TEST 2: Detección y Texto del Acompañante ---
+Texto sin acompañante: Ninguno (Descansando)
+✔ Texto sin acompañante coincide exactamente con texto_companero_descanso
+Texto con acompañante detectado: La Dani🐀 
+✔ Texto con acompañante coincide exactamente con texto_companero_activo
+
+--- TEST 3: Navegación de Opciones en Combate con Joystick ---
+✔ Todos los botones tienen FOCUS_NONE (sin interferencia de Godot GUI focus)
+✔ Movimiento hacia abajo seleccionó correctamente la opción 1 (Huir)
+✔ Deriva horizontal no causó doble salto; se mantiene en opción 1 (Huir)
+✔ Movimiento hacia arriba seleccionó correctamente la opción 0 (Golpear)
+✔ Confirmación con botón interact/A selecciona correctamente 'huir'
+
+=== TODOS LOS TESTS PASARON CON ÉXITO (3/3) ===

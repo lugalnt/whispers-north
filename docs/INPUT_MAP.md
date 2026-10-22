@@ -20,6 +20,10 @@ implemente el remapeo desde Opciones solo hay que modificar estas mismas accione
 | `move_left` | Mover izquierda | `A`, `←` | Stick izq. ←, D-pad ← |
 | `move_right` | Mover derecha | `D`, `→` | Stick izq. →, D-pad → |
 | `interact` | Interactuar (puertas, cofres, arbustos, NPCs, empujar al jarrón embrujado, etc.) | `Z`, `E`, `Enter`, `Espacio` | Botón A (abajo) |
+| `pause` | Abrir / Cerrar Menú de Pausa (Inventario, Stats, Opciones) | `Escape`, `P` | Botón Start (Menú) |
+| `tab_prev` | Pestaña anterior en menús con tabs | `Q`, `Page Up` | Botón LB / L1 (Hombro Izq.) |
+| `tab_next` | Pestaña siguiente en menús con tabs | `E`, `Page Down` | Botón RB / R1 (Hombro Der.) |
+
 
 - Las teclas usan `physical_keycode` (posición física), por lo que WASD funciona
   igual en teclados QWERTY, AZERTY, etc.
