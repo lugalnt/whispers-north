@@ -1,0 +1,1285 @@
+[gd_scene format=3 uid="uid://67dcvy6q4m36"]
+
+[ext_resource type="Texture2D" uid="uid://ds6en71aom1gh" path="res://assets/sprites/environment/backgrounds/mountain_snowy_background.png" id="1_fwgll"]
+[ext_resource type="PackedScene" uid="uid://bmq2ghxhosxj" path="res://scenes/player/player_32.tscn" id="1_s5k7d"]
+[ext_resource type="Texture2D" uid="uid://cgt45814xeiem" path="res://assets/sprites/items/placeholder.png" id="2_i618c"]
+[ext_resource type="Texture2D" uid="uid://qcuc2g14unqg" path="res://assets/sprites/environment/materials/pokemon_grass.png" id="2_rq4xl"]
+[ext_resource type="Script" uid="uid://ojlc0i8sf3xn" path="res://scripts/world/path_patch.gd" id="3_kdiqa"]
+[ext_resource type="PackedScene" uid="uid://d276us1ef7vn2" path="res://scenes/world/Paths/World_Town/Main_Path_Town_Section1.tscn" id="4_y4oph"]
+[ext_resource type="PackedScene" uid="uid://bi4mty8e2lew4" path="res://scenes/world/Entities/Tree.tscn" id="5_j7b52"]
+[ext_resource type="PackedScene" uid="uid://dxsn6l7x0h2ta" path="res://scenes/world/Entities/Tree_Pine.tscn" id="6_tamvi"]
+[ext_resource type="Texture2D" uid="uid://cxou354dqi2mf" path="res://assets/sprites/environment/materials/rock01_snow_c.png" id="7_b7lm3"]
+[ext_resource type="Texture2D" uid="uid://bslm2ejupfom4" path="res://assets/sprites/environment/materials/rock01_snow_n.png" id="8_af2fx"]
+[ext_resource type="PackedScene" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon HeartGold _ SoulSilver - Map Objects - Cianwood City House/Cianwood_City_House.tscn" id="9_fahh1"]
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/CameraSwitch.tscn" id="10_fhhgm"]
+[ext_resource type="PackedScene" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon HeartGold _ SoulSilver - Map Objects - Violet City House/Violet_City_House.tscn" id="10_xhxc1"]
+[ext_resource type="PackedScene" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon Platinum - Map Objects - Pastoria City House/Pastoria_City_House.tscn" id="11_3hbph"]
+[ext_resource type="PackedScene" uid="uid://bo22auxjhymkm" path="res://scenes/world/Entities/placeholder_npc.tscn" id="12_xhxc1"]
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/Fountain.tscn" id="14_fi4bx"]
+[ext_resource type="Script" uid="uid://dincpu7fdiqik" path="res://scripts/world/camera_switch_manager.gd" id="15_switchmgr"]
+[ext_resource type="Script" uid="uid://cptj7rkplojal" path="res://scripts/dialogue/interaccion_dialogo.gd" id="15_utsce"]
+[ext_resource type="Texture2D" uid="uid://cyjdhv31rlu27" path="res://assets/sprites/enemies/test_npc_portrait.png" id="16_fhhgm"]
+[ext_resource type="AudioStream" uid="uid://bafi4fmf3gk58" path="res://assets/audio/sfx/bottles_Sound.mp3" id="17_fhhgm"]
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/Pot.tscn" id="19_6eawn"]
+[ext_resource type="AudioStream" uid="uid://dhmy8wgyl8emk" path="res://assets/audio/sfx/Roar_0.wav" id="20_hep7u"]
+[ext_resource type="Script" uid="uid://d0kw3ycrnbgay" path="res://scripts/world/world_town.gd" id="21_worldtown"]
+[ext_resource type="PackedScene" uid="uid://c3q8fkm1r4t2v" path="res://scenes/world/Entities/WorldTransition.tscn" id="22_worldtrans"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rq4xl"]
+size = Vector3(0.2977295, 1, 1)
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_u2qlt"]
+
+[sub_resource type="Sky" id="Sky_6eebf"]
+sky_material = SubResource("PhysicalSkyMaterial_u2qlt")
+
+[sub_resource type="Environment" id="Environment_s5k7d"]
+background_mode = 1
+background_color = Color(0.35686275, 0.627451, 0.93333334, 1)
+background_energy_multiplier = 0.8
+sky = SubResource("Sky_6eebf")
+ambient_light_source = 2
+ambient_light_color = Color(0.76862746, 0.8, 0.827451, 1)
+ambient_light_energy = 0.08
+tonemap_mode = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qh0kd"]
+albedo_texture = ExtResource("2_rq4xl")
+uv1_scale = Vector3(16, 16, 16)
+uv1_offset = Vector3(0, 2, 0)
+texture_filter = 0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_b7lm3"]
+size = Vector3(0.9116516, 1.0889893, 1.1767044)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_j7b52"]
+size = Vector3(0.9116516, 1.0889893, 1.1767044)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j7b52"]
+albedo_texture = ExtResource("7_b7lm3")
+normal_enabled = true
+normal_texture = ExtResource("8_af2fx")
+uv1_triplanar = true
+texture_filter = 0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_l6rgs"]
+size = Vector3(83.18834, 8.6710205, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g4v7s"]
+size = Vector3(66.8078, 8.6710205, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_51fas"]
+size = Vector3(13.435351, 8.6710205, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_utsce"]
+size = Vector3(26.515234, 8.6710205, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fhhgm"]
+size = Vector3(7.724542, 8.6710205, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6eawn"]
+size = Vector3(7.724542, 8.6710205, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hep7u"]
+size = Vector3(16.406338, 8.6710205, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fwgll"]
+size = Vector3(21.339367, 8.6710205, 1)
+
+[node name="WorldTown" type="Node3D" unique_id=1701017460]
+script = ExtResource("21_worldtown")
+
+[node name="Background" type="StaticBody3D" parent="." unique_id=1502484923]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -3.7505436, 1.0824051, -41.722946)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Background" unique_id=1096605637]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35113525, 9.208674, -7.456194)
+shape = SubResource("BoxShape3D_rq4xl")
+
+[node name="Sprite3D" type="Sprite3D" parent="Background" unique_id=1920265624]
+transform = Transform3D(89.81132, 0, 0, 0, 49.69762, 0, 0, 0, 6.247612, -9.601983, 11.26092, 182.84868)
+cast_shadow = 0
+texture_filter = 0
+texture = ExtResource("1_fwgll")
+
+[node name="Sprite3D2" type="Sprite3D" parent="Background" unique_id=1635568874]
+transform = Transform3D(137.14447, 0, 0, 0, 60.60583, 0, -4.5474735e-13, 0, 6.247612, -38.929512, 38.53347, 205.87383)
+cast_shadow = 0
+texture_filter = 0
+texture = ExtResource("1_fwgll")
+
+[node name="Sprite3D3" type="Sprite3D" parent="Background" unique_id=1592774923]
+transform = Transform3D(95.31145, 0, 0, 0, 49.69762, 0, 0, 0, 6.247612, -55.672516, -23.31043, 205.87383)
+cast_shadow = 0
+texture_filter = 0
+texture = ExtResource("1_fwgll")
+
+[node name="Sprite3D4" type="Sprite3D" parent="Background" unique_id=814513778]
+transform = Transform3D(87.81964, 0, 0, 0, 49.69762, 0, 0, 0, 6.247612, -174.44754, -13.905706, 121.770615)
+cast_shadow = 0
+texture_filter = 0
+texture = ExtResource("1_fwgll")
+
+[node name="Background3" type="StaticBody3D" parent="." unique_id=1840022368]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -3.7505436, -48.765377, -41.722946)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Background3" unique_id=2008830100]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35113525, 9.208674, -7.456194)
+shape = SubResource("BoxShape3D_rq4xl")
+
+[node name="Sprite3D" type="Sprite3D" parent="Background3" unique_id=968414683]
+transform = Transform3D(89.81132, 0, 0, 0, 49.69762, 0, 0, 0, 6.247612, -9.601983, 11.26092, 182.84868)
+cast_shadow = 0
+texture_filter = 0
+texture = ExtResource("1_fwgll")
+
+[node name="Sprite3D2" type="Sprite3D" parent="Background3" unique_id=1925216536]
+transform = Transform3D(137.14447, 0, 0, 0, 60.60583, 0, -4.5474735e-13, 0, 6.247612, -38.929512, 38.53347, 205.87383)
+cast_shadow = 0
+texture_filter = 0
+texture = ExtResource("1_fwgll")
+
+[node name="Sprite3D3" type="Sprite3D" parent="Background3" unique_id=1295364883]
+transform = Transform3D(95.31145, 0, 0, 0, 49.69762, 0, 0, 0, 6.247612, -55.672516, -23.31043, 205.87383)
+cast_shadow = 0
+texture_filter = 0
+texture = ExtResource("1_fwgll")
+
+[node name="Sprite3D4" type="Sprite3D" parent="Background3" unique_id=1007572453]
+transform = Transform3D(87.81964, 0, 0, 0, 49.69762, 0, 0, 0, 6.247612, -174.44754, -13.905706, 121.770615)
+cast_shadow = 0
+texture_filter = 0
+texture = ExtResource("1_fwgll")
+
+[node name="Background2" type="StaticBody3D" parent="." unique_id=1984949903]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -3.7505436, 1.0824051, -41.722946)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Background2" unique_id=665859190]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35113525, 9.208674, -7.456194)
+shape = SubResource("BoxShape3D_rq4xl")
+
+[node name="Sprite3D" type="Sprite3D" parent="Background2" unique_id=120461951]
+transform = Transform3D(89.81132, 0, 0, 0, 49.69762, 0, 0, 0, 6.247612, -9.601983, 11.26092, 182.84868)
+cast_shadow = 0
+texture_filter = 0
+texture = ExtResource("1_fwgll")
+
+[node name="Sprite3D2" type="Sprite3D" parent="Background2" unique_id=1480714184]
+transform = Transform3D(137.14447, 0, 0, 0, 60.60583, 0, -4.5474735e-13, 0, 6.247612, -38.929512, 38.53347, 205.87383)
+cast_shadow = 0
+texture_filter = 0
+texture = ExtResource("1_fwgll")
+
+[node name="Sprite3D3" type="Sprite3D" parent="Background2" unique_id=1612445360]
+transform = Transform3D(95.31145, 0, 0, 0, 49.69762, 0, 0, 0, 6.247612, -55.672516, -23.31043, 205.87383)
+cast_shadow = 0
+texture_filter = 0
+texture = ExtResource("1_fwgll")
+
+[node name="Sprite3D4" type="Sprite3D" parent="Background2" unique_id=1684666521]
+transform = Transform3D(87.81964, 0, 0, 0, 49.69762, 0, 0, 0, 6.247612, -174.44754, -13.905706, 121.770615)
+cast_shadow = 0
+texture_filter = 0
+texture = ExtResource("1_fwgll")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=487776008]
+environment = SubResource("Environment_s5k7d")
+
+[node name="Sol" type="DirectionalLight3D" parent="." unique_id=462675487]
+transform = Transform3D(0.819152, 0.36868787, -0.4393851, 0, 0.76604444, 0.6427877, 0.5735765, -0.52654076, 0.62750685, -18.220196, 10.639449, 2.8805351)
+shadow_enabled = true
+
+[node name="Piso" type="CSGBox3D" parent="." unique_id=235782659]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.420189, -0.21069336, 0.7850418)
+use_collision = true
+size = Vector3(85.51105, 0.5786133, 41.031868)
+material = SubResource("StandardMaterial3D_qh0kd")
+
+[node name="Player32" parent="." unique_id=820540263 instance=ExtResource("1_s5k7d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.991846, 5.0543976, -13.440037)
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=876239236]
+transform = Transform3D(26.46904, 0, 0, 0, -5.644293e-07, -0.99999976, 0, 12.912636, -4.371138e-08, 5.3985634, 0.15913105, 0.8559017)
+visible = false
+texture = ExtResource("2_i618c")
+
+[node name="PathPatch" type="Node3D" parent="." unique_id=569151735]
+transform = Transform3D(2.0348346, 0, 0, 0, 1, 0, 0, 0, 2.4966834, 10.341369, 0.18807411, 0.73442554)
+script = ExtResource("3_kdiqa")
+source_scene = ExtResource("4_y4oph")
+metadata/_custom_type_script = "uid://ojlc0i8sf3xn"
+
+[node name="TreeWall" type="Node3D" parent="." unique_id=838812855]
+
+[node name="Trees" type="StaticBody3D" parent="TreeWall" unique_id=1137635071]
+transform = Transform3D(-1.1443998e-08, 0, 1, 0, 1, 0, -0.26180816, 0, -4.371139e-08, -25.278133, -0.55791664, -19.245766)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="TreeWall/Trees" unique_id=278204476]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees/Bundle Trees 1" unique_id=1178052795]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_b7lm3")
+
+[node name="Tree" parent="TreeWall/Trees/Bundle Trees 1" unique_id=911684628 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees/Bundle Trees 1" unique_id=1329488846 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="TreeWall/Trees/Bundle Trees 1" unique_id=209514914 instance=ExtResource("6_tamvi")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="TreeWall/Trees/Bundle Trees 1" unique_id=1401951278 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="TreeWall/Trees" unique_id=1004138215]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees/Bundle Trees 2" unique_id=1310028206]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_b7lm3")
+
+[node name="Tree" parent="TreeWall/Trees/Bundle Trees 2" unique_id=2130825730 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees/Bundle Trees 2" unique_id=724028030 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="TreeWall/Trees/Bundle Trees 2" unique_id=1553781573 instance=ExtResource("6_tamvi")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="TreeWall/Trees/Bundle Trees 2" unique_id=61677564 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="TreeWall/Trees" unique_id=1192837857]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees/Bundle Trees 3" unique_id=619722677]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_b7lm3")
+
+[node name="Tree" parent="TreeWall/Trees/Bundle Trees 3" unique_id=295584953 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees/Bundle Trees 3" unique_id=484055901 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP2" parent="TreeWall/Trees/Bundle Trees 3" unique_id=1931944701 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees7" type="StaticBody3D" parent="TreeWall" unique_id=1360956711]
+transform = Transform3D(-1.1443998e-08, 0, 1, 0, 1, 0, -0.26180816, 0, -4.371139e-08, -24.41776, -0.55791664, -17.145466)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="TreeWall/Trees7" unique_id=206613386]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees7/Bundle Trees 1" unique_id=44568816]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_b7lm3")
+
+[node name="Tree" parent="TreeWall/Trees7/Bundle Trees 1" unique_id=297213000 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees7/Bundle Trees 1" unique_id=1054716782 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="TreeWall/Trees7/Bundle Trees 1" unique_id=1077344041 instance=ExtResource("6_tamvi")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="TreeWall/Trees7/Bundle Trees 1" unique_id=192851868 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="TreeWall/Trees7" unique_id=1777555557]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees7/Bundle Trees 2" unique_id=1636568330]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_b7lm3")
+
+[node name="Tree" parent="TreeWall/Trees7/Bundle Trees 2" unique_id=724752278 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees7/Bundle Trees 2" unique_id=1033895295 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="TreeWall/Trees7/Bundle Trees 2" unique_id=53294601 instance=ExtResource("6_tamvi")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="TreeWall/Trees7/Bundle Trees 2" unique_id=681821035 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="TreeWall/Trees7" unique_id=1017556486]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees7/Bundle Trees 3" unique_id=657526749]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_b7lm3")
+
+[node name="Tree" parent="TreeWall/Trees7/Bundle Trees 3" unique_id=1787444703 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees7/Bundle Trees 3" unique_id=577730167 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP2" parent="TreeWall/Trees7/Bundle Trees 3" unique_id=2071531406 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees8" type="StaticBody3D" parent="TreeWall" unique_id=521720210]
+transform = Transform3D(-1.1443998e-08, 0, 1, 0, 1, 0, -0.26180816, 0, -4.371139e-08, -25.44592, -0.55791664, -15.178005)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="TreeWall/Trees8" unique_id=1949114071]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees8/Bundle Trees 1" unique_id=72346655]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_b7lm3")
+
+[node name="Tree" parent="TreeWall/Trees8/Bundle Trees 1" unique_id=1235825285 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees8/Bundle Trees 1" unique_id=309277101 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="TreeWall/Trees8/Bundle Trees 1" unique_id=857407460 instance=ExtResource("6_tamvi")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="TreeWall/Trees8/Bundle Trees 1" unique_id=1441347405 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="TreeWall/Trees8" unique_id=40651979]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees8/Bundle Trees 2" unique_id=1643872543]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_b7lm3")
+
+[node name="Tree" parent="TreeWall/Trees8/Bundle Trees 2" unique_id=1040793981 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees8/Bundle Trees 2" unique_id=1375252190 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="TreeWall/Trees8/Bundle Trees 2" unique_id=1203546459 instance=ExtResource("6_tamvi")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="TreeWall/Trees8/Bundle Trees 2" unique_id=939224373 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="TreeWall/Trees8" unique_id=1048039785]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees8/Bundle Trees 3" unique_id=145578539]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_b7lm3")
+
+[node name="Tree" parent="TreeWall/Trees8/Bundle Trees 3" unique_id=1062728151 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees8/Bundle Trees 3" unique_id=137055669 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP2" parent="TreeWall/Trees8/Bundle Trees 3" unique_id=1494665769 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees2" type="StaticBody3D" parent="TreeWall" unique_id=2104594491]
+transform = Transform3D(-2.996132e-09, 0, 1, 0, 1, 0, -0.06854351, 0, -4.371139e-08, -7.7611136, -0.55791664, -19.64705)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="TreeWall/Trees2" unique_id=761290800]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees2/Bundle Trees 1" unique_id=1067293223]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_j7b52")
+
+[node name="Tree" parent="TreeWall/Trees2/Bundle Trees 1" unique_id=1422670147 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees2/Bundle Trees 1" unique_id=827819640 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="TreeWall/Trees2/Bundle Trees 1" unique_id=2009983365 instance=ExtResource("6_tamvi")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="TreeWall/Trees2/Bundle Trees 1" unique_id=1661362656 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="TreeWall/Trees2" unique_id=701091341]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees2/Bundle Trees 2" unique_id=680035945]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_j7b52")
+
+[node name="Tree" parent="TreeWall/Trees2/Bundle Trees 2" unique_id=55973517 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees2/Bundle Trees 2" unique_id=357887820 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="TreeWall/Trees2/Bundle Trees 2" unique_id=1674533652 instance=ExtResource("6_tamvi")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="TreeWall/Trees2/Bundle Trees 2" unique_id=737287423 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="TreeWall/Trees2" unique_id=1552711630]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees2/Bundle Trees 3" unique_id=2012751072]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_j7b52")
+
+[node name="Tree" parent="TreeWall/Trees2/Bundle Trees 3" unique_id=1208546301 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees2/Bundle Trees 3" unique_id=1335626581 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="TreeWall/Trees2/Bundle Trees 3" unique_id=1768624443 instance=ExtResource("6_tamvi")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="TreeWall/Trees2/Bundle Trees 3" unique_id=1478597840 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees9" type="StaticBody3D" parent="TreeWall" unique_id=184980360]
+transform = Transform3D(-2.996132e-09, 0, 1, 0, 1, 0, -0.06854351, 0, -4.371139e-08, -6.9734325, -0.55791664, -20.307539)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="TreeWall/Trees9" unique_id=64523663]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees9/Bundle Trees 1" unique_id=412268649]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_j7b52")
+
+[node name="Tree" parent="TreeWall/Trees9/Bundle Trees 1" unique_id=311005949 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees9/Bundle Trees 1" unique_id=376467031 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="TreeWall/Trees9/Bundle Trees 1" unique_id=1325391593 instance=ExtResource("6_tamvi")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="TreeWall/Trees9/Bundle Trees 1" unique_id=436798458 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="TreeWall/Trees9" unique_id=703595532]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees9/Bundle Trees 2" unique_id=1492678602]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_j7b52")
+
+[node name="Tree" parent="TreeWall/Trees9/Bundle Trees 2" unique_id=159539760 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees9/Bundle Trees 2" unique_id=1182941151 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="TreeWall/Trees9/Bundle Trees 2" unique_id=1398937935 instance=ExtResource("6_tamvi")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="TreeWall/Trees9/Bundle Trees 2" unique_id=879702128 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="TreeWall/Trees9" unique_id=1516770098]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees9/Bundle Trees 3" unique_id=688644676]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_j7b52")
+
+[node name="Tree" parent="TreeWall/Trees9/Bundle Trees 3" unique_id=552911071 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees9/Bundle Trees 3" unique_id=1290508112 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="TreeWall/Trees9/Bundle Trees 3" unique_id=1848293915 instance=ExtResource("6_tamvi")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="TreeWall/Trees9/Bundle Trees 3" unique_id=1272166710 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees10" type="StaticBody3D" parent="TreeWall" unique_id=1211912036]
+transform = Transform3D(-2.996132e-09, 0, 1, 0, 1, 0, -0.06854351, 0, -4.371139e-08, 9.116663, -0.55791664, -20.307539)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="TreeWall/Trees10" unique_id=816880342]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees10/Bundle Trees 1" unique_id=539768021]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_j7b52")
+
+[node name="Tree" parent="TreeWall/Trees10/Bundle Trees 1" unique_id=993028251 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees10/Bundle Trees 1" unique_id=648066674 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="TreeWall/Trees10/Bundle Trees 1" unique_id=978140868 instance=ExtResource("6_tamvi")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="TreeWall/Trees10/Bundle Trees 1" unique_id=980992130 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="TreeWall/Trees10" unique_id=584510517]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees10/Bundle Trees 2" unique_id=793017273]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_j7b52")
+
+[node name="Tree" parent="TreeWall/Trees10/Bundle Trees 2" unique_id=1820021250 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees10/Bundle Trees 2" unique_id=281867810 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="TreeWall/Trees10/Bundle Trees 2" unique_id=963605056 instance=ExtResource("6_tamvi")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="TreeWall/Trees10/Bundle Trees 2" unique_id=324195774 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="TreeWall/Trees10" unique_id=2065710480]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees10/Bundle Trees 3" unique_id=781553342]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_j7b52")
+
+[node name="Tree" parent="TreeWall/Trees10/Bundle Trees 3" unique_id=404177006 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees10/Bundle Trees 3" unique_id=746234630 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="TreeWall/Trees10/Bundle Trees 3" unique_id=1194222402 instance=ExtResource("6_tamvi")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="TreeWall/Trees10/Bundle Trees 3" unique_id=98168212 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees11" type="StaticBody3D" parent="TreeWall" unique_id=1593593978]
+transform = Transform3D(-2.996132e-09, 0, 1, 0, 1, 0, -0.06854351, 0, -4.371139e-08, 24.217525, -0.55791664, -20.307539)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="TreeWall/Trees11" unique_id=1297638098]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees11/Bundle Trees 1" unique_id=1100608617]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_j7b52")
+
+[node name="Tree" parent="TreeWall/Trees11/Bundle Trees 1" unique_id=328355068 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees11/Bundle Trees 1" unique_id=983739209 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="TreeWall/Trees11/Bundle Trees 1" unique_id=1304666886 instance=ExtResource("6_tamvi")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="TreeWall/Trees11/Bundle Trees 1" unique_id=1935295340 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="TreeWall/Trees11" unique_id=432653517]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees11/Bundle Trees 2" unique_id=433317117]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_j7b52")
+
+[node name="Tree" parent="TreeWall/Trees11/Bundle Trees 2" unique_id=1798509093 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees11/Bundle Trees 2" unique_id=1925065333 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="TreeWall/Trees11/Bundle Trees 2" unique_id=967594584 instance=ExtResource("6_tamvi")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="TreeWall/Trees11/Bundle Trees 2" unique_id=1658548259 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="TreeWall/Trees11" unique_id=4128537]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees11/Bundle Trees 3" unique_id=1200322825]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_j7b52")
+
+[node name="Tree" parent="TreeWall/Trees11/Bundle Trees 3" unique_id=1970938815 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees11/Bundle Trees 3" unique_id=197233211 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="TreeWall/Trees11/Bundle Trees 3" unique_id=264759756 instance=ExtResource("6_tamvi")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="TreeWall/Trees11/Bundle Trees 3" unique_id=807682811 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees12" type="StaticBody3D" parent="TreeWall" unique_id=1696722501]
+transform = Transform3D(-2.996132e-09, 0, 1, 0, 1, 0, -0.06854351, 0, -4.371139e-08, 39.69247, -0.55791664, -20.307539)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="TreeWall/Trees12" unique_id=573912266]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees12/Bundle Trees 1" unique_id=1908560246]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_j7b52")
+
+[node name="Tree" parent="TreeWall/Trees12/Bundle Trees 1" unique_id=1024858104 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees12/Bundle Trees 1" unique_id=75297117 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="TreeWall/Trees12/Bundle Trees 1" unique_id=332586202 instance=ExtResource("6_tamvi")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="TreeWall/Trees12/Bundle Trees 1" unique_id=24179899 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="TreeWall/Trees12" unique_id=1086852993]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees12/Bundle Trees 2" unique_id=1468801014]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_j7b52")
+
+[node name="Tree" parent="TreeWall/Trees12/Bundle Trees 2" unique_id=1962569447 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees12/Bundle Trees 2" unique_id=711544245 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="TreeWall/Trees12/Bundle Trees 2" unique_id=2105696017 instance=ExtResource("6_tamvi")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="TreeWall/Trees12/Bundle Trees 2" unique_id=599757140 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="TreeWall/Trees12" unique_id=1181231502]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees12/Bundle Trees 3" unique_id=814264142]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_j7b52")
+
+[node name="Tree" parent="TreeWall/Trees12/Bundle Trees 3" unique_id=1097620175 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees12/Bundle Trees 3" unique_id=389922831 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="TreeWall/Trees12/Bundle Trees 3" unique_id=1835547320 instance=ExtResource("6_tamvi")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="TreeWall/Trees12/Bundle Trees 3" unique_id=374952102 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees13" type="StaticBody3D" parent="TreeWall" unique_id=870646326]
+transform = Transform3D(-2.996132e-09, 0, 1, 0, 1, 0, -0.06854351, 0, -4.371139e-08, 55.26875, -0.55791664, -20.307539)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="TreeWall/Trees13" unique_id=1141196361]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees13/Bundle Trees 1" unique_id=1512985635]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_j7b52")
+
+[node name="Tree" parent="TreeWall/Trees13/Bundle Trees 1" unique_id=1172406309 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees13/Bundle Trees 1" unique_id=27036703 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="TreeWall/Trees13/Bundle Trees 1" unique_id=365922992 instance=ExtResource("6_tamvi")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="TreeWall/Trees13/Bundle Trees 1" unique_id=1543530762 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="TreeWall/Trees13" unique_id=1200640320]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees13/Bundle Trees 2" unique_id=992265087]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_j7b52")
+
+[node name="Tree2" parent="TreeWall/Trees13/Bundle Trees 2" unique_id=396353844 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="TreeWall/Trees13" unique_id=383622696]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees13/Bundle Trees 3" unique_id=587885820]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_j7b52")
+
+[node name="Trees3" type="StaticBody3D" parent="TreeWall" unique_id=1099250265]
+transform = Transform3D(-2.996132e-09, 0, 1, 0, 1, 0, -0.06854351, 0, -4.371139e-08, 8.448233, -0.55791664, -19.64705)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="TreeWall/Trees3" unique_id=719269290]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees3/Bundle Trees 1" unique_id=574396496]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_j7b52")
+
+[node name="Tree" parent="TreeWall/Trees3/Bundle Trees 1" unique_id=1235937665 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees3/Bundle Trees 1" unique_id=1473222266 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="TreeWall/Trees3/Bundle Trees 1" unique_id=1404437645 instance=ExtResource("6_tamvi")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="TreeWall/Trees3/Bundle Trees 1" unique_id=535540725 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="TreeWall/Trees3" unique_id=1300184112]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees3/Bundle Trees 2" unique_id=264214491]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_j7b52")
+
+[node name="Tree" parent="TreeWall/Trees3/Bundle Trees 2" unique_id=1975278656 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees3/Bundle Trees 2" unique_id=1682732570 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="TreeWall/Trees3/Bundle Trees 2" unique_id=806936159 instance=ExtResource("6_tamvi")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="TreeWall/Trees3/Bundle Trees 2" unique_id=235799827 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="TreeWall/Trees3" unique_id=1942342569]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees3/Bundle Trees 3" unique_id=1414888508]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_j7b52")
+
+[node name="Tree" parent="TreeWall/Trees3/Bundle Trees 3" unique_id=25256242 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees3/Bundle Trees 3" unique_id=1499233695 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="TreeWall/Trees3/Bundle Trees 3" unique_id=398532559 instance=ExtResource("6_tamvi")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="TreeWall/Trees3/Bundle Trees 3" unique_id=1161188508 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees4" type="StaticBody3D" parent="TreeWall" unique_id=596408330]
+transform = Transform3D(-2.996132e-09, 0, 1, 0, 1, 0, -0.06854351, 0, -4.371139e-08, 24.907467, -0.55791664, -19.64705)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="TreeWall/Trees4" unique_id=1413896990]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees4/Bundle Trees 1" unique_id=110862709]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_j7b52")
+
+[node name="Tree" parent="TreeWall/Trees4/Bundle Trees 1" unique_id=1533016067 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees4/Bundle Trees 1" unique_id=287543561 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="TreeWall/Trees4/Bundle Trees 1" unique_id=1875086744 instance=ExtResource("6_tamvi")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="TreeWall/Trees4/Bundle Trees 1" unique_id=477590950 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="TreeWall/Trees4" unique_id=1534703862]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees4/Bundle Trees 2" unique_id=2057432889]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_j7b52")
+
+[node name="Tree" parent="TreeWall/Trees4/Bundle Trees 2" unique_id=2141472576 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees4/Bundle Trees 2" unique_id=1741271133 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="TreeWall/Trees4/Bundle Trees 2" unique_id=2118446270 instance=ExtResource("6_tamvi")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="TreeWall/Trees4/Bundle Trees 2" unique_id=1473232090 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="TreeWall/Trees4" unique_id=1335937870]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees4/Bundle Trees 3" unique_id=160423859]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_j7b52")
+
+[node name="Tree" parent="TreeWall/Trees4/Bundle Trees 3" unique_id=543497556 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees4/Bundle Trees 3" unique_id=1995772606 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="TreeWall/Trees4/Bundle Trees 3" unique_id=1313199878 instance=ExtResource("6_tamvi")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="TreeWall/Trees4/Bundle Trees 3" unique_id=207406510 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees5" type="StaticBody3D" parent="TreeWall" unique_id=418982982]
+transform = Transform3D(-2.996132e-09, 0, 1, 0, 1, 0, -0.06854351, 0, -4.371139e-08, 40.849075, -0.55791664, -19.64705)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="TreeWall/Trees5" unique_id=1138885206]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees5/Bundle Trees 1" unique_id=1899144857]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_j7b52")
+
+[node name="Tree" parent="TreeWall/Trees5/Bundle Trees 1" unique_id=1604196926 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees5/Bundle Trees 1" unique_id=167657264 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="TreeWall/Trees5/Bundle Trees 1" unique_id=1563886973 instance=ExtResource("6_tamvi")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="TreeWall/Trees5/Bundle Trees 1" unique_id=871533411 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="TreeWall/Trees5" unique_id=1864054122]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees5/Bundle Trees 2" unique_id=55195463]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_j7b52")
+
+[node name="Tree" parent="TreeWall/Trees5/Bundle Trees 2" unique_id=1144971638 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees5/Bundle Trees 2" unique_id=2012483752 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="TreeWall/Trees5/Bundle Trees 2" unique_id=1953193299 instance=ExtResource("6_tamvi")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="TreeWall/Trees5/Bundle Trees 2" unique_id=601086709 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="TreeWall/Trees5" unique_id=234928300]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees5/Bundle Trees 3" unique_id=1327271290]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_j7b52")
+
+[node name="Tree" parent="TreeWall/Trees5/Bundle Trees 3" unique_id=477019192 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees5/Bundle Trees 3" unique_id=1036215109 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP" parent="TreeWall/Trees5/Bundle Trees 3" unique_id=1086208030 instance=ExtResource("6_tamvi")]
+transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0, 0.13681674, 0, 0, 0)
+
+[node name="TreeP2" parent="TreeWall/Trees5/Bundle Trees 3" unique_id=769784096 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Trees6" type="StaticBody3D" parent="TreeWall" unique_id=991047556]
+transform = Transform3D(-2.996132e-09, 0, 1, 0, 1, 0, -0.06854351, 0, -4.371139e-08, 56.980453, -0.55791664, -19.64705)
+
+[node name="Bundle Trees 1" type="StaticBody3D" parent="TreeWall/Trees6" unique_id=509705213]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -6.9719276)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees6/Bundle Trees 1" unique_id=575156647]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_j7b52")
+
+[node name="Tree" parent="TreeWall/Trees6/Bundle Trees 1" unique_id=2114914268 instance=ExtResource("5_j7b52")]
+transform = Transform3D(1.2216309, 0, -0.0036060205, 0, 1.1854532, 0, 0.10004586, 0, 0.18281184, 1.3421178, 0.003094852, 1.0251317)
+
+[node name="Tree2" parent="TreeWall/Trees6/Bundle Trees 1" unique_id=496255523 instance=ExtResource("5_j7b52")]
+transform = Transform3D(0.7177186, 0, -0.0036609885, 0, 0.7256849, 0, 0.05877784, 0, 0.18559875, 2.2088718, -0.12835807, 0.5066042)
+
+[node name="TreeP2" parent="TreeWall/Trees6/Bundle Trees 1" unique_id=563839208 instance=ExtResource("6_tamvi")]
+transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
+
+[node name="Bundle Trees 2" type="StaticBody3D" parent="TreeWall/Trees6" unique_id=1507296655]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, -2.0766277)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees6/Bundle Trees 2" unique_id=62790085]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1.0000001, 0, 3.7652378, 0, 0.04578261, 0.9837723, 0.09393665, 1.1340027)
+shape = SubResource("BoxShape3D_j7b52")
+
+[node name="Bundle Trees 3" type="StaticBody3D" parent="TreeWall/Trees6" unique_id=879015208]
+transform = Transform3D(0.052381728, 0, 0.9070031, 0, 1.8731936, 0, -1.8481033, 0, 0.025707642, 4.679428, 1.3890547, 3.223989)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TreeWall/Trees6/Bundle Trees 3" unique_id=161370720]
+transform = Transform3D(0.05385086, 0, -3.201107, 0, 1, 0, 3.765238, 0, 0.045782592, 0.984025, 0.09393662, 1.1522231)
+shape = SubResource("BoxShape3D_j7b52")
+
+[node name="MuroPlantilla" type="CSGPolygon3D" parent="." unique_id=2024454123]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -37.115788, 0, 8.848755)
+visible = false
+use_collision = true
+polygon = PackedVector2Array(0, 0, 0, 1, 1, 1, 2, 0)
+depth = 11.73
+
+[node name="Muro1" type="CSGPolygon3D" parent="." unique_id=1323028471]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -37.115788, 0, 21.088024)
+use_collision = true
+polygon = PackedVector2Array(0, 0, 0, 1, 1, 1, 2, 0)
+depth = 18.1
+material = SubResource("StandardMaterial3D_j7b52")
+
+[node name="Muro2" type="CSGPolygon3D" parent="." unique_id=616382811]
+transform = Transform3D(-2, 0, -1.7484555e-07, 0, 2, 0, 1.7484555e-07, 0, -2, 47.98344, 0, -18.949823)
+use_collision = true
+polygon = PackedVector2Array(0, 0, 0, 1, 1, 1, 2, 0)
+depth = 10.5
+material = SubResource("StandardMaterial3D_j7b52")
+
+[node name="Muro3" type="CSGPolygon3D" parent="." unique_id=686640544]
+transform = Transform3D(-2, 0, -1.7484555e-07, 0, 2, 0, 1.7484555e-07, 0, -2, 47.98344, 0, 6.482115)
+use_collision = true
+polygon = PackedVector2Array(0, 0, 0, 1, 1, 1, 2, 0)
+depth = 7.4
+material = SubResource("StandardMaterial3D_j7b52")
+
+[node name="Cameras" type="Node3D" parent="." unique_id=1277655875]
+
+[node name="Camera1" type="Camera3D" parent="Cameras" unique_id=789151285]
+transform = Transform3D(1, 0, 0, 0, 0.9170601, 0.39874908, 0, -0.39874908, 0.9170601, -20.608292, 6.838628, 0.8517666)
+fov = 60.0
+
+[node name="Camera2" type="Camera3D" parent="Cameras" unique_id=1331878664]
+transform = Transform3D(1, 0, 0, 0, 0.9170601, 0.39874908, 0, -0.39874908, 0.9170601, -9.594805, 6.838628, -7.7838364)
+fov = 60.0
+
+[node name="Camera3" type="Camera3D" parent="Cameras" unique_id=459463096]
+transform = Transform3D(1, 0, 0, 0, 0.9170601, 0.39874908, 0, -0.39874908, 0.9170601, 0.8064766, 6.838628, -9.571081)
+fov = 60.0
+
+[node name="Camera4" type="Camera3D" parent="Cameras" unique_id=1307466078]
+transform = Transform3D(1, 0, 0, 0, 0.9170601, 0.39874908, 0, -0.39874908, 0.9170601, -20.608292, 6.838628, 13.443968)
+fov = 60.0
+
+[node name="Camera5" type="Camera3D" parent="Cameras" unique_id=997008442]
+transform = Transform3D(0.7815205, -0.35336933, 0.5141555, 0, 0.8241262, 0.56640625, -0.6238796, -0.4426581, 0.6440715, -20.608292, 6.838628, 17.17168)
+fov = 60.0
+
+[node name="Camera6" type="Camera3D" parent="Cameras" unique_id=1615289618]
+transform = Transform3D(1, 0, 0, 0, 0.8241262, 0.56640625, 0, -0.56640625, 0.8241262, -13.095644, 6.838628, 24.370598)
+fov = 60.0
+
+[node name="Camera7" type="Camera3D" parent="Cameras" unique_id=893994372]
+transform = Transform3D(1, 0, 0, 0, 0.8241262, 0.56640625, 0, -0.56640625, 0.8241262, 11.023166, 6.838628, 24.370598)
+fov = 60.0
+
+[node name="Camera8" type="Camera3D" parent="Cameras" unique_id=89172533]
+transform = Transform3D(1, 0, 0, 0, 0.8241262, 0.56640625, 0, -0.56640625, 0.8241262, -13.095644, 6.838628, 11.107414)
+fov = 60.0
+
+[node name="Camera9" type="Camera3D" parent="Cameras" unique_id=16993337]
+transform = Transform3D(1, 0, 0, 0, 0.8241262, 0.56640625, 0, -0.56640625, 0.8241262, 11.023166, 6.838628, 11.181486)
+fov = 60.0
+
+[node name="Camera10" type="Camera3D" parent="Cameras" unique_id=1933658749]
+transform = Transform3D(1, 0, 0, 0, 0.8241262, 0.56640625, 0, -0.56640625, 0.8241262, 30.70927, 6.838628, 24.370598)
+fov = 60.0
+
+[node name="Camera11" type="Camera3D" parent="Cameras" unique_id=2116787208]
+transform = Transform3D(1, 0, 0, 0, 0.8241262, 0.56640625, 0, -0.56640625, 0.8241262, 34.1564, 6.838628, 11.181486)
+fov = 60.0
+
+[node name="Switches" type="Node3D" parent="." unique_id=2081928374]
+script = ExtResource("15_switchmgr")
+nuevo_switch_par = Vector2i(9, 11)
+
+[node name="Switch_1_2" parent="Switches" unique_id=1982736450 instance=ExtResource("10_fhhgm")]
+transform = Transform3D(-0.007390833, 0, -0.9999727, 0, 1, 0, 0.9999727, 0, -0.007390833, -12.818702, 0, -15.590525)
+modo = 1
+tamano_trigger = Vector3(20.6, 3.5, 2)
+
+[node name="Switch_2_3" parent="Switches" unique_id=220235683 instance=ExtResource("10_fhhgm")]
+transform = Transform3D(0.16934781, 0, -0.98555636, 0, 1, 0, 0.98555636, 0, 0.16934781, -4.394164, 0, -16.63459)
+modo = 1
+camara_a_num = 2
+camara_b_num = 3
+tamano_trigger = Vector3(10, 3.5, 2)
+
+[node name="Switch_1_4" parent="Switches" unique_id=1890316686 instance=ExtResource("10_fhhgm")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -20.608292, 0, -1.4534578)
+modo = 1
+camara_b_num = 4
+tamano_trigger = Vector3(6, 3.5, 1.8)
+
+[node name="Switch_4_5" parent="Switches" unique_id=1993832150 instance=ExtResource("10_fhhgm")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -20.608292, 0, 9.9351635)
+modo = 1
+camara_a_num = 4
+camara_b_num = 5
+tamano_trigger = Vector3(5.5, 3.5, 1.6)
+
+[node name="Switch_5_6" parent="Switches" unique_id=927805182 instance=ExtResource("10_fhhgm")]
+transform = Transform3D(-0.6918703, 0, -0.7220218, 0, 1, 0, 0.7220218, 0, -0.6918703, -20.87038, 0, 16.226534)
+modo = 1
+camara_a_num = 5
+camara_b_num = 6
+tamano_trigger = Vector3(11.619503, 3.5, 2)
+
+[node name="Switch_6_7" parent="Switches" unique_id=1637152018 instance=ExtResource("10_fhhgm")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -2.1869364, 0, 16.577635)
+modo = 1
+camara_a_num = 6
+camara_b_num = 7
+tamano_trigger = Vector3(9.5, 3.5, 2.2)
+
+[node name="Switch_4_8" parent="Switches" unique_id=1293777603 instance=ExtResource("10_fhhgm")]
+transform = Transform3D(-0.023510188, 0, -0.99972355, 0, 1, 0, 0.99972355, 0, -0.023510188, -17.044872, 0, 5.41759)
+modo = 1
+camara_a_num = 4
+camara_b_num = 8
+tamano_trigger = Vector3(6.8, 3.5, 1.9)
+
+[node name="Switch_8_9" parent="Switches" unique_id=1070289438 instance=ExtResource("10_fhhgm")]
+transform = Transform3D(-0.0030708702, 0, -0.9999953, 0, 1, 0, 0.9999953, 0, -0.0030708702, -0.9440303, 0, 4.088814)
+modo = 1
+camara_a_num = 8
+camara_b_num = 9
+tamano_trigger = Vector3(14.5, 3.5, 2.4)
+
+[node name="Switch_8_6" parent="Switches" unique_id=727149065 instance=ExtResource("10_fhhgm")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, -13.095644, 0, 10.032926)
+modo = 1
+camara_a_num = 8
+camara_b_num = 6
+tamano_trigger = Vector3(8.2, 3.5, 2)
+
+[node name="Switch_7_9" parent="Switches" unique_id=529062648 instance=ExtResource("10_fhhgm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.023166, 0, 10.294256)
+modo = 1
+camara_a_num = 7
+camara_b_num = 9
+tamano_trigger = Vector3(25.4, 3.5, 2.5)
+
+[node name="Switch_9_11" parent="Switches" unique_id=852013432 instance=ExtResource("10_fhhgm")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 24.84343, 0, 3.6884794)
+modo = 1
+camara_a_num = 9
+camara_b_num = 11
+tamano_trigger = Vector3(6.2, 3.5, 1.8)
+
+[node name="Houses" type="Node3D" parent="." unique_id=1944536437]
+
+[node name="House_A" parent="Houses" unique_id=453238937 instance=ExtResource("9_fahh1")]
+transform = Transform3D(-4.371139e-09, 0, 0.1, 0, 0.1, 0, -0.1, 0, -4.371139e-09, -27.68959, -0.036049843, -9.306185)
+
+[node name="House_A2" parent="Houses" unique_id=155833816 instance=ExtResource("9_fahh1")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -2.1316404, -0.036049843, -1.40979)
+
+[node name="House_A3" parent="Houses" unique_id=1680891188 instance=ExtResource("9_fahh1")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 17.832962, -0.036049843, -1.40979)
+
+[node name="House_A5" parent="Houses" unique_id=495217974 instance=ExtResource("9_fahh1")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 13.582903, -0.036049843, -8.170225)
+
+[node name="House_A4" parent="Houses" unique_id=1574951128 instance=ExtResource("9_fahh1")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 37.977135, -0.036049843, -1.40979)
+
+[node name="House_B" parent="Houses" unique_id=1580575251 instance=ExtResource("10_xhxc1")]
+transform = Transform3D(-4.371139e-09, 0, -0.1, 0, 0.1, 0, 0.1, 0, -4.371139e-09, 7.4726753, -0.028921127, -15.219931)
+
+[node name="House_B2" parent="Houses" unique_id=1646970949 instance=ExtResource("10_xhxc1")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 8.059161, -0.028921127, -1.5242939)
+
+[node name="House_B3" parent="Houses" unique_id=1480972593 instance=ExtResource("10_xhxc1")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 23.21949, -0.028921127, -7.609277)
+
+[node name="House_C" parent="Houses" unique_id=1697781114 instance=ExtResource("11_3hbph")]
+transform = Transform3D(-4.371139e-09, 0, 0.1, 0, 0.1, 0, -0.1, 0, -4.371139e-09, -27.121416, -0.11078739, 2.5295439)
+
+[node name="House_C3" parent="Houses" unique_id=1253752101 instance=ExtResource("11_3hbph")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 28.153463, -0.11078739, -0.8753004)
+
+[node name="House_C5" parent="Houses" unique_id=877658952 instance=ExtResource("11_3hbph")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 33.157158, -0.11078739, -8.196471)
+
+[node name="House_C4" parent="Houses" unique_id=378448174 instance=ExtResource("11_3hbph")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 3.1868, -0.11078739, -7.579833)
+
+[node name="House_C2" parent="Houses" unique_id=741616285 instance=ExtResource("11_3hbph")]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, -12.762271, -0.11078739, -1.9391732)
+
+[node name="Npc" parent="." unique_id=691415349 instance=ExtResource("12_xhxc1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.883728, 1.3016276, 13.414091)
+
+[node name="InteraccionDialogo" type="Area3D" parent="Npc" unique_id=137124227]
+script = ExtResource("15_utsce")
+maximo_interacciones = 1
+nombre_hablante = "NPC"
+retrato_hablante = ExtResource("16_fhhgm")
+lineas_rapidas = Array[String](["No me hables."])
+sfx_iniciar = null
+sfx_voz_hablante = ExtResource("17_fhhgm")
+metadata/_custom_type_script = "uid://cptj7rkplojal"
+
+[node name="Npc_Exp" parent="." unique_id=479512314 instance=ExtResource("12_xhxc1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.3989906, 1.3016276, 4.4688797)
+explotar_al_terminar_dialogo = true
+
+[node name="InteraccionDialogo" type="Area3D" parent="Npc_Exp" unique_id=1615668233]
+script = ExtResource("15_utsce")
+maximo_interacciones = 1
+nombre_hablante = "NPC"
+retrato_hablante = ExtResource("16_fhhgm")
+lineas_rapidas = Array[String](["Ser NPC de pruebas es cosa dificil, chabal.", "Bye."])
+sfx_iniciar = null
+sfx_voz_hablante = ExtResource("17_fhhgm")
+metadata/_custom_type_script = "uid://cptj7rkplojal"
+
+[node name="Npc_Util" parent="." unique_id=1690203017 instance=ExtResource("12_xhxc1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3919077, 1.3016276, -16.85178)
+aumentar_ataque_al_terminar = true
+desbloquear_ataque_al_terminar = true
+
+[node name="InteraccionDialogo" type="Area3D" parent="Npc_Util" unique_id=1846260343]
+script = ExtResource("15_utsce")
+maximo_interacciones = 5
+nombre_hablante = "NPC Util."
+retrato_hablante = ExtResource("16_fhhgm")
+lineas_rapidas = Array[String](["Soy el unico NPC util de aqui.", "Toma!!!"])
+sfx_iniciar = null
+sfx_voz_hablante = ExtResource("17_fhhgm")
+metadata/_custom_type_script = "uid://cptj7rkplojal"
+
+[node name="Fountain" parent="." unique_id=558754715 instance=ExtResource("14_fi4bx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.1823196, 0, 11.616127)
+velocidad_flujo = 0.6
+
+[node name="Invis_Walls" type="Node3D" parent="." unique_id=226087773]
+
+[node name="Invis_Wall" type="StaticBody3D" parent="Invis_Walls" unique_id=564152025]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.094647, 5.173122, 25.267002)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Invis_Walls/Invis_Wall" unique_id=955348966]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.8118978, -1.3882184, -3.563755)
+shape = SubResource("BoxShape3D_l6rgs")
+debug_color = Color(0, 0, 0, 1)
+
+[node name="Invis_Wall2" type="StaticBody3D" parent="Invis_Walls" unique_id=1573401663]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.094647, 5.173122, 5.1769323)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Invis_Walls/Invis_Wall2" unique_id=1476791160]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.397247, -1.3882184, -3.563755)
+shape = SubResource("BoxShape3D_g4v7s")
+debug_color = Color(0, 0, 0, 1)
+
+[node name="Invis_Wall3" type="StaticBody3D" parent="Invis_Walls" unique_id=888773062]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.094647, 5.173122, -7.353444)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Invis_Walls/Invis_Wall3" unique_id=1719735929]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.397247, -1.3882184, -3.563755)
+shape = SubResource("BoxShape3D_g4v7s")
+debug_color = Color(0, 0, 0, 1)
+
+[node name="Invis_Wall4" type="StaticBody3D" parent="Invis_Walls" unique_id=361922277]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.094647, 5.173122, -13.213515)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Invis_Walls/Invis_Wall4" unique_id=639621008]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 7.9433556, -1.3882184, -1.6356525)
+shape = SubResource("BoxShape3D_51fas")
+debug_color = Color(0, 0, 0, 1)
+
+[node name="Invis_Wall5" type="StaticBody3D" parent="Invis_Walls" unique_id=402729635]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.024076, 5.173122, -1.8420496)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Invis_Walls/Invis_Wall5" unique_id=2100339205]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8.269266, -1.3882184, -2.868856)
+shape = SubResource("BoxShape3D_51fas")
+debug_color = Color(0, 0, 0, 1)
+
+[node name="Invis_Wall6" type="StaticBody3D" parent="Invis_Walls" unique_id=1993591738]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.324257, 5.173122, -1.8420496)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Invis_Walls/Invis_Wall6" unique_id=1850881960]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8.484116, -1.3882184, -0.7503991)
+shape = SubResource("BoxShape3D_utsce")
+debug_color = Color(0, 0, 0, 1)
+
+[node name="Invis_Wall7" type="StaticBody3D" parent="Invis_Walls" unique_id=2067068544]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.342117, 5.173122, -1.8420496)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Invis_Walls/Invis_Wall7" unique_id=616353085]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.509888, -1.3882184, 12.507058)
+shape = SubResource("BoxShape3D_fhhgm")
+debug_color = Color(0, 0, 0, 1)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Invis_Walls/Invis_Wall7" unique_id=283204405]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.509888, -1.3882184, 17.28762)
+shape = SubResource("BoxShape3D_fhhgm")
+debug_color = Color(0, 0, 0, 1)
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Invis_Walls/Invis_Wall7" unique_id=1861627304]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 7.184757, -1.3882184, 14.642357)
+shape = SubResource("BoxShape3D_6eawn")
+debug_color = Color(0, 0, 0, 1)
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="Invis_Walls/Invis_Wall7" unique_id=1915562449]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 13.657629, -1.3882184, 20.937916)
+shape = SubResource("BoxShape3D_6eawn")
+debug_color = Color(0, 0, 0, 1)
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="Invis_Walls/Invis_Wall7" unique_id=563594282]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 60.87052, -1.3882184, 16.59702)
+shape = SubResource("BoxShape3D_hep7u")
+debug_color = Color(0, 0, 0, 1)
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="Invis_Walls/Invis_Wall7" unique_id=1270294508]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71.13285, -1.3882184, 8.659756)
+shape = SubResource("BoxShape3D_fwgll")
+debug_color = Color(0, 0, 0, 1)
+
+[node name="Pot" parent="." unique_id=1699643971 instance=ExtResource("19_6eawn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46.48463, -0.019107819, 4.734478)
+combate_grupal = true
+jarrones_vinculados = Array[NodePath]([NodePath("../Pot2"), NodePath("../Pot3")])
+grupo_jarrones = &"trio_pots_town"
+sonido_avistamiento = ExtResource("20_hep7u")
+
+[node name="Pot2" parent="." unique_id=1847396616 instance=ExtResource("19_6eawn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.095085, -0.019107819, 5.3089814)
+combate_grupal = true
+jarrones_vinculados = Array[NodePath]([NodePath("../Pot"), NodePath("../Pot3")])
+grupo_jarrones = &"trio_pots_town"
+sonido_avistamiento = ExtResource("20_hep7u")
+
+[node name="Pot3" parent="." unique_id=316411335 instance=ExtResource("19_6eawn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.31285, -0.019107819, 3.72479)
+combate_grupal = true
+jarrones_vinculados = Array[NodePath]([NodePath("../Pot"), NodePath("../Pot2")])
+grupo_jarrones = &"trio_pots_town"
+sonido_avistamiento = ExtResource("20_hep7u")
+
+[node name="Marker_Exit_World" parent="." unique_id=1508003745 instance=ExtResource("22_worldtrans")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.966436, 1.0824051, -18.085182)
+escena_destino = "res://scenes/world/World.tscn"
+camara_destino = "Camera6"
+offset_aparicion = Vector3(2.8, 0, -0.5)
+tamano_zona = Vector3(5, 3, 2.5)

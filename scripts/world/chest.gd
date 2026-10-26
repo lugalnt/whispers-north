@@ -10,6 +10,20 @@ extends Node3D
 # Escena de la rata para reinstanciar en el bucle cuando se requiera
 @export var escena_rata: PackedScene = preload("res://scenes/world/Entities/Rat.tscn")
 
+@export_group("Contenido del Cofre")
+## Si es true, el cofre contiene la rata acompañante y realiza su animación de salto a la cabeza.
+@export var contiene_rata: bool = true
+
+@export_group("Botín / Ítems")
+## Ítem que otorga o suelta el cofre al abrirse (opcional).
+@export var item_recompensa: InventoryItem = null
+## Cantidad del ítem a otorgar.
+@export var cantidad_item: int = 1
+## Pool de ítems opcional para el cofre (selecciona un ítem al azar de la pool).
+@export var pool_items: ItemPool = null
+## Si es true, el ítem salta físicamente en 3D para ser recogido; si es false, se añade directo al inventario.
+@export var soltar_como_pickup_3d: bool = false
+
 # Nodos hijos del cofre
 @onready var sprite_cerrado: Sprite3D = $StaticBody3D/Closed
 @onready var sprite_abierto: Sprite3D = $StaticBody3D/Open
@@ -43,10 +57,24 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 	if event.is_action_pressed("interact") and not event.is_echo():
 		get_viewport().set_input_as_handled()
-		if not esta_abierto and not rata_en_cabeza:
-			_fase_1_abrir_y_saltar()
-		elif esta_abierto and rata_en_cabeza:
-			_fase_2_desvanecer_y_explotar_rata()
+		interactuar(jugador_actual)
+
+## Abre el cofre programáticamente o desde un diálogo
+func abrir(jugador: CharacterBody3D = null) -> void:
+	if esta_abierto or desvaneciendo:
+		return
+	if jugador:
+		jugador_actual = jugador
+	_fase_1_abrir_y_saltar()
+
+## Interacción pública genérica con el cofre
+func interactuar(jugador: CharacterBody3D = null) -> void:
+	if jugador:
+		jugador_actual = jugador
+	if not esta_abierto and not rata_en_cabeza:
+		_fase_1_abrir_y_saltar()
+	elif esta_abierto and rata_en_cabeza and contiene_rata:
+		_fase_2_desvanecer_y_explotar_rata()
 
 # Detecta cuando el jugador entra en el área del cofre
 func _on_area_3d_body_entered(body: Node3D) -> void:
@@ -81,6 +109,13 @@ func _fase_1_abrir_y_saltar() -> void:
 	# Cambiar visibilidad de los sprites del cofre
 	sprite_cerrado.hide()
 	sprite_abierto.show()
+	
+	# Entregar recompensas configuradas
+	_entregar_recompensas_cofre()
+	
+	if not contiene_rata:
+		reproducir_sonido(sonido_item)
+		return
 	
 	# Asegurar que la rata exista (instanciar si fue liberada anteriormente en el bucle)
 	if rata_instancia == null or not is_instance_valid(rata_instancia):
@@ -206,8 +241,14 @@ func reiniciar_estado() -> void:
 
 # Emisor procedural de partículas para simular cristal o globo explotando
 func _crear_explosion_cristal(posicion: Vector3) -> void:
-	var particulas = CPUParticles3D.new()
-	particulas.global_position = posicion
+	if not is_inside_tree():
+		return
+	var tree := get_tree()
+	var world: Node = tree.current_scene if tree else null
+	if world == null:
+		return
+
+	var particulas := CPUParticles3D.new()
 	particulas.amount = 35
 	particulas.lifetime = 0.6
 	particulas.one_shot = true
@@ -220,10 +261,10 @@ func _crear_explosion_cristal(posicion: Vector3) -> void:
 	particulas.initial_velocity_max = 7.5
 	
 	# Malla de fragmentos de cristal brillantes
-	var mesh = QuadMesh.new()
+	var mesh := QuadMesh.new()
 	mesh.size = Vector2(0.12, 0.12)
 	
-	var mat = StandardMaterial3D.new()
+	var mat := StandardMaterial3D.new()
 	mat.albedo_color = Color(0.9, 0.95, 1.0, 0.9)
 	mat.emission_enabled = true
 	mat.emission = Color(0.7, 0.9, 1.0)
@@ -233,12 +274,10 @@ func _crear_explosion_cristal(posicion: Vector3) -> void:
 	
 	particulas.mesh = mesh
 	
-	var world = get_tree().current_scene
-
-	if world:
-		world.add_child(particulas)
-		particulas.emitting = true
-		get_tree().create_timer(particulas.lifetime + 0.2).timeout.connect(particulas.queue_free)
+	world.add_child(particulas)
+	particulas.global_position = posicion
+	particulas.emitting = true
+	tree.create_timer(particulas.lifetime + 0.2).timeout.connect(particulas.queue_free)
 
 # Función para obtener el nodo Sprite3D dentro de la estructura de la rata
 func _obtener_sprite_rata(nodo_rata: Node) -> Sprite3D:
@@ -256,3 +295,36 @@ func reproducir_sonido(stream: AudioStream) -> void:
 	if audio_player and stream:
 		audio_player.stream = stream
 		audio_player.play()
+
+func _entregar_recompensas_cofre() -> void:
+	var items_a_dar: Array[Dictionary] = []
+	if item_recompensa:
+		items_a_dar.append({"item": item_recompensa, "cant": max(1, cantidad_item)})
+	if pool_items:
+		var item_pool = pool_items.elegir_item()
+		if item_pool:
+			var cant_pool = pool_items.elegir_cantidad(item_pool)
+			items_a_dar.append({"item": item_pool, "cant": cant_pool})
+	
+	for drop in items_a_dar:
+		var it: InventoryItem = drop["item"]
+		var cant: int = drop["cant"]
+		if soltar_como_pickup_3d:
+			ItemPickup3D.spawn_en_posicion(
+				get_tree().current_scene if get_tree().current_scene else self,
+				global_position + Vector3(0.0, 0.6, 0.0),
+				it,
+				cant,
+				Vector3(randf_range(-0.5, 0.5), 2.5, randf_range(-0.5, 0.5))
+			)
+		else:
+			var gs = null
+			var GS = load("res://scripts/core/game_state.gd")
+			if GS and GS.instancia != null:
+				gs = GS.instancia
+			elif Engine.has_singleton("GameState"):
+				gs = Engine.get_singleton("GameState")
+			elif is_inside_tree() and get_tree() and get_tree().root.has_node("GameState"):
+				gs = get_tree().root.get_node("GameState")
+			if gs and gs.has_method("agregar_item"):
+				gs.agregar_item(it, cant)

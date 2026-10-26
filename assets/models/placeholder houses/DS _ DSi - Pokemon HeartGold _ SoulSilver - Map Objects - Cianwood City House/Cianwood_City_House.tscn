@@ -1,0 +1,16 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon HeartGold _ SoulSilver - Map Objects - Cianwood City House/Cianwood City House.obj" id="1_j4kl8"]
+[ext_resource type="Material" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon HeartGold _ SoulSilver - Map Objects - Cianwood City House/materials/mat_window.tres" id="2_xnibu"]
+[ext_resource type="Material" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon HeartGold _ SoulSilver - Map Objects - Cianwood City House/materials/mat_shadow.tres" id="3_h5qmy"]
+[ext_resource type="Material" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon HeartGold _ SoulSilver - Map Objects - Cianwood City House/materials/mat_door.tres" id="4_ysbyr"]
+[ext_resource type="Material" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon HeartGold _ SoulSilver - Map Objects - Cianwood City House/materials/mat_walls_roof.tres" id="5_7wya8"]
+
+[node name="House_Cianwood" type="Node3D" unique_id=453238937]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1845023614]
+mesh = ExtResource("1_j4kl8")
+surface_material_override/0 = ExtResource("2_xnibu")
+surface_material_override/1 = ExtResource("3_h5qmy")
+surface_material_override/2 = ExtResource("4_ysbyr")
+surface_material_override/3 = ExtResource("5_7wya8")

@@ -26,12 +26,61 @@ var hp_actual: int = 15
 # Estado del acompañante
 var tiene_rata: bool = false
 
+# Acciones de combate desbloqueadas para el jugador
+var acciones_desbloqueadas: Array[String] = []
+
+# Transición entre escenas de mundo
+var spawn_nombre_marcador: String = ""
+var spawn_offset: Vector3 = Vector3.ZERO
+var spawn_camara_siguiente: String = ""
+var usar_personaje_32: bool = false
+
+## Comprueba si hay un cambio de mundo en curso esperando ubicar al jugador
+func hay_transicion_pendiente() -> bool:
+	return not spawn_nombre_marcador.is_empty()
+
+## Prepara los parámetros para la escena de destino
+func preparar_transicion(marcador_destino: String, offset: Vector3, camara: String) -> void:
+	spawn_nombre_marcador = marcador_destino
+	spawn_offset = offset
+	spawn_camara_siguiente = camara
+
+## Obtiene la posición final en la nueva escena a partir del marcador y limpia el estado
+func consumir_posicion_spawn(mundo: Node) -> Vector3:
+	var pos: Vector3 = Vector3.ZERO
+	if not spawn_nombre_marcador.is_empty() and mundo != null:
+		var marcador = mundo.find_child(spawn_nombre_marcador, true, false)
+		if marcador != null and marcador is Node3D:
+			var m_pos = marcador.global_position if marcador.is_inside_tree() else marcador.position
+			pos = m_pos + spawn_offset
+	spawn_nombre_marcador = ""
+	spawn_offset = Vector3.ZERO
+	return pos
+
+## Obtiene el nombre de la cámara que debe activarse y limpia el estado
+func consumir_camara_spawn() -> String:
+	var cam: String = spawn_camara_siguiente
+	spawn_camara_siguiente = ""
+	return cam
+
+static var instancia: Node = null
+
+func _init() -> void:
+	instancia = self
+	_inicializar_stats()
+
+func _enter_tree() -> void:
+	instancia = self
+
 func _ready() -> void:
+	instancia = self
 	_inicializar_stats()
 	_cargar_items_iniciales()
 	inventario.inventario_actualizado.connect(func(): inventario_modificado.emit())
 
 func _inicializar_stats() -> void:
+	if stats != null:
+		return
 	# Cargar stats base del arquetipo del jugador si existen
 	var temp_battler: Battler = PlayerBattlerScene.instantiate() as Battler
 	if temp_battler and temp_battler.stats:
@@ -46,35 +95,38 @@ func _inicializar_stats() -> void:
 	if temp_battler:
 		temp_battler.queue_free()
 
-## Carga algunos objetos temáticos iniciales de demostración
+@export_group("Inventario Inicial")
+## Ítems iniciales otorgados al comenzar. Configurable visualmente asignando recursos .tres desde data/items/
+@export var items_iniciales: Array[InventoryItem] = [
+	preload("res://data/items/fragmento_ceramica.tres"),
+	preload("res://data/items/queso_nordico.tres"),
+	preload("res://data/items/llave_antigua.tres"),
+]
+## Cantidades de cada ítem inicial
+@export var cantidades_iniciales: Array[int] = [3, 2, 1]
+
+## Carga los objetos temáticos iniciales desde los recursos .tres configurados
 func _cargar_items_iniciales() -> void:
 	if not inventario.esta_vacio():
 		return
 	
-	var item_fragmento: InventoryItem = InventoryItem.new()
-	item_fragmento.id = "fragmento_ceramica"
-	item_fragmento.nombre = "Fragmento de Cerámica"
-	item_fragmento.descripcion = "Un trozo de arcilla antigua decorado con runas nórdicas. Parece provenir de un jarrón encantado."
-	item_fragmento.categoria = InventoryItem.Categoria.OBJETO
-	item_fragmento.icono = preload("res://assets/sprites/ui/icon.png")
-	inventario.agregar(item_fragmento, 3)
+	for i in range(items_iniciales.size()):
+		var item: InventoryItem = items_iniciales[i]
+		if item == null:
+			continue
+		var cant: int = cantidades_iniciales[i] if i < cantidades_iniciales.size() else 1
+		inventario.agregar(item, cant)
 
-	var item_queso: InventoryItem = InventoryItem.new()
-	item_queso.id = "queso_nordico"
-	item_queso.nombre = "Queso Nórdico"
-	item_queso.descripcion = "Queso ahumado de montaña. Delicioso y reconfortante. Restaura 5 HP al consumirse."
-	item_queso.categoria = InventoryItem.Categoria.CONSUMIBLE
-	item_queso.curacion_hp = 5
-	item_queso.icono = preload("res://assets/sprites/ui/icon.png")
-	inventario.agregar(item_queso, 2)
-
-	var item_llave: InventoryItem = InventoryItem.new()
-	item_llave.id = "llave_antigua"
-	item_llave.nombre = "Llave Antigua de Madera"
-	item_llave.descripcion = "Una pequeña llave tallada en madera de roble mohoso. Debe abrir algún cofre o puerta del bosque."
-	item_llave.categoria = InventoryItem.Categoria.CLAVE
-	item_llave.icono = preload("res://assets/sprites/environment/items/chest_closed.png")
-	inventario.agregar(item_llave, 1)
+## Añade un ítem al inventario pasando su recurso InventoryItem o su ID en String
+func agregar_item(item_o_id, cantidad: int = 1) -> void:
+	var item: InventoryItem = null
+	if item_o_id is String:
+		item = ItemDatabase.obtener_item(item_o_id)
+	elif item_o_id is InventoryItem:
+		item = item_o_id
+	
+	if item != null:
+		inventario.agregar(item, cantidad)
 
 ## Suma experiencia y sube de nivel si corresponde
 func agregar_exp(cantidad: int) -> void:
@@ -95,6 +147,13 @@ func agregar_exp(cantidad: int) -> void:
 			hp_actual = clamp(hp_actual + 2, 1, stats.max_hp)
 		nivel_subido.emit(nivel)
 	
+	stats_modificadas.emit()
+
+## Aumenta el ataque base del jugador y notifica a la interfaz
+func aumentar_ataque(cantidad: int = 1) -> void:
+	if stats == null:
+		_inicializar_stats()
+	stats.ataque += cantidad
 	stats_modificadas.emit()
 
 ## Actualiza la salud actual tras un combate o evento
@@ -126,3 +185,13 @@ func usar_item(item_id: String) -> bool:
 	
 	inventario.quitar(item_id, 1)
 	return true
+
+## Desbloquea una nueva acción de combate para el jugador
+func desbloquear_accion(id_accion: String) -> void:
+	if id_accion not in acciones_desbloqueadas:
+		acciones_desbloqueadas.append(id_accion)
+		print("[GameState] ¡Acción de combate desbloqueada: %s!" % id_accion)
+
+## Comprueba si el jugador tiene una acción de combate desbloqueada
+func tiene_accion(id_accion: String) -> bool:
+	return id_accion in acciones_desbloqueadas

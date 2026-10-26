@@ -42,6 +42,16 @@ enum Estado { DORMIDO, PERSIGUIENDO, EN_CONTACTO, ATURDIDO, REGRESANDO, EXPLOTAN
 ## Experiencia otorgada por derrotar a este jarrón (-1 para usar la de la arena).
 @export var exp_recompensa_combate: int = -1
 
+@export_group("Combate Grupal")
+## Si es true, este jarrón participa en un combate grupal con otros jarrones vinculados.
+@export var combate_grupal: bool = false
+## Jarrones que acompañan a este en combate. Si uno entra en batalla, todos entran juntos (ej. 1vs3).
+@export var jarrones_vinculados: Array[NodePath] = []
+## Identificador de grupo para vincular jarrones automáticamente (ej. &"trio_pots_town").
+@export var grupo_jarrones: StringName = &""
+## Si es true, cuando este jarrón avista al jugador también despierta y alerta a los jarrones vinculados.
+@export var alertar_grupo: bool = true
+
 # Modelos de fragmentos que salen volando al romperse el jarrón
 const RUTAS_FRAGMENTOS: Array[String] = [
 	"res://assets/models/Generic Pot/pot_brk_1.dae",
@@ -94,6 +104,17 @@ const RUTAS_FRAGMENTOS: Array[String] = [
 @export var altura_impacto_rata: float = 0.8
 @export var duracion_salto_rata: float = 0.55
 
+@export_group("Botín / Item Drops")
+## Si es true, el jarrón suelta ítems al romperse o destruirse
+@export var soltar_item_al_romper: bool = true
+## Ítem garantizado que siempre suelta al destruirse (arrastrar .tres desde data/items/)
+@export var item_garantizado: InventoryItem = preload("res://data/items/fragmento_ceramica.tres")
+@export_range(1, 10, 1) var cantidad_drop_garantizado: int = 1
+## Pool de ítems (loot table) para drops aleatorios adicionales del mundo
+@export var pool_items: ItemPool = preload("res://data/item_pools/pool_mundo_general.tres")
+## Probabilidad de que se active la pool de drops (0.0 a 1.0)
+@export_range(0.0, 1.0, 0.05) var probabilidad_pool: float = 0.5
+
 @export_group("Sonidos")
 @export var sonido_avistamiento: AudioStream = preload("res://assets/audio/sfx/snd_mysterygo.wav")
 @export var sonido_empuje: AudioStream = preload("res://assets/audio/sfx/snd_doorclose.wav")
@@ -115,6 +136,9 @@ var _tiempo_aturdido: float = 0.0
 var _textbox: Node = null
 
 func _ready() -> void:
+	add_to_group("pot")
+	if not grupo_jarrones.is_empty():
+		add_to_group(grupo_jarrones)
 	_posicion_inicial = global_position
 	_escala_modelo = modelo.scale
 	_obtener_encuentro()
@@ -253,6 +277,11 @@ func _avistar() -> void:
 	estado = Estado.PERSIGUIENDO
 	velocity.y = 4.5
 	_sonido_global(sonido_avistamiento)
+	if alertar_grupo:
+		for otro in _obtener_jarrones_vinculados():
+			if is_instance_valid(otro) and otro != self and otro.estado == Estado.DORMIDO:
+				otro.estado = Estado.PERSIGUIENDO
+				otro.velocity.y = 4.5
 
 # Mueve el jarrón en el plano XZ hacia un destino
 func _mover_hacia(destino: Vector3, delta: float, vel_max: float = -1.0) -> void:
@@ -269,11 +298,36 @@ func _frenar(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, 0.0, aceleracion * 2.0 * delta)
 	velocity.z = move_toward(velocity.z, 0.0, aceleracion * 2.0 * delta)
 
-# Devuelve el jugador activo (16x16 o 32x32) a través del mundo
+# Devuelve el jugador activo (16x16 o 32x32) a través del mundo, grupos o jerarquía
 func _obtener_jugador() -> CharacterBody3D:
-	var mundo: Node = get_tree().current_scene
-	if mundo != null and mundo.has_method("get_active_player"):
-		return mundo.get_active_player()
+	if is_inside_tree():
+		var nodos = get_tree().get_nodes_in_group("player")
+		for n in nodos:
+			if is_instance_valid(n) and n is CharacterBody3D and n != self:
+				return n as CharacterBody3D
+		var mundo: Node = get_tree().current_scene
+		if mundo != null and mundo.has_method("get_active_player"):
+			return mundo.get_active_player()
+		var root_w = get_tree().root
+		if root_w:
+			var p32 = root_w.find_child("Player32", true, false)
+			if p32 is CharacterBody3D and p32 != self:
+				return p32
+			var p16 = root_w.find_child("Player", true, false)
+			if p16 is CharacterBody3D and p16 != self:
+				return p16
+
+	# Búsqueda hacia arriba en la jerarquía (útil en escenas instanciadas y tests)
+	var curr: Node = self
+	while curr.get_parent() != null:
+		curr = curr.get_parent()
+		var p32 = curr.find_child("Player32", true, false)
+		if p32 is CharacterBody3D and p32 != self:
+			return p32
+		var p16 = curr.find_child("Player", true, false)
+		if p16 is CharacterBody3D and p16 != self:
+			return p16
+
 	return null
 
 func _distancia_xz(jugador: CharacterBody3D) -> float:
@@ -290,8 +344,13 @@ func _puede_ver(jugador: CharacterBody3D) -> bool:
 		return true
 
 	var desde: Vector3 = global_position + Vector3.UP * altura_ojos
-	var hasta: Vector3 = jugador.global_position
-	var consulta: PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.create(desde, hasta, collision_mask, [get_rid(), jugador.get_rid()])
+	var hasta: Vector3 = jugador.global_position + Vector3.UP * 0.8
+	var excludes: Array[RID] = [get_rid(), jugador.get_rid()]
+	if is_inside_tree():
+		for otro in get_tree().get_nodes_in_group("pot"):
+			if otro is CollisionObject3D and is_instance_valid(otro):
+				excludes.append(otro.get_rid())
+	var consulta: PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.create(desde, hasta, collision_mask, excludes)
 	return get_world_3d().direct_space_state.intersect_ray(consulta).is_empty()
 
 # Saltitos mientras se mueve, temblor en contacto y bamboleo al ser empujado
@@ -319,12 +378,46 @@ func _animar_modelo() -> void:
 # Combate RPG (Estilo Paper Mario)
 # ---------------------------------------------------------------------------
 
+## Obtiene la lista de todos los jarrones vinculados a este grupo (incluyendo a self)
+func _obtener_jarrones_vinculados() -> Array:
+	var lista: Array = []
+	if not combate_grupal:
+		return [self]
+	
+	for path in jarrones_vinculados:
+		if path != null and not path.is_empty():
+			var nodo = get_node_or_null(path)
+			if nodo != null and is_instance_valid(nodo) and nodo != self and not lista.has(nodo):
+				lista.append(nodo)
+	
+	if not grupo_jarrones.is_empty() and is_inside_tree():
+		for nodo in get_tree().get_nodes_in_group(grupo_jarrones):
+			if nodo != null and is_instance_valid(nodo) and nodo != self and not lista.has(nodo):
+				lista.append(nodo)
+	
+	if not lista.has(self):
+		lista.push_front(self)
+	return lista
+
 func _iniciar_evento_combate(jugador: CharacterBody3D) -> void:
 	if estado == Estado.COMBATIENDO:
 		return
 	estado = Estado.COMBATIENDO
 	velocity = Vector3.ZERO
 	_secuencia += 1
+
+	var grupo: Array = _obtener_jarrones_vinculados()
+	if not grupo.has(self):
+		grupo.push_front(self)
+
+	# Todos los jarrones del grupo entran en combate y ocultan su modelo
+	for j in grupo:
+		if is_instance_valid(j):
+			j.estado = Estado.COMBATIENDO
+			j.velocity = Vector3.ZERO
+			j._secuencia += 1
+			if j.modelo:
+				j.modelo.hide()
 
 	var enc: EncuentroCombate = _obtener_encuentro()
 	var resultado: CombatArena.ResultadoCombate
@@ -335,21 +428,38 @@ func _iniciar_evento_combate(jugador: CharacterBody3D) -> void:
 			enc.musica_combate = musica_combate
 		if textura_fondo_combate != null:
 			enc.textura_fondo = textura_fondo_combate
+		
+		# 1 battler de jarrón por cada miembro del grupo
+		var lista_enemigos: Array[PackedScene] = []
+		for _j in grupo:
+			lista_enemigos.append(escena_battler_pot)
+		enc.enemigos = lista_enemigos
+		
 		if not texto_inicio_combate.is_empty():
 			enc.texto_inicio_combate = texto_inicio_combate
+		elif grupo.size() > 1:
+			enc.texto_inicio_combate = "¡Emboscada de %d Jarrones Embrujados!" % grupo.size()
 		if not texto_victoria_combate.is_empty():
 			enc.texto_victoria = texto_victoria_combate
 		if not texto_recompensas_combate.is_empty():
 			enc.texto_recompensas = texto_recompensas_combate
+		elif grupo.size() > 1:
+			enc.texto_recompensas = "¡Victoria sobre los %d jarrones!\n\n+%d EXP\nObtuviste botín de jarrones." % [grupo.size(), 20 * grupo.size()]
 		if exp_recompensa_combate >= 0:
 			enc.exp_recompensa = exp_recompensa_combate
-		resultado = await enc.iniciar_combate(jugador, modelo)
+		elif grupo.size() > 1:
+			enc.exp_recompensa = 20 * grupo.size()
+
+		resultado = await enc.iniciar_combate(jugador, null)
 	else:
 		# Fallback autónomo si no existiera el componente EncuentroCombate
 		var encuentro_temp: EncuentroCombate = EncuentroCombate.new()
 		encuentro_temp.escena_arena = escena_arena
 		encuentro_temp.aliados = [escena_battler_jugador]
-		encuentro_temp.enemigos = [escena_battler_pot]
+		var lista_enemigos_temp: Array[PackedScene] = []
+		for _j in grupo:
+			lista_enemigos_temp.append(escena_battler_pot)
+		encuentro_temp.enemigos = lista_enemigos_temp
 		if jingle_combate != null:
 			encuentro_temp.jingle_inicio = jingle_combate
 		if musica_combate != null:
@@ -358,35 +468,52 @@ func _iniciar_evento_combate(jugador: CharacterBody3D) -> void:
 			encuentro_temp.textura_fondo = textura_fondo_combate
 		if not texto_inicio_combate.is_empty():
 			encuentro_temp.texto_inicio_combate = texto_inicio_combate
+		elif grupo.size() > 1:
+			encuentro_temp.texto_inicio_combate = "¡Emboscada de %d Jarrones Embrujados!" % grupo.size()
 		if not texto_victoria_combate.is_empty():
 			encuentro_temp.texto_victoria = texto_victoria_combate
 		if not texto_recompensas_combate.is_empty():
 			encuentro_temp.texto_recompensas = texto_recompensas_combate
+		elif grupo.size() > 1:
+			encuentro_temp.texto_recompensas = "¡Victoria sobre los %d jarrones!\n\n+%d EXP\nObtuviste botín de jarrones." % [grupo.size(), 20 * grupo.size()]
 		if exp_recompensa_combate >= 0:
 			encuentro_temp.exp_recompensa = exp_recompensa_combate
+		elif grupo.size() > 1:
+			encuentro_temp.exp_recompensa = 20 * grupo.size()
 		add_child(encuentro_temp)
-		resultado = await encuentro_temp.iniciar_combate(jugador, modelo)
+		resultado = await encuentro_temp.iniciar_combate(jugador, null)
 		encuentro_temp.queue_free()
 
 	# Procesar el resultado según las reglas pedidas:
 	match resultado:
 		CombatArena.ResultadoCombate.VICTORIA:
-			# Ganar: el jarrón se rompe con fragmentos/partículas y desaparece para siempre
+			# Ganar: todos los jarrones del grupo se rompen con fragmentos/partículas y desaparecen
 			_bloquear_jugador(jugador, false)
-			_destruir(global_position + Vector3(0.0, 0.6, 0.0))
+			for j in grupo:
+				if is_instance_valid(j):
+					j._destruir(j.global_position + Vector3(0.0, 0.6, 0.0))
 		CombatArena.ResultadoCombate.DERROTA:
-			# Perder: el jugador explota y reaparece junto al arbusto y el jarrón vuelve a su sitio
+			# Perder: el jugador explota y todos los jarrones vuelven a su sitio
+			for j in grupo:
+				if is_instance_valid(j):
+					if j.modelo:
+						j.modelo.show()
+					j._reiniciar_jarron()
 			await _explotar_jugador(jugador)
 		CombatArena.ResultadoCombate.HUIDA:
-			# Huir: vuelves al mundo y el jarrón queda aturdido un rato para poder escapar
+			# Huir: vuelves al mundo y todos los jarrones quedan aturdidos para poder escapar
 			_bloquear_jugador(jugador, false)
-			var direccion: Vector3 = global_position - jugador.global_position
-			direccion.y = 0.0
-			if direccion.length() < 0.01:
-				direccion = Vector3.BACK
-			_vel_empuje = direccion.normalized() * (fuerza_empuje * 0.8)
-			_tiempo_aturdido = duracion_aturdimiento * 2.0
-			estado = Estado.ATURDIDO
+			for j in grupo:
+				if is_instance_valid(j):
+					if j.modelo:
+						j.modelo.show()
+					var direccion: Vector3 = j.global_position - jugador.global_position
+					direccion.y = 0.0
+					if direccion.length() < 0.01:
+						direccion = Vector3.BACK
+					j._vel_empuje = direccion.normalized() * (fuerza_empuje * 0.8)
+					j._tiempo_aturdido = duracion_aturdimiento * 2.0
+					j.estado = Estado.ATURDIDO
 
 # ---------------------------------------------------------------------------
 # Evento de cercanía original (textbox)
@@ -605,12 +732,35 @@ func _reiniciar_cofres() -> void:
 		if cofre.has_method("reiniciar_estado"):
 			cofre.reiniciar_estado()
 
-# Estalla el jarrón: sonido, partículas, fragmentos y se elimina
+# Estalla el jarrón: sonido, partículas, fragmentos, suelta ítems y se elimina
 func _destruir(posicion: Vector3) -> void:
 	_sonido_global(sonido_explosion)
 	_crear_explosion_cristal(posicion)
 	_crear_fragmentos(posicion)
+	_soltar_item_drop(posicion)
 	queue_free()
+
+## Suelta los objetos configurados en el mundo mediante ItemPickup3D
+func _soltar_item_drop(posicion: Vector3) -> void:
+	if not soltar_item_al_romper:
+		return
+	var tree := get_tree()
+	var mundo: Node = tree.current_scene if (tree and tree.current_scene) else (tree.root if tree else null)
+	if mundo == null:
+		return
+	
+	# 1. Drop garantizado
+	if item_garantizado != null and cantidad_drop_garantizado > 0:
+		ItemPickup3D.spawn_en_posicion(mundo, posicion, item_garantizado, cantidad_drop_garantizado, true)
+	
+	# 2. Drop aleatorio desde ItemPool
+	if pool_items != null and randf() <= probabilidad_pool:
+		var drops: Array[Dictionary] = pool_items.generar_drops()
+		for d in drops:
+			var it: InventoryItem = d.get("item")
+			var cant: int = d.get("cantidad", 1)
+			if it != null and cant > 0:
+				ItemPickup3D.spawn_en_posicion(mundo, posicion, it, cant, true)
 
 # Fragmentos físicos (RigidBody3D) con los modelos pot_brk_*, que desaparecen tras un rato
 func _crear_fragmentos(posicion: Vector3) -> void:
@@ -655,7 +805,7 @@ func _crear_fragmentos(posicion: Vector3) -> void:
 
 		var tween: Tween = cuerpo.create_tween()
 		tween.tween_interval(randf_range(2.0, 2.8))
-		tween.tween_property(visual, "scale", Vector3.ZERO, 0.4)
+		tween.tween_property(visual, "scale", Vector3.ONE * 0.001, 0.4)
 		tween.tween_callback(cuerpo.queue_free)
 
 # Emisor procedural de partículas para simular cristal o globo explotando (igual que chest.gd)

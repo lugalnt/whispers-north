@@ -1,0 +1,14 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://dba3hhviu1psn"]
+
+[ext_resource type="Texture2D" uid="uid://dfkk7pmu6l22q" path="res://assets/models/DS _ DSi - Pokemon Black 2 _ White 2 - Fountains - Fountain 02/c03_foun_03.png" id="1_7hxp0"]
+
+[resource]
+resource_name = "mat_water_stream"
+render_priority = 1
+transparency = 1
+cull_mode = 2
+albedo_color = Color(1, 1, 1, 0.95)
+albedo_texture = ExtResource("1_7hxp0")
+roughness = 0.1
+uv1_offset = Vector3(0, -0.48666954, 0)
+texture_filter = 0

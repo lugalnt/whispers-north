@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon HeartGold _ SoulSilver - Map Objects - Violet City House/kk_h01_b.png" id="1_j542e"]
+
+[resource]
+resource_name = "mat_door"
+cull_mode = 2
+albedo_texture = ExtResource("1_j542e")
+roughness = 0.85
+texture_filter = 0

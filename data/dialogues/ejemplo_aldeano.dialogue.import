@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=18
+type="Resource"
+uid="uid://dm3tdwk04pe3a"
+path="res://.godot/imported/ejemplo_aldeano.dialogue-13832d6f2988ff1468eb6101b5899a61.tres"
+
+[deps]
+
+source_file="res://data/dialogues/ejemplo_aldeano.dialogue"
+dest_files=["res://.godot/imported/ejemplo_aldeano.dialogue-13832d6f2988ff1468eb6101b5899a61.tres"]
+
+[params]
+
+defaults=true

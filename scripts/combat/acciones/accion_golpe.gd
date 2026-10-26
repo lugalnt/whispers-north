@@ -55,9 +55,11 @@ func ejecutar(origen: Battler, objetivos: Array[Battler], arena: Node) -> void:
 
 	# 3. Impacto
 	var danio: int = calcular_danio(origen, victima, poder, bonus_exito if exito else 0)
-	arena.reproducir_sonido(sonido_golpe)
+	var sfx_impacto = origen.sfx_ataque_golpe if (origen and "sfx_ataque_golpe" in origen and origen.sfx_ataque_golpe) else sonido_golpe
+	var sfx_bien = origen.sfx_ataque_exito if (origen and "sfx_ataque_exito" in origen and origen.sfx_ataque_exito) else sonido_exito
+	arena.reproducir_sonido(sfx_impacto)
 	if exito:
-		arena.reproducir_sonido(sonido_exito)
+		arena.reproducir_sonido(sfx_bien)
 	victima.recibir_danio(danio)
 	arena.mostrar_numero(victima, danio, exito)
 	arena.sacudir_camara(0.18 if exito else 0.08)

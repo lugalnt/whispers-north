@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="InventoryItem" format=3 uid="uid://crwp6rs7v0v7h"]
+
+[ext_resource type="Script" uid="uid://bhtrg41fnwdvg" path="res://scripts/inventory/inventory_item.gd" id="1_item"]
+[ext_resource type="Texture2D" uid="uid://cgt45814xeiem" path="res://assets/sprites/items/placeholder.png" id="1_ojeu0"]
+
+[resource]
+script = ExtResource("1_item")
+id = "queso_nordico"
+nombre = "Queso Nórdico"
+descripcion = "Queso ahumado de montaña. Delicioso y reconfortante. Restaura 5 HP al consumirse."
+icono = ExtResource("1_ojeu0")
+categoria = 1
+curacion_hp = 5

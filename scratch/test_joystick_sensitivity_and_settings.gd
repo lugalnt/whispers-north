@@ -77,7 +77,7 @@ func _initialize() -> void:
 	ev_center.axis = 1
 	ev_center.axis_value = 0.05
 	arena._unhandled_input(ev_center)
-	assert(not arena._stick_nav_activo, "Retorno al centro debe resetear el stick")
+	assert(not arena._stick_v_activo, "Retorno al centro debe resetear el stick")
 
 	# Nuevo movimiento del stick: debe aceptarse de inmediato
 	var ev_motion2 = InputEventJoypadMotion.new()

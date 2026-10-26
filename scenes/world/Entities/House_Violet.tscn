@@ -1,0 +1,26 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon HeartGold _ SoulSilver - Map Objects - Violet City House/Violet City House.obj" id="1_25nyq"]
+[ext_resource type="Material" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon HeartGold _ SoulSilver - Map Objects - Violet City House/materials/mat_window.tres" id="2_oeyig"]
+[ext_resource type="Material" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon HeartGold _ SoulSilver - Map Objects - Violet City House/materials/mat_shadow.tres" id="3_h5ws8"]
+[ext_resource type="Material" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon HeartGold _ SoulSilver - Map Objects - Violet City House/materials/mat_door.tres" id="4_rtlha"]
+[ext_resource type="Material" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon HeartGold _ SoulSilver - Map Objects - Violet City House/materials/mat_walls_roof.tres" id="5_iil0d"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cc7sq"]
+size = Vector3(5.8, 5.8, 4.2)
+
+[node name="House_Violet" type="StaticBody3D" unique_id=874264210]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=386364616]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9, 0)
+shape = SubResource("BoxShape3D_cc7sq")
+
+[node name="Visual" type="Node3D" parent="." unique_id=190157994]
+transform = Transform3D(0.08, 0, 0, 0, 0.08, 0, 0, 0, 0.08, -0.16, -0.08, -0.24)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Visual" unique_id=90438626]
+mesh = ExtResource("1_25nyq")
+surface_material_override/0 = ExtResource("2_oeyig")
+surface_material_override/1 = ExtResource("3_h5ws8")
+surface_material_override/2 = ExtResource("4_rtlha")
+surface_material_override/3 = ExtResource("5_iil0d")

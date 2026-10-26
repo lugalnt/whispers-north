@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/models/DS _ DSi - Pokemon Black 2 _ White 2 - Fountains - Fountain 02/h_kage.png" id="1_vfgi2"]
+
+[resource]
+resource_name = "mat_shadow"
+render_priority = -1
+transparency = 1
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(1, 1, 1, 0.65)
+albedo_texture = ExtResource("1_vfgi2")
+texture_filter = 0

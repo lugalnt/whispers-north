@@ -1,48 +1,43 @@
 [gd_scene format=3 uid="uid://cb3pl1bat001"]
 
-[ext_resource type="Script" path="res://scripts/combat/battler.gd" id="1_battler"]
-[ext_resource type="Script" path="res://scripts/combat/battler_stats.gd" id="2_stats"]
-[ext_resource type="Script" path="res://scripts/combat/acciones/accion_golpe.gd" id="3_golpe"]
+[ext_resource type="Script" uid="uid://dop1q8g1sik7i" path="res://scripts/combat/battler.gd" id="1_battler"]
+[ext_resource type="Script" uid="uid://dsqsl4jcuos6g" path="res://scripts/combat/battler_stats.gd" id="2_stats"]
+[ext_resource type="Script" uid="uid://dkh872n1t181d" path="res://scripts/combat/acciones/accion_golpe.gd" id="3_golpe"]
+[ext_resource type="Script" uid="uid://cb14ax1ksjqb8" path="res://scripts/combat/battler_action.gd" id="3_mmx4l"]
+[ext_resource type="AudioStream" uid="uid://5jv27887xvb2" path="res://assets/audio/sfx/snd_bell_bounce_short.wav" id="5_nbaxn"]
+[ext_resource type="AudioStream" uid="uid://cgbmhrm40vkpi" path="res://assets/audio/sfx/snd_doorclose.wav" id="6_xrtao"]
+[ext_resource type="AudioStream" uid="uid://bv0xdi6738j5u" path="res://assets/audio/sfx/snd_punchmed_bc.wav" id="7_ufsl7"]
+[ext_resource type="AudioStream" uid="uid://bbgo0sj1onj67" path="res://assets/audio/sfx/snd_punchheavythunder.wav" id="8_7aayp"]
+[ext_resource type="AudioStream" uid="uid://cm4wc0v30s3ax" path="res://assets/audio/sfx/snd_cardrive_bc.wav" id="9_mysnp"]
 
 [sub_resource type="Resource" id="Resource_player_stats"]
 script = ExtResource("2_stats")
 max_hp = 15
-ataque = 2
-defensa = 0
+ataque = 4
 velocidad = 12
 
 [sub_resource type="Resource" id="Resource_player_golpe"]
 script = ExtResource("3_golpe")
-duracion_acercarse = 0.5
-tiempo_impacto = 0.55
-ventana_antes = 0.2
-ventana_despues = 0.06
-duracion_volver = 0.4
-bonus_exito = 1
-mostrar_indicador = true
 nombre = "Golpear"
 descripcion = "Pulsa el botón de interactuar justo en el impacto para infligir daño extra."
-objetivo = 0
 poder = 1
 
-[node name="PlayerBattler" type="Node3D"]
+[node name="PlayerBattler" type="Node3D" unique_id=149152612]
 script = ExtResource("1_battler")
 nombre = "Jugador"
 stats = SubResource("Resource_player_stats")
-acciones = Array[Resource]([SubResource("Resource_player_golpe")])
+acciones = Array[ExtResource("3_mmx4l")]([SubResource("Resource_player_golpe")])
 controlado_por_jugador = true
 copiar_sprite_del_jugador = true
 radio = 0.5
-altura = 1.4
-sprite_mira_a_la_derecha = true
 anim_reposo = &"walk_side"
-reposo_estatico = true
 anim_caminar = &"walk_side"
 anim_ataque = &"interact_side"
-anim_herido = &""
-anim_esquive = &""
+sfx_ataque_golpe = ExtResource("7_ufsl7")
+sfx_ataque_exito = ExtResource("8_7aayp")
+sfx_ataque_especial = ExtResource("9_mysnp")
 
-[node name="Visual" type="AnimatedSprite3D" parent="."]
+[node name="Visual" type="AnimatedSprite3D" parent="." unique_id=2077441117]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96, 0)
 pixel_size = 0.08
 billboard = 2

@@ -12,6 +12,7 @@ var last_input_dir: Vector2 = Vector2(0, 1)
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _ready() -> void:
+	add_to_group("player")
 	# Las animaciones de interacción se reproducen una sola vez (para poder esperar a que terminen)
 	var frames: SpriteFrames = anim_sprite.sprite_frames
 	if frames:
@@ -145,3 +146,82 @@ func toggle_sprite_size() -> void:
 	if world and world.has_method("toggle_player_character"):
 		world.toggle_player_character()
 
+# --- Menú de Pausa Global para el Jugador ---
+@export var escena_menu_pausa: PackedScene = preload("res://scenes/ui/PauseMenu.tscn")
+var _menu_pausa: PauseMenu = null
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("pause") and not event.is_echo():
+		if is_interacting:
+			return
+		var menu = _asegurar_menu_pausa()
+		if menu and not menu.visible:
+			get_viewport().set_input_as_handled()
+			# Sincronizar rata en GameState
+			var tiene_rata: bool = false
+			for child in get_children():
+				if child.name.begins_with("Rat") or child.is_in_group("rat"):
+					tiene_rata = true
+					break
+			var gs = _obtener_game_state()
+			if gs:
+				gs.tiene_rata = tiene_rata
+			menu.abrir_menu()
+
+func _asegurar_menu_pausa() -> PauseMenu:
+	if _menu_pausa != null and is_instance_valid(_menu_pausa):
+		return _menu_pausa
+	
+	var tree = get_tree() if is_inside_tree() else (Engine.get_main_loop() as SceneTree)
+	var root: Node = tree.root if tree else null
+	if root == null:
+		var p = get_parent()
+		while p != null:
+			if p.get_parent() == null:
+				root = p
+				break
+			p = p.get_parent()
+	
+	if root:
+		var existente = root.find_child("PauseMenu", true, false)
+		if existente is PauseMenu:
+			_menu_pausa = existente
+			return _menu_pausa
+	
+	if escena_menu_pausa:
+		_menu_pausa = escena_menu_pausa.instantiate() as PauseMenu
+		var cur_scene = tree.current_scene if tree else null
+		if cur_scene:
+			cur_scene.add_child(_menu_pausa)
+		elif root:
+			root.add_child(_menu_pausa)
+	return _menu_pausa
+
+func _obtener_game_state():
+	if Engine.has_singleton("GameState"):
+		return Engine.get_singleton("GameState")
+	var root: Node = null
+	if is_inside_tree() and get_tree():
+		root = get_tree().root
+	elif Engine.get_main_loop() and "root" in Engine.get_main_loop():
+		root = Engine.get_main_loop().root
+	else:
+		var p = get_parent()
+		while p != null:
+			if p.has_node("GameState"):
+				return p.get_node("GameState")
+			if p.get_parent() == null:
+				root = p
+				break
+			p = p.get_parent()
+	
+	if root and root.has_node("GameState"):
+		return root.get_node("GameState")
+	if root and not root.has_node("GameState"):
+		var gs_res = load("res://scripts/core/game_state.gd")
+		if gs_res:
+			var gs_inst = gs_res.new()
+			gs_inst.name = "GameState"
+			root.add_child(gs_inst)
+			return gs_inst
+	return null

@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon Platinum - Map Objects - Pastoria City House/c6_h01_b.png" id="1_e7rai"]
+
+[resource]
+resource_name = "mat_door"
+cull_mode = 2
+albedo_texture = ExtResource("1_e7rai")
+roughness = 0.85
+texture_filter = 0

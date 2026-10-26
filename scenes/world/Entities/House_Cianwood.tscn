@@ -1,0 +1,26 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon HeartGold _ SoulSilver - Map Objects - Cianwood City House/Cianwood City House.obj" id="1_y5rup"]
+[ext_resource type="Material" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon HeartGold _ SoulSilver - Map Objects - Cianwood City House/materials/mat_window.tres" id="2_gl2gu"]
+[ext_resource type="Material" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon HeartGold _ SoulSilver - Map Objects - Cianwood City House/materials/mat_shadow.tres" id="3_t7gmk"]
+[ext_resource type="Material" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon HeartGold _ SoulSilver - Map Objects - Cianwood City House/materials/mat_door.tres" id="4_3hlon"]
+[ext_resource type="Material" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon HeartGold _ SoulSilver - Map Objects - Cianwood City House/materials/mat_walls_roof.tres" id="5_02g3n"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hj4s1"]
+size = Vector3(5.6, 5, 4.2)
+
+[node name="House_Cianwood" type="StaticBody3D" unique_id=1589497904]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=571311647]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+shape = SubResource("BoxShape3D_hj4s1")
+
+[node name="Visual" type="Node3D" parent="." unique_id=2072454181]
+transform = Transform3D(0.08, 0, 0, 0, 0.08, 0, 0, 0, 0.08, -0.24, -0.08, -0.24)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Visual" unique_id=559996015]
+mesh = ExtResource("1_y5rup")
+surface_material_override/0 = ExtResource("2_gl2gu")
+surface_material_override/1 = ExtResource("3_t7gmk")
+surface_material_override/2 = ExtResource("4_3hlon")
+surface_material_override/3 = ExtResource("5_02g3n")

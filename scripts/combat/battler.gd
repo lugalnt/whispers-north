@@ -58,6 +58,14 @@ enum Bando { ALIADO, ENEMIGO }
 @export var sonido_herido: AudioStream
 @export var sonido_derrota: AudioStream
 
+@export_group("Sonidos de Ataque (personalizables)")
+## Sonido de impacto básico para los ataques del combatiente (editable desde el Inspector)
+@export var sfx_ataque_golpe: AudioStream = preload("res://assets/audio/sfx/snd_doorclose.wav")
+## Sonido reproducido al acertar el comando de acción a tiempo
+@export var sfx_ataque_exito: AudioStream = preload("res://assets/audio/sfx/snd_bell_bounce_short.wav")
+## Sonido para ataques especiales o barridas
+@export var sfx_ataque_especial: AudioStream = preload("res://assets/audio/sfx/test_battle_start.mp3")
+
 @onready var visual: Node3D = $Visual
 
 var bando: Bando = Bando.ALIADO
@@ -156,7 +164,10 @@ func mirar_al_frente() -> void:
 ## Reproduce una animación del AnimatedSprite3D si existe. Devuelve true si se reprodujo.
 func reproducir(anim: StringName) -> bool:
 	_respirando = false
-	visual.scale = _escala_visual
+	if visual == null:
+		visual = get_node_or_null("Visual")
+	if visual != null:
+		visual.scale = _escala_visual
 	var sprite: AnimatedSprite3D = visual as AnimatedSprite3D
 	if sprite == null or anim == &"" or sprite.sprite_frames == null:
 		return false
@@ -258,12 +269,16 @@ func animar_herido() -> void:
 	_reproducir_sonido(sonido_herido)
 	var hay_anim: bool = reproducir(anim_herido)
 	destello(Color(1.0, 0.35, 0.35))
-	var tween: Tween = create_tween()
-	for i in range(4):
-		var lado: float = 0.12 if i % 2 == 0 else -0.12
-		tween.tween_property(visual, "position:x", _pos_visual.x + lado, 0.04)
-	tween.tween_property(visual, "position:x", _pos_visual.x, 0.04)
-	await tween.finished
+	if visual == null:
+		visual = get_node_or_null("Visual")
+	if visual != null:
+		var tween: Tween = create_tween()
+		if tween:
+			for i in range(4):
+				var lado: float = 0.12 if i % 2 == 0 else -0.12
+				tween.tween_property(visual, "position:x", _pos_visual.x + lado, 0.04)
+			tween.tween_property(visual, "position:x", _pos_visual.x, 0.04)
+			await tween.finished
 	if hay_anim:
 		await esperar_animacion()
 	if esta_vivo():
@@ -317,6 +332,10 @@ func _ajustar_sprite_al_suelo() -> void:
 
 func _sprites() -> Array[SpriteBase3D]:
 	var lista: Array[SpriteBase3D] = []
+	if visual == null:
+		visual = get_node_or_null("Visual")
+	if visual == null:
+		return lista
 	if visual is SpriteBase3D:
 		lista.append(visual)
 	for hijo in visual.find_children("*", "SpriteBase3D", true, false):
@@ -325,6 +344,10 @@ func _sprites() -> Array[SpriteBase3D]:
 
 func _geometrias() -> Array[GeometryInstance3D]:
 	var lista: Array[GeometryInstance3D] = []
+	if visual == null:
+		visual = get_node_or_null("Visual")
+	if visual == null:
+		return lista
 	for hijo in visual.find_children("*", "MeshInstance3D", true, false):
 		lista.append(hijo)
 	return lista

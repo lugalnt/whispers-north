@@ -233,9 +233,37 @@ Todo el sistema está diseñado para que artistas y diseñadores puedan intercam
 ### C. Cambiar Música y Efectos de Sonido (SFX)
 - **Música:** Arrastra cualquier archivo `.mp3`, `.ogg` o `.wav` a la propiedad `Musica Combate` (disponible tanto en `EncuentroCombate` como en `CombatArena`).
 - **Sonidos de impacto y victoria:** En el Inspector de `CombatArena`, asigna nuevos audios a `Sonido Victoria`, `Sonido Derrota`, `Sonido Huida` o `Sonido Cursor`.
-- **Sonidos de ataques y habilidades:** En los recursos de las acciones (ej. `Resource_player_golpe` o `Resource_pot_embestida`), cambia las propiedades `Sonido Golpe`, `Sonido Exito` o `Sonido Carga`.
+- **Sonidos de combate del jugador (personalizables en el Inspector):**
+  En el nodo raíz de [`scenes/combat/battlers/PlayerBattler.tscn`](../scenes/combat/battlers/PlayerBattler.tscn), el grupo `@export_group("Sonidos de Ataque (personalizables)")` permite configurar directamente:
+  - `sfx_ataque_golpe`: Sonido básico al impactar el golpe.
+  - `sfx_ataque_exito`: Sonido al acertar el comando de acción (QTE) a tiempo.
+  - `sfx_ataque_especial`: Sonido al ejecutar ataques especiales o barridas.
+  Las acciones de combate leen preferentemente estos sonidos del atacante antes de recurrir a sus valores de fábrica.
 
 ### D. Sincronizar el Timing del Ataque con una Nueva Animación
 Cuando un animador cree un nuevo sprite de golpe:
 1. En el recurso `BattlerAction` (ej. `AccionGolpe`), ajusta la propiedad `Tiempo Impacto` (en segundos) para que coincida exactamente con el frame de impacto del nuevo sprite.
 2. Ajusta `Ventana Antes` y `Ventana Despues` para aumentar o reducir la dificultad del comando de acción (QTE).
+
+---
+
+## 9. Encuadre Automático de Cámara por Proyección (`CombatArena`)
+
+En encuentros de múltiples combatientes (por ejemplo 1 vs 3 jarrones), el método `_ajustar_encuadre_camara_y_combatientes()` garantiza que ninguna entidad quede fuera de la pantalla:
+1. **Espaciado Adaptativo Inicial**: Calcula la separación horizontal de aliados y enemigos en función de la cantidad en cada bando.
+2. **Proyección Analítica 3D a 2D (`proyectar_posicion_pantalla`)**: Transforma los extremos de colisión y altura de cada combatiente a píxeles de pantalla en la resolución actual del viewport.
+3. **Corrección Dinámica Iterativa**: Si algún enemigo o aliado excede los márgenes seguros (6% a 90% del ancho de pantalla), comprime el espaciado horizontal y/o desplaza suavemente la cámara hacia atrás a lo largo de su vector `+Z` local hasta que todos queden encuadrados a la perfección.
+4. **Persistencia de Posición Base**: Actualiza la `posicion_base` de cada battler y `_cam_pos_original` para que los retornos de animación y las sacudidas de pantalla (`sacudir_camara`) operen con precisión.
+
+---
+
+## 10. Habilidades Desbloqueables: `AccionBarridaVortice`
+
+- **Script:** [`res://scripts/combat/acciones/accion_barrida_vortice.gd`](../scripts/combat/acciones/accion_barrida_vortice.gd)
+- **Desbloqueo:** Se aprende al completar las 5 interacciones con `Npc_Util` en `World_Town.tscn` (registrada globalmente en `GameState.acciones_desbloqueadas`).
+- **Objetivo:** `Objetivo.TODOS_ENEMIGOS`. No requiere seleccionar un enemigo individual en el menú; ataca a todos los rivales vivos en orden horizontal.
+- **Animación:** El personaje realiza una anticipación y carga arremetiendo a gran velocidad atravesando a todos los enemigos consecutivamente.
+- **Comando de Acción:** Secuencia de timing multi-botón (`ComandoAccion.ejecutar_secuencia`) utilizando acciones configuradas en el Input Map (`move_right`, `move_up`, `interact`).
+  - **Éxito (Perfecto):** Atraviesa a todos los enemigos infligiendo daño a cada uno + autodaño (`2-3` HP).
+  - **Fallo / Anticipado:** El jugador tropieza, no inflige daño a los enemigos y recibe el autodaño (`2-3` HP).
+

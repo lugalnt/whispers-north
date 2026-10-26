@@ -1,0 +1,26 @@
+Godot Engine v4.7.2.stable.steam.ed1daf0bf - https://godotengine.org
+
+==================================================
+TEST: NPC VISUAL DIRECTION AWARENESS & DIALOGUE ISOLATION
+==================================================
+Verificando que los NPCs NO se detecten a sí mismos como el jugador...
+PASS: Ningún NPC se auto-detectó.
+
+Moviendo jugador cerca de NPC A...
+PASS: Detección y proximidad aisladas por NPC.
+
+Probando orientación de sprites con PlaceholderNPC...
+Jugador al frente (+Z) -> Anim: interact_down | Flip: false | Frame: 0
+Jugador a la derecha (+X) -> Anim: interact_side | Flip: false | Frame: 0
+Jugador a la izquierda (-X) -> Anim: interact_side | Flip: true | Frame: 0
+Jugador detrás (-Z) -> Anim: interact_up | Flip: false | Frame: 0
+Restaurar pose -> Anim: interact_down | Frame: 0
+
+Verificando escena real World_Town.tscn...
+Lineas de Npc: ["No me hables."]
+Lineas de Npc_Exp: ["Ser NPC de pruebas es cosa dificil, chabal.", "Bye."]
+Lineas de Npc_Util: ["Soy el unico NPC util de aqui.", "Toma!!!"]
+
+==================================================
+TODAS LAS PRUEBAS PASARON EXITOSAMENTE (100% OK)
+==================================================

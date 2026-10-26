@@ -1,0 +1,16 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon HeartGold _ SoulSilver - Map Objects - Violet City House/Violet City House.obj" id="1_6y2u2"]
+[ext_resource type="Material" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon HeartGold _ SoulSilver - Map Objects - Violet City House/materials/mat_window.tres" id="2_2jh5d"]
+[ext_resource type="Material" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon HeartGold _ SoulSilver - Map Objects - Violet City House/materials/mat_shadow.tres" id="3_n8d4l"]
+[ext_resource type="Material" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon HeartGold _ SoulSilver - Map Objects - Violet City House/materials/mat_door.tres" id="4_8dblf"]
+[ext_resource type="Material" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon HeartGold _ SoulSilver - Map Objects - Violet City House/materials/mat_walls_roof.tres" id="5_0vuoj"]
+
+[node name="House_Violet" type="Node3D" unique_id=1580575251]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=973307365]
+mesh = ExtResource("1_6y2u2")
+surface_material_override/0 = ExtResource("2_2jh5d")
+surface_material_override/1 = ExtResource("3_n8d4l")
+surface_material_override/2 = ExtResource("4_8dblf")
+surface_material_override/3 = ExtResource("5_0vuoj")

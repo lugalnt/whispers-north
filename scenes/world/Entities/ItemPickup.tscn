@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://itmpickup001"]
+
+[ext_resource type="Script" uid="uid://de62sgpba812l" path="res://scripts/world/item_pickup.gd" id="1_pickup"]
+[ext_resource type="Resource" uid="uid://crwp6rs7v0v7h" path="res://data/items/queso_nordico.tres" id="2_queso"]
+[ext_resource type="Texture2D" uid="uid://cgt45814xeiem" path="res://assets/sprites/items/placeholder.png" id="3_n3sct"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_pickup"]
+radius = 0.7
+
+[node name="ItemPickup" type="Area3D" unique_id=2110419748]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("1_pickup")
+item = ExtResource("2_queso")
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=1931705024]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
+pixel_size = 0.015
+billboard = 1
+texture_filter = 0
+texture = ExtResource("3_n3sct")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1081485303]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
+shape = SubResource("SphereShape3D_pickup")

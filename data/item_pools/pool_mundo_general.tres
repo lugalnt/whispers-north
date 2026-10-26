@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="ItemPool" format=3 uid="uid://dx6g5fcaftxd8"]
+
+[ext_resource type="Script" uid="uid://ddwruasehyfqo" path="res://scripts/inventory/item_pool.gd" id="1_pool"]
+[ext_resource type="Script" uid="uid://cgjkf6ww8u3jy" path="res://scripts/inventory/item_pool_entry.gd" id="2_entry"]
+[ext_resource type="Resource" uid="uid://h1jb2tycug0q" path="res://data/items/fragmento_ceramica.tres" id="3_frag"]
+[ext_resource type="Resource" uid="uid://crwp6rs7v0v7h" path="res://data/items/queso_nordico.tres" id="4_queso"]
+[ext_resource type="Resource" uid="uid://dq6sbydfv1dto" path="res://data/items/llave_antigua.tres" id="5_llave"]
+
+[sub_resource type="Resource" id="Resource_entry_frag"]
+script = ExtResource("2_entry")
+item = ExtResource("3_frag")
+peso = 3.0
+probabilidad = 0.8
+cantidad_max = 3
+
+[sub_resource type="Resource" id="Resource_entry_queso"]
+script = ExtResource("2_entry")
+item = ExtResource("4_queso")
+peso = 2.0
+probabilidad = 0.5
+cantidad_max = 2
+
+[sub_resource type="Resource" id="Resource_entry_llave"]
+script = ExtResource("2_entry")
+item = ExtResource("5_llave")
+peso = 0.5
+probabilidad = 0.2
+
+[resource]
+script = ExtResource("1_pool")
+nombre = "Pool General del Supramundo"
+entradas = Array[ExtResource("2_entry")]([SubResource("Resource_entry_frag"), SubResource("Resource_entry_queso"), SubResource("Resource_entry_llave")])

@@ -1,0 +1,4 @@
+Godot Engine v4.7.2.stable.steam.ed1daf0bf - https://godotengine.org
+
+Image loaded! Size: (1207, 100) format: 5
+ImageTexture created: ():<ImageTexture#-9223372009877010965> size: (1207.0, 100.0)

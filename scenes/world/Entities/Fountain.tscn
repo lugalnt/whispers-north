@@ -1,0 +1,85 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/fountain.gd" id="1_script"]
+[ext_resource type="ArrayMesh" path="res://assets/models/DS _ DSi - Pokemon Black 2 _ White 2 - Fountains - Fountain 02/fountain_mesh.res" id="1_hf08b"]
+[ext_resource type="Material" path="res://assets/models/DS _ DSi - Pokemon Black 2 _ White 2 - Fountains - Fountain 02/materials/mat_shadow.tres" id="2_hft80"]
+[ext_resource type="Material" path="res://assets/models/DS _ DSi - Pokemon Black 2 _ White 2 - Fountains - Fountain 02/materials/mat_water_rim.tres" id="3_y3dpx"]
+[ext_resource type="Material" path="res://assets/models/DS _ DSi - Pokemon Black 2 _ White 2 - Fountains - Fountain 02/materials/mat_basin_floor.tres" id="4_mdiof"]
+[ext_resource type="Material" path="res://assets/models/DS _ DSi - Pokemon Black 2 _ White 2 - Fountains - Fountain 02/materials/mat_water_pool.tres" id="5_g8kax"]
+[ext_resource type="Material" path="res://assets/models/DS _ DSi - Pokemon Black 2 _ White 2 - Fountains - Fountain 02/materials/mat_water_stream.tres" id="6_bk66y"]
+[ext_resource type="Material" path="res://assets/models/DS _ DSi - Pokemon Black 2 _ White 2 - Fountains - Fountain 02/materials/mat_stone_base.tres" id="7_ciqmi"]
+[ext_resource type="Material" path="res://assets/models/DS _ DSi - Pokemon Black 2 _ White 2 - Fountains - Fountain 02/materials/mat_stone_trim.tres" id="8_8ilkr"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_uch0r"]
+radius = 4.0
+
+[sub_resource type="Animation" id="Animation_rn40e"]
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/FountainMesh:surface_material_override/4:uv1_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/FountainMesh:surface_material_override/3:uv1_offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.5, 0.5, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visual/FountainMesh:surface_material_override/1:uv1_offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_er0x8"]
+_data = {
+&"flow": SubResource("Animation_rn40e")
+}
+
+[node name="Fountain" type="StaticBody3D" unique_id=558754715]
+script = ExtResource("1_script")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1420595399]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CylinderShape3D_uch0r")
+
+[node name="Visual" type="Node3D" parent="." unique_id=1920163922]
+transform = Transform3D(0.08, 0, 0, 0, 0.08, 0, 0, 0, 0.08, 0, 0, 0)
+
+[node name="FountainMesh" type="MeshInstance3D" parent="Visual" unique_id=521745656]
+mesh = ExtResource("1_hf08b")
+surface_material_override/0 = ExtResource("2_hft80")
+surface_material_override/1 = ExtResource("3_y3dpx")
+surface_material_override/2 = ExtResource("4_mdiof")
+surface_material_override/3 = ExtResource("5_g8kax")
+surface_material_override/4 = ExtResource("6_bk66y")
+surface_material_override/5 = ExtResource("7_ciqmi")
+surface_material_override/6 = ExtResource("8_8ilkr")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=556606470]
+libraries/ = SubResource("AnimationLibrary_er0x8")
+autoplay = &"flow"
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1290093840]
+max_distance = 25.0

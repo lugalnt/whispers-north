@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bhknu3e5jjviy"]
+
+[ext_resource type="Texture2D" uid="uid://btlcjvaaa8xer" path="res://assets/models/DS _ DSi - Pokemon Black 2 _ White 2 - Fountains - Fountain 02/c03_foun_02.png" id="1_wmw7l"]
+
+[resource]
+resource_name = "mat_water_rim"
+transparency = 1
+cull_mode = 2
+albedo_color = Color(1, 1, 1, 0.9)
+albedo_texture = ExtResource("1_wmw7l")
+roughness = 0.2
+uv1_offset = Vector3(0, -0.48666954, 0)
+texture_filter = 0

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="InventoryItem" format=3 uid="uid://dq6sbydfv1dto"]
+
+[ext_resource type="Texture2D" uid="uid://cgt45814xeiem" path="res://assets/sprites/items/placeholder.png" id="1_fw2x7"]
+[ext_resource type="Script" uid="uid://bhtrg41fnwdvg" path="res://scripts/inventory/inventory_item.gd" id="1_item"]
+
+[resource]
+script = ExtResource("1_item")
+id = "llave_antigua"
+nombre = "Llave Antigua de Madera"
+descripcion = "Una pequeña llave tallada en madera de roble mohoso. Debe abrir algún cofre o puerta del bosque."
+icono = ExtResource("1_fw2x7")
+categoria = 2
+cantidad_maxima = 1

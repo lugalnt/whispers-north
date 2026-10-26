@@ -17,6 +17,75 @@ func _ready() -> void:
 	if escena_menu_pausa:
 		_menu_pausa = escena_menu_pausa.instantiate() as PauseMenu
 		add_child(_menu_pausa)
+	
+	_procesar_transicion_entrada()
+
+func _procesar_transicion_entrada() -> void:
+	var gs = _obtener_game_state()
+	if gs == null or not gs.hay_transicion_pendiente():
+		return
+	
+	# Restaurar variante de personaje (16x16 o 32x32) si venía usando 32x32
+	if gs.usar_personaje_32 and player_16 and player_32 and player_16.visible:
+		cambiar_personaje(player_16, player_32)
+	
+	var active = get_active_player()
+	
+	# 1. Colocar al jugador en el punto de entrada
+	var pos_destino: Vector3 = gs.consumir_posicion_spawn(self)
+	if pos_destino != Vector3.ZERO and active != null:
+		if active.is_inside_tree():
+			active.global_position = pos_destino
+		else:
+			active.position = pos_destino
+		active.reset_physics_interpolation()
+	
+	# 2. Activar la cámara de destino (ej: Camera6)
+	var cam_nombre: String = gs.consumir_camara_spawn()
+	if not cam_nombre.is_empty():
+		var cam: Camera3D = get_node_or_null(cam_nombre) as Camera3D
+		if cam == null:
+			cam = find_child(cam_nombre, true, false) as Camera3D
+		if cam:
+			cam.make_current()
+	
+	# 3. Restaurar acompañante (Rata) si corresponde
+	if gs.tiene_rata and active != null:
+		_asegurar_rata(active)
+	
+	# 4. Fundido suave de entrada (fade in desde negro)
+	_animar_fade_in(active)
+
+func _asegurar_rata(jugador: CharacterBody3D) -> void:
+	for c in jugador.get_children():
+		if c.name.begins_with("Rat") or c.is_in_group("rat"):
+			return
+	var escena_rata: PackedScene = load("res://scenes/world/Entities/Rat.tscn")
+	if escena_rata:
+		var rata = escena_rata.instantiate()
+		rata.name = "Rat"
+		jugador.add_child(rata)
+		rata.position = Vector3(0, 1.2, 0)
+
+func _animar_fade_in(jugador: CharacterBody3D) -> void:
+	var canvas := CanvasLayer.new()
+	canvas.layer = 120
+	var rect := ColorRect.new()
+	rect.color = Color.BLACK
+	rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	canvas.add_child(rect)
+	add_child(canvas)
+	
+	if jugador and "is_interacting" in jugador:
+		jugador.is_interacting = true
+	
+	var tw = create_tween()
+	tw.tween_property(rect, "modulate:a", 0.0, 0.45)
+	await tw.finished
+	canvas.queue_free()
+	
+	if is_instance_valid(jugador) and "is_interacting" in jugador:
+		jugador.is_interacting = false
 
 # --- Sistema de cámaras ---
 # Cada Area3D llamada "SwitchC_A_B" alterna entre Camera<A> y Camera<B> cuando el jugador la cruza.
@@ -37,7 +106,9 @@ func _setup_camera_switches() -> void:
 			push_warning("La zona %s referencia una cámara que no existe" % zone.name)
 			continue
 		
-		zone.body_entered.connect(_on_camera_switch_entered.bind(cam_a, cam_b))
+		var cb = _on_camera_switch_entered.bind(cam_a, cam_b)
+		if not zone.body_entered.is_connected(cb):
+			zone.body_entered.connect(cb)
 
 # Alterna entre las dos cámaras de la zona (solo reacciona al jugador activo)
 func _on_camera_switch_entered(body: Node3D, cam_a: Camera3D, cam_b: Camera3D) -> void:
@@ -100,6 +171,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			_menu_pausa.abrir_menu()
 
 func _obtener_game_state():
+	var gs_script = load("res://scripts/core/game_state.gd")
+	if gs_script and "instancia" in gs_script and gs_script.instancia != null:
+		return gs_script.instancia
 	if Engine.has_singleton("GameState"):
 		return Engine.get_singleton("GameState")
 	var root = get_tree().root if is_inside_tree() else null

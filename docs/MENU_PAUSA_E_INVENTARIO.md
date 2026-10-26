@@ -64,20 +64,23 @@ Autoload global registrado en `project.godot`:
 ### 2.4 `PauseMenu` (`scenes/ui/PauseMenu.tscn` / `scripts/ui/pause_menu.gd`)
 Interfaz gráfica completa con `process_mode = PROCESS_MODE_ALWAYS` y **altamente configurable desde el Inspector de Godot**:
 - **Propiedades exportadas (@export_group)**:
+  - *Encabezado del Menú*: título principal del menú (`texto_titulo_menu`, por defecto `"PAUSA"`) y pistas de atajos (`texto_pistas_menu`).
   - *Textos de Pestañas*: títulos de Inventario, Estadísticas y Sistema.
-  - *Textos de Inventario*: mensajes de zurrón vacío, selección y botón consumir.
-  - *Textos de Estadísticas*: etiquetas de HP, Ataque, Defensa, Velocidad, y estado del compañero (`texto_companero_activo` y `texto_companero_descanso`). Se muestran exactamente como están configurados.
+  - *Textos de Inventario*: mensajes de zurrón vacío, selección y texto del botón consumir.
+  - *Textos de Estadísticas*: título del perfil (`texto_titulo_perfil`, respeta configuraciones como `"El Fuki"`), etiquetas de HP, Ataque, Defensa, Velocidad, y estado del compañero (`texto_companero_activo` y `texto_companero_descanso`).
   - *Textos de Sistema*: botones de Reanudar, Controles y Menú Principal.
   - *Visuales y Retratos*: textura de retrato de Eric y del compañero.
   - *Audio y Efectos*: streams de sonido para abrir, cerrar, cursor, confirmar y error.
 - **Detección Automática de Acompañante**:
   - `_detectar_companero()` inspecciona si el jugador activo tiene a la rata anclada como hijo o en el grupo `"rat"`.
   - Muestra directamente el texto configurado (`texto_companero_activo` o `texto_companero_descanso`) y sincroniza con `GameState.tiene_rata`.
-- **Pestaña Inventario**:
-  - Cuadrícula responsiva de slots con navegación por teclado/gamepad.
-  - Panel lateral de detalles (icono, nombre, categoría, cantidad, descripción completa y botón Usar). Los objetos consumibles (e.g. Queso Nórdico) curan directamente la salud global persistente `hp_actual`.
+- **Pestaña Inventario y Consumo Ágil de Objetos**:
+  - Cuadrícula responsiva de slots con navegación intuitiva por teclado/gamepad/ratón.
+  - **Uso directo sin ratón**: Al navegar o seleccionar un ítem consumible (e.g. Queso Nórdico), interactuar de nuevo sobre el mismo slot (`ui_accept`, botón `interact`, `Enter`, `Espacio`, `E` o botón `A` del mando) consume el objeto al instante y restaura la salud sin necesidad de mover el cursor hasta el panel lateral.
+  - El foco de la interfaz se retiene en el slot activo tras consumir, evitando desorientación o bloqueo del foco.
+  - Panel lateral de detalles (icono, nombre, categoría, cantidad, descripción completa y botón Usar interactivo).
 - **Pestaña Estadísticas**:
-  - Retrato de Eric y nombre del compañero configurable.
+  - Retrato de Eric y título/perfil respetando fielmente el valor asignado en el Inspector visual.
   - Nivel, barra de EXP, barra de HP sincronizada en tiempo real con `GameState.hp_actual`.
   - Insignias de combate: Ataque, Defensa, Velocidad.
 - **Pestaña Sistema**:

@@ -1,0 +1,16 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon Platinum - Map Objects - Pastoria City House/Pastoria City House.obj" id="1_604cu"]
+[ext_resource type="Material" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon Platinum - Map Objects - Pastoria City House/materials/mat_window.tres" id="2_35ogy"]
+[ext_resource type="Material" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon Platinum - Map Objects - Pastoria City House/materials/mat_door.tres" id="3_ace46"]
+[ext_resource type="Material" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon Platinum - Map Objects - Pastoria City House/materials/mat_shadow.tres" id="4_ak2uh"]
+[ext_resource type="Material" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon Platinum - Map Objects - Pastoria City House/materials/mat_walls_roof.tres" id="5_glg1p"]
+
+[node name="House_Pastoria" type="Node3D" unique_id=1697781114]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1095223464]
+mesh = ExtResource("1_604cu")
+surface_material_override/0 = ExtResource("2_35ogy")
+surface_material_override/1 = ExtResource("3_ace46")
+surface_material_override/2 = ExtResource("4_ak2uh")
+surface_material_override/3 = ExtResource("5_glg1p")

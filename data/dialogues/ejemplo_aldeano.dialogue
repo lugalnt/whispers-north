@@ -1,0 +1,16 @@
+~ start
+Aldeano: ¡Saludos, viajero! Las ventiscas del norte están más frías que de costumbre hoy.
+Aldeano: Se escuchan ruidos extraños saliendo de los jarrones abandonados...
+- ¿Sabes algo de la rata mágica?
+	Aldeano: Dicen que se esconde en los cofres antiguos. Si la encuentras, ¡te acompañará en tu viaje!
+	if GameState.tiene_rata:
+		Aldeano: ¡Espera un momento! ¿Esa rata en tu cabeza es real? ¡Increíble!
+	- ¡Gracias por el consejo!
+		Aldeano: ¡Cuídate allá afuera en el bosque!
+- ¿Tienes provisiones para el camino?
+	Aldeano: Solo me queda un poco de queso nórdico ahumado. Toma una ración para el frío.
+	do GameState.inventario.agregar(ItemDatabase.obtener_item("queso_nordico"), 1)
+	Aldeano: ¡Que te dé fuerzas en tu aventura, explorador!
+- Hasta luego.
+	Aldeano: Que los vientos te sean favorables.
+=> END

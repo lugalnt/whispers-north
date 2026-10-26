@@ -126,6 +126,18 @@ func _ready() -> void:
 		inicializar([escena_battler_jugador_defecto], [escena_battler_enemigo_defecto], null)
 		comenzar_combate.call_deferred()
 	elif not aliados.is_empty() or not enemigos.is_empty():
+		var gs = _obtener_game_state()
+		if gs and gs.stats:
+			for a in aliados:
+				if a.controlado_por_jugador:
+					a.stats.max_hp = gs.stats.max_hp
+					a.stats.ataque = gs.stats.ataque
+					a.stats.defensa = gs.stats.defensa
+					a.stats.velocidad = gs.stats.velocidad
+					if not gs.nombre_jugador.is_empty():
+						a.nombre = gs.nombre_jugador
+					if gs.hp_actual > 0:
+						a.hp = clamp(gs.hp_actual, 1, a.stats.max_hp)
 		_reconstruir_hud()
 
 func _process(_delta: float) -> void:
@@ -213,17 +225,28 @@ func inicializar(escenas_aliados: Array, escenas_enemigos: Array, jugador_mundo:
 		contenedor_aliados.add_child(battler)
 		battler.inicializar_stats()
 		battler.bando = Battler.Bando.ALIADO
-		# Sincronizar vida inicial con GameState si es el jugador
+		# Sincronizar stats y vida inicial con GameState si es el jugador
 		if battler.controlado_por_jugador:
 			var gs = _obtener_game_state()
-			if gs and gs.hp_actual > 0:
-				battler.hp = clamp(gs.hp_actual, 1, battler.stats.max_hp)
-		# Posición escalonada para que si hay más de 1 aliado no se tapen
-		var offset_x: float = -3.2 - (float(i) * 1.5)
-		var offset_z: float = float(i) * 0.4
-		battler.position = Vector3(offset_x, 0.0, offset_z)
-		battler.posicion_base = battler.global_position if battler.is_inside_tree() else battler.position
-		battler.mirar_al_frente()
+			if gs:
+				if gs.stats != null:
+					if battler.stats == null:
+						battler.stats = BattlerStats.new()
+					else:
+						battler.stats = battler.stats.duplicate()
+					battler.stats.max_hp = gs.stats.max_hp
+					battler.stats.ataque = gs.stats.ataque
+					battler.stats.defensa = gs.stats.defensa
+					battler.stats.velocidad = gs.stats.velocidad
+				if not gs.nombre_jugador.is_empty():
+					battler.nombre = gs.nombre_jugador
+				if gs.hp_actual > 0:
+					battler.hp = clamp(gs.hp_actual, 1, battler.stats.max_hp)
+				else:
+					battler.hp = battler.stats.max_hp
+				# Cargar acciones desbloqueadas por NPCs o misiones
+				if gs.has_method("tiene_accion") and gs.tiene_accion("barrida_vortice"):
+					_asegurar_accion_desbloqueada(battler, "res://scripts/combat/acciones/accion_barrida_vortice.gd")
 		if battler.copiar_sprite_del_jugador and jugador_mundo != null:
 			battler.copiar_sprite_de(jugador_mundo)
 		aliados.append(battler)
@@ -239,17 +262,184 @@ func inicializar(escenas_aliados: Array, escenas_enemigos: Array, jugador_mundo:
 		contenedor_enemigos.add_child(battler)
 		battler.inicializar_stats()
 		battler.bando = Battler.Bando.ENEMIGO
-		# Posición escalonada hacia la derecha
-		var offset_x: float = 3.2 + (float(i) * 1.5)
-		var offset_z: float = float(i) * 0.4
-		battler.position = Vector3(offset_x, 0.0, offset_z)
-		battler.posicion_base = battler.global_position if battler.is_inside_tree() else battler.position
-		battler.mirar_al_frente()
+		if escenas_enemigos.size() > 1:
+			var letra = String.chr(65 + i)
+			battler.nombre = "%s %s" % [battler.nombre, letra]
 		enemigos.append(battler)
 		battler.hp_cambiado.connect(_on_battler_hp_cambiado.bind(battler))
 		battler.derrotado.connect(_on_battler_derrotado.bind(battler))
 
+	# Posicionar aliados y enemigos con adaptación de encuadre por proyección de cámara
+	_posicionar_combatientes_inicial()
+	_ajustar_encuadre_camara_y_combatientes()
+
 	_reconstruir_hud()
+
+func _asegurar_accion_desbloqueada(battler: Battler, ruta_script: String) -> void:
+	for a in battler.acciones:
+		if a and a.get_script() and a.get_script().resource_path == ruta_script:
+			return
+	var script_accion = load(ruta_script)
+	if script_accion:
+		var nueva_accion: BattlerAction = script_accion.new()
+		battler.acciones.append(nueva_accion)
+
+func _posicionar_combatientes_inicial() -> void:
+	var cant_aliados = aliados.size()
+	for i in range(cant_aliados):
+		var a = aliados[i]
+		var offset_x: float
+		if cant_aliados == 1:
+			offset_x = -3.0
+		else:
+			var sep = clampf(2.4 / float(cant_aliados - 1), 0.85, 1.3)
+			offset_x = -2.2 - float(i) * sep
+		var offset_z: float = float(i) * 0.35
+		a.position = Vector3(offset_x, 0.0, offset_z)
+		a.posicion_base = a.global_position if a.is_inside_tree() else a.position
+		a.mirar_al_frente()
+
+	var cant_enemigos = enemigos.size()
+	for i in range(cant_enemigos):
+		var e = enemigos[i]
+		var offset_x: float
+		if cant_enemigos == 1:
+			offset_x = 3.0
+		else:
+			var sep = clampf(2.2 / float(cant_enemigos - 1), 0.85, 1.25)
+			offset_x = 2.4 + float(i) * sep
+		var offset_z: float = float(i) * 0.35
+		e.position = Vector3(offset_x, 0.0, offset_z)
+		e.posicion_base = e.global_position if e.is_inside_tree() else e.position
+		e.mirar_al_frente()
+
+## Proyecta un punto 3D del mundo a coordenadas 2D en pantalla basándose en la cámara y resolución
+func proyectar_posicion_pantalla(pos_3d: Vector3, tam_pantalla: Vector2) -> Vector2:
+	if camara == null:
+		return tam_pantalla * 0.5
+	
+	# Si unproject_position está disponible en el entorno y da coordenadas válidas, usarlo
+	if camara.is_inside_tree():
+		var p_unproj: Vector2 = camara.unproject_position(pos_3d)
+		if p_unproj.length_squared() > 1.0:
+			return p_unproj
+	
+	# Cálculo analítico directo de perspectiva (consistente en cualquier resolución, aspecto y modo headless)
+	var cam_xform: Transform3D = camara.global_transform if camara.is_inside_tree() else camara.transform
+	if absf(cam_xform.basis.determinant()) < 0.0001:
+		return tam_pantalla * 0.5
+	var p_cam: Vector3 = cam_xform.affine_inverse() * pos_3d
+	var dist_z: float = -p_cam.z
+	if dist_z <= 0.05:
+		return Vector2(-9999.0, -9999.0)
+	
+	var fov_rad: float = deg_to_rad(camara.fov)
+	var h_half: float = dist_z * tan(fov_rad * 0.5)
+	var aspect: float = tam_pantalla.x / maxf(1.0, tam_pantalla.y)
+	var w_half: float = h_half * aspect
+	
+	var ndc_x: float = p_cam.x / w_half
+	var ndc_y: float = -p_cam.y / h_half
+	
+	return Vector2(
+		(ndc_x * 0.5 + 0.5) * tam_pantalla.x,
+		(ndc_y * 0.5 + 0.5) * tam_pantalla.y
+	)
+
+## Comprueba mediante proyección 3D a 2D en pantalla que todos los combatientes (aliados y enemigos)
+## quepan dentro de los márgenes visibles de la resolución de la cámara, ajustando su espaciado y/o alejando la cámara.
+func _ajustar_encuadre_camara_y_combatientes() -> void:
+	if camara == null:
+		return
+	
+	var vp := get_viewport()
+	var tam_pantalla: Vector2 = vp.get_visible_rect().size if vp else Vector2(1152, 648)
+	if tam_pantalla.x <= 10.0 or tam_pantalla.y <= 10.0:
+		tam_pantalla = Vector2(1152, 648)
+	
+	# Márgenes de seguridad dentro de la resolución de pantalla (6% a 90%)
+	var margen_izq: float = tam_pantalla.x * 0.06
+	var margen_der: float = tam_pantalla.x * 0.90
+	var margen_arr: float = tam_pantalla.y * 0.07
+	var margen_aba: float = tam_pantalla.y * 0.91
+	
+	var todos: Array[Battler] = []
+	todos.append_array(aliados)
+	todos.append_array(enemigos)
+	
+	for iteracion in range(8):
+		var fuera_derecha: float = 0.0
+		var fuera_izquierda: float = 0.0
+		var fuera_arriba: float = 0.0
+		var fuera_abajo: float = 0.0
+		
+		for b in todos:
+			if not is_instance_valid(b):
+				continue
+			var pos_b: Vector3 = b.global_position if b.is_inside_tree() else b.position
+			var r: float = b.radio if "radio" in b else 0.6
+			var h: float = b.altura if "altura" in b else 1.4
+			
+			var puntos: Array[Vector3] = [
+				pos_b,
+				pos_b + Vector3(-r * 1.1, 0.0, 0.0),
+				pos_b + Vector3(r * 1.1, 0.0, 0.0),
+				pos_b + Vector3(0.0, h * 1.1, 0.0),
+			]
+			
+			for pt in puntos:
+				var p2d: Vector2 = proyectar_posicion_pantalla(pt, tam_pantalla)
+				if p2d.x < -9000.0:
+					fuera_derecha = maxf(fuera_derecha, 50.0)
+					continue
+				if p2d.x > margen_der:
+					fuera_derecha = maxf(fuera_derecha, p2d.x - margen_der)
+				if p2d.x < margen_izq:
+					fuera_izquierda = maxf(fuera_izquierda, margen_izq - p2d.x)
+				if p2d.y < margen_arr:
+					fuera_arriba = maxf(fuera_arriba, margen_arr - p2d.y)
+				if p2d.y > margen_aba:
+					fuera_abajo = maxf(fuera_abajo, p2d.y - margen_aba)
+		
+		if fuera_derecha <= 1.0 and fuera_izquierda <= 1.0 and fuera_arriba <= 1.0 and fuera_abajo <= 1.0:
+			break
+		
+		if fuera_derecha > 1.0:
+			for e in enemigos:
+				if is_instance_valid(e):
+					e.position.x = maxf(1.5, e.position.x - 0.2)
+			camara.position += camara.transform.basis.z * 0.35
+		
+		if fuera_izquierda > 1.0:
+			for a in aliados:
+				if is_instance_valid(a):
+					a.position.x = minf(-1.5, a.position.x + 0.2)
+			camara.position += camara.transform.basis.z * 0.35
+		
+		if fuera_arriba > 1.0:
+			camara.position += camara.transform.basis.z * 0.25 + Vector3.UP * 0.15
+		
+		if fuera_abajo > 1.0:
+			camara.position += camara.transform.basis.z * 0.25 - Vector3.UP * 0.1
+
+	# Asegurar que el suelo y el fondo se extiendan lo suficiente cuando se aleja o escala la cámara
+	# para evitar que se vea como una plataforma flotante en el vacío.
+	if nodo_escenario:
+		var dist_extra: float = maxf(0.0, camara.position.z - 6.47)
+		var suelo = nodo_escenario.get_node_or_null("PlataformaSuelo") as Node3D
+		if suelo and is_instance_valid(suelo):
+			var escala_suelo: float = 1.0 + dist_extra * 0.3
+			suelo.scale = Vector3(escala_suelo, 1.0, escala_suelo)
+		var fondo = nodo_escenario.get_node_or_null("FondoSprite") as Node3D
+		if fondo and is_instance_valid(fondo):
+			var escala_fondo: float = 3.8 * (1.0 + dist_extra * 0.2)
+			fondo.scale = Vector3(escala_fondo, escala_fondo, 3.8)
+			fondo.position.y = 4.2 + dist_extra * 0.12
+
+	for b in todos:
+		if is_instance_valid(b):
+			b.posicion_base = b.global_position if b.is_inside_tree() else b.position
+	_cam_pos_original = camara.transform.origin
 
 ## Arranca el combate y comienza el bucle de turnos
 func comenzar_combate() -> void:
@@ -349,7 +539,13 @@ func _procesar_turno_jugador(battler: Battler) -> bool:
 				decision_tomada = true
 				menu_acciones.hide()
 				_estado = EstadoTurno.ACCION_EN_CURSO
-				var objs: Array[Battler] = enemigos if _accion_seleccionada.objetivo == BattlerAction.Objetivo.TODOS_ENEMIGOS else [battler]
+				var objs: Array[Battler] = []
+				if _accion_seleccionada.objetivo == BattlerAction.Objetivo.TODOS_ENEMIGOS:
+					for e in enemigos:
+						if e.esta_vivo():
+							objs.append(e)
+				else:
+					objs = [battler]
 				await _accion_seleccionada.ejecutar(battler, objs, self)
 
 	_estado = EstadoTurno.ESPERANDO
@@ -464,13 +660,6 @@ var _ultimo_tiempo_stick_h: int = 0
 var _stick_v_activo: bool = false
 var _stick_h_activo: bool = false
 
-# Propiedades de compatibilidad hacia atrás
-var _stick_nav_activo: bool:
-	get: return _stick_v_activo
-	set(v): _stick_v_activo = v
-var _ultimo_tiempo_nav_menu: int:
-	get: return _ultimo_tiempo_stick_v
-	set(v): _ultimo_tiempo_stick_v = v
 
 const RETARDO_INICIAL_STICK_MS: int = 280
 const REPETICION_STICK_MS: int = 180
@@ -689,16 +878,17 @@ func _finalizar_derrota() -> void:
 
 ## Convierte una coordenada 3D del mundo en píxeles 2D de la pantalla
 func a_pantalla(pos_3d: Vector3) -> Vector2:
-	var cam: Camera3D = camara if camara else get_viewport().get_camera_3d()
-	if cam:
-		return cam.unproject_position(pos_3d)
-	return get_viewport().get_visible_rect().size * 0.5
+	var vp := get_viewport()
+	var tam_pantalla: Vector2 = vp.get_visible_rect().size if vp else Vector2(1152, 648)
+	if tam_pantalla.x <= 10.0 or tam_pantalla.y <= 10.0:
+		tam_pantalla = Vector2(1152, 648)
+	return proyectar_posicion_pantalla(pos_3d, tam_pantalla)
 
 func esperar(segundos: float) -> void:
 	await get_tree().create_timer(segundos).timeout
 
 func reproducir_sonido(stream: AudioStream) -> void:
-	if stream == null:
+	if stream == null or not is_inside_tree():
 		return
 	var player: AudioStreamPlayer = AudioStreamPlayer.new()
 	player.stream = stream
@@ -708,6 +898,11 @@ func reproducir_sonido(stream: AudioStream) -> void:
 
 ## Muestra un número flotante de daño o curación
 func mostrar_numero(battler: Battler, cantidad: int, critico: bool = false) -> void:
+	if contenedor_danio == null:
+		contenedor_danio = get_node_or_null("UICanvas/ContenedorDanio")
+	if contenedor_danio == null or battler == null:
+		return
+
 	var label: Label = Label.new()
 	label.text = str(cantidad)
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -728,6 +923,11 @@ func mostrar_numero(battler: Battler, cantidad: int, critico: bool = false) -> v
 
 ## Muestra un texto flotante encima del combatiente (e.g. "¡Esquivado!")
 func mostrar_texto(battler: Battler, texto: String, color: Color = Color.WHITE) -> void:
+	if contenedor_danio == null:
+		contenedor_danio = get_node_or_null("UICanvas/ContenedorDanio")
+	if contenedor_danio == null or battler == null:
+		return
+
 	var label: Label = Label.new()
 	label.text = texto
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -901,11 +1101,25 @@ func _sincronizar_estado_global() -> void:
 			break
 
 func _obtener_game_state():
+	var gs_script = load("res://scripts/core/game_state.gd")
+	if gs_script and "instancia" in gs_script and gs_script.instancia != null:
+		return gs_script.instancia
 	if Engine.has_singleton("GameState"):
 		return Engine.get_singleton("GameState")
-	if not is_inside_tree():
-		return null
-	var t = get_tree()
-	if t and t.root and t.root.has_node("GameState"):
-		return t.root.get_node("GameState")
+	var root_node: Node = null
+	if is_inside_tree() and get_tree():
+		root_node = get_tree().root
+	elif Engine.get_main_loop() and "root" in Engine.get_main_loop():
+		root_node = Engine.get_main_loop().root
+	if root_node and root_node.has_node("GameState"):
+		return root_node.get_node("GameState")
+	var p = get_parent()
+	while p != null:
+		if p.has_node("GameState"):
+			return p.get_node("GameState")
+		if p.get_parent() == null:
+			if p.name == "GameState":
+				return p
+			break
+		p = p.get_parent()
 	return null

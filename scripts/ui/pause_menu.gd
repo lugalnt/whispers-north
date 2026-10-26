@@ -14,6 +14,12 @@ enum Pestana { INVENTARIO, STATS, SISTEMA }
 # PROPIEDADES CONFIGURABLES DESDE EL EDITOR VISUAL (INSPECTOR)
 # ===========================================================================
 
+@export_group("Encabezado del Menú")
+## Título principal mostrado en la cabecera del menú de pausa (nodo Label 'Titulo')
+@export var texto_titulo_menu: String = "PAUSA"
+## Texto de atajos de teclado mostrado en la cabecera (nodo Label 'PistasTeclado')
+@export var texto_pistas_menu: String = "[Q / E] Cambiar pestaña  |  [Esc / Start] Cerrar"
+
 @export_group("Textos de Pestañas")
 @export var texto_tab_inventario: String = "Inventario"
 @export var texto_tab_stats: String = "Estadísticas"
@@ -53,6 +59,8 @@ enum Pestana { INVENTARIO, STATS, SISTEMA }
 # Nodos de Interfaz
 @onready var panel_fondo: Control = $FondoOscuro
 @onready var contenedor_principal: Control = $ContenedorPrincipal
+@onready var lbl_header_titulo: Label = $ContenedorPrincipal/Margen/VBox/Header/Titulo
+@onready var lbl_header_pistas: Label = $ContenedorPrincipal/Margen/VBox/Header/PistasTeclado
 
 # Pestañas
 @onready var btn_tab_inventario: Button = $ContenedorPrincipal/Margen/VBox/BarraPestanas/BtnInventario
@@ -98,6 +106,7 @@ enum Pestana { INVENTARIO, STATS, SISTEMA }
 
 var pestana_actual: Pestana = Pestana.INVENTARIO
 var _item_seleccionado_id: String = ""
+var _indice_slot_enfocado: int = 0
 var _botones_slots: Array[Button] = []
 var _escena_controles = preload("res://scenes/ui/ControlsMenu.tscn")
 var _panel_controles_activo: Control = null
@@ -110,24 +119,38 @@ func _ready() -> void:
 	_aplicar_textos_configurados()
 	
 	# Conexión de pestañas
-	btn_tab_inventario.pressed.connect(func(): cambiar_pestana(Pestana.INVENTARIO))
-	btn_tab_stats.pressed.connect(func(): cambiar_pestana(Pestana.STATS))
-	btn_tab_sistema.pressed.connect(func(): cambiar_pestana(Pestana.SISTEMA))
+	if not btn_tab_inventario.pressed.is_connected(func(): cambiar_pestana(Pestana.INVENTARIO)):
+		btn_tab_inventario.pressed.connect(func(): cambiar_pestana(Pestana.INVENTARIO))
+	if not btn_tab_stats.pressed.is_connected(func(): cambiar_pestana(Pestana.STATS)):
+		btn_tab_stats.pressed.connect(func(): cambiar_pestana(Pestana.STATS))
+	if not btn_tab_sistema.pressed.is_connected(func(): cambiar_pestana(Pestana.SISTEMA)):
+		btn_tab_sistema.pressed.connect(func(): cambiar_pestana(Pestana.SISTEMA))
 	
 	# Conexión botones de sistema
-	btn_reanudar.pressed.connect(cerrar_menu)
-	btn_controles.pressed.connect(_abrir_menu_controles)
-	btn_salir_menu.pressed.connect(_ir_al_menu_principal)
+	if not btn_reanudar.pressed.is_connected(cerrar_menu):
+		btn_reanudar.pressed.connect(cerrar_menu)
+	if not btn_controles.pressed.is_connected(_abrir_menu_controles):
+		btn_controles.pressed.connect(_abrir_menu_controles)
+	if not btn_salir_menu.pressed.is_connected(_ir_al_menu_principal):
+		btn_salir_menu.pressed.connect(_ir_al_menu_principal)
 	
-	detalle_btn_usar.pressed.connect(_usar_item_seleccionado)
+	if not detalle_btn_usar.pressed.is_connected(_usar_item_seleccionado):
+		detalle_btn_usar.pressed.connect(_usar_item_seleccionado)
 	
 	# Escuchar cambios de GameState si está disponible
 	var game_state = _obtener_game_state()
 	if game_state:
-		game_state.inventario_modificado.connect(_actualizar_vista_inventario)
-		game_state.stats_modificadas.connect(_actualizar_vista_stats)
+		if not game_state.inventario_modificado.is_connected(_actualizar_vista_inventario):
+			game_state.inventario_modificado.connect(_actualizar_vista_inventario)
+		if not game_state.stats_modificadas.is_connected(_actualizar_vista_stats):
+			game_state.stats_modificadas.connect(_actualizar_vista_stats)
 
 func _aplicar_textos_configurados() -> void:
+	if lbl_header_titulo and not texto_titulo_menu.is_empty():
+		lbl_header_titulo.text = texto_titulo_menu
+	if lbl_header_pistas and not texto_pistas_menu.is_empty():
+		lbl_header_pistas.text = texto_pistas_menu
+	
 	btn_tab_inventario.text = texto_tab_inventario
 	btn_tab_stats.text = texto_tab_stats
 	btn_tab_sistema.text = texto_tab_sistema
@@ -138,7 +161,8 @@ func _aplicar_textos_configurados() -> void:
 	
 	if stats_retrato and retrato_protagonista:
 		stats_retrato.texture = retrato_protagonista
-	stats_titulo.text = texto_titulo_perfil
+	if stats_titulo and not texto_titulo_perfil.is_empty():
+		stats_titulo.text = texto_titulo_perfil
 	if stats_lbl_salud: stats_lbl_salud.text = texto_etiqueta_hp
 	if stats_lbl_ataque: stats_lbl_ataque.text = texto_etiqueta_ataque
 	if stats_lbl_defensa: stats_lbl_defensa.text = texto_etiqueta_defensa
@@ -175,6 +199,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		cerrar_menu()
 		return
 	
+	# En la pestaña de inventario, presionar interact consumiría el ítem seleccionado
+	if pestana_actual == Pestana.INVENTARIO and event.is_action_pressed("interact") and not event.is_echo():
+		var foco = get_viewport().gui_get_focus_owner()
+		if foco is Button and foco in _botones_slots:
+			get_viewport().set_input_as_handled()
+			_usar_item_seleccionado()
+			return
+	
 	# Cambio de pestaña con teclas Q / E, Page Up / Page Down o Bumpers del gamepad (LB / RB)
 	if (event.is_action_pressed("tab_prev") or event.is_action_pressed("ui_page_up")) and not event.is_echo():
 		get_viewport().set_input_as_handled()
@@ -192,7 +224,7 @@ func abrir_menu() -> void:
 	_detectar_companero()
 	_reproducir_sonido(sfx_abrir)
 	show()
-	var t := get_tree()
+	var t := get_tree() if is_inside_tree() else null
 	if t != null:
 		t.paused = true
 	cambiar_pestana(Pestana.INVENTARIO)
@@ -206,7 +238,7 @@ func cerrar_menu() -> void:
 		_cerrar_menu_controles()
 	_reproducir_sonido(sfx_cerrar)
 	hide()
-	var t := get_tree()
+	var t := get_tree() if is_inside_tree() else null
 	if t != null:
 		t.paused = false
 	menu_cerrado.emit()
@@ -225,13 +257,15 @@ func cambiar_pestana(nueva_pestana: Pestana) -> void:
 	match pestana_actual:
 		Pestana.INVENTARIO:
 			_actualizar_vista_inventario()
-			if not _botones_slots.is_empty():
+			if not _botones_slots.is_empty() and is_inside_tree():
 				_botones_slots[0].grab_focus()
 		Pestana.STATS:
 			_actualizar_vista_stats()
-			btn_tab_stats.grab_focus()
+			if is_inside_tree():
+				btn_tab_stats.grab_focus()
 		Pestana.SISTEMA:
-			btn_reanudar.grab_focus()
+			if is_inside_tree():
+				btn_reanudar.grab_focus()
 
 func _actualizar_estilo_pestanas() -> void:
 	var tabs = [btn_tab_inventario, btn_tab_stats, btn_tab_sistema]
@@ -257,6 +291,8 @@ func _actualizar_vista_inventario() -> void:
 	if inventario == null or inventario.esta_vacio():
 		lbl_vacio.show()
 		_limpiar_detalle()
+		if visible and pestana_actual == Pestana.INVENTARIO and is_inside_tree():
+			btn_tab_inventario.grab_focus()
 		return
 	
 	lbl_vacio.hide()
@@ -300,17 +336,47 @@ func _actualizar_vista_inventario() -> void:
 			lbl_cant.add_theme_constant_override("outline_size", 4)
 			margen.add_child(lbl_cant)
 		
-		# Conectar selección y clic
+		# Conectar selección y uso: seleccionar al entrar/enfocar, y consumir al interactuar de nuevo
 		var item_ref: InventoryItem = item
-		slot_btn.focus_entered.connect(func(): _mostrar_detalle_item(item_ref))
-		slot_btn.mouse_entered.connect(func(): _mostrar_detalle_item(item_ref))
-		slot_btn.pressed.connect(func(): _mostrar_detalle_item(item_ref))
+		var slot_idx: int = i
+		slot_btn.focus_entered.connect(func():
+			_indice_slot_enfocado = slot_idx
+			_mostrar_detalle_item(item_ref)
+		)
+		slot_btn.mouse_entered.connect(func():
+			_indice_slot_enfocado = slot_idx
+			_mostrar_detalle_item(item_ref)
+		)
+		slot_btn.pressed.connect(func():
+			_on_slot_presionado(item_ref, slot_idx)
+		)
 		
 		grid_items.add_child(slot_btn)
 		_botones_slots.append(slot_btn)
 	
 	if not _botones_slots.is_empty():
-		_mostrar_detalle_item(lista_items[0].get("item"))
+		var idx_a_enfocar: int = clamp(_indice_slot_enfocado, 0, _botones_slots.size() - 1)
+		_indice_slot_enfocado = idx_a_enfocar
+		if visible and pestana_actual == Pestana.INVENTARIO:
+			_botones_slots[idx_a_enfocar].grab_focus()
+		var item_a_mostrar: InventoryItem = lista_items[idx_a_enfocar].get("item")
+		_mostrar_detalle_item(item_a_mostrar)
+
+func _on_slot_presionado(item: InventoryItem, slot_idx: int) -> void:
+	if item == null:
+		return
+	
+	# Si este ítem ya es el seleccionado actualmente (o ya tiene el foco): interactuar de nuevo lo consume
+	if _item_seleccionado_id == item.id:
+		if item.puede_usarse():
+			_consumir_item(item)
+		else:
+			_reproducir_sonido(sfx_cursor)
+	else:
+		# Primer clic o selección
+		_indice_slot_enfocado = slot_idx
+		_mostrar_detalle_item(item)
+		_reproducir_sonido(sfx_cursor)
 
 func _mostrar_detalle_item(item: InventoryItem) -> void:
 	if item == null:
@@ -324,7 +390,7 @@ func _mostrar_detalle_item(item: InventoryItem) -> void:
 	
 	if item.puede_usarse():
 		detalle_btn_usar.show()
-		detalle_btn_usar.text = "Consumir (+%d HP)" % item.curacion_hp
+		detalle_btn_usar.text = "%s (+%d HP) [Interactuar]" % [texto_boton_usar, item.curacion_hp]
 	else:
 		detalle_btn_usar.hide()
 
@@ -340,9 +406,30 @@ func _usar_item_seleccionado() -> void:
 	if _item_seleccionado_id.is_empty():
 		return
 	var game_state = _obtener_game_state()
-	if game_state and game_state.usar_item(_item_seleccionado_id):
-		_reproducir_sonido(sfx_cursor)
+	if not game_state:
+		return
+	var item: InventoryItem = game_state.inventario.obtener_item(_item_seleccionado_id)
+	if item and item.puede_usarse():
+		_consumir_item(item)
+
+func _consumir_item(item: InventoryItem) -> void:
+	if item == null or not item.puede_usarse():
+		return
+	var game_state = _obtener_game_state()
+	if not game_state:
+		return
+	
+	var curado: int = item.curacion_hp
+	if game_state.usar_item(item.id):
+		_reproducir_sonido(sfx_confirmar if sfx_confirmar else sfx_cursor)
+		
+		# Feedback temporal en el botón de consumir
+		if detalle_btn_usar and is_instance_valid(detalle_btn_usar):
+			detalle_btn_usar.text = "¡Consumido! (+%d HP)" % curado
+		
 		_actualizar_vista_inventario()
+		_actualizar_vista_stats()
+
 
 # ---------------------------------------------------------------------------
 # Vista de Estadísticas (Stats)
@@ -387,8 +474,11 @@ func _detectar_companero() -> bool:
 func _actualizar_vista_stats() -> void:
 	var game_state = _obtener_game_state()
 	
-	var nom: String = game_state.nombre_jugador if game_state else "Eric"
-	var tit: String = game_state.titulo_jugador if game_state else texto_titulo_perfil
+	var nom: String = game_state.nombre_jugador if (game_state and not game_state.nombre_jugador.is_empty()) else "Eric"
+	# Priorizar la configuración del título establecida en el nodo principal (ej: "El Fuki")
+	var tit: String = texto_titulo_perfil
+	if tit.is_empty():
+		tit = game_state.titulo_jugador if (game_state and not game_state.titulo_jugador.is_empty()) else "Explorador del Norte"
 	var niv: int = game_state.nivel if game_state else 1
 	var exp_act: int = game_state.exp_actual if game_state else 0
 	var exp_sig: int = game_state.exp_para_siguiente_nivel if game_state else 50
@@ -454,7 +544,21 @@ func _ir_al_menu_principal() -> void:
 func _obtener_game_state():
 	if Engine.has_singleton("GameState"):
 		return Engine.get_singleton("GameState")
-	var root = get_tree().root if is_inside_tree() else null
+	var root: Node = null
+	if is_inside_tree() and get_tree():
+		root = get_tree().root
+	elif Engine.get_main_loop() and "root" in Engine.get_main_loop():
+		root = Engine.get_main_loop().root
+	else:
+		var p = get_parent()
+		while p != null:
+			if p.has_node("GameState"):
+				return p.get_node("GameState")
+			if p.get_parent() == null:
+				root = p
+				break
+			p = p.get_parent()
+	
 	if root and root.has_node("GameState"):
 		return root.get_node("GameState")
 	return null

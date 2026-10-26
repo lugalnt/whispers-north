@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/models/DS _ DSi - Pokemon Black 2 _ White 2 - Fountains - Fountain 02/c3_yuka2.png" id="1_1v0ms"]
+
+[resource]
+resource_name = "mat_stone_base"
+cull_mode = 2
+albedo_texture = ExtResource("1_1v0ms")
+roughness = 0.85
+texture_filter = 0

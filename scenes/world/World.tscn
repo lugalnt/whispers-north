@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dbt1y0neukt5h" path="res://scripts/world/world.gd" id="1_gbddb"]
 [ext_resource type="PackedScene" uid="uid://dqgkj6m2blabm" path="res://scenes/player/player.tscn" id="2_6eebf"]
 [ext_resource type="Texture2D" uid="uid://qcuc2g14unqg" path="res://assets/sprites/environment/materials/pokemon_grass.png" id="2_8xm5o"]
-[ext_resource type="PackedScene" uid="uid://tmee1acxuci3" path="res://scenes/world/Path.tscn" id="2_16fjv"]
+[ext_resource type="PackedScene" uid="uid://tmee1acxuci3" path="res://scenes/world/Paths/World/Path.tscn" id="2_16fjv"]
 [ext_resource type="Texture2D" uid="uid://biwelvgsjonu1" path="res://assets/sprites/environment/materials/darkwood_wall.png" id="2_ckp8c"]
 [ext_resource type="Texture2D" uid="uid://ds6en71aom1gh" path="res://assets/sprites/environment/backgrounds/mountain_snowy_background.png" id="2_fe1rh"]
 [ext_resource type="PackedScene" uid="uid://bmq2ghxhosxj" path="res://scenes/player/player_32.tscn" id="3_6eebf"]
@@ -17,15 +17,19 @@
 [ext_resource type="AudioStream" uid="uid://3sywwbl7jfo3" path="res://assets/audio/sfx/snd_mysterygo.wav" id="11_jy5j1"]
 [ext_resource type="PackedScene" uid="uid://b1noknypul483" path="res://scenes/world/Entities/Rat.tscn" id="12_ckp8c"]
 [ext_resource type="PackedScene" path="res://scenes/world/Snow.tscn" id="13_snow"]
+[ext_resource type="PackedScene" path="res://scenes/dialogue/InteraccionDialogo.tscn" id="15_xclow"]
 [ext_resource type="Script" uid="uid://ojlc0i8sf3xn" path="res://scripts/world/path_patch.gd" id="16_0duuj"]
-[ext_resource type="PackedScene" uid="uid://cd8057ionvm5d" path="res://scenes/world/Main_Path_Section1.tscn" id="17_d0ueh"]
-[ext_resource type="PackedScene" uid="uid://dxn6wcvk074i1" path="res://scenes/world/Main_Path_Section2.tscn" id="18_d0ueh"]
-[ext_resource type="PackedScene" uid="uid://d2xgydtkx3q60" path="res://scenes/world/Main_Path_Section3.tscn" id="19_i08rc"]
+[ext_resource type="Texture2D" uid="uid://bl8ykd81rrdns" path="res://assets/sprites/environment/items/chest_closed.png" id="16_dobjl"]
+[ext_resource type="AudioStream" uid="uid://dkmskaqgkjey8" path="res://assets/audio/sfx/snd_item.wav" id="16_hon07"]
+[ext_resource type="PackedScene" uid="uid://cd8057ionvm5d" path="res://scenes/world/Paths/World/Main_Path_Section1.tscn" id="17_d0ueh"]
+[ext_resource type="PackedScene" uid="uid://dxn6wcvk074i1" path="res://scenes/world/Paths/World/Main_Path_Section2.tscn" id="18_d0ueh"]
+[ext_resource type="PackedScene" uid="uid://d2xgydtkx3q60" path="res://scenes/world/Paths/World/Main_Path_Section3.tscn" id="19_i08rc"]
 [ext_resource type="PackedScene" uid="uid://dbggfxbe2xhfc" path="res://assets/models/GameCube - The Legend of Zelda_ The Wind Waker - Great Sea Islands - Fire Mountain/fire_mountain.tscn" id="20_o0dc1"]
 [ext_resource type="PackedScene" path="res://scenes/world/Entities/Pot.tscn" id="23_pot"]
 [ext_resource type="AudioStream" uid="uid://dhmy8wgyl8emk" path="res://assets/audio/sfx/Roar_0.wav" id="24_d6tky"]
 [ext_resource type="AudioStream" uid="uid://vlmithwrbs2j" path="res://assets/audio/sfx/snd_ralsei_yell.wav" id="24_juaju"]
 [ext_resource type="AudioStream" uid="uid://5jv27887xvb2" path="res://assets/audio/sfx/snd_bell_bounce_short.wav" id="25_6mhxi"]
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/WorldTransition.tscn" id="26_worldtrans"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_qxiha"]
 
@@ -77,7 +81,19 @@ uv1_triplanar = true
 texture_filter = 0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_d0u6y"]
-size = Vector3(4.7639837, 2.1929321, 2.2996826)
+size = Vector3(9.856007, 2.1929321, 1.4708366)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_d6tky"]
+size = Vector3(9.856007, 2.1929321, 1.4708366)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6mhxi"]
+size = Vector3(9.856007, 2.1929321, 1.4708366)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xclow"]
+size = Vector3(7.5508485, 2.1929321, 1.7149105)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hon07"]
+size = Vector3(7.623316, 2.1929321, 1.4708366)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_g4v7s"]
 size = Vector3(0.9116516, 1.0889893, 1.1767044)
@@ -265,6 +281,14 @@ sonido_entrar = ExtResource("11_jy5j1")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.131546, 8.57667, 23.79941)
 visible = false
 
+[node name="Marker_Exit_World" parent="." unique_id=479959522 instance=ExtResource("26_worldtrans")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.40393, 1.1015129, 23.79941)
+escena_destino = "res://scenes/world/World_Town.tscn"
+nombre_marcador_destino = "Marker_Exit_World"
+camara_destino = "Camera1"
+offset_aparicion = Vector3(0, 0, 3)
+tamano_zona = Vector3(4, 3, 3)
+
 [node name="SwitchC_1_2" type="Area3D" parent="." unique_id=734366742]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9837251, 1.8802006)
 
@@ -276,29 +300,29 @@ shape = SubResource("BoxShape3D_d0u6y")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3514185, 1.9837251, 20.30675)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SwitchC_2_3" unique_id=1364907261]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2.3175006, -0.25301838, 3.9606457)
-shape = SubResource("BoxShape3D_d0u6y")
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2.7847552, -0.25301838, 3.9844704)
+shape = SubResource("BoxShape3D_d6tky")
 
 [node name="SwitchC_3_4" type="Area3D" parent="." unique_id=1179126073]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.345657, 1.9837251, 20.30675)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SwitchC_3_4" unique_id=1898023062]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2.9852543, -0.28490925, 5.6622257)
-shape = SubResource("BoxShape3D_d0u6y")
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.5154343, -0.28490925, 5.074604)
+shape = SubResource("BoxShape3D_6mhxi")
 
 [node name="SwitchC_2_5" type="Area3D" parent="." unique_id=1573987465]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.584112, 1.9837251, 20.30675)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SwitchC_2_5" unique_id=531842863]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2.1664572, -0.28490925, 4.1178703)
-shape = SubResource("BoxShape3D_d0u6y")
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3.6002312, -0.28490925, 2.96529)
+shape = SubResource("BoxShape3D_xclow")
 
 [node name="SwitchC_5_6" type="Area3D" parent="." unique_id=805273928]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.584112, 1.9837251, 20.30675)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SwitchC_5_6" unique_id=845952764]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -4.2644444, -0.28490925, 3.570528)
-shape = SubResource("BoxShape3D_d0u6y")
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3.9022846, -0.28490925, 2.4541836)
+shape = SubResource("BoxShape3D_hon07")
 
 [node name="BunchaTrees" type="Node3D" parent="." unique_id=1048316915]
 
@@ -2604,6 +2628,15 @@ transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879
 
 [node name="Chest" parent="." unique_id=1324083416 instance=ExtResource("11_16fjv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.803303, 0.73356843, 33.455223)
+
+[node name="InteraccionDialogo" parent="Chest" unique_id=1217865924 instance=ExtResource("15_xclow")]
+maximo_interacciones = 999
+nombre_hablante = "Cofre"
+retrato_hablante = ExtResource("16_dobjl")
+lineas_rapidas = Array[String](["(Es la Dani.)"])
+sfx_iniciar = ExtResource("16_hon07")
+es_objeto_interactuable = true
+pasar_input_al_padre = true
 
 [node name="Rat" parent="." unique_id=993836924 instance=ExtResource("12_ckp8c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8463783, 10.900915, -2.9572194)

@@ -47,6 +47,12 @@ const PotBattlerScene = preload("res://scenes/combat/battlers/PotBattler.tscn")
 @export var exp_recompensa: int = 20
 ## Texto multilínea que se muestra en el panel de victoria.
 @export_multiline var texto_recompensas: String = "¡Ganaste el combate!\n\n+20 EXP\nObtuviste: [Fragmento de Cerámica Antiguo]"
+## Ítems garantizados otorgados al jugador al salir victorioso.
+@export var items_garantizados: Array[InventoryItem] = []
+## Tabla de botín aleatoria opcional que suelta un ítem según probabilidades.
+@export var pool_recompensas: ItemPool = null
+## Probabilidad de que la pool de recompensas suelte un objeto (0.0 = nunca, 1.0 = siempre).
+@export_range(0.0, 1.0, 0.05) var probabilidad_pool: float = 0.5
 
 @export_group("Efecto de Inicio (Flash y Jingle)")
 ## Si está activo, produce un destello (flash) en pantalla al comenzar el combate.
@@ -250,6 +256,7 @@ func iniciar_combate(jugador: CharacterBody3D = null, nodo_a_ocultar: Node = nul
 	combate_terminado.emit(resultado)
 	match resultado:
 		CombatArena.ResultadoCombate.VICTORIA:
+			_entregar_recompensas()
 			victoria.emit()
 			if auto_eliminar_padre_en_victoria:
 				var padre: Node = get_parent()
@@ -291,11 +298,29 @@ func _reproducir_audio(stream: AudioStream) -> void:
 	player.play()
 
 func _obtener_game_state():
+	var GS = load("res://scripts/core/game_state.gd")
+	if GS and GS.instancia != null:
+		return GS.instancia
 	if Engine.has_singleton("GameState"):
 		return Engine.get_singleton("GameState")
-	if not is_inside_tree():
-		return null
-	var t = get_tree()
-	if t and t.root and t.root.has_node("GameState"):
-		return t.root.get_node("GameState")
+	if is_inside_tree() and get_tree() and get_tree().root.has_node("GameState"):
+		return get_tree().root.get_node("GameState")
 	return null
+
+func _entregar_recompensas() -> void:
+	var gs = _obtener_game_state()
+	if not gs:
+		return
+	if exp_recompensa > 0 and gs.has_method("agregar_exp"):
+		gs.agregar_exp(exp_recompensa)
+	
+	for item in items_garantizados:
+		if item and gs.has_method("agregar_item"):
+			gs.agregar_item(item, 1)
+	
+	if pool_recompensas and randf() <= probabilidad_pool and gs.has_method("agregar_item"):
+		var drop: InventoryItem = pool_recompensas.elegir_item()
+		if drop:
+			var cant: int = pool_recompensas.elegir_cantidad(drop)
+			gs.agregar_item(drop, cant)
+

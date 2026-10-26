@@ -1,0 +1,26 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon Platinum - Map Objects - Pastoria City House/Pastoria City House.obj" id="1_tq2qm"]
+[ext_resource type="Material" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon Platinum - Map Objects - Pastoria City House/materials/mat_window.tres" id="2_hsmpd"]
+[ext_resource type="Material" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon Platinum - Map Objects - Pastoria City House/materials/mat_door.tres" id="3_18kn7"]
+[ext_resource type="Material" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon Platinum - Map Objects - Pastoria City House/materials/mat_shadow.tres" id="4_e3ihs"]
+[ext_resource type="Material" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon Platinum - Map Objects - Pastoria City House/materials/mat_walls_roof.tres" id="5_dmp2d"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_34l15"]
+size = Vector3(5.8, 5.8, 3.8)
+
+[node name="House_Pastoria" type="StaticBody3D" unique_id=205171328]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=407238038]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9, 0)
+shape = SubResource("BoxShape3D_34l15")
+
+[node name="Visual" type="Node3D" parent="." unique_id=219355454]
+transform = Transform3D(0.08, 0, 0, 0, 0.08, 0, 0, 0, 0.08, -0.28, -0.08, 0.08)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Visual" unique_id=855153256]
+mesh = ExtResource("1_tq2qm")
+surface_material_override/0 = ExtResource("2_hsmpd")
+surface_material_override/1 = ExtResource("3_18kn7")
+surface_material_override/2 = ExtResource("4_e3ihs")
+surface_material_override/3 = ExtResource("5_dmp2d")
