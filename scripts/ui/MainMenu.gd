@@ -97,8 +97,9 @@ func _ready() -> void:
 	panel_controles = get_node_or_null("PanelControles")
 	if panel_controles:
 		controls_menu = panel_controles.get_node_or_null("ControlsMenu")
-		# Ocultar al inicio
+		# Ocultar al inicio y desactivar visibilidad para evitar robo de foco
 		panel_controles.position.x = _controles_x_oculto()
+		panel_controles.visible    = false
 		if controls_menu and not controls_menu.regresar_pedido.is_connected(_on_controles_regresar):
 			controls_menu.regresar_pedido.connect(_on_controles_regresar)
 
@@ -120,6 +121,7 @@ func _ready() -> void:
 	# Posiciones iniciales
 	menu.position.x           = MENU_X_VISIBLE
 	panel_opciones.position.x = _opciones_x_oculto()
+	panel_opciones.visible    = false
 
 	# Conectar la señal de cambio de tamaño del viewport para reposicionar
 	# los paneles cuando cambie la resolución o el modo de pantalla
@@ -329,6 +331,7 @@ func _ir_a_opciones() -> void:
 		return
 	_animando = true
 	_en_opciones = true
+	panel_opciones.visible = true
 
 	# El foco pasa al panel de opciones
 	_set_foco_habilitado(_controles_menu(), false)
@@ -367,6 +370,7 @@ func _ir_al_menu() -> void:
 	tween.tween_property(panel_opciones, "position:x", _opciones_x_oculto(), DURACION_TRANSICION)
 
 	await tween.finished
+	panel_opciones.visible = false
 	_animando = false
 
 
@@ -379,18 +383,24 @@ func _on_viewport_size_changed() -> void:
 	if _en_controles:
 		menu.position.x           = MENU_X_OCULTO
 		panel_opciones.position.x = _opciones_x_oculto()
+		panel_opciones.visible    = false
 		if panel_controles:
 			panel_controles.position.x = OPCIONES_X_VISIBLE
+			panel_controles.visible    = true
 	elif _en_opciones:
 		menu.position.x           = MENU_X_OCULTO
 		panel_opciones.position.x = OPCIONES_X_VISIBLE
+		panel_opciones.visible    = true
 		if panel_controles:
 			panel_controles.position.x = _controles_x_oculto()
+			panel_controles.visible    = false
 	else:
 		menu.position.x           = MENU_X_VISIBLE
 		panel_opciones.position.x = _opciones_x_oculto()
+		panel_opciones.visible    = false
 		if panel_controles:
 			panel_controles.position.x = _controles_x_oculto()
+			panel_controles.visible    = false
 
 
 func _ir_a_controles() -> void:
@@ -398,6 +408,8 @@ func _ir_a_controles() -> void:
 		return
 	_animando = true
 	_en_controles = true
+	if panel_controles:
+		panel_controles.visible = true
 
 	# Deshabilitar foco de opciones
 	_set_foco_habilitado(_controles_opciones(), false)
@@ -414,6 +426,7 @@ func _ir_a_controles() -> void:
 		tween.tween_property(panel_controles, "position:x", OPCIONES_X_VISIBLE, DURACION_TRANSICION)
 
 	await tween.finished
+	panel_opciones.visible = false
 	_animando = false
 
 
@@ -422,6 +435,7 @@ func _ir_a_opciones_desde_controles() -> void:
 		return
 	_animando = true
 	_en_controles = false
+	panel_opciones.visible = true
 
 	# Controles sale, opciones vuelve
 	var tween = create_tween().set_parallel(true)
@@ -432,6 +446,8 @@ func _ir_a_opciones_desde_controles() -> void:
 		tween.tween_property(panel_controles, "position:x", _controles_x_oculto(), DURACION_TRANSICION)
 
 	await tween.finished
+	if panel_controles:
+		panel_controles.visible = false
 	_animando = false
 
 	# Restaurar foco en opciones (en el botón Controles, de donde venimos)
