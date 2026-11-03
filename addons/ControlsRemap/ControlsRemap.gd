@@ -29,6 +29,7 @@ var _action_list: Array[StringName]
 
 var _default_keyboard: Dictionary[StringName, int]
 var _default_joypad: Dictionary[StringName, int]
+var _default_events: Dictionary[StringName, Array] = {}
 
 var _stashed_keyboard: Dictionary[StringName, int]
 var _stashed_joypad: Dictionary[StringName, int]
@@ -69,8 +70,14 @@ func restore_default_controls():
 
 ## Restores a single action to its default state.
 func restore_action_default(action: String):
-	_demap_input(_default_keyboard, action, get_action_key(action))
-	_demap_input(_default_joypad, action, get_action_button(action))
+	if _default_events.has(StringName(action)):
+		for ev in InputMap.action_get_events(action):
+			InputMap.action_erase_event(action, ev)
+		for ev in _default_events[StringName(action)]:
+			InputMap.action_add_event(action, ev.duplicate())
+	else:
+		_demap_input(_default_keyboard, action, get_action_key(action))
+		_demap_input(_default_joypad, action, get_action_button(action))
 
 ## Creates an internal clone of the remap resource.
 func clone_remap() -> void:
@@ -82,13 +89,18 @@ func restore_cloned_remap() -> void:
 	_keyboard_remap = _stashed_keyboard.duplicate()
 	_joypad_remap = _stashed_joypad.duplicate()
 
-## Replaces the first [InputEventKey] in an action with the given one.
+## Replaces the first [InputEventKey] in an action with the given one using action_erase_event/action_add_event.
 func set_action_key(action: String, key: InputEventKey) -> bool:
+	var nuevo := InputEventKey.new()
+	nuevo.physical_keycode = key.physical_keycode if key.physical_keycode != 0 else key.keycode
+	nuevo.keycode = key.keycode
+	nuevo.device = -1
+	
 	for event in InputMap.action_get_events(action):
 		if event is InputEventKey:
-			event.keycode = key.keycode
-			return true
-	return false
+			InputMap.action_erase_event(action, event)
+	InputMap.action_add_event(action, nuevo)
+	return true
 
 ## Returns the first [InputEventKey] assigned to the action.
 func get_action_key(action: String) -> InputEventKey:
@@ -97,13 +109,30 @@ func get_action_key(action: String) -> InputEventKey:
 			return event
 	return null
 
-## Replaces the first [InputEventJoypadButton] in an action with the given one.
+## Replaces joypad button or motion in an action with the given button using action_erase_event/action_add_event.
 func set_action_button(action: String, button: InputEventJoypadButton) -> bool:
+	var nuevo := InputEventJoypadButton.new()
+	nuevo.button_index = button.button_index
+	nuevo.device = -1
+	
 	for event in InputMap.action_get_events(action):
-		if event is InputEventJoypadButton:
-			event.button_index = button.button_index
-			return true
-	return false
+		if event is InputEventJoypadButton or event is InputEventJoypadMotion:
+			InputMap.action_erase_event(action, event)
+	InputMap.action_add_event(action, nuevo)
+	return true
+
+## Replaces joypad button or motion in an action with the given motion using action_erase_event/action_add_event.
+func set_action_motion(action: String, motion: InputEventJoypadMotion) -> bool:
+	var nuevo := InputEventJoypadMotion.new()
+	nuevo.axis = motion.axis
+	nuevo.axis_value = 1.0 if motion.axis_value > 0.0 else -1.0
+	nuevo.device = -1
+	
+	for event in InputMap.action_get_events(action):
+		if event is InputEventJoypadButton or event is InputEventJoypadMotion:
+			InputMap.action_erase_event(action, event)
+	InputMap.action_add_event(action, nuevo)
+	return true
 
 ## Returns the first [InputEventJoypadButton] assigned to the action.
 func get_action_button(action: String) -> InputEventJoypadButton:
@@ -112,55 +141,62 @@ func get_action_button(action: String) -> InputEventJoypadButton:
 			return event
 	return null
 
+## Returns the first [InputEventJoypadMotion] assigned to the action.
+func get_action_motion(action: String) -> InputEventJoypadMotion:
+	for event in InputMap.action_get_events(action):
+		if event is InputEventJoypadMotion:
+			return event
+	return null
+
 ## Returns an array of action names that have assigned conflicting input events.
 func find_duplicates() -> Array[StringName]:
-	var dupes: Array[StringName]
-	
-	for action in _action_list:
-		var key1 := get_action_key(action)
-		if not key1:
-			continue
-		
-		for action2 in _action_list:
-			if action == action2:
-				continue
-			
-			var key2 := get_action_key(action2)
-			if key2 and key1.keycode == key2.keycode:
-				dupes.append(action)
-				break
-	
-	for action in _action_list:
-		if action in dupes:
-			continue
-		
-		var button1 := get_action_button(action)
-		if not button1:
-			continue
-		
-		for action2 in _action_list:
-			if action == action2:
-				continue
-			
-			var button2 := get_action_button(action2)
-			if button2 and button1.button_index == button2.button_index:
-				dupes.append(action)
-				break
-	
+	var dupes: Array[StringName] = []
+	for i in range(_action_list.size()):
+		var a1 = _action_list[i]
+		for j in range(i + 1, _action_list.size()):
+			var a2 = _action_list[j]
+			if _hay_conflicto(a1, a2):
+				if not a1 in dupes: dupes.append(a1)
+				if not a2 in dupes: dupes.append(a2)
 	return dupes
+
+func _hay_conflicto(a1: StringName, a2: StringName) -> bool:
+	var k1 := get_action_key(a1)
+	var k2 := get_action_key(a2)
+	if k1 and k2:
+		var code1 = k1.physical_keycode if k1.physical_keycode != 0 else k1.keycode
+		var code2 = k2.physical_keycode if k2.physical_keycode != 0 else k2.keycode
+		if code1 != 0 and code1 == code2:
+			return true
+
+	var b1 := get_action_button(a1)
+	var b2 := get_action_button(a2)
+	if b1 and b2 and b1.button_index == b2.button_index:
+		return true
+
+	var m1 := get_action_motion(a1)
+	var m2 := get_action_motion(a2)
+	if m1 and m2 and m1.axis == m2.axis and sign(m1.axis_value) == sign(m2.axis_value):
+		return true
+
+	return false
 
 func _load_defaults():
 	_default_keyboard.clear()
 	_default_joypad.clear()
+	_default_events.clear()
 	
 	for action in _action_list:
+		_default_events[action] = []
+		for ev in InputMap.action_get_events(action):
+			_default_events[action].append(ev.duplicate())
 		_map_input(_default_keyboard, action, get_action_key(action))
 		_map_input(_default_joypad, action, get_action_button(action))
 
 func _map_input(map: Dictionary[StringName, int], action: StringName, input: InputEvent):
 	var k := input as InputEventKey
 	if k:
-		map[action] = k.keycode
+		map[action] = k.physical_keycode if k.physical_keycode != 0 else k.keycode
 		return
 	
 	var j := input as InputEventJoypadButton
@@ -173,7 +209,10 @@ func _demap_input(map: Dictionary[StringName, int], action: StringName, input: I
 	
 	var k := input as InputEventKey
 	if k:
-		k.keycode = map[action]
+		if k.physical_keycode != 0:
+			k.physical_keycode = map[action]
+		else:
+			k.keycode = map[action]
 		return
 	
 	var j := input as InputEventJoypadButton

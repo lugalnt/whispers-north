@@ -34,24 +34,25 @@ const ICONOS_ACCION: Dictionary = {
 	"interact":   "✦",
 }
 
-# Nombres de botones de joypad según JoyButton enum de Godot
+# Nombres de botones de joypad según JoyButton enum de Godot 4 (compatible con PS5, Xbox y Switch)
 const NOMBRES_JOYBUTTON: Dictionary = {
-	0:  "A / Cruz",
-	1:  "B / Círculo",
-	2:  "X / Cuadrado",
-	3:  "Y / Triángulo",
-	4:  "L1",
-	5:  "R1",
-	6:  "L2",
-	7:  "R2",
-	8:  "L3 (Stick)",
-	9:  "R3 (Stick)",
-	10: "Select / Share",
-	11: "Start / Opciones",
-	12: "D-Pad ↑",
-	13: "D-Pad ↓",
-	14: "D-Pad ←",
-	15: "D-Pad →",
+	JOY_BUTTON_A: "Cruz (✕) / A",
+	JOY_BUTTON_B: "Círculo (○) / B",
+	JOY_BUTTON_X: "Cuadrado (□) / X",
+	JOY_BUTTON_Y: "Triángulo (△) / Y",
+	JOY_BUTTON_BACK: "Create / Share",
+	JOY_BUTTON_GUIDE: "Botón PS / Guía",
+	JOY_BUTTON_START: "Options / Start",
+	JOY_BUTTON_LEFT_STICK: "L3 (Stick)",
+	JOY_BUTTON_RIGHT_STICK: "R3 (Stick)",
+	JOY_BUTTON_LEFT_SHOULDER: "L1 / LB",
+	JOY_BUTTON_RIGHT_SHOULDER: "R1 / RB",
+	JOY_BUTTON_DPAD_UP: "D-Pad ↑",
+	JOY_BUTTON_DPAD_DOWN: "D-Pad ↓",
+	JOY_BUTTON_DPAD_LEFT: "D-Pad ←",
+	JOY_BUTTON_DPAD_RIGHT: "D-Pad →",
+	JOY_BUTTON_MISC1: "Mute / Captura",
+	JOY_BUTTON_TOUCHPAD: "Touchpad",
 }
 
 # Colores del sistema de UI
@@ -108,8 +109,10 @@ func _ready() -> void:
 
 	_label_estado.text = ""
 
-	# Foco inicial en el primer tab
+	# Foco inicial en el primer tab y título universal para mandos (PS5, Xbox, Switch)
 	_tab_container.current_tab = 0
+	if _tab_container.get_tab_count() > 1:
+		_tab_container.set_tab_title(1, "Mando / Gamepad")
 
 
 # -------------------------------------------------
@@ -249,6 +252,24 @@ func _badge_label(badge: Panel) -> Label:
 	return badge.get_node_or_null("LblBadge") as Label
 
 
+func _obtener_nombre_joypad_motion(axis: int, axis_value: float) -> String:
+	match axis:
+		JOY_AXIS_LEFT_X:
+			return "Stick Izq. →" if axis_value > 0 else "Stick Izq. ←"
+		JOY_AXIS_LEFT_Y:
+			return "Stick Izq. ↓" if axis_value > 0 else "Stick Izq. ↑"
+		JOY_AXIS_RIGHT_X:
+			return "Stick Der. →" if axis_value > 0 else "Stick Der. ←"
+		JOY_AXIS_RIGHT_Y:
+			return "Stick Der. ↓" if axis_value > 0 else "Stick Der. ↑"
+		JOY_AXIS_TRIGGER_LEFT:
+			return "L2 / LT"
+		JOY_AXIS_TRIGGER_RIGHT:
+			return "R2 / RT"
+		_:
+			return "Eje %d (%+.1f)" % [axis, axis_value]
+
+
 func _obtener_texto_binding(accion: StringName, tipo: String) -> String:
 	if tipo == "keyboard":
 		var ev := _remap.get_action_key(accion)
@@ -256,9 +277,12 @@ func _obtener_texto_binding(accion: StringName, tipo: String) -> String:
 			return OS.get_keycode_string(ev.physical_keycode) if ev.physical_keycode != 0 else OS.get_keycode_string(ev.keycode)
 		return "—"
 	else:
-		var ev := _remap.get_action_button(accion)
-		if ev:
-			return NOMBRES_JOYBUTTON.get(ev.button_index, "Botón %d" % ev.button_index)
+		var ev_btn := _remap.get_action_button(accion)
+		if ev_btn:
+			return NOMBRES_JOYBUTTON.get(ev_btn.button_index, "Botón %d" % ev_btn.button_index)
+		var ev_mot := _remap.get_action_motion(accion)
+		if ev_mot:
+			return _obtener_nombre_joypad_motion(ev_mot.axis, ev_mot.axis_value)
 		return "—"
 
 
@@ -276,6 +300,9 @@ func _on_btn_reasignar(btn: Button) -> void:
 	_badge_activo  = btn.get_meta("badge") as Panel
 	_escuchando    = true
 
+	# Liberar el foco temporalmente para que la pulsación del gamepad no reactive ui_accept
+	btn.release_focus()
+
 	# Actualizar badge a modo "escucha"
 	_badge_set_escuchando(_badge_activo, true)
 	var lbl_badge := _badge_label(_badge_activo)
@@ -286,7 +313,7 @@ func _on_btn_reasignar(btn: Button) -> void:
 	btn.modulate = Color(1.0, 0.75, 0.3, 1.0)
 
 	_set_estado(
-		"⌨  Presiona una %s para asignarla   (Esc = cancelar)" % ("tecla" if _tipo_actual == "keyboard" else "botón de gamepad"),
+		"⌨  Presiona una %s para asignarla   (Esc / Create / Select = cancelar)" % ("tecla" if _tipo_actual == "keyboard" else "botón o stick"),
 		COLOR_WARN
 	)
 	_iniciar_parpadeo(_badge_activo)
@@ -322,7 +349,12 @@ func _input(event: InputEvent) -> void:
 			return
 		return
 
-	if event.is_action("ui_cancel") and event.is_pressed():
+	# Durante la escucha, solo cancelar si es tecla Escape o botón Back/Select en gamepad.
+	# Esto permite asignar botones normales (como B / Círculo) sin que ui_cancel aborte la captura.
+	var es_cancelar_teclado: bool = event is InputEventKey and (event.keycode == KEY_ESCAPE or event.physical_keycode == KEY_ESCAPE) and event.is_pressed()
+	var es_cancelar_gamepad: bool = event is InputEventJoypadButton and event.button_index == JOY_BUTTON_BACK and event.is_pressed()
+
+	if es_cancelar_teclado or es_cancelar_gamepad:
 		_cancelar_escucha()
 		get_viewport().set_input_as_handled()
 		return
@@ -339,6 +371,13 @@ func _input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		_aplicar_boton_joypad(event as InputEventJoypadButton)
 
+	elif _tipo_actual == "joypad" and event is InputEventJoypadMotion:
+		# Filtro de zona muerta para evitar capturar deriva analógica accidental
+		if abs(event.axis_value) < 0.5:
+			return
+		get_viewport().set_input_as_handled()
+		_aplicar_motion_joypad(event as InputEventJoypadMotion)
+
 
 func _aplicar_tecla(ev: InputEventKey) -> void:
 	_remap.set_action_key(_accion_actual, ev)
@@ -351,17 +390,27 @@ func _aplicar_boton_joypad(ev: InputEventJoypadButton) -> void:
 	_finalizar_reasignacion(NOMBRES_JOYBUTTON.get(ev.button_index, "Botón %d" % ev.button_index))
 
 
+func _aplicar_motion_joypad(ev: InputEventJoypadMotion) -> void:
+	_remap.set_action_motion(_accion_actual, ev)
+	_finalizar_reasignacion(_obtener_nombre_joypad_motion(ev.axis, ev.axis_value))
+
+
 func _finalizar_reasignacion(texto: String) -> void:
+	var btn_para_enfocar: Button = _boton_activo
 	if _badge_activo:
 		var lbl := _badge_label(_badge_activo)
 		if lbl:
 			lbl.text = texto
 	_cancelar_escucha()
+	if btn_para_enfocar and btn_para_enfocar.is_inside_tree():
+		btn_para_enfocar.grab_focus()
 	_revisar_duplicados()
 
 
 func _cancelar_escucha() -> void:
 	_detener_parpadeo()
+
+	var btn_para_enfocar: Button = _boton_activo
 
 	if _badge_activo:
 		_badge_set_escuchando(_badge_activo, false)
@@ -378,6 +427,9 @@ func _cancelar_escucha() -> void:
 	_escuchando    = false
 	_accion_actual = &""
 	_tipo_actual   = ""
+
+	if btn_para_enfocar and btn_para_enfocar.is_inside_tree() and is_visible_in_tree():
+		btn_para_enfocar.grab_focus()
 
 
 # -------------------------------------------------
