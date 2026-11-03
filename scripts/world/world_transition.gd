@@ -217,9 +217,7 @@ func _jugador_tiene_rata(jugador: Node3D) -> bool:
 	return false
 
 func _obtener_game_state():
-	var gs_script = load("res://scripts/core/game_state.gd")
-	if gs_script and "instancia" in gs_script and gs_script.instancia != null:
-		return gs_script.instancia
-	if is_inside_tree() and get_tree() and get_tree().root.has_node("GameState"):
-		return get_tree().root.get_node("GameState")
-	return null
+	# Autoload GameState (acceso por nodo para compatibilidad con scripts headless)
+	var ml := Engine.get_main_loop() as SceneTree
+	return ml.root.get_node_or_null("GameState") if ml else null
+

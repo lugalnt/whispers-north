@@ -542,26 +542,9 @@ func _ir_al_menu_principal() -> void:
 # ---------------------------------------------------------------------------
 
 func _obtener_game_state():
-	if Engine.has_singleton("GameState"):
-		return Engine.get_singleton("GameState")
-	var root: Node = null
-	if is_inside_tree() and get_tree():
-		root = get_tree().root
-	elif Engine.get_main_loop() and "root" in Engine.get_main_loop():
-		root = Engine.get_main_loop().root
-	else:
-		var p = get_parent()
-		while p != null:
-			if p.has_node("GameState"):
-				return p.get_node("GameState")
-			if p.get_parent() == null:
-				root = p
-				break
-			p = p.get_parent()
-	
-	if root and root.has_node("GameState"):
-		return root.get_node("GameState")
-	return null
+	# Autoload GameState (acceso por nodo para compatibilidad con scripts headless)
+	var ml := Engine.get_main_loop() as SceneTree
+	return ml.root.get_node_or_null("GameState") if ml else null
 
 func _reproducir_sonido(stream: AudioStream) -> void:
 	if stream == null or not is_inside_tree():

@@ -130,6 +130,6 @@ func _aplicar_autodanio(origen: Battler, arena: Node, danio: int) -> void:
 	
 	# Sincronizar salud con GameState si es el jugador
 	if origen.controlado_por_jugador:
-		var GS = load("res://scripts/core/game_state.gd")
-		if GS and GS.instancia != null:
-			GS.instancia.actualizar_hp(origen.hp)
+		var gs = (Engine.get_main_loop() as SceneTree).root.get_node_or_null("GameState")
+		if gs:
+			gs.actualizar_hp(origen.hp)

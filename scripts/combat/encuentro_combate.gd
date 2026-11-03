@@ -298,22 +298,15 @@ func _reproducir_audio(stream: AudioStream) -> void:
 	player.play()
 
 func _obtener_game_state():
-	var GS = load("res://scripts/core/game_state.gd")
-	if GS and GS.instancia != null:
-		return GS.instancia
-	if Engine.has_singleton("GameState"):
-		return Engine.get_singleton("GameState")
-	if is_inside_tree() and get_tree() and get_tree().root.has_node("GameState"):
-		return get_tree().root.get_node("GameState")
-	return null
+	# Autoload GameState (acceso por nodo para compatibilidad con scripts headless)
+	var ml := Engine.get_main_loop() as SceneTree
+	return ml.root.get_node_or_null("GameState") if ml else null
 
 func _entregar_recompensas() -> void:
 	var gs = _obtener_game_state()
 	if not gs:
 		return
-	if exp_recompensa > 0 and gs.has_method("agregar_exp"):
-		gs.agregar_exp(exp_recompensa)
-	
+	# La EXP ya la otorga CombatArena._finalizar_victoria (exp_victoria = exp_recompensa); no duplicar aquí
 	for item in items_garantizados:
 		if item and gs.has_method("agregar_item"):
 			gs.agregar_item(item, 1)

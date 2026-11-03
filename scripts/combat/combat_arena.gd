@@ -1101,25 +1101,6 @@ func _sincronizar_estado_global() -> void:
 			break
 
 func _obtener_game_state():
-	var gs_script = load("res://scripts/core/game_state.gd")
-	if gs_script and "instancia" in gs_script and gs_script.instancia != null:
-		return gs_script.instancia
-	if Engine.has_singleton("GameState"):
-		return Engine.get_singleton("GameState")
-	var root_node: Node = null
-	if is_inside_tree() and get_tree():
-		root_node = get_tree().root
-	elif Engine.get_main_loop() and "root" in Engine.get_main_loop():
-		root_node = Engine.get_main_loop().root
-	if root_node and root_node.has_node("GameState"):
-		return root_node.get_node("GameState")
-	var p = get_parent()
-	while p != null:
-		if p.has_node("GameState"):
-			return p.get_node("GameState")
-		if p.get_parent() == null:
-			if p.name == "GameState":
-				return p
-			break
-		p = p.get_parent()
-	return null
+	# Autoload GameState (acceso por nodo para compatibilidad con scripts headless)
+	var ml := Engine.get_main_loop() as SceneTree
+	return ml.root.get_node_or_null("GameState") if ml else null

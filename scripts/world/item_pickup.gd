@@ -253,11 +253,6 @@ func _reproducir_sfx(stream: AudioStream) -> void:
 	p.play()
 
 func _obtener_game_state():
-	var GS = load("res://scripts/core/game_state.gd")
-	if GS and GS.instancia != null:
-		return GS.instancia
-	if Engine.has_singleton("GameState"):
-		return Engine.get_singleton("GameState")
-	if is_inside_tree() and get_tree() and get_tree().root.has_node("GameState"):
-		return get_tree().root.get_node("GameState")
-	return null
+	# Autoload GameState (acceso por nodo para compatibilidad con scripts headless)
+	var ml := Engine.get_main_loop() as SceneTree
+	return ml.root.get_node_or_null("GameState") if ml else null

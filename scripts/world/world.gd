@@ -171,12 +171,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			_menu_pausa.abrir_menu()
 
 func _obtener_game_state():
-	var gs_script = load("res://scripts/core/game_state.gd")
-	if gs_script and "instancia" in gs_script and gs_script.instancia != null:
-		return gs_script.instancia
-	if Engine.has_singleton("GameState"):
-		return Engine.get_singleton("GameState")
-	var root = get_tree().root if is_inside_tree() else null
-	if root and root.has_node("GameState"):
-		return root.get_node("GameState")
-	return null
+	# Autoload GameState (acceso por nodo para compatibilidad con scripts headless)
+	var ml := Engine.get_main_loop() as SceneTree
+	return ml.root.get_node_or_null("GameState") if ml else null

@@ -299,7 +299,16 @@ func _frenar(delta: float) -> void:
 	velocity.z = move_toward(velocity.z, 0.0, aceleracion * 2.0 * delta)
 
 # Devuelve el jugador activo (16x16 o 32x32) a través del mundo, grupos o jerarquía
+# Caché del jugador: evita buscarlo en el árbol en cada frame
+var _jugador_cache: CharacterBody3D = null
+
 func _obtener_jugador() -> CharacterBody3D:
+	if is_instance_valid(_jugador_cache) and _jugador_cache.is_inside_tree():
+		return _jugador_cache
+	_jugador_cache = _buscar_jugador()
+	return _jugador_cache
+
+func _buscar_jugador() -> CharacterBody3D:
 	if is_inside_tree():
 		var nodos = get_tree().get_nodes_in_group("player")
 		for n in nodos:
@@ -343,6 +352,17 @@ func _puede_ver(jugador: CharacterBody3D) -> bool:
 	if not requiere_linea_de_vista:
 		return true
 
+	# Throttle: el raycast de línea de vista se recalcula como máximo cada 0.15 s
+	if _tiempo - _t_ultima_vision < 0.15:
+		return _ultima_vision
+	_t_ultima_vision = _tiempo
+	_ultima_vision = _raycast_vision(jugador)
+	return _ultima_vision
+
+var _t_ultima_vision: float = -1.0
+var _ultima_vision: bool = false
+
+func _raycast_vision(jugador: CharacterBody3D) -> bool:
 	var desde: Vector3 = global_position + Vector3.UP * altura_ojos
 	var hasta: Vector3 = jugador.global_position + Vector3.UP * 0.8
 	var excludes: Array[RID] = [get_rid(), jugador.get_rid()]

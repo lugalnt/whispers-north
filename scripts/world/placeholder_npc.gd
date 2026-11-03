@@ -461,30 +461,7 @@ func _obtener_jugador() -> Node3D:
 	return null
 
 func _obtener_game_state():
-	if Engine.has_singleton("GameState"):
-		return Engine.get_singleton("GameState")
-	var root: Node = null
-	if is_inside_tree() and get_tree():
-		root = get_tree().root
-	elif Engine.get_main_loop() and "root" in Engine.get_main_loop():
-		root = Engine.get_main_loop().root
-	else:
-		var p = get_parent()
-		while p != null:
-			if p.has_node("GameState"):
-				return p.get_node("GameState")
-			if p.get_parent() == null:
-				root = p
-				break
-			p = p.get_parent()
-	
-	if root and root.has_node("GameState"):
-		return root.get_node("GameState")
-	if root and not root.has_node("GameState"):
-		var gs_res = load("res://scripts/core/game_state.gd")
-		if gs_res:
-			var gs_inst = gs_res.new()
-			gs_inst.name = "GameState"
-			root.add_child(gs_inst)
-			return gs_inst
-	return null
+	# Autoload GameState (acceso por nodo para compatibilidad con scripts headless)
+	var ml := Engine.get_main_loop() as SceneTree
+	return ml.root.get_node_or_null("GameState") if ml else null
+

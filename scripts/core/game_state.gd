@@ -65,15 +65,14 @@ func consumir_camara_spawn() -> String:
 
 static var instancia: Node = null
 
-func _init() -> void:
-	instancia = self
-	_inicializar_stats()
-
 func _enter_tree() -> void:
-	instancia = self
+	# El autoload es la única instancia válida; evita que copias creadas con .new() la reemplacen
+	if instancia == null or not is_instance_valid(instancia):
+		instancia = self
 
 func _ready() -> void:
-	instancia = self
+	if instancia == null or not is_instance_valid(instancia):
+		instancia = self
 	_inicializar_stats()
 	_cargar_items_iniciales()
 	inventario.inventario_actualizado.connect(func(): inventario_modificado.emit())

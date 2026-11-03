@@ -463,12 +463,9 @@ func _reproducir_sfx(stream: AudioStream) -> void:
 	player.play()
 
 func _obtener_game_state():
-	if Engine.has_singleton("GameState"):
-		return Engine.get_singleton("GameState")
-	var root = get_tree().root if is_inside_tree() else null
-	if root and root.has_node("GameState"):
-		return root.get_node("GameState")
-	return null
+	# Autoload GameState (acceso por nodo para compatibilidad con scripts headless)
+	var ml := Engine.get_main_loop() as SceneTree
+	return ml.root.get_node_or_null("GameState") if ml else null
 
 func _conectar_dialogue_manager() -> void:
 	var dm = _obtener_dialogue_manager()

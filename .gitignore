@@ -40,3 +40,7 @@ dist/
 # Variables de entorno locales
 .env
 .env.local
+
+# Scripts y salidas temporales de pruebas/depuracion
+scratch/
+*.uid.tmp
