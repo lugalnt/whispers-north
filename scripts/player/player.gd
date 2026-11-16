@@ -1,6 +1,10 @@
 extends CharacterBody3D
 
 const SPEED = 5.0
+var _ultimo_suelo := Vector3.ZERO
+var _hay_suelo_seguro := false
+var _base_movimiento := Basis.IDENTITY
+var _entrada_anterior := Vector2.ZERO
 var _distancia_polvo: float = 0.0
 @onready var anim_sprite = $Sprite2_5D
 
@@ -14,6 +18,25 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _ready() -> void:
 	add_to_group("player")
+	# Colores del sprite legibles, independientes de la normal del billboard.
+	anim_sprite.shaded = get_parent().scene_file_path.ends_with("World_Cave.tscn")
+	if anim_sprite.shaded:
+		# Relleno tenue solo sobre el personaje: conserva lectura en las zonas oscuras.
+		anim_sprite.layers = 2
+		var relleno := OmniLight3D.new()
+		relleno.name = "RellenoPersonajeCueva"
+		relleno.position = Vector3(0, 0.5, 2.0)
+		relleno.light_color = Color(0.70, 0.78, 0.88)
+		relleno.light_energy = 2.0
+		relleno.omni_range = 7.0
+		relleno.light_cull_mask = 2
+		relleno.shadow_enabled = false
+		add_child(relleno)
+	if get_parent().scene_file_path.ends_with("World_House.tscn"):
+		# Reducir el visual manteniendo los pies y las colisiones de interacción.
+		var tex: Texture2D = anim_sprite.sprite_frames.get_frame_texture(anim_sprite.animation, 0)
+		anim_sprite.position.y -= tex.get_height() * anim_sprite.pixel_size * 0.5 * 0.30
+		anim_sprite.scale *= 0.70
 	# Las animaciones de interacción se reproducen una sola vez (para poder esperar a que terminen)
 	var frames: SpriteFrames = anim_sprite.sprite_frames
 	if frames:
@@ -22,6 +45,13 @@ func _ready() -> void:
 				frames.set_animation_loop(anim_name, false)
 
 func _physics_process(delta):
+	if _hay_suelo_seguro and global_position.y < _ultimo_suelo.y - 8.0:
+		global_position = _ultimo_suelo
+		velocity = Vector3.ZERO
+		reset_physics_interpolation()
+	elif is_on_floor() and not is_interacting:
+		_ultimo_suelo = global_position
+		_hay_suelo_seguro = true
 	# 1. APLICAR GRAVEDAD (Para que no flote ni se resbale)
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -41,9 +71,13 @@ func _physics_process(delta):
 	var camera = get_viewport().get_camera_3d()
 	
 	if camera != null:
-		# Calcula el movimiento basado en hacia dónde mira la cámara
-		var cam_forward = -camera.global_transform.basis.z
-		var cam_right = camera.global_transform.basis.x
+		# Conservar rumbo al cruzar cámaras mientras se mantiene la misma entrada.
+		if _entrada_anterior.is_zero_approx() or input_dir.is_zero_approx() or input_dir.normalized().dot(_entrada_anterior.normalized()) < 0.95:
+			_base_movimiento = camera.global_transform.basis
+		_entrada_anterior = input_dir
+		# Calcula el movimiento basado en la cámara al comenzar el gesto.
+		var cam_forward = -_base_movimiento.z
+		var cam_right = _base_movimiento.x
 		
 		# Ignoramos la altura (Y) de la cámara para que no vuele si la cámara mira hacia abajo
 		cam_forward.y = 0
@@ -60,7 +94,7 @@ func _physics_process(delta):
 	if direction:
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
-		update_animation(input_dir)
+		update_animation(_world_dir_to_input(direction))
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)

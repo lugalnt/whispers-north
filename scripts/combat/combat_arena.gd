@@ -104,6 +104,10 @@ var _jugador_mundo_ref: Node = null
 var _jingle_reproducido: bool = false
 
 func _ready() -> void:
+	_crear_profundidad_y_sombras()
+	for visual in $Escenario/DecoracionNueva.find_children("*", "Sprite3D", true, false):
+		visual.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_DOUBLE_SIDED
+		visual.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
 	if camara:
 		_cam_pos_original = camara.transform.origin
 	if hud_aliados == null:
@@ -412,12 +416,13 @@ func _ajustar_encuadre_camara_y_combatientes() -> void:
 		var suelo = nodo_escenario.get_node_or_null("PlataformaSuelo") as Node3D
 		if suelo and is_instance_valid(suelo):
 			var escala_suelo: float = 1.0 + dist_extra * 0.3
-			suelo.scale = Vector3(escala_suelo, 1.0, escala_suelo)
+			suelo.scale = Vector3(escala_suelo, 1.0, 1.0)
+			suelo.position.z = 36.0 # Suelo continuo hasta -24 bajo el bosque.
 		var fondo = nodo_escenario.get_node_or_null("FondoSprite") as Node3D
 		if fondo and is_instance_valid(fondo):
-			var escala_fondo: float = 3.8 * (1.0 + dist_extra * 0.04)
-			fondo.scale = Vector3(escala_fondo, escala_fondo, 3.8)
-			fondo.position.y = 4.2 + dist_extra * 0.12
+			var escala_fondo: float = 4.5 * (1.0 + dist_extra * 0.02)
+			fondo.scale = Vector3(escala_fondo, escala_fondo, 1.0)
+			fondo.position = Vector3(0, 0.0, -32.0)
 
 	for b in todos:
 		if is_instance_valid(b):
@@ -980,11 +985,12 @@ func _crear_panel_hud(battler: Battler, color_borde: Color) -> Control:
 	var contenedor: PanelContainer = PanelContainer.new()
 	var marco_hud := StyleBoxTexture.new()
 	marco_hud.texture = preload("res://assets/sprites/ui/nordic_carved_v1/button_normal.png")
-	marco_hud.content_margin_left = 14.0
-	marco_hud.content_margin_right = 14.0
-	marco_hud.content_margin_top = 10.0
-	marco_hud.content_margin_bottom = 10.0
+	marco_hud.content_margin_left = 20.0
+	marco_hud.content_margin_right = 20.0
+	marco_hud.content_margin_top = 18.0
+	marco_hud.content_margin_bottom = 18.0
 	contenedor.add_theme_stylebox_override("panel", marco_hud)
+	contenedor.custom_minimum_size = Vector2(210, 108)
 	contenedor.name = "HUD_" + str(battler.get_instance_id())
 	var vbox: VBoxContainer = VBoxContainer.new()
 	contenedor.add_child(vbox)
@@ -1094,3 +1100,58 @@ func _obtener_game_state():
 	# Autoload GameState (acceso por nodo para compatibilidad con scripts headless)
 	var ml := Engine.get_main_loop() as SceneTree
 	return ml.root.get_node_or_null("GameState") if ml else null
+
+
+func _crear_profundidad_y_sombras() -> void:
+	# Vegetación a distintas profundidades entre el suelo jugable y las montañas.
+	var rutas := ["res://assets/sprites/environment/nordic_props_v1/nordic_pine.png", "res://assets/sprites/environment/trees/tree1_snowy.png", "res://assets/sprites/environment/trees/tree1.png"]
+	var texturas: Array[Texture2D] = []
+	var recortes: Array[Rect2i] = []
+	for ruta in rutas:
+		var tex: Texture2D = load(ruta)
+		texturas.append(tex)
+		recortes.append(tex.get_image().get_used_rect())
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 161126
+	var puntos: Array[Vector2] = []
+	for intento in 700:
+		var punto := Vector2(rng.randf_range(-35, 35), rng.randf_range(-21, -9))
+		var libre := true
+		for otro in puntos:
+			if otro.distance_squared_to(punto) < 2.8: libre = false; break
+		if not libre: continue
+		puntos.append(punto)
+		var tipo := 0 if rng.randf() < 0.6 else (1 if rng.randf() < 0.7 else 2)
+		var alto := rng.randf_range(2.8, 5.0)
+		var arbol := Node3D.new()
+		$Escenario/DecoracionNueva.add_child(arbol)
+		arbol.position = Vector3(punto.x, -0.06, punto.y)
+		var visual := Sprite3D.new()
+		visual.name = "Visual"
+		visual.texture = texturas[tipo]
+		visual.pixel_size = alto / recortes[tipo].size.y
+		visual.position.y = (recortes[tipo].end.y - texturas[tipo].get_height() * 0.5) * visual.pixel_size
+		visual.billboard = BaseMaterial3D.BILLBOARD_FIXED_Y
+		visual.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
+		visual.flip_h = rng.randf() < 0.5
+		var tono := rng.randf_range(0.85, 1.0)
+		visual.modulate = Color(0.64 * tono, 0.75 * tono, 0.74 * tono)
+		arbol.add_child(visual)
+		if puntos.size() >= 135: break
+	# Sombras de contacto suaves: anclan los recortes al suelo sin siluetas flotantes.
+	var shader := Shader.new()
+	shader.code = "shader_type spatial; render_mode unshaded, blend_mix, depth_draw_never, cull_disabled; void fragment(){ float d=length((UV-vec2(0.5))*2.0); ALBEDO=vec3(0.035,0.045,0.055); ALPHA=(1.0-smoothstep(0.25,1.0,d))*0.38; }"
+	var material := ShaderMaterial.new()
+	material.shader = shader
+	for prop in $Escenario/DecoracionNueva.get_children():
+		var visual := prop.get_node_or_null("Visual") as Sprite3D
+		if visual == null: continue
+		var sombra := MeshInstance3D.new()
+		var plano := PlaneMesh.new()
+		var ancho: float = visual.texture.get_width() * visual.pixel_size
+		plano.size = Vector2(ancho * 0.9, maxf(0.4, ancho * 0.45))
+		sombra.mesh = plano
+		sombra.material_override = material
+		sombra.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		prop.add_child(sombra)
+		sombra.position.y = 0.018 - prop.position.y / absf(prop.scale.y)

@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cgt45814xeiem" path="res://assets/sprites/items/placeholder.png" id="2_i618c"]
 [ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_v1/cold_grass.png" id="2_rq4xl"]
 [ext_resource type="Script" uid="uid://ojlc0i8sf3xn" path="res://scripts/world/path_patch.gd" id="3_kdiqa"]
-[ext_resource type="PackedScene" uid="uid://d276us1ef7vn2" path="res://scenes/world/Paths/World_Town/Main_Path_Town_Section1.tscn" id="4_y4oph"]
+[ext_resource type="PackedScene" path="res://scenes/world/Paths/World_Town/Main_Path_Town_Section1.tscn" id="4_y4oph"]
 [ext_resource type="PackedScene" uid="uid://bi4mty8e2lew4" path="res://scenes/world/Entities/Tree.tscn" id="5_j7b52"]
 [ext_resource type="PackedScene" uid="uid://dxsn6l7x0h2ta" path="res://scenes/world/Entities/Tree_Pine.tscn" id="6_tamvi"]
 [ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_surfaces_v2/fractured_rock.png" id="7_b7lm3"]
@@ -28,6 +28,9 @@
 [ext_resource type="PackedScene" path="res://scenes/world/Entities/NordicProps/wildflowers.tscn" id="decor_f"]
 [ext_resource type="PackedScene" path="res://scenes/world/Entities/NordicProps/grass_tuft.tscn" id="decor_g"]
 [ext_resource type="PackedScene" path="res://scenes/world/Entities/NordicProps/mossy_rock.tscn" id="decor_r"]
+
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/NordicDecor/town_bench.tscn" id="new_town_bench"]
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/NordicDecor/town_flower_planter.tscn" id="new_town_flower_planter"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rq4xl"]
 size = Vector3(0.2977295, 1, 1)
@@ -223,9 +226,9 @@ shadow_opacity = 0.72
 directional_shadow_max_distance = 90.0
 
 [node name="Piso" type="CSGBox3D" parent="." unique_id=235782659]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.420189, -0.21069336, 0.7850418)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.420189, -0.21069336, 0.7850418)
 use_collision = true
-size = Vector3(85.51105, 0.5786133, 41.031868)
+size = Vector3(89.51105, 0.5786133, 41.031868)
 material = SubResource("StandardMaterial3D_qh0kd")
 
 [node name="Player32" parent="." unique_id=820540263 instance=ExtResource("1_s5k7d")]
@@ -1564,3 +1567,230 @@ collision_mask = 0
 position = Vector3(43.35, 0.09361329, 9.05)
 scale = Vector3(0.95, 0.95, 0.95)
 
+
+
+[node name="DecoracionNueva" type="Node3D" parent="."]
+
+[node name="town_bench_0" parent="DecoracionNueva" instance=ExtResource("new_town_bench")]
+position = Vector3(-14.0, 0.079, 10.5)
+scale = Vector3(1, 1, 1)
+
+[node name="town_bench_1" parent="DecoracionNueva" instance=ExtResource("new_town_bench")]
+position = Vector3(-0.2, 0.079, 10.7)
+scale = Vector3(-1, 1, 1)
+
+[node name="town_flower_planter_2" parent="DecoracionNueva" instance=ExtResource("new_town_flower_planter")]
+position = Vector3(-14.0, 0.079, 7.9)
+scale = Vector3(1, 1, 1)
+
+[node name="town_flower_planter_3" parent="DecoracionNueva" instance=ExtResource("new_town_flower_planter")]
+position = Vector3(-0.2, 0.079, 8.0)
+scale = Vector3(-0.9, 0.9, 0.9)
+
+[node name="town_flower_planter_4" parent="DecoracionNueva" instance=ExtResource("new_town_flower_planter")]
+position = Vector3(1.2, 0.079, 1.2)
+scale = Vector3(0.85, 0.85, 0.85)
+
+[node name="town_flower_planter_5" parent="DecoracionNueva" instance=ExtResource("new_town_flower_planter")]
+position = Vector3(20.2, 0.079, 1.1)
+scale = Vector3(-0.9, 0.9, 0.9)
+
+[node name="town_bench_extra_0" parent="DecoracionNueva" instance=ExtResource("new_town_bench")]
+position = Vector3(8, 0.079, 9)
+
+[node name="town_flower_planter_extra_1" parent="DecoracionNueva" instance=ExtResource("new_town_flower_planter")]
+position = Vector3(10.5, 0.079, 9)
+
+[node name="town_bench_extra_2" parent="DecoracionNueva" instance=ExtResource("new_town_bench")]
+position = Vector3(22, 0.079, 9)
+
+[node name="town_flower_planter_extra_3" parent="DecoracionNueva" instance=ExtResource("new_town_flower_planter")]
+position = Vector3(24.5, 0.079, 9)
+
+[node name="town_bench_extra_4" parent="DecoracionNueva" instance=ExtResource("new_town_bench")]
+position = Vector3(35, 0.079, 9)
+
+[node name="town_flower_planter_extra_5" parent="DecoracionNueva" instance=ExtResource("new_town_flower_planter")]
+position = Vector3(37.5, 0.079, 9)
+
+[node name="town_flower_planter_extra_6" parent="DecoracionNueva" instance=ExtResource("new_town_flower_planter")]
+position = Vector3(8, 0.079, 1)
+
+[node name="town_flower_planter_extra_7" parent="DecoracionNueva" instance=ExtResource("new_town_flower_planter")]
+position = Vector3(31, 0.079, 1)
+
+[node name="Camera13" type="Camera3D" parent="Cameras"]
+position = Vector3(-7, 9, 31)
+rotation = Vector3(-0.6, 0, 0)
+fov = 55.0
+
+[node name="Camera14" type="Camera3D" parent="Cameras"]
+position = Vector3(0, 9, 24)
+rotation = Vector3(-0.6, 0, 0)
+fov = 55.0
+
+[node name="Camera15" type="Camera3D" parent="Cameras"]
+position = Vector3(22, 9, 17)
+rotation = Vector3(-0.6, 0, 0)
+fov = 55.0
+
+[node name="Sector_Entrada" type="Camera3D" parent="Cameras"]
+position = Vector3(-28, 7.5, 15)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(-28, 4)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_CruceOeste" type="Camera3D" parent="Cameras"]
+position = Vector3(-20, 7.5, 15)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(-20, 4)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_CallePlaza" type="Camera3D" parent="Cameras"]
+position = Vector3(-8, 7.5, 15)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(-8, 4)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_CruceEstePlaza" type="Camera3D" parent="Cameras"]
+position = Vector3(4, 7.5, 15)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(4, 4)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_CalleCentral" type="Camera3D" parent="Cameras"]
+position = Vector3(16, 7.5, 15)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(16, 4)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_CalleEste" type="Camera3D" parent="Cameras"]
+position = Vector3(28, 7.5, 15)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(28, 4)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_AccesoCueva" type="Camera3D" parent="Cameras"]
+position = Vector3(41, 7.5, 15)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(41, 4)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_BocaCueva" type="Camera3D" parent="Cameras"]
+position = Vector3(48, 7.5, 15)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(48, 4)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_PlazaOeste" type="Camera3D" parent="Cameras"]
+position = Vector3(-16, 7.5, 23)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(-16, 12)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_PlazaSur" type="Camera3D" parent="Cameras"]
+position = Vector3(-7, 7.5, 29)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(-7, 18)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_PlazaEste" type="Camera3D" parent="Cameras"]
+position = Vector3(2, 7.5, 23)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(2, 12)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_JardinCentral" type="Camera3D" parent="Cameras"]
+position = Vector3(14, 7.5, 25)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(14, 14)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_JardinEste" type="Camera3D" parent="Cameras"]
+position = Vector3(28, 7.5, 25)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(28, 14)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_ExtremoEste" type="Camera3D" parent="Cameras"]
+position = Vector3(43, 7.5, 25)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(43, 14)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_CalleNoroeste" type="Camera3D" parent="Cameras"]
+position = Vector3(-23, 7.5, 1)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(-23, -10)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_CalleNorte" type="Camera3D" parent="Cameras"]
+position = Vector3(-9, 7.5, 1)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(-9, -10)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_CalleNoreste" type="Camera3D" parent="Cameras"]
+position = Vector3(4, 7.5, 1)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(4, -10)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_BarrioCentral" type="Camera3D" parent="Cameras"]
+position = Vector3(18, 7.5, 1)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(18, -10)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_BarrioEste" type="Camera3D" parent="Cameras"]
+position = Vector3(33, 7.5, 1)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(33, -10)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_BarrioExtremo" type="Camera3D" parent="Cameras"]
+position = Vector3(46, 7.5, 1)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(46, -10)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_PaseoSurOeste" type="Camera3D" parent="Cameras"]
+position = Vector3(6, 7.5, 29)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(6, 18)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_PaseoSurCentro" type="Camera3D" parent="Cameras"]
+position = Vector3(21, 7.5, 29)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(21, 18)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_PaseoSurEste" type="Camera3D" parent="Cameras"]
+position = Vector3(38, 7.5, 29)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(38, 18)
+metadata/sector_radio = Vector2(9, 7)

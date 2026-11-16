@@ -22,7 +22,7 @@ Fuente 1: (0,0) recorte interior NO, (2,0) NE, (0,2) SO, (2,2) SE. Se usa una cu
 
 Asignar el TileSet a TileMapLayer y pintar manualmente con filtro Nearest. Diseñado para caminos anchos de al menos tres celdas y plazas. Usar fuente 1 en entrantes; completar el resto con centro/bordes. No tiene terreno automático, piezas de callejón de una celda ni colisiones. Puede colocarse sobre pasto o nieve porque el exterior tiene alfa; no es una transición texturada de nieve acumulada.
 
-PathPatch admite la escena fuente: empezar con meters_per_tile=0.5 y ajustar ancho en el mapa. No reemplazar directamente paths_tile_set.tres: cambian fuentes, coordenadas y tamaño de celda. Falta repintar/migrar las escenas existentes y revisar continuidad en curvas; no se modificaron recorridos.
+PathPatch admite la escena fuente: empezar con meters_per_tile=0.5 y ajustar ancho en el mapa. No reemplazar directamente paths_tile_set.tres: cambian fuentes, coordenadas y tamaño de celda. Integrado en las cinco escenas de caminos de World y World_Town, conservando sus 1218 celdas y tamaño físico. Conversor idempotente en tools/migrate_paths.gd. Render de ambas zonas revisado; se aprecian variaciones de grano entre tiles.
 
 ## Verificación
 

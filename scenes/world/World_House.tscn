@@ -13,7 +13,7 @@
 
 [ext_resource type="Script" path="res://scripts/world/transicion_casa.gd" id="11_paso"]
 [ext_resource type="Script" path="res://scripts/dialogue/interaccion_dialogo.gd" id="12_dialogo"]
-[ext_resource type="Texture2D" path="res://assets/sprites/player/Erland (Padre)/16x16 Walk-Sheet.png" id="13_padre"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/Erland (Padre)/nordic_v1/erland_idle_directions.png" id="13_padre"]
 
 [ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_wood_v1/light_pine_planks.png" id="tex_light_pine_planks"]
 [ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_wood_v1/dark_oak_panels.png" id="tex_dark_oak_panels"]
@@ -22,6 +22,12 @@
 [ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_surfaces_v2/woven_wool.png" id="tex_woven_wool"]
 
 [ext_resource type="PackedScene" path="res://scenes/world/Entities/FarolInterior.tscn" id="farol_interior"]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/player/Erland (Padre)/nordic_v1/erland_portrait.png" id="portrait_erland"]
+[ext_resource type="Script" path="res://scripts/world/erland_visual.gd" id="visual_erland"]
+
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/NordicDecor/house_bookshelf.tscn" id="new_house_bookshelf"]
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/NordicDecor/house_firewood.tscn" id="new_house_firewood"]
 
 [sub_resource type="Environment" id="Environment_6njgx"]
 background_mode = 1
@@ -84,7 +90,7 @@ roughness = 0.85
 
 [sub_resource type="AtlasTexture" id="PadreAtlas"]
 atlas = ExtResource("13_padre")
-region = Rect2(0, 0, 24, 24)
+region = Rect2(0, 0, 627, 627)
 
 [sub_resource type="StandardMaterial3D" id="mat_light_pine_planks"]
 albedo_texture = ExtResource("tex_light_pine_planks")
@@ -302,20 +308,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1.1, 0.3)
 script = ExtResource("10_sf7k5")
 
 [node name="Cama" type="CSGBox3D" parent="Cuarto"]
-position = Vector3(-3.05, 0.35, -1.95)
-size = Vector3(1.55, 0.7, 1.65)
+position = Vector3(-3.05, 0.35, -1.65)
+size = Vector3(1.55, 0.7, 2.25)
 use_collision = true
 material = SubResource("mat_birch_furniture")
 
 [node name="Colchon" type="CSGBox3D" parent="Cuarto"]
-position = Vector3(-3.05, 0.77, -1.95)
-size = Vector3(1.5, 0.2, 1.6)
+position = Vector3(-3.05, 0.77, -1.65)
+size = Vector3(1.5, 0.2, 2.2)
 use_collision = false
 material = SubResource("MatLino")
 
 [node name="Manta" type="CSGBox3D" parent="Cuarto"]
-position = Vector3(-3.05, 0.89, -1.6)
-size = Vector3(1.5, 0.08, 0.9)
+position = Vector3(-3.05, 0.89, -1.25)
+size = Vector3(1.5, 0.08, 1.4)
 use_collision = false
 material = SubResource("mat_woven_wool")
 
@@ -389,7 +395,7 @@ lineas_rapidas = Array[String](["Primer día en la casa nueva."])
 radio_interaccion = 1.65
 orientar_npc_al_jugador = false
 activar_objeto_al_terminar = false
-offset_indicador = Vector3(0, 1.6, 0)
+offset_indicador = Vector3(0, 2.2, 0)
 sfx_iniciar = null
 
 [node name="CajaMudanza" type="CSGBox3D" parent="Cuarto"]
@@ -480,20 +486,22 @@ material = SubResource("mat_dark_oak_panels")
 position = Vector3(38.5, 0, -1)
 
 [node name="Sprite" type="Sprite3D" parent="PlantaBaja/Erland"]
-position = Vector3(0, 1.05, 0)
+position = Vector3(0, 1.0, 0)
 texture = SubResource("PadreAtlas")
-pixel_size = 0.085
+pixel_size = 0.00323
 texture_filter = 0
-billboard = 1
+billboard = 2
+script = ExtResource("visual_erland")
 
 [node name="InteraccionDialogo" type="Area3D" parent="PlantaBaja/Erland"]
 script = ExtResource("12_dialogo")
 nombre_hablante = "Papá"
+retrato_hablante = ExtResource("portrait_erland")
 lineas_rapidas = Array[String](["¿Dormiste bien? Aún tenemos media casa dentro de estas cajas.", "Si vas a salir, abrígate. El camino lleva al pueblo; allí podrás orientarte.", "Puedes volver cuando quieras. Yo terminaré de ordenar aquí."])
 radio_interaccion = 2.0
 orientar_npc_al_jugador = false
 activar_objeto_al_terminar = false
-offset_indicador = Vector3(0, 1.6, 0)
+offset_indicador = Vector3(0, 2.2, 0)
 sfx_iniciar = null
 
 [node name="Ayuda" type="CanvasLayer" parent="."]
@@ -532,3 +540,63 @@ position = Vector3(38.3, 2.35, -2.77)
 [node name="FarolEntrada" parent="." instance=ExtResource("farol_interior")]
 position = Vector3(44.5, 2.35, -2.77)
 
+
+[node name="LamparaTecho" parent="Cuarto" instance=ExtResource("farol_interior")]
+position = Vector3(0, 3.2, -0.2)
+
+[node name="LuzTechoSuave" type="OmniLight3D" parent="Cuarto"]
+position = Vector3(0, 2.9, 0)
+light_color = Color(1, 0.91, 0.76, 1)
+light_energy = 0.18
+omni_range = 5.5
+light_specular = 0.1
+shadow_enabled = false
+
+[node name="DecoracionNueva" type="Node3D" parent="."]
+
+[node name="house_bookshelf_0" parent="DecoracionNueva" instance=ExtResource("new_house_bookshelf")]
+position = Vector3(-0.4, 0, -2.7)
+scale = Vector3(0.85, 0.85, 0.85)
+
+[node name="house_bookshelf_1" parent="DecoracionNueva" instance=ExtResource("new_house_bookshelf")]
+position = Vector3(36.8, 0, -2.65)
+scale = Vector3(1, 1, 1)
+
+[node name="house_firewood_2" parent="DecoracionNueva" instance=ExtResource("new_house_firewood")]
+position = Vector3(44.4, 0, 1.8)
+scale = Vector3(0.9, 0.9, 0.9)
+
+[node name="Sector_CamaDiario" type="Camera3D" parent="Cameras"]
+position = Vector3(-2, 4.5, 6.5)
+rotation = Vector3(-0.55, 0, 0)
+fov = 60.0
+metadata/sector_centro = Vector2(-2, 0)
+metadata/sector_radio = Vector2(4, 3.5)
+
+[node name="Sector_ArmarioEscalera" type="Camera3D" parent="Cameras"]
+position = Vector3(2, 4.5, 6.5)
+rotation = Vector3(-0.55, 0, 0)
+fov = 60.0
+metadata/sector_centro = Vector2(2, 0)
+metadata/sector_radio = Vector2(4, 3.5)
+
+[node name="Sector_Padre" type="Camera3D" parent="Cameras"]
+position = Vector3(36.5, 4.5, 6.5)
+rotation = Vector3(-0.55, 0, 0)
+fov = 60.0
+metadata/sector_centro = Vector2(36.5, 0)
+metadata/sector_radio = Vector2(4, 3.5)
+
+[node name="Sector_Sala" type="Camera3D" parent="Cameras"]
+position = Vector3(40, 4.5, 6.5)
+rotation = Vector3(-0.55, 0, 0)
+fov = 60.0
+metadata/sector_centro = Vector2(40, 0)
+metadata/sector_radio = Vector2(4, 3.5)
+
+[node name="Sector_PuertaLenero" type="Camera3D" parent="Cameras"]
+position = Vector3(44, 4.5, 6.5)
+rotation = Vector3(-0.55, 0, 0)
+fov = 60.0
+metadata/sector_centro = Vector2(44, 0)
+metadata/sector_radio = Vector2(4, 3.5)

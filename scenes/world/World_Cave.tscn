@@ -17,6 +17,13 @@
 [ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_surfaces_v2/frozen_ice.png" id="tex_frozen_ice"]
 [ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_wood_v1/weathered_boardwalk.png" id="tex_weathered_boardwalk"]
 
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/FarolInterior.tscn" id="decor_farol"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_wood_v1/weathered_boardwalk.png" id="decor_madera"]
+
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/NordicDecor/cave_mushrooms.tscn" id="new_cave_mushrooms"]
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/NordicDecor/cave_stalagmites.tscn" id="new_cave_stalagmites"]
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/NordicDecor/house_firewood.tscn" id="new_house_firewood"]
+
 [sub_resource type="Environment" id="Environment_pfb61"]
 background_mode = 1
 background_color = Color(0.01, 0.01, 0.015, 1)
@@ -78,6 +85,12 @@ texture_filter = 0
 roughness = 1.0
 uv1_triplanar = true
 uv1_scale = Vector3(0.4, 0.4, 0.4)
+
+[sub_resource type="StandardMaterial3D" id="decor_caja"]
+albedo_texture = ExtResource("decor_madera")
+albedo_color = Color(0.55, 0.48, 0.38, 1)
+texture_filter = 0
+roughness = 1.0
 
 [node name="WorldCave" type="Node3D" unique_id=1778051884]
 script = ExtResource("1_2gsow")
@@ -270,3 +283,250 @@ material = SubResource("mat_frozen_ice")
 position = Vector3(22, 0.025, 0)
 size = Vector3(4, 0.04, 2.4)
 material = SubResource("mat_weathered_boardwalk")
+
+[node name="DecoracionTunel" type="Node3D" parent="."]
+
+[node name="Farol1" parent="DecoracionTunel" instance=ExtResource("decor_farol")]
+position = Vector3(8, 2.3, -3.1)
+
+[node name="Caja1" type="CSGBox3D" parent="DecoracionTunel"]
+position = Vector3(9.4, 0.45, -2.7)
+size = Vector3(0.95, 0.9, 0.85)
+material = SubResource("decor_caja")
+use_collision = true
+
+[node name="Roca1" type="CSGSphere3D" parent="DecoracionTunel"]
+position = Vector3(6.8, 0.1, -2.85)
+scale = Vector3(1.3, 0.55, 0.8)
+radius = 0.42
+radial_segments = 7
+rings = 4
+material = SubResource("mat_fractured_rock")
+
+[node name="Farol2" parent="DecoracionTunel" instance=ExtResource("decor_farol")]
+position = Vector3(29, 2.3, -3.1)
+
+[node name="Caja2" type="CSGBox3D" parent="DecoracionTunel"]
+position = Vector3(30.4, 0.45, -2.7)
+size = Vector3(0.95, 0.9, 0.85)
+material = SubResource("decor_caja")
+use_collision = true
+
+[node name="Roca2" type="CSGSphere3D" parent="DecoracionTunel"]
+position = Vector3(27.8, 0.1, -2.85)
+scale = Vector3(1.3, 0.55, 0.8)
+radius = 0.42
+radial_segments = 7
+rings = 4
+material = SubResource("mat_fractured_rock")
+
+[node name="Farol3" parent="DecoracionTunel" instance=ExtResource("decor_farol")]
+position = Vector3(51, 2.3, -3.1)
+
+[node name="Caja3" type="CSGBox3D" parent="DecoracionTunel"]
+position = Vector3(52.4, 0.45, -2.7)
+size = Vector3(0.95, 0.9, 0.85)
+material = SubResource("decor_caja")
+use_collision = true
+
+[node name="Roca3" type="CSGSphere3D" parent="DecoracionTunel"]
+position = Vector3(49.8, 0.1, -2.85)
+scale = Vector3(1.3, 0.55, 0.8)
+radius = 0.42
+radial_segments = 7
+rings = 4
+material = SubResource("mat_fractured_rock")
+
+[node name="Farol4" parent="DecoracionTunel" instance=ExtResource("decor_farol")]
+position = Vector3(73, 2.3, -3.1)
+
+[node name="Caja4" type="CSGBox3D" parent="DecoracionTunel"]
+position = Vector3(74.4, 0.45, -2.7)
+size = Vector3(0.95, 0.9, 0.85)
+material = SubResource("decor_caja")
+use_collision = true
+
+[node name="Roca4" type="CSGSphere3D" parent="DecoracionTunel"]
+position = Vector3(71.8, 0.1, -2.85)
+scale = Vector3(1.3, 0.55, 0.8)
+radius = 0.42
+radial_segments = 7
+rings = 4
+material = SubResource("mat_fractured_rock")
+
+[node name="RellenoFarol1" type="OmniLight3D" parent="DecoracionTunel"]
+position = Vector3(8, 2.1, -1.8)
+light_color = Color(1, 0.79, 0.55, 1)
+light_energy = 0.7
+light_specular = 0.1
+omni_range = 7.5
+shadow_enabled = false
+
+[node name="RellenoFarol2" type="OmniLight3D" parent="DecoracionTunel"]
+position = Vector3(29, 2.1, -1.8)
+light_color = Color(1, 0.79, 0.55, 1)
+light_energy = 0.7
+light_specular = 0.1
+omni_range = 7.5
+shadow_enabled = false
+
+[node name="RellenoFarol3" type="OmniLight3D" parent="DecoracionTunel"]
+position = Vector3(51, 2.1, -1.8)
+light_color = Color(1, 0.79, 0.55, 1)
+light_energy = 0.7
+light_specular = 0.1
+omni_range = 7.5
+shadow_enabled = false
+
+[node name="RellenoFarol4" type="OmniLight3D" parent="DecoracionTunel"]
+position = Vector3(73, 2.1, -1.8)
+light_color = Color(1, 0.79, 0.55, 1)
+light_energy = 0.7
+light_specular = 0.1
+omni_range = 7.5
+shadow_enabled = false
+
+[node name="DecoracionNueva" type="Node3D" parent="."]
+
+[node name="cave_stalagmites_0" parent="DecoracionNueva" instance=ExtResource("new_cave_stalagmites")]
+position = Vector3(4, 0, -2.9)
+scale = Vector3(-0.85, 0.85, 0.85)
+
+[node name="cave_stalagmites_1" parent="DecoracionNueva" instance=ExtResource("new_cave_stalagmites")]
+position = Vector3(16, 0, -2.85)
+scale = Vector3(0.65, 0.65, 0.65)
+
+[node name="cave_mushrooms_2" parent="DecoracionNueva" instance=ExtResource("new_cave_mushrooms")]
+position = Vector3(6.1, 0, -2.5)
+scale = Vector3(-1.1, 1.1, 1.1)
+
+[node name="cave_mushrooms_3" parent="DecoracionNueva" instance=ExtResource("new_cave_mushrooms")]
+position = Vector3(14.5, 0, -2.35)
+scale = Vector3(0.8, 0.8, 0.8)
+
+[node name="house_firewood_4" parent="DecoracionNueva" instance=ExtResource("new_house_firewood")]
+position = Vector3(9, 0, -2.65)
+scale = Vector3(0.65, 0.65, 0.65)
+
+[node name="cave_stalagmites_5" parent="DecoracionNueva" instance=ExtResource("new_cave_stalagmites")]
+position = Vector3(25, 0, -2.9)
+scale = Vector3(1.15, 1.15, 1.15)
+
+[node name="cave_stalagmites_6" parent="DecoracionNueva" instance=ExtResource("new_cave_stalagmites")]
+position = Vector3(37, 0, -2.85)
+scale = Vector3(0.65, 0.65, 0.65)
+
+[node name="cave_mushrooms_7" parent="DecoracionNueva" instance=ExtResource("new_cave_mushrooms")]
+position = Vector3(27.1, 0, -2.5)
+scale = Vector3(1.1, 1.1, 1.1)
+
+[node name="cave_mushrooms_8" parent="DecoracionNueva" instance=ExtResource("new_cave_mushrooms")]
+position = Vector3(35.5, 0, -2.35)
+scale = Vector3(0.8, 0.8, 0.8)
+
+[node name="house_firewood_9" parent="DecoracionNueva" instance=ExtResource("new_house_firewood")]
+position = Vector3(30, 0, -2.65)
+scale = Vector3(0.65, 0.65, 0.65)
+
+[node name="cave_stalagmites_10" parent="DecoracionNueva" instance=ExtResource("new_cave_stalagmites")]
+position = Vector3(46, 0, -2.9)
+scale = Vector3(-0.85, 0.85, 0.85)
+
+[node name="cave_stalagmites_11" parent="DecoracionNueva" instance=ExtResource("new_cave_stalagmites")]
+position = Vector3(58, 0, -2.85)
+scale = Vector3(0.65, 0.65, 0.65)
+
+[node name="cave_mushrooms_12" parent="DecoracionNueva" instance=ExtResource("new_cave_mushrooms")]
+position = Vector3(48.1, 0, -2.5)
+scale = Vector3(-1.1, 1.1, 1.1)
+
+[node name="cave_mushrooms_13" parent="DecoracionNueva" instance=ExtResource("new_cave_mushrooms")]
+position = Vector3(56.5, 0, -2.35)
+scale = Vector3(0.8, 0.8, 0.8)
+
+[node name="house_firewood_14" parent="DecoracionNueva" instance=ExtResource("new_house_firewood")]
+position = Vector3(51, 0, -2.65)
+scale = Vector3(0.65, 0.65, 0.65)
+
+[node name="cave_stalagmites_15" parent="DecoracionNueva" instance=ExtResource("new_cave_stalagmites")]
+position = Vector3(67, 0, -2.9)
+scale = Vector3(1.15, 1.15, 1.15)
+
+[node name="cave_stalagmites_16" parent="DecoracionNueva" instance=ExtResource("new_cave_stalagmites")]
+position = Vector3(79, 0, -2.85)
+scale = Vector3(0.65, 0.65, 0.65)
+
+[node name="cave_mushrooms_17" parent="DecoracionNueva" instance=ExtResource("new_cave_mushrooms")]
+position = Vector3(69.1, 0, -2.5)
+scale = Vector3(1.1, 1.1, 1.1)
+
+[node name="cave_mushrooms_18" parent="DecoracionNueva" instance=ExtResource("new_cave_mushrooms")]
+position = Vector3(77.5, 0, -2.35)
+scale = Vector3(0.8, 0.8, 0.8)
+
+[node name="house_firewood_19" parent="DecoracionNueva" instance=ExtResource("new_house_firewood")]
+position = Vector3(72, 0, -2.65)
+scale = Vector3(0.65, 0.65, 0.65)
+
+[node name="Sector_BocaPueblo" type="Camera3D" parent="Cameras"]
+position = Vector3(2, 7.5, 11)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(2, 0)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_FarolUno" type="Camera3D" parent="Cameras"]
+position = Vector3(12, 7.5, 11)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(12, 0)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_PasoUno" type="Camera3D" parent="Cameras"]
+position = Vector3(23, 7.5, 11)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(23, 0)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_FarolDos" type="Camera3D" parent="Cameras"]
+position = Vector3(34, 7.5, 11)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(34, 0)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_PasoDos" type="Camera3D" parent="Cameras"]
+position = Vector3(45, 7.5, 11)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(45, 0)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_FarolTres" type="Camera3D" parent="Cameras"]
+position = Vector3(56, 7.5, 11)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(56, 0)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_PasoTres" type="Camera3D" parent="Cameras"]
+position = Vector3(67, 7.5, 11)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(67, 0)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_FarolCuatro" type="Camera3D" parent="Cameras"]
+position = Vector3(78, 7.5, 11)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(78, 0)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_BocaBosque" type="Camera3D" parent="Cameras"]
+position = Vector3(84, 7.5, 11)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(84, 0)
+metadata/sector_radio = Vector2(9, 7)

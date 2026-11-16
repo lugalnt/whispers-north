@@ -102,6 +102,8 @@ func _ready() -> void:
 
 	_construir_lista_teclado()
 	_construir_lista_joycon()
+	_enlazar_foco(_lista_teclado)
+	_enlazar_foco(_lista_joycon)
 
 	_btn_regresar.pressed.connect(_on_regresar)
 	_btn_restablecer.pressed.connect(_on_restablecer)
@@ -279,10 +281,10 @@ func _obtener_texto_binding(accion: StringName, tipo: String) -> String:
 	else:
 		var ev_btn := _remap.get_action_button(accion)
 		if ev_btn:
-			return NOMBRES_JOYBUTTON.get(ev_btn.button_index, "Botón %d" % ev_btn.button_index)
+			return preload("res://scripts/ui/input_hints.gd").evento_texto(ev_btn)
 		var ev_mot := _remap.get_action_motion(accion)
 		if ev_mot:
-			return _obtener_nombre_joypad_motion(ev_mot.axis, ev_mot.axis_value)
+			return preload("res://scripts/ui/input_hints.gd").evento_texto(ev_mot)
 		return "—"
 
 
@@ -320,6 +322,10 @@ func _on_btn_reasignar(btn: Button) -> void:
 
 
 func _input(event: InputEvent) -> void:
+	var familia_anterior := preload("res://scripts/ui/input_hints.gd").familia_actual()
+	preload("res://scripts/ui/input_hints.gd").registrar(event)
+	if not _escuchando and familia_anterior != preload("res://scripts/ui/input_hints.gd").familia_actual():
+		_refrescar_todos_los_badges()
 	if not visible or not is_inside_tree():
 		return
 
@@ -532,3 +538,16 @@ func preparar() -> void:
 	_refrescar_todos_los_badges()
 	if _btn_regresar and is_inside_tree():
 		_btn_regresar.grab_focus()
+
+func _enlazar_foco(lista: VBoxContainer) -> void:
+	for i in lista.get_child_count():
+		var fila := lista.get_child(i)
+		for col in [2, 3]:
+			var btn: Control = fila.get_child(col)
+			var arriba: Control = lista.get_child(i - 1).get_child(col) if i > 0 else _tab_container.get_tab_bar()
+			var abajo: Control = lista.get_child(i + 1).get_child(col) if i + 1 < lista.get_child_count() else _btn_regresar
+			btn.focus_neighbor_top = btn.get_path_to(arriba)
+			btn.focus_neighbor_bottom = btn.get_path_to(abajo)
+			btn.focus_neighbor_left = btn.get_path_to(fila.get_child(2))
+			btn.focus_neighbor_right = btn.get_path_to(fila.get_child(3))
+

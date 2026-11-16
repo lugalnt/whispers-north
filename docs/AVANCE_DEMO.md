@@ -1,5 +1,33 @@
 # Avance de Implementación de la Demo (`plandeescenasWOTN.docx`)
 
+## Correcciones de pruebas Gupi — 16 de noviembre de 2026
+
+Revisión de dos videos y pruebasgupi.docx. Detalles, validaciones y recomendaciones en [REVISION_GUPI.md](REVISION_GUPI.md).
+
+- Límites físicos alrededor de los suelos de World y World_Town, cobertura visual exterior y recuperación ante caídas; acceso físico a la cueva verificado.
+- Las cámaras mantienen su posición; ajuste de orientación al borde del encuadre. Este comportamiento sustituye el desplazamiento automático documentado anteriormente.
+- Atenuación de vegetación reducida a 35 % con transición gradual; apoyo ligeramente hundido y sombras de planos desactivadas. Protagonista sin sombreado del billboard para preservar sus colores.
+- Indicaciones compactas de mando en tutorial, diario y pausa; navegación vertical estable en remapeo. Cama alargada y márgenes del HUD de combate ampliados.
+- Jarritos retirados tras victoria y derrota recordada al regresar al mapa; Nueva partida los restaura. Se elimina el puñetazo anticipado de la carga de Barrida Vórtice.
+- Pruebas de recorrido, casa, grupo, revisión Gupi, persistencia y acceso físico a cueva sin fallos. Pendientes de pulido: horizonte, sombras de contacto y revisión manual exhaustiva de cámaras con mando.
+
+
+## Erland integrado — 16 de noviembre de 2026
+
+- Sustituido el sprite provisional del padre en World_House por las cuatro vistas estáticas de nordic_v1, con orientación hacia el protagonista cercano y ajuste de pivote/altura.
+- Retrato nuevo conectado a sus diálogos iniciales y posteriores; se conservan textos y progresión.
+- Validación: captura del diálogo revisada en Godot Compatibility y casa_fase2_test.gd con 23 pruebas, 0 fallos, sin errores del controlador visual.
+- Pendiente: el paquete no contiene animaciones de caminar/interacción. Los PNG originales se conservan sin modificación.
+
+
+## Integración de casas y caminos — 16 de noviembre de 2026
+
+- World_Town: 13 casas sustituidas por CasaRoja, CasaEntramado y CasaPorche; escala, orientación y apoyo ajustados. Colisión incluida en los modelos. Puertas decorativas sin nuevos interiores.
+- World y World_Town: cinco escenas de caminos migradas a nordic_path_v1, con 1218 celdas conservadas y tamaño físico compensado al pasar de 8 a 32 px por tile.
+- Validación ejecutada: render de ambas zonas con decoration_preview.gd e inspección de capturas; recorrido_fase1_test.gd sin fallos. No equivale a un recorrido manual de cada fachada.
+- Pendiente artístico: variaciones de grano/uniones del tileset y nieve acumulada. La casa del protagonista conserva su exterior y transición existentes.
+
+
 Registro de avance por fases para la demo jugable de **Whispers of the North**, siguiendo el recorrido:
 **Casa (`World_House`) → Vecindad (`World`) → Pueblo (`World_Town`) → Cueva (`World_Cave`) → Bosque y ruinas (`World_ForestRuins`) → Jefe → Final de demo**.
 
@@ -306,3 +334,54 @@ Se integraron los paquetes de objetos, materiales, props y UI en escenas jugable
 ## Auditoría de assets y panorama — 16 de noviembre de 2026
 
 Revisados los 47 PNG de ocho paquetes. El pendiente nuevo era snowy_mountain_panorama: integrado en World, World_Town y CombatArena, con escala corregida, capas exteriores redundantes ocultas y cielo de soporte en combate. Capturas inspeccionadas y grupo_jarrito_test con cero fallos. ASSETS_INTEGRACION.md actualizado con los pendientes de creación/adaptación y la distinción entre iconos registrados y sistemas de gameplay aún pendientes.
+
+## Sugerencias implementadas
+
+- Bosque distante en World y World_Town reutilizando nordic_pine, fuera del perímetro jugable y sin colisión. Variación determinista de alturas/posiciones y color frío para cubrir el horizonte.
+- Etiquetas según el nombre del mando conectado y último dispositivo usado: Xbox, PlayStation y Nintendo. Botones y gatillos en tutorial, pausa y remapeo; un dispositivo no reconocido usa nomenclatura Xbox. Validación de mapeo automatizada; falta prueba física de cada familia, especialmente mandos traducidos por Steam Input.
+- Túnel: cuatro faroles, cuatro cajas y cuatro rocas junto a la pared posterior. Relleno cálido localizado; corredor central comprobado libre de colisión.
+- Dormitorio: lámpara elevada y relleno suave para iluminar el centro sin aumentar la luz ambiente global.
+- Validación: presentation_test.gd sin fallos (20 puntos de encuadre en cinco zonas); suggestions_test.gd sin fallos (familias de mando, decoración y paso central). Capturas de bosque, casa y túnel revisadas en Godot Compatibility.
+- Siguen pendientes de pulido: sombras de contacto de decoraciones, mobiliario definitivo y recorrido manual exhaustivo con mando físico en varios formatos de pantalla. No se añadieron enemigos al túnel ni se modificó su progresión.
+
+## Bosque de fondo denso e irregular
+
+Sustituida la cuadrícula de pinos del fondo de World y World_Town por distribución continua determinista con separación mínima entre troncos, mezcla de pinos y árboles de copa verde/nevada, variación de altura, anchura, orientación horizontal y tono. Se añaden grupos de arbustos, hierba, rocas musgosas y nieve como sotobosque. La franja queda entre 9 y 32 unidades fuera de los suelos jugables; no incluye colisiones ni ocupa accesos. Límite de 650 árboles por zona, con decoración agrupada adicional, reutilizando texturas existentes. Las escenas se renderizaron en Godot Compatibility sin errores y se revisaron capturas de casa y pueblo. No se ha realizado un benchmark en hardware de gama baja.
+
+## Integración del paquete decorativo
+
+Los ocho assets de nordic_decor_v1 están integrados mediante prefabs editables en scenes/world/Entities/NordicDecor. Recorte AtlasTexture con umbral alfa 128 para ignorar residuos casi transparentes, escala por altura visible y apoyo al suelo; originales PNG conservados.
+
+- Casa: dos estanterías y un leñero.
+- Pueblo: dos bancos y cuatro jardineras cerca de la plaza y fachadas.
+- Arena: dos columnas, dos braseros con luz cálida y ocho elementos de borde reutilizados (rocas, hierba, arbustos y nieve). Centro reservado a combatientes.
+- Cueva: ocho grupos de estalagmitas, ocho de hongos y cuatro leñeros junto a las paredes, además de los faroles/cajas/rocas existentes. Tonos fríos adaptados a la cueva.
+- Decoración sin interacciones ni nuevas colisiones; los hongos no son recogibles y la llama dibujada del brasero sigue estática. No se modificó la dificultad ni el botín.
+- Validación: grupo_jarrito_test.gd sin fallos; suggestions_test.gd sin fallos y corredor central libre en cuatro tramos. Capturas revisadas de arena, cueva, casa y plaza.
+
+## Ajuste de escala e iluminación de NordicDecor — 16/11/2026
+
+- Los ocho prefabs usan `shaded = true`: reciben iluminación ambiental, luces locales y sombras del escenario en lugar de mantener brillo constante. Se mantienen sin proyectar sombras planas de billboard.
+- Alturas base antes de la escala de cada instancia: estantería 1.85, leñero 0.50, banco 0.90, jardinera 0.65, columna 2.10, brasero 1.20, estalagmitas 1.65 y hongos 0.34 unidades.
+- Recalculado pixel_size desde el recorte visible y apoyo a -0.015 del suelo. Matices moderados de madera, vegetación y piedra; retirada la corrección azul oscura artificial de cueva para usar luz real.
+- Luz del brasero reubicada a la altura de la llama, con alcance 3.2 acorde al nuevo tamaño.
+- Validación visual: capturas de casa, planta baja, plaza, arena y cueva. grupo_jarrito_test y suggestions_test: cero fallos. lighting_preview y decoration_preview finalizaron sin errores.
+- Limitación: los assets siguen siendo sprites con perspectiva dibujada; la iluminación real mejora su integración pero no sustituye el volumen de un modelo 3D.
+
+## Correcciones tras revisión de capturas — 16/11/2026
+
+- Aumentadas las alturas base de estanterías (2.65), leñeros (1.05), bancos (1.65) y jardineras (1.20). Sustituyen los tamaños anteriores del ajuste de NordicDecor.
+- Eric usa el 70% de escala visual solo en World_House, conservando apoyo de pies, cápsula y lógica de interacción. Combate y exteriores conservan su tamaño.
+- En cueva el sprite recibe iluminación real y un relleno frío limitado a su capa visual para que no brille a intensidad completa ni quede negro; no ilumina el entorno.
+- Cambios de cámara cercanos interpolados en 0.45 segundos. Teletransportes lejanos conservan su fundido. Mientras se mantiene una misma dirección de entrada, el movimiento conserva el rumbo del mundo al cruzar cámaras; al soltar o cambiar de dirección se toma la cámara nueva.
+- Arena: montañas alejadas a Z=-22, vegetación intermedia con alturas y posiciones variadas, suelo con borde posterior oculto por vegetación y cielo ampliado. Luz solar orientada hacia el suelo, sombras habilitadas y sombras suaves de contacto bajo decoraciones.
+- Validación: camera_comfort_test (4 comprobaciones), casa_fase2_test (23), suggestions_test y grupo_jarrito_test sin fallos. Capturas finales revisadas de casa, plaza, cueva y arena. La comodidad de cámaras durante recorridos largos queda sujeta a prueba manual del jugador; no se cambió el mapa de controles.
+
+## Bosque de arena, sombras y cámaras fijas — 16/11/2026
+
+- La arena reutiliza las tres especies del bosque del pueblo (pino, árbol nevado y verde): hasta 135 árboles con separación mínima, posiciones continuas, alturas 2.8–5.0 y varias profundidades. Montañas reducidas y alejadas a Z=-32; terreno extendido bajo el bosque. Captura de combate revisada y grupo_jarrito_test sin fallos.
+- Árboles y decoración del mundo proyectan sombras con recorte alfa y doble cara, incluido el bosque distante y NordicDecor. Los prefabs con atlas conservan su apoyo original al suelo. decoration_preview finaliza sin errores.
+- Eliminados por completo el giro automático look_at y la interpolación de transformaciones en world_presentation. Solo cambia la cámara activa cuando existe un encuadre fijo válido, con margen y espera de 0.65 para evitar oscilaciones. Se conserva el rumbo del movimiento mientras se mantiene la entrada.
+- Tres cámaras fijas adicionales en el pueblo cubren la plaza sur, plaza este y calle central (Camera13–15). Validado el encuadre completo en siete puntos y que las 15 cámaras mantengan su transformación; fixed_cameras_test sin fallos. camera_comfort_test actualizado al contrato de cámaras fijas, sin fallos.
+- Muebles cercanos a la fuente desplazados al exterior: centros a más de 6.5 unidades de ella. Añadidos tres bancos y cinco jardineras; total del paquete en el pueblo: cinco bancos y nueve jardineras. Captura revisada sin intersecciones con la fuente.
+- Esta revisión sustituye la interpolación de cámaras descrita en el registro anterior. No se ha medido el coste de sombras adicionales en hardware de gama baja.

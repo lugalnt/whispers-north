@@ -1,6 +1,6 @@
 # Integración de assets nórdicos — estado al 16 de noviembre de 2026
 
-Estado general por fases: [AVANCE_DEMO.md](AVANCE_DEMO.md). Esta revisión documental no vuelve a ejecutar pruebas ni cambia assets.
+Estado general por fases: [AVANCE_DEMO.md](AVANCE_DEMO.md). La integración de casas y caminos incluye revisión visual y nueva ejecución de recorrido_fase1_test.gd sin fallos.
 
 ## Modelos originales de casas — 16 de noviembre de 2026
 
@@ -8,16 +8,17 @@ Estado general por fases: [AVANCE_DEMO.md](AVANCE_DEMO.md). Esta revisión docum
 - Fachadas roja, yeso con entramado y madera oscura con porche; tejados a dos aguas, ventanas en cuatro lados, puertas, chimeneas, zócalos y molduras. Fuente reproducible: `tools/build_nordic_houses.py`.
 - Escenas `.tscn` con colisión de volumen principal y marcador Entrance. Frente +Z, origen al suelo, escala 1. Puertas visuales, sin interiores ni transiciones. Aleros y porche no amplían la caja de colisión.
 - Validación: instanciación de las tres escenas, comprobación de colisión/marcador, exportación GLB y captura conjunta inspeccionada en Godot 4.7.2. Abrir `assets/models/nordic_houses/Preview.tscn` para revisar.
-- **Pendiente de integrar en World_Town**: sustituir las casas placeholder con ajuste explícito de escala/orientación, apoyo y recorridos. El pueblo conserva sus casas anteriores; los nuevos modelos no se han probado dentro del mapa.
+- **Integrado en World_Town**: 13 instancias sustituidas por los tres modelos nuevos. Escala 0.76, salvo House_C2 a 1.05; orientación hacia calles y apoyo en Y=0.07861329. Revisión visual del pueblo y recorrido entre zonas sin fallos. El exterior de la casa del protagonista en World conserva su geometría e interacción existentes.
 
 ## Catálogo de assets generados
 
-Actualizado el 16 de noviembre de 2026 mediante revisión de archivos y referencias de escenas, scripts y recursos. Hay **49 PNG originales en nueve paquetes** (sin contar capturas de revisión). «Generado» significa que el archivo está disponible; «integrado» significa que existe una referencia en el juego. La creación de un material o una escena reutilizable no implica que se haya colocado en un mapa.
+Actualizado el 16 de noviembre de 2026 mediante revisión de archivos y referencias de escenas, scripts y recursos. Hay **59 PNG originales en once paquetes** (sin contar capturas de revisión). «Generado» significa que el archivo está disponible; «integrado» significa que existe una referencia en el juego. La creación de un material o una escena reutilizable no implica que se haya colocado en un mapa.
 
 Las rutas de esta tabla son relativas a `res://`. Los README de cada paquete conservan sus prompts de `image_gen`, instrucciones y limitaciones de generación; este documento registra el estado de integración posterior.
 
 | Paquete | Ruta | PNG | Contenido y estado |
 | --- | --- | ---: | --- |
+| Decoración de cuatro zonas | `assets/sprites/environment/nordic_decor_v1/` | 8 | Ocho assets integrados en casa, arena, pueblo y cueva; ver detalle al final. |
 | Superficies base | `assets/sprites/environment/materials/nordic_v1/` | 6 | `wood_wall`, `red_roof`, `cold_grass`, `dirt_path`, `combat_ground`, `village_stone`. Integrados en superficies compatibles; detalles abajo. |
 | Vegetación y obstáculos | `assets/sprites/environment/nordic_props_v1/` | 6 | `nordic_pine`, `grass_tuft`, `mossy_rock`, `snow_bank`, `wildflowers`, `dense_bush`. Incluyen escenas en `scenes/world/Entities/NordicProps/`; integración inicial y restricciones descritas abajo. |
 | Interfaz Nordic Carved | `assets/sprites/ui/nordic_carved_v1/` | 5 | `button_normal`, `button_hover`, `button_pressed`, `menu_panel`, `inventory_slot`. Temas de menú/gameplay integrados. Foco y deshabilitado son estilos, no PNG adicionales. |
@@ -69,8 +70,8 @@ Los materiales usan filtro Nearest y escalas adaptadas. Las superficies nuevas n
 
 | Elemento | Pendiente concreto |
 | --- | --- |
-| Casas del pueblo | Tres modelos originales disponibles en nordic_houses (roja, entramado y porche), con materiales por pieza. Falta sustituir las instancias del pueblo y ajustar escalas, orientación, terreno y recorridos. Las casas de prueba todavía conservan sus atlas; los modelos nuevos no necesitan esos atlas. |
-| Caminos de vecindad y pueblo | nordic_path_v1 disponible: centro, bordes y esquinas con exterior transparente. Falta migrar/repintar caminos, revisar curvas y escala. No es reemplazo directo del atlas anterior; autotiling y nieve acumulada siguen pendientes. |
+| Casas del pueblo | Tres modelos originales integrados en las 13 casas de World_Town, con materiales por pieza, escalas y orientación ajustadas. Puertas decorativas: faltan interiores y transiciones propias de estas viviendas. |
+| Caminos de vecindad y pueblo | nordic_path_v1 integrado en las cinco escenas de caminos de World y World_Town: 1218 celdas conservadas, bordes y esquinas reasignados por vecindad. Autotiling editable y nieve acumulada siguen pendientes; el grano presenta variaciones entre tiles. |
 | Vegetación | Árbol frondoso original y variantes nevadas de árbol y pino. Árboles frondosos anteriores siguen en uso; el pino nuevo no incluye versión nevada. |
 | Casa | Arte definitivo de cama, ropero, mesa, sillas, diario, espejo, cajas y alfombras. Maderas, cream_plaster y woven_wool ya asignadas; no sustituyen muebles ni alfombras completas. |
 | Cueva y relieve | cave_rock y fractured_rock ya cubren los mapas de color de roca y grietas. Materiales aplicados; faltan entrada/relieve definitivos y revisión de UV en esas futuras mallas; mossy_rock sigue siendo un sprite decorativo. |
@@ -78,13 +79,13 @@ Los materiales usan filtro Nearest y escalas adaptadas. Las superficies nuevas n
 | Agua y terreno invernal | Agua, nieve y hielo ya tienen texturas base. Colocados detalles de cueva y agua de piscina; faltan orillas/transiciones definitivas y comportamiento del terreno. |
 | Efectos visuales | Cuatro efectos conectados con animación por escala/fundido. Faltan spritesheets si se requieren animaciones dibujadas cuadro a cuadro. |
 | Fondo de combate y paisaje | Panorama integrado en vecindad, pueblo y combate. Faltan variantes específicas por bioma si se desean fondos diferentes para cueva, bosque o jefe. |
-| Personajes | Retratos definitivos del protagonista/NPC y arte pendiente de personajes de prueba. |
+| Personajes | Erland tiene cuatro vistas estáticas y retrato integrados en World_House; orientación al protagonista cercano, altura visual 1.9 y pivote al suelo. Faltan animaciones y retratos definitivos de los demás personajes. |
 | Jefe/final | Sprite y animaciones del jefe, objeto narrativo definitivo y presentación del final. La espada nueva no se ha asignado por inferencia al objeto del desenlace. |
 | Interfaz complementaria | Iconos de estados/acciones, barras y selector propios; panel de controles y diálogo todavía conservan estilos anteriores. |
 
 ## Comprobación
 
-- Catálogo: 49 PNG en nueve paquetes; los dos atlas del camino siguen pendientes de integración; las seis maderas, ocho superficies complementarias y cuatro VFX tienen usos conectados en el proyecto. El panorama nuevo está integrado y revisado como se detalla arriba. Las pruebas siguientes conservan su historial previo.
+- Catálogo: 59 PNG en once paquetes; los dos atlas del camino ya están integrados en World y World_Town; las seis maderas, ocho superficies complementarias y cuatro VFX tienen usos conectados en el proyecto. El panorama nuevo está integrado y revisado como se detalla arriba. Las pruebas siguientes conservan su historial previo.
 - `assets_nordic_test.gd`: carga/render de escenas y recursos, 0 fallos; inspeccionada la casa con la nueva paleta.
 - `presentation_test.gd`: opciones dentro del panel, estadísticas dentro del marco, vegetación registrada para apoyo, veinte muestras de encuadre en cinco zonas y vida útil de cuatro VFX, 0 fallos. Capturas revisadas de opciones, pausa y World en formato ancho y ventana 900 × 700. Son muestras automatizadas, no una revisión manual de cada punto del mapa ni garantía contra toda oclusión por edificios.
 - Regresiones ejecutadas: recorrido_fase1, casa_fase2, inventario_fase25, grupo_jarrito y encuentros; consultar el registro de avance para resultados finales.
@@ -115,5 +116,67 @@ Al añadir un paquete o variante, actualizar este documento con nombre, ruta, ca
 - 13 tiles: centro, cuatro bordes, cuatro esquinas exteriores y cuatro interiores. Exterior transparente para superponer sobre pasto/nieve. No incluye acumulación de nieve ni terrain/autotiling.
 - Originales 1254 × 1254, importados por Godot a 96 × 96 con process/size_limit=96 en los .png.import. Celdas de 32 × 32; conservar estos ajustes. Fuente 0: nueve celdas. Fuente 1: cuatro esquinas.
 - Verificación Godot 4.7.2: resolución importada y conteo correctos, escena de muestra guardada y render rectangular inspeccionado. Falta revisar todas las combinaciones de curvas en el mapa; la continuidad del grano no es matemáticamente garantizada.
-- Disponible para pintura manual y PathPatch. No se reemplazó paths_tile_set ni se cambiaron recorridos. Migrar coordenadas y revisar escala antes de aplicarlo.
+- Integrado en World/Path (150 celdas), Main_Path_Section1 (94), Section2 (255), Section3 (173) y World_Town/Main_Path_Town_Section1 (546). Se conserva el trazado y tamaño físico; la escala 2D se compensa por el cambio de 8 a 32 px. El atlas antiguo se conserva como recurso de archivo, sin referencias desde estas cinco escenas. Conversor idempotente: tools/migrate_paths.gd.
 - preview.png es una captura de revisión, excluida del conteo de assets originales.
+
+## Erland Erki — 16 de noviembre de 2026
+
+- Paquete: `assets/sprites/player/Erland (Padre)/nordic_v1/`. Dos PNG originales con transparencia, generados con image_gen a partir del diseño de Finn.
+- `erland_idle_directions.png`: 1254 × 1254, cuadrícula 2 × 2 con frente, perfil derecho, espalda y perfil izquierdo. Poses estáticas; no es una animación de caminar.
+- `erland_portrait.png`: 1312 × 1199, busto para diálogos y consejos. Cabello blanco peinado, lentes, mostacho y barba corta, traje oscuro y chaleco azul.
+- README con coordenadas de atlas y PROMPTS.md con instrucciones exactas. Revisión visual de ambas imágenes y validación PNG RGBA/alfa completadas.
+- Estado: integrado en World_House. erland_visual.gd selecciona entre cuatro vistas según la posición del protagonista respecto a la cámara, dentro de 2.5 unidades. AtlasTexture recorta márgenes transparentes por celda sin modificar los PNG; altura visual uniforme de 1.9 unidades y billboard vertical. Retrato asignado a InteraccionDialogo. Captura real del diálogo inspeccionada en Godot Compatibility; casa_fase2_test.gd: 23 pruebas, 0 fallos. Pendientes: animaciones de caminar/interacción y una eventual versión de pixel art a resolución final más baja.
+
+## Ajustes tras pruebas Gupi — 16 de noviembre de 2026
+
+Ver [REVISION_GUPI.md](REVISION_GUPI.md). No se generaron nuevas imágenes: se ajustó apoyo de decoraciones, sombra de sus planos, atenuación de árboles, cobertura exterior de terreno y proporciones de la cama. La cobertura del horizonte necesita acabado artístico. Los assets y originales permanecen disponibles.
+
+## Bosque de fondo denso e irregular
+
+Sustituida la cuadrícula de pinos del fondo de World y World_Town por distribución continua determinista con separación mínima entre troncos, mezcla de pinos y árboles de copa verde/nevada, variación de altura, anchura, orientación horizontal y tono. Se añaden grupos de arbustos, hierba, rocas musgosas y nieve como sotobosque. La franja queda entre 9 y 32 unidades fuera de los suelos jugables; no incluye colisiones ni ocupa accesos. Límite de 650 árboles por zona, con decoración agrupada adicional, reutilizando texturas existentes. Las escenas se renderizaron en Godot Compatibility sin errores y se revisaron capturas de casa y pueblo. No se ha realizado un benchmark en hardware de gama baja.
+
+## Decoración de casa, combate, pueblo y cueva — 16 de noviembre de 2026
+
+- Paquete: `assets/sprites/environment/nordic_decor_v1/`. Ocho PNG RGBA de 1254 × 1254, generados con image_gen integrada; README y PROMPTS.md incluidos.
+- Casa: house_bookshelf y house_firewood. Combate: combat_broken_pillar y combat_brazier. Pueblo: town_bench y town_flower_planter. Cueva: cave_stalagmites y cave_mushrooms.
+- Referencia de estilo: cofre nórdico existente; madera cálida, hierro y piedra azul gris, vegetación apagada. Cada archivo contiene una pieza decorativa independiente con fondo transparente.
+- Verificación: revisión visual e integridad PNG, dimensiones y transparencia alfa de los ocho originales. Sin pruebas de escena en Godot.
+- Estado: integrados. Ver el registro de integración al final: prefabs, colocación, luces y validación. Son sprites de una vista, no modelos tridimensionales.
+
+## Integración del paquete decorativo
+
+Los ocho assets de nordic_decor_v1 están integrados mediante prefabs editables en scenes/world/Entities/NordicDecor. Recorte AtlasTexture con umbral alfa 128 para ignorar residuos casi transparentes, escala por altura visible y apoyo al suelo; originales PNG conservados.
+
+- Casa: dos estanterías y un leñero.
+- Pueblo: dos bancos y cuatro jardineras cerca de la plaza y fachadas.
+- Arena: dos columnas, dos braseros con luz cálida y ocho elementos de borde reutilizados (rocas, hierba, arbustos y nieve). Centro reservado a combatientes.
+- Cueva: ocho grupos de estalagmitas, ocho de hongos y cuatro leñeros junto a las paredes, además de los faroles/cajas/rocas existentes. Tonos fríos adaptados a la cueva.
+- Decoración sin interacciones ni nuevas colisiones; los hongos no son recogibles y la llama dibujada del brasero sigue estática. No se modificó la dificultad ni el botín.
+- Validación: grupo_jarrito_test.gd sin fallos; suggestions_test.gd sin fallos y corredor central libre en cuatro tramos. Capturas revisadas de arena, cueva, casa y plaza.
+
+## Ajuste de escala e iluminación de NordicDecor — 16/11/2026
+
+- Los ocho prefabs usan `shaded = true`: reciben iluminación ambiental, luces locales y sombras del escenario en lugar de mantener brillo constante. Se mantienen sin proyectar sombras planas de billboard.
+- Alturas base antes de la escala de cada instancia: estantería 1.85, leñero 0.50, banco 0.90, jardinera 0.65, columna 2.10, brasero 1.20, estalagmitas 1.65 y hongos 0.34 unidades.
+- Recalculado pixel_size desde el recorte visible y apoyo a -0.015 del suelo. Matices moderados de madera, vegetación y piedra; retirada la corrección azul oscura artificial de cueva para usar luz real.
+- Luz del brasero reubicada a la altura de la llama, con alcance 3.2 acorde al nuevo tamaño.
+- Validación visual: capturas de casa, planta baja, plaza, arena y cueva. grupo_jarrito_test y suggestions_test: cero fallos. lighting_preview y decoration_preview finalizaron sin errores.
+- Limitación: los assets siguen siendo sprites con perspectiva dibujada; la iluminación real mejora su integración pero no sustituye el volumen de un modelo 3D.
+
+## Correcciones tras revisión de capturas — 16/11/2026
+
+- Aumentadas las alturas base de estanterías (2.65), leñeros (1.05), bancos (1.65) y jardineras (1.20). Sustituyen los tamaños anteriores del ajuste de NordicDecor.
+- Eric usa el 70% de escala visual solo en World_House, conservando apoyo de pies, cápsula y lógica de interacción. Combate y exteriores conservan su tamaño.
+- En cueva el sprite recibe iluminación real y un relleno frío limitado a su capa visual para que no brille a intensidad completa ni quede negro; no ilumina el entorno.
+- Cambios de cámara cercanos interpolados en 0.45 segundos. Teletransportes lejanos conservan su fundido. Mientras se mantiene una misma dirección de entrada, el movimiento conserva el rumbo del mundo al cruzar cámaras; al soltar o cambiar de dirección se toma la cámara nueva.
+- Arena: montañas alejadas a Z=-22, vegetación intermedia con alturas y posiciones variadas, suelo con borde posterior oculto por vegetación y cielo ampliado. Luz solar orientada hacia el suelo, sombras habilitadas y sombras suaves de contacto bajo decoraciones.
+- Validación: camera_comfort_test (4 comprobaciones), casa_fase2_test (23), suggestions_test y grupo_jarrito_test sin fallos. Capturas finales revisadas de casa, plaza, cueva y arena. La comodidad de cámaras durante recorridos largos queda sujeta a prueba manual del jugador; no se cambió el mapa de controles.
+
+## Bosque de arena, sombras y cámaras fijas — 16/11/2026
+
+- La arena reutiliza las tres especies del bosque del pueblo (pino, árbol nevado y verde): hasta 135 árboles con separación mínima, posiciones continuas, alturas 2.8–5.0 y varias profundidades. Montañas reducidas y alejadas a Z=-32; terreno extendido bajo el bosque. Captura de combate revisada y grupo_jarrito_test sin fallos.
+- Árboles y decoración del mundo proyectan sombras con recorte alfa y doble cara, incluido el bosque distante y NordicDecor. Los prefabs con atlas conservan su apoyo original al suelo. decoration_preview finaliza sin errores.
+- Eliminados por completo el giro automático look_at y la interpolación de transformaciones en world_presentation. Solo cambia la cámara activa cuando existe un encuadre fijo válido, con margen y espera de 0.65 para evitar oscilaciones. Se conserva el rumbo del movimiento mientras se mantiene la entrada.
+- Tres cámaras fijas adicionales en el pueblo cubren la plaza sur, plaza este y calle central (Camera13–15). Validado el encuadre completo en siete puntos y que las 15 cámaras mantengan su transformación; fixed_cameras_test sin fallos. camera_comfort_test actualizado al contrato de cámaras fijas, sin fallos.
+- Muebles cercanos a la fuente desplazados al exterior: centros a más de 6.5 unidades de ella. Añadidos tres bancos y cinco jardineras; total del paquete en el pueblo: cinco bancos y nueve jardineras. Captura revisada sin intersecciones con la fuente.
+- Esta revisión sustituye la interpolación de cámaras descrita en el registro anterior. No se ha medido el coste de sombras adicionales en hardware de gama baja.

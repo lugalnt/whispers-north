@@ -9,6 +9,7 @@ func _ready() -> void:
 	super._ready()
 	diario.dialogo_terminado.connect(_terminar_diario)
 	padre.dialogo_terminado.connect(_terminar_charla)
+	_configurar_ayuda()
 	_actualizar_textos()
 	if GameState.tiene_progreso(GameState.PROGRESO_TUTORIAL_DIARIO):
 		diario.desactivar()
@@ -17,6 +18,7 @@ func _ready() -> void:
 		padre.cambiar_lineas_rapidas(["Abrígate bien. Estaré aquí si necesitas volver a casa."])
 
 func _input(event: InputEvent) -> void:
+	preload("res://scripts/ui/input_hints.gd").registrar(event)
 	if event is InputEventJoypadButton or event is InputEventJoypadMotion:
 		if event is InputEventJoypadMotion and absf(event.axis_value) < 0.3:
 			return
@@ -29,11 +31,7 @@ func _input(event: InputEvent) -> void:
 		_actualizar_textos()
 
 func _control(accion: StringName) -> String:
-	for evento in InputMap.action_get_events(accion):
-		var mando := evento is InputEventJoypadButton or evento is InputEventJoypadMotion
-		if mando == _usa_mando:
-			return evento.as_text().replace(" (Physical)", "").replace(" - Physical", "")
-	return String(accion)
+	return preload("res://scripts/ui/input_hints.gd").accion(accion, _usa_mando)
 
 func _actualizar_textos() -> void:
 	var movimiento := "%s / %s / %s / %s" % [
@@ -83,3 +81,19 @@ func _liberar_referencias_dialogo(dialogo: InteraccionDialogo) -> void:
 		for linea in recurso.lines.values():
 			if linea is Dictionary and linea.get(&"resource") == recurso:
 				linea.erase(&"resource")
+
+func _configurar_ayuda() -> void:
+	var fondo := StyleBoxFlat.new()
+	fondo.bg_color = Color(0.04, 0.06, 0.09, 0.85)
+	fondo.content_margin_left = 12
+	fondo.content_margin_right = 12
+	fondo.content_margin_top = 8
+	fondo.content_margin_bottom = 8
+	pista.add_theme_stylebox_override("normal", fondo)
+	pista.add_theme_font_size_override("font_size", 17)
+	pista.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	get_viewport().size_changed.connect(_ajustar_ayuda)
+	_ajustar_ayuda()
+
+func _ajustar_ayuda() -> void:
+	$Ayuda/Margen.offset_right = minf(590, get_viewport().get_visible_rect().size.x - 24)

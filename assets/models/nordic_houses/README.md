@@ -19,10 +19,10 @@ Las mallas incluyen cuerpo, frontones, dos faldones de tejado, cumbrera, aleros,
 
 La colisión es una caja para el volumen principal; no sigue tejado, aleros, umbral ni porche. Entrance indica una posición delante de la puerta para una futura transición. Sin lógica de interacción ni conexiones al gameplay.
 
-## Integración pendiente
+## Integración en el pueblo — 16 de noviembre de 2026
 
-World_Town sigue usando casas placeholder con escalas 0.1 y 0.15. No sustituir sus recursos directamente sin normalizar escala, comprobar orientación, terreno, caminos, visibilidad y colisiones. Estas casas usan unidades del mundo y escala 1.
+World_Town usa estos modelos en sus 13 casas. Escala 0.76 salvo House_C2 a 1.05; apoyo en Y=0.07861329 y fachadas orientadas hacia las calles. Las puertas continúan siendo decorativas. El exterior de la casa del protagonista en World mantiene su modelo y conexión existentes.
 
 ## Verificación
 
-Las tres escenas se instanciaron correctamente en Godot 4.7.2; comprobados CollisionShape3D y Entrance, exportación GLB y render conjunto. Inspección visual de la captura completada. No se han sustituido casas ni probado recorridos en World_Town.
+Instanciación y render del pueblo revisados en Godot Compatibility. recorrido_fase1_test.gd completado sin fallos tras la sustitución. Esta prueba cubre transiciones y llegadas; no simula caminar alrededor de cada vivienda.

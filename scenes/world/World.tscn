@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dbt1y0neukt5h" path="res://scripts/world/world.gd" id="1_gbddb"]
 [ext_resource type="PackedScene" uid="uid://dqgkj6m2blabm" path="res://scenes/player/player.tscn" id="2_6eebf"]
 [ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_v1/cold_grass.png" id="2_8xm5o"]
-[ext_resource type="PackedScene" uid="uid://tmee1acxuci3" path="res://scenes/world/Paths/World/Path.tscn" id="2_16fjv"]
+[ext_resource type="PackedScene" path="res://scenes/world/Paths/World/Path.tscn" id="2_16fjv"]
 [ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_v1/wood_wall.png" id="2_ckp8c"]
 [ext_resource type="Texture2D" path="res://assets/sprites/environment/backgrounds/nordic_v1/snowy_mountain_panorama.png" id="2_fe1rh"]
 [ext_resource type="PackedScene" uid="uid://bmq2ghxhosxj" path="res://scenes/player/player_32.tscn" id="3_6eebf"]
@@ -21,9 +21,9 @@
 [ext_resource type="Script" uid="uid://ojlc0i8sf3xn" path="res://scripts/world/path_patch.gd" id="16_0duuj"]
 [ext_resource type="Texture2D" path="res://assets/sprites/items/nordic_v1/chest_closed.png" id="16_dobjl"]
 [ext_resource type="AudioStream" uid="uid://dkmskaqgkjey8" path="res://assets/audio/sfx/snd_item.wav" id="16_hon07"]
-[ext_resource type="PackedScene" uid="uid://cd8057ionvm5d" path="res://scenes/world/Paths/World/Main_Path_Section1.tscn" id="17_d0ueh"]
-[ext_resource type="PackedScene" uid="uid://dxn6wcvk074i1" path="res://scenes/world/Paths/World/Main_Path_Section2.tscn" id="18_d0ueh"]
-[ext_resource type="PackedScene" uid="uid://d2xgydtkx3q60" path="res://scenes/world/Paths/World/Main_Path_Section3.tscn" id="19_i08rc"]
+[ext_resource type="PackedScene" path="res://scenes/world/Paths/World/Main_Path_Section1.tscn" id="17_d0ueh"]
+[ext_resource type="PackedScene" path="res://scenes/world/Paths/World/Main_Path_Section2.tscn" id="18_d0ueh"]
+[ext_resource type="PackedScene" path="res://scenes/world/Paths/World/Main_Path_Section3.tscn" id="19_i08rc"]
 [ext_resource type="PackedScene" uid="uid://dbggfxbe2xhfc" path="res://assets/models/GameCube - The Legend of Zelda_ The Wind Waker - Great Sea Islands - Fire Mountain/fire_mountain.tscn" id="20_o0dc1"]
 [ext_resource type="PackedScene" path="res://scenes/world/Entities/Jarrito.tscn" id="23_pot"]
 [ext_resource type="AudioStream" uid="uid://dhmy8wgyl8emk" path="res://assets/audio/sfx/Roar_0.wav" id="24_d6tky"]
@@ -2848,3 +2848,87 @@ scale = Vector3(1.0699999999999998, 1.0699999999999998, 1.0699999999999998)
 position = Vector3(-7.65, 0.515, 21.55)
 scale = Vector3(1.0699999999999998, 1.0699999999999998, 1.0699999999999998)
 
+
+[node name="Sector_Casa" type="Camera3D" parent="."]
+position = Vector3(3, 8.0, -8)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(3, -19)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_CaminoCasa" type="Camera3D" parent="."]
+position = Vector3(0, 8.0, 2)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(0, -9)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_CruceNorte" type="Camera3D" parent="."]
+position = Vector3(0, 8.0, 14)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(0, 3)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_AccesoClaro" type="Camera3D" parent="."]
+position = Vector3(0, 8.0, 25)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(0, 14)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_CruceCentral" type="Camera3D" parent="."]
+position = Vector3(0, 8.0, 36)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(0, 25)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_SenderoEste" type="Camera3D" parent="."]
+position = Vector3(13, 8.0, 36)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(13, 25)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_SalidaPueblo" type="Camera3D" parent="."]
+position = Vector3(30, 8.0, 41)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(30, 30)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_ClaroEste" type="Camera3D" parent="."]
+position = Vector3(39, 8.0, 49)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(39, 38)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_CaminoOeste" type="Camera3D" parent="."]
+position = Vector3(-12, 8.0, 36)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(-12, 25)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_ClaroOeste" type="Camera3D" parent="."]
+position = Vector3(-25, 8.0, 36)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(-25, 25)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_SenderoSur" type="Camera3D" parent="."]
+position = Vector3(-12, 8.0, 48)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(-12, 37)
+metadata/sector_radio = Vector2(9, 7)
+
+[node name="Sector_BordeOeste" type="Camera3D" parent="."]
+position = Vector3(-36, 8.0, 27)
+rotation = Vector3(-0.55, 0, 0)
+fov = 55.0
+metadata/sector_centro = Vector2(-36, 16)
+metadata/sector_radio = Vector2(9, 7)

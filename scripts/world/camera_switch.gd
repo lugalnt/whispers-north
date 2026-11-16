@@ -252,6 +252,10 @@ func _activar_camara(nueva_cam: Camera3D, previa: Camera3D = null) -> void:
 	if nueva_cam == null or nueva_cam.current:
 		return
 	
+	# El selector por tramos tiene prioridad sobre los volúmenes antiguos.
+	var activa := get_viewport().get_camera_3d()
+	if activa != null and activa.has_meta("sector_centro"):
+		return
 	nueva_cam.make_current()
 	_ultimo_tiempo_cambio = Time.get_ticks_msec() / 1000.0
 	camara_cambiada.emit(nueva_cam, previa)

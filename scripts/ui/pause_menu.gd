@@ -229,6 +229,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func abrir_menu() -> void:
 	if visible:
 		return
+	_actualizar_pistas_dispositivo()
 	_detectar_companero()
 	_reproducir_sonido(sfx_abrir)
 	show()
@@ -585,3 +586,18 @@ func _ajustar_panel() -> void:
 	panel.size = Vector2(960, 600)
 	panel.scale = Vector2.ONE * factor
 	panel.position = (area - panel.size * factor) * 0.5
+
+var _pistas_mando := false
+func _input(event: InputEvent) -> void:
+	preload("res://scripts/ui/input_hints.gd").registrar(event)
+	if event is InputEventJoypadMotion and absf(event.axis_value) < 0.3: return
+	if event is InputEventJoypadButton or event is InputEventJoypadMotion:
+		_pistas_mando = true
+	elif event is InputEventKey or event is InputEventMouseButton:
+		_pistas_mando = false
+	else: return
+	_actualizar_pistas_dispositivo()
+
+func _actualizar_pistas_dispositivo() -> void:
+	var hints = preload("res://scripts/ui/input_hints.gd")
+	lbl_header_pistas.text = "[%s / %s] Pestañas  |  [%s] Cerrar" % [hints.accion(&"tab_prev", _pistas_mando), hints.accion(&"tab_next", _pistas_mando), hints.accion(&"pause", _pistas_mando)]

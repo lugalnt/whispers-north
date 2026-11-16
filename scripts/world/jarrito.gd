@@ -36,6 +36,7 @@ var _sesion_grupo: RefCounted
 var _recuperacion: float = 0.0
 var _solicitando: bool = false
 var _derrotado: bool = false
+var _id_derrota: StringName = &""
 
 @export_group("Volúmenes iniciales (al ejecutar)")
 @export_range(0.1, 5.0, 0.05) var radio_cuerpo: float = 0.65
@@ -60,6 +61,14 @@ var _gravedad: float = float(ProjectSettings.get_setting("physics/3d/default_gra
 
 
 func _ready() -> void:
+	var mundo: Node = get_parent()
+	while mundo != null and not mundo.has_method("get_active_player"):
+		mundo = mundo.get_parent()
+	if mundo != null and not mundo.scene_file_path.is_empty():
+		_id_derrota = StringName("enemigo." + mundo.scene_file_path + ":" + str(mundo.get_path_to(self)))
+		if get_node("/root/GameState").tiene_progreso(_id_derrota):
+			queue_free()
+			return
 	_posicion_inicial = global_position
 	if grupo_encuentro != &"":
 		add_to_group(grupo_encuentro)
@@ -287,8 +296,7 @@ func _solicitar_encuentro() -> void:
 	if _combate.reserva_confirmada.is_connected(registrar):
 		_combate.reserva_confirmada.disconnect(registrar)
 	if resultado == CombatArena.ResultadoCombate.VICTORIA:
-		# Permanece en el mundo, pero ya no vuelve a desafiar al jugador.
-		_derrotado = true
+		_retirar_derrotado()
 	recuperar_encuentro()
 
 
@@ -334,6 +342,18 @@ func _registrar_grupo(sesion: RefCounted, miembros: Array[Jarrito]) -> void:
 
 func _finalizar_grupo(sesion: RefCounted) -> void:
 	if not sesion.cancelada and sesion.resultado == CombatArena.ResultadoCombate.VICTORIA:
-		_derrotado = true
+		_retirar_derrotado()
 	_sesion_grupo = null
 	recuperar_encuentro()
+
+func _retirar_derrotado() -> void:
+	if _derrotado: return
+	_derrotado = true
+	combate_habilitado = false
+	hide()
+	set_deferred("collision_layer", 0)
+	if _id_derrota != &"": get_node("/root/GameState").marcar_progreso(_id_derrota)
+	# Diferir para que el encuentro termine de restaurar controles y recursos.
+	queue_free.call_deferred()
+
+

@@ -3,10 +3,15 @@ extends Node
 var vegetacion: Array[Sprite3D] = []
 var bases: Dictionary = {}
 var zona: Node3D
+var _espera_cambio := 0.0
 
 func _ready() -> void:
 	zona = get_parent()
 	process_priority = 90
+	if zona.scene_file_path.get_file() in ["World.tscn", "World_Town.tscn"]:
+		var limites_mundo := preload("res://scripts/world/world_boundary.gd").new()
+		limites_mundo.name = "LimitesMundo"
+		zona.add_child(limites_mundo)
 	await get_tree().physics_frame
 	await get_tree().physics_frame
 	var excluidos: Array[RID] = []
@@ -16,8 +21,12 @@ func _ready() -> void:
 	for sprite in zona.find_children("*", "Sprite3D", true, false):
 		var fuente: Node = sprite
 		while fuente != zona and fuente.scene_file_path.is_empty(): fuente = fuente.get_parent()
-		if not (fuente.scene_file_path.get_file() in ["Tree.tscn", "Tree_Pine.tscn", "Bush.tscn"] or "/NordicProps/" in fuente.scene_file_path): continue
+		if not (fuente.scene_file_path.get_file() in ["Tree.tscn", "Tree_Pine.tscn", "Bush.tscn"] or "/NordicProps/" in fuente.scene_file_path or "/NordicDecor/" in fuente.scene_file_path): continue
 		if sprite.texture == null: continue
+		if "/NordicDecor/" in fuente.scene_file_path:
+			sprite.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_DOUBLE_SIDED
+			sprite.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
+			continue # Atlas ya recortado y apoyado al suelo en el prefab.
 		var tex: Texture2D = sprite.texture
 		if not limites.has(tex): limites[tex] = tex.get_image().get_used_rect()
 		var rect: Rect2i = limites[tex]
@@ -26,7 +35,10 @@ func _ready() -> void:
 		if hit.is_empty(): continue
 		sprite.billboard = BaseMaterial3D.BILLBOARD_FIXED_Y
 		var fondo: float = (float(tex.get_height()) * 0.5 - float(rect.end.y) + sprite.offset.y) * sprite.pixel_size * sprite.global_basis.get_scale().y
-		sprite.global_position.y = hit.position.y - fondo + 0.015
+		sprite.global_position.y = hit.position.y - fondo - 0.06
+		# Proyectar la silueta recortada por alfa sobre el suelo.
+		sprite.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_DOUBLE_SIDED
+		sprite.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
 		vegetacion.append(sprite)
 
 func _process(_delta: float) -> void:
@@ -36,18 +48,30 @@ func _process(_delta: float) -> void:
 	if jugador == null or cam == null or not jugador.is_visible_in_tree(): return
 	# Las cámaras de exploración pertenecen directamente a la zona.
 	if cam.get_parent() != zona and cam.get_parent().name != "Cameras": return
-	if not bases.has(cam): bases[cam] = cam.global_transform
-	var area := get_viewport().get_visible_rect().size
+	# Encuadres inmutables: elegir otra cámara, nunca orientar hacia el jugador.
+	_espera_cambio = maxf(0.0, _espera_cambio - _delta)
 	var centro := jugador.global_position + Vector3.UP * 0.45
-	var punto := cam.unproject_position(centro)
-	var seguro := Rect2(area * Vector2(0.2, 0.2), area * Vector2(0.6, 0.55))
-	if cam.is_position_behind(centro) or not seguro.has_point(punto):
-		var base: Transform3D = bases[cam]
-		var altura := clampf(cam.global_position.y - centro.y, 1.5, 10.0)
-		var atras := Vector3(base.basis.z.x, 0, base.basis.z.z).normalized()
-		if atras.is_zero_approx(): atras = Vector3.BACK
-		cam.global_position = centro + atras * altura * 1.732 + Vector3.UP * altura
-		cam.look_at(centro)
+	# Elegir el encuadre del tramo, aunque la vista anterior aún vea al jugador.
+	var sector := _sector_preferido(jugador, cam)
+	if sector != null and sector != cam and _espera_cambio <= 0.0:
+		sector.make_current()
+		cam = sector
+		_espera_cambio = 0.45
+	if _espera_cambio <= 0.0 and not _encuadra(cam, jugador, 0.06):
+		var mejor: Camera3D = null
+		var puntuacion := INF
+		for candidata in zona.find_children("*", "Camera3D", true, false):
+			if candidata.get_parent() != zona and candidata.get_parent().name != "Cameras": continue
+			if candidata == cam or not _encuadra(candidata, jugador, 0.13): continue
+			var uv: Vector2 = candidata.unproject_position(centro) / get_viewport().get_visible_rect().size
+			var valor: float = uv.distance_squared_to(Vector2(0.5, 0.5)) + candidata.global_position.distance_to(centro) * 0.001
+			if valor < puntuacion:
+				puntuacion = valor
+				mejor = candidata
+		if mejor != null:
+			mejor.make_current()
+			cam = mejor
+			_espera_cambio = 0.65
 	# Atenuar vegetación que tapa al personaje, manteniendo el resto del bosque.
 	var pantalla := cam.unproject_position(centro)
 	for sprite in vegetacion:
@@ -57,7 +81,36 @@ func _process(_delta: float) -> void:
 		var a := cam.unproject_position(sprite.global_position + Vector3.UP * alto * 0.5 - cam.global_basis.x * ancho * 0.5)
 		var b := cam.unproject_position(sprite.global_position - Vector3.UP * alto * 0.5 + cam.global_basis.x * ancho * 0.5)
 		var tapa := Rect2(a, b - a).abs().grow(10).has_point(pantalla) and cam.global_position.distance_squared_to(sprite.global_position) < cam.global_position.distance_squared_to(centro)
-		sprite.transparency = 0.8 if tapa else 0.0
+		sprite.transparency = move_toward(sprite.transparency, 0.35 if tapa else 0.0, _delta * 1.5)
 
 
 
+
+func _encuadra(cam: Camera3D, jugador: Node3D, margen: float) -> bool:
+	var area := get_viewport().get_visible_rect().size
+	var seguro := Rect2(area * margen, area * (1.0 - 2.0 * margen))
+	for altura in [-0.8, 1.1]:
+		var punto: Vector3 = jugador.global_position + Vector3.UP * float(altura)
+		if cam.is_position_behind(punto) or not seguro.has_point(cam.unproject_position(punto)): return false
+	return true
+
+func _sector_preferido(jugador: Node3D, actual: Camera3D) -> Camera3D:
+	var punto := Vector2(jugador.global_position.x, jugador.global_position.z)
+	var mejor: Camera3D = null
+	var valor_mejor := INF
+	var valor_actual := INF
+	for cam in zona.find_children("*", "Camera3D", true, false):
+		if not cam.has_meta("sector_centro"): continue
+		var centro: Vector2 = cam.get_meta("sector_centro")
+		var radio: Vector2 = cam.get_meta("sector_radio")
+		var distancia := (punto - centro) / radio
+		if absf(distancia.x) > 1.15 or absf(distancia.y) > 1.15: continue
+		if not _encuadra(cam, jugador, 0.08): continue
+		var valor := distancia.length_squared()
+		if cam == actual: valor_actual = valor
+		if valor < valor_mejor:
+			mejor = cam
+			valor_mejor = valor
+	# Histéresis espacial: no alternar al detenerse junto al límite entre dos tramos.
+	if valor_actual < INF and valor_actual <= valor_mejor + 0.22: return actual
+	return mejor

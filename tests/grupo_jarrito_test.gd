@@ -92,7 +92,9 @@ func ejecutar() -> void:
 		await cuadros(3)
 		comprobar(not gestor.ocupado() and not jugador.is_interacting, "Finalizar libera sesión y controles")
 		for j in miembros:
-			if is_instance_valid(j):
+			if resultado == 0:
+				comprobar(not is_instance_valid(j), "Victoria elimina al miembro del mundo")
+			elif is_instance_valid(j):
 				comprobar(j._visual.visible and j._sesion_grupo == null, "Visual restaurado tras cierre")
 				comprobar(j._derrotado == (resultado == 0), "Victoria afecta al grupo; huida/cancelación permite reintento")
 		mundo.queue_free()

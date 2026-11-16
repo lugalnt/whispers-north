@@ -44,7 +44,7 @@ func ejecutar(origen: Battler, objetivos: Array[Battler], arena: Node) -> void:
 	
 	# 2. Anticipación y carga
 	arena.reproducir_sonido(sonido_carga)
-	origen.reproducir(origen.anim_ataque)
+	origen.quedarse_quieto()
 	await origen.aplastar(Vector3(1.2, 0.75, 1.2), 0.35)
 	
 	# 3. Comando de acción: secuencia de timing con botones de movimiento y acción
