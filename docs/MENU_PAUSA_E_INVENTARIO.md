@@ -1,5 +1,9 @@
 # Sistema de Menú de Pausa, Inventario y Estadísticas
 
+## Estado vigente — 16 de noviembre de 2026
+
+Fase 2.5A implementada: consumo en exploración sin desperdiciar comida, cantidades seguras, detalle de curación y recogida parcial. Nueve iconos nórdicos registrados; seis objetos adicionales no se distribuyen automáticamente en el pool general. Pausa usa un panel lógico de 960 × 600 adaptable, márgenes interiores y tema legible; opciones también se adapta a la ventana. Pendientes: consumibles en combate (2.5B), filtros y guardado/carga de partida completa (2.5C). Prueba de inventario: 20 comprobaciones, cero fallos funcionales en la ejecución registrada del 14 de noviembre; persiste un aviso de audio retenido al cerrar. Ver [AVANCE_DEMO.md](AVANCE_DEMO.md).
+
 Arquitectura inspirada en Godot Open RPG (`gdquest-demos/godot-open-rpg`), adaptada con estética y controles nórdicos para *Whispers of the North*.
 
 ---
@@ -47,13 +51,13 @@ Recurso ligero de datos:
 
 ### 2.2 `Inventory` (`scripts/inventory/inventory.gd`)
 Gestor reactivo desacoplado de la UI:
-- `agregar(item: InventoryItem, cantidad: int = 1) -> bool`
-- `quitar(item: InventoryItem, cantidad: int = 1) -> bool`
-- `obtener_cantidad(item: InventoryItem) -> int`
+- `agregar(item: InventoryItem, cantidad: int = 1) -> int`: unidades aceptadas; el llamador conserva el sobrante.
+- `quitar(item_id: String, cantidad: int = 1) -> bool`: falla sin cambios si faltan unidades.
+- `obtener_cantidad(item_id: String) -> int`
 - `obtener_item(id: String) -> InventoryItem`
-- `obtener_lista_items(categoria: int = -1) -> Array[InventoryItem]`
-- `guardar() -> Dictionary` y `restaurar(datos: Dictionary)`
-- Emite `inventario_actualizado()` y `item_cambiado(item, cantidad)`.
+- `obtener_lista_items() -> Array`: registros {item, cantidad}, ordenados por categoría/nombre.
+- `guardar(ruta)` y `Inventory.restaurar(ruta)`: serialización aislada del recurso; todavía no hay guardado completo de partida integrado.
+- Emite `inventario_actualizado()` y `item_cambiado(item_id, cantidad)`.
 
 ### 2.3 `GameState` (`scripts/core/game_state.gd`)
 Autoload global registrado en `project.godot`:
@@ -131,3 +135,7 @@ pocion.icono = preload("res://assets/sprites/items/pocion.png") # Opcional
 
 GameState.inventario.agregar(pocion, 3)
 ```
+
+## Actualización de Fase 2.5A
+
+GameState.motivo_no_usable(id) devuelve el motivo legible (vacío si puede usarse). usar_item(id) no consume con salud completa ni revive. El menú muestra cantidad/límite y curación efectiva. ItemPickup3D conserva sobrantes y excluye enemigos. Pruebas: res://tests/inventario_fase25_test.gd. Uso en combate, filtros y guardado completo permanecen pendientes en el plan de AVANCE_DEMO.md.

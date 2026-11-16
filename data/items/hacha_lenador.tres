@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/inventory/inventory_item.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/items/nordic_v1/wood_axe.png" id="2"]
+[resource]
+script = ExtResource("1")
+id = "hacha_lenador"
+nombre = "Hacha de leñador"
+descripcion = "Hacha de hierro con mango de madera, marcada por años de trabajo."
+icono = ExtResource("2")
+categoria = 0
+curacion_hp = 0

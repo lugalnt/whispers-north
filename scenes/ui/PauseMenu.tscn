@@ -4,6 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://45k6ixti2rk" path="res://assets/sprites/ui/icon.png" id="2_icon"]
 [ext_resource type="Texture2D" uid="uid://c45qesr1rijmr" path="res://assets/sprites/player/test_hero_portrait.png" id="2_n5dsq"]
 
+[ext_resource type="Theme" path="res://assets/sprites/ui/nordic_carved_v1/nordic_gameplay_theme.tres" id="nordic_theme"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_modal"]
 bg_color = Color(0.07, 0.09, 0.14, 0.95)
 border_width_left = 3
@@ -19,6 +21,10 @@ shadow_color = Color(0, 0, 0, 0.5)
 shadow_size = 12
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_box_inner"]
+content_margin_left = 12.0
+content_margin_right = 12.0
+content_margin_top = 12.0
+content_margin_bottom = 12.0
 bg_color = Color(0.04, 0.05, 0.08, 0.6)
 border_width_left = 1
 border_width_top = 1
@@ -56,25 +62,26 @@ grow_vertical = 2
 color = Color(0.03, 0.04, 0.07, 0.75)
 
 [node name="ContenedorPrincipal" type="PanelContainer" parent="." unique_id=559294419]
+texture_filter = 1
+theme = ExtResource("nordic_theme")
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -400.0
-offset_top = -240.0
-offset_right = 400.0
-offset_bottom = 240.0
+offset_left = -480.0
+offset_top = -300.0
+offset_right = 480.0
+offset_bottom = 300.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_modal")
 
 [node name="Margen" type="MarginContainer" parent="ContenedorPrincipal" unique_id=275329387]
 layout_mode = 2
-theme_override_constants/margin_left = 24
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 24
-theme_override_constants/margin_bottom = 20
+theme_override_constants/margin_left = 44
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 44
+theme_override_constants/margin_bottom = 28
 
 [node name="VBox" type="VBoxContainer" parent="ContenedorPrincipal/Margen" unique_id=227417351]
 layout_mode = 2
@@ -230,7 +237,7 @@ grow_vertical = 2
 theme_override_constants/separation = 16
 
 [node name="PanelPerfil" type="PanelContainer" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox" unique_id=1895254866]
-custom_minimum_size = Vector2(280, 0)
+custom_minimum_size = Vector2(220, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_box_inner")
 
@@ -319,37 +326,45 @@ theme_override_constants/v_separation = 12
 columns = 2
 
 [node name="LblAtaque" type="Label" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox/PanelStatsValores/VBox/GridStats" unique_id=1310872618]
+theme_override_font_sizes/font_size = 16
 layout_mode = 2
 text = "⚔️  Ataque:"
 
 [node name="ValAtaque" type="Label" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox/PanelStatsValores/VBox/GridStats" unique_id=400036631]
+theme_override_font_sizes/font_size = 16
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
 text = "2"
 
 [node name="LblDefensa" type="Label" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox/PanelStatsValores/VBox/GridStats" unique_id=476808037]
+theme_override_font_sizes/font_size = 16
 layout_mode = 2
 text = "🛡️  Defensa:"
 
 [node name="ValDefensa" type="Label" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox/PanelStatsValores/VBox/GridStats" unique_id=1166918879]
+theme_override_font_sizes/font_size = 16
 layout_mode = 2
 theme_override_colors/font_color = Color(0.4, 0.75, 1, 1)
 text = "1"
 
 [node name="LblVelocidad" type="Label" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox/PanelStatsValores/VBox/GridStats" unique_id=148867797]
+theme_override_font_sizes/font_size = 16
 layout_mode = 2
 text = "👟  Velocidad:"
 
 [node name="ValVelocidad" type="Label" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox/PanelStatsValores/VBox/GridStats" unique_id=1468325179]
+theme_override_font_sizes/font_size = 16
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9, 0.5, 1, 1)
 text = "12"
 
 [node name="LblAcompanante" type="Label" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox/PanelStatsValores/VBox/GridStats" unique_id=1757211024]
+theme_override_font_sizes/font_size = 16
 layout_mode = 2
 text = "🐾  Acompañante:"
 
 [node name="ValAcompanante" type="Label" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox/PanelStatsValores/VBox/GridStats" unique_id=488393641]
+theme_override_font_sizes/font_size = 16
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8, 0.85, 0.9, 1)
 text = "Ninguno"
@@ -393,3 +408,4 @@ text = "🎮  Guía de Controles"
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "🚪  Volver al Menú Principal"
+

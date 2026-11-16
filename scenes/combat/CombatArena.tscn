@@ -4,10 +4,12 @@
 [ext_resource type="Script" uid="uid://bsd5cpn2urk28" path="res://scripts/combat/comando_accion.gd" id="2_comando"]
 [ext_resource type="AudioStream" uid="uid://dfqlsxqls5h7l" path="res://assets/audio/music/test_battle_theme.mp3" id="2_tr5ew"]
 [ext_resource type="AudioStream" uid="uid://d11axqap2nusa" path="res://assets/audio/sfx/byeguys.mp3" id="3_7tyy2"]
-[ext_resource type="Texture2D" uid="uid://ds6en71aom1gh" path="res://assets/sprites/environment/backgrounds/mountain_snowy_background.png" id="3_bg"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/backgrounds/nordic_v1/snowy_mountain_panorama.png" id="3_bg"]
 [ext_resource type="AudioStream" uid="uid://cb6neens4q5gh" path="res://assets/audio/sfx/test_battle_start.mp3" id="3_k76re"]
-[ext_resource type="Texture2D" uid="uid://qcuc2g14unqg" path="res://assets/sprites/environment/materials/pokemon_grass.png" id="4_grass"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_v1/combat_ground.png" id="4_grass"]
 [ext_resource type="AudioStream" uid="uid://x4obrtblk8lj" path="res://assets/audio/music/test_win_theme.mp3" id="4_k76re"]
+
+[ext_resource type="Theme" path="res://assets/sprites/ui/nordic_carved_v1/nordic_gameplay_theme.tres" id="nordic_theme"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_floor"]
 albedo_color = Color(0.88, 0.92, 0.95, 1)
@@ -47,6 +49,15 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
+[sub_resource type="StandardMaterial3D" id="SkyPanoramaMaterial"]
+shading_mode = 0
+albedo_color = Color(0.35, 0.53, 0.71, 1)
+cull_mode = 2
+
+[sub_resource type="QuadMesh" id="SkyPanoramaMesh"]
+size = Vector2(7.65, 3.825)
+material = SubResource("SkyPanoramaMaterial")
+
 [node name="CombatArena" type="Node3D" unique_id=1901600493 node_paths=PackedStringArray("camara", "comando", "nodo_escenario", "contenedor_aliados", "contenedor_enemigos", "ui_canvas")]
 script = ExtResource("1_arena")
 camara = NodePath("CamaraCombate")
@@ -61,7 +72,7 @@ sonido_victoria = ExtResource("4_k76re")
 sonido_huida = ExtResource("3_7tyy2")
 
 [node name="CamaraCombate" type="Camera3D" parent="." unique_id=1655206904]
-transform = Transform3D(0.9927103, -0.027457185, 0.11735592, 0, 0.97370493, 0.22781295, -0.12052514, -0.22615226, 0.9666069, 0.562731, 2.8823898, 6.4721546)
+transform = Transform3D(1, 0, 0, 0, 0.8660254, 0.5, 0, -0.5, 0.8660254, 0, 7.6, 12)
 fov = 44.0
 
 [node name="DireccionalLight3D" type="DirectionalLight3D" parent="." unique_id=1094564117]
@@ -77,9 +88,9 @@ mesh = SubResource("BoxMesh_floor")
 
 [node name="FondoSprite" type="Sprite3D" parent="Escenario" unique_id=174239578]
 transform = Transform3D(3.8, 0, 0, 0, 3.8, 0, 0, 0, 3.8, 0, 4.2, -4.5)
-pixel_size = 0.015
 texture_filter = 0
 texture = ExtResource("3_bg")
+pixel_size = 0.0043122886
 
 [node name="Aliados" type="Node3D" parent="." unique_id=1818273564]
 
@@ -92,6 +103,8 @@ volume_db = -5.361
 layer = 5
 
 [node name="ComandoAccion" type="Control" parent="UICanvas" unique_id=120801072]
+texture_filter = 1
+theme = ExtResource("nordic_theme")
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -118,6 +131,8 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ContenedorDanio" type="Control" parent="UICanvas" unique_id=321834073]
+texture_filter = 1
+theme = ExtResource("nordic_theme")
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -139,6 +154,8 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="HUD" type="Control" parent="UICanvas" unique_id=1667517649]
+texture_filter = 1
+theme = ExtResource("nordic_theme")
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -168,6 +185,8 @@ grow_horizontal = 0
 theme_override_constants/separation = 8
 
 [node name="MenuAcciones" type="PanelContainer" parent="UICanvas" unique_id=1549063957]
+texture_filter = 1
+theme = ExtResource("nordic_theme")
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -179,7 +198,6 @@ offset_right = 160.0
 offset_bottom = -28.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_menu")
 
 [node name="VBox" type="VBoxContainer" parent="UICanvas/MenuAcciones" unique_id=1543828342]
 layout_mode = 2
@@ -208,6 +226,8 @@ text = "Descripción de la acción..."
 autowrap_mode = 2
 
 [node name="PanelRecompensas" type="PanelContainer" parent="UICanvas" unique_id=2133847849]
+texture_filter = 1
+theme = ExtResource("nordic_theme")
 visible = false
 anchors_preset = 8
 anchor_left = 0.5
@@ -220,7 +240,6 @@ offset_right = 200.0
 offset_bottom = 90.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_rewards")
 
 [node name="MarginContainer" type="MarginContainer" parent="UICanvas/PanelRecompensas" unique_id=919186493]
 layout_mode = 2
@@ -248,3 +267,8 @@ theme_override_font_sizes/font_size = 15
 text = "+20 EXP
 Obtuviste: [Fragmento de Cerámica Antiguo]"
 horizontal_alignment = 1
+
+[node name="CieloPanorama" type="MeshInstance3D" parent="Escenario/FondoSprite"]
+position = Vector3(0, 0, -0.02)
+cast_shadow = 0
+mesh = SubResource("SkyPanoramaMesh")

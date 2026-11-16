@@ -37,6 +37,8 @@ enum Bando { ALIADO, ENEMIGO }
 ## Altura aproximada (cursor de objetivo, números de daño). Si el Visual es un sprite se
 ## calcula sola a partir del tamaño del frame.
 @export var altura: float = 1.4
+## Margen transparente bajo los pies en el atlas; mantiene el dibujo apoyado en el suelo.
+@export_range(0, 128, 1) var margen_inferior_sprite_px: int = 0
 ## Hacia dónde mira el sprite sin voltear (las animaciones "side" del jugador miran a la derecha)
 @export var sprite_mira_a_la_derecha: bool = true
 
@@ -116,6 +118,8 @@ func esta_vivo() -> bool:
 ## Aplica daño y devuelve el daño real aplicado
 func recibir_danio(cantidad: int) -> int:
 	var aplicado: int = mini(maxi(cantidad, 0), hp)
+	if aplicado > 0 and is_inside_tree():
+		preload("res://scripts/vfx/nordic_vfx.gd").emitir(get_parent(), &"impacto", global_position + Vector3.UP * altura * 0.55, 0.85)
 	hp -= aplicado
 	hp_cambiado.emit(hp, stats.max_hp)
 	if hp <= 0:
@@ -326,9 +330,9 @@ func _ajustar_sprite_al_suelo() -> void:
 		return
 	var alto: float = textura.get_height() * sprite.pixel_size
 	sprite.centered = true
-	_pos_visual = Vector3(_pos_visual.x, alto * 0.5, _pos_visual.z)
+	_pos_visual = Vector3(_pos_visual.x, alto * 0.5 - margen_inferior_sprite_px * sprite.pixel_size, _pos_visual.z)
 	visual.position = _pos_visual
-	altura = alto
+	altura = alto - margen_inferior_sprite_px * sprite.pixel_size
 
 func _sprites() -> Array[SpriteBase3D]:
 	var lista: Array[SpriteBase3D] = []

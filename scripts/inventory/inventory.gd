@@ -13,25 +13,18 @@ const RUTA_GUARDADO_DEFECTO: String = "user://inventario_partida.tres"
 ## Clave: String (id del item) -> Valor: Dictionary { "item": InventoryItem, "cantidad": int }
 @export var items: Dictionary = {}
 
-## Agrega una cantidad de un objeto al inventario
-func agregar(item: InventoryItem, cantidad: int = 1) -> void:
-	if item == null or cantidad <= 0:
-		return
-	
-	var id: String = item.id
-	if items.has(id):
-		var actual: int = items[id].get("cantidad", 0)
-		var nueva_cantidad: int = mini(actual + cantidad, item.cantidad_maxima)
-		items[id]["cantidad"] = nueva_cantidad
-		items[id]["item"] = item
-	else:
-		items[id] = {
-			"item": item,
-			"cantidad": mini(cantidad, item.cantidad_maxima)
-		}
-	
-	item_cambiado.emit(id, items[id]["cantidad"])
+## Añade hasta el límite y devuelve las unidades realmente aceptadas.
+func agregar(item: InventoryItem, cantidad: int = 1) -> int:
+	if item == null or item.id.strip_edges().is_empty() or cantidad <= 0 or item.cantidad_maxima <= 0:
+		return 0
+	var actual: int = obtener_cantidad(item.id)
+	var aceptada: int = mini(cantidad, maxi(0, item.cantidad_maxima - actual))
+	if aceptada == 0:
+		return 0
+	items[item.id] = {"item": item, "cantidad": actual + aceptada}
+	item_cambiado.emit(item.id, actual + aceptada)
 	inventario_actualizado.emit()
+	return aceptada
 
 ## Quita una cantidad de un objeto del inventario. Devuelve true si la operación fue exitosa.
 func quitar(item_id: String, cantidad: int = 1) -> bool:
@@ -39,6 +32,8 @@ func quitar(item_id: String, cantidad: int = 1) -> bool:
 		return false
 	
 	var actual: int = items[item_id].get("cantidad", 0)
+	if cantidad > actual:
+		return false
 	var nueva_cantidad: int = actual - cantidad
 	
 	if nueva_cantidad <= 0:
@@ -67,7 +62,15 @@ func obtener_item(item_id: String) -> InventoryItem:
 func obtener_lista_items() -> Array:
 	var lista: Array = []
 	for clave in items.keys():
-		lista.append(items[clave])
+		lista.append(items[clave].duplicate())
+	lista.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		var ia: InventoryItem = a["item"]
+		var ib: InventoryItem = b["item"]
+		if ia.categoria != ib.categoria:
+			return ia.categoria < ib.categoria
+		var comparacion := ia.nombre.naturalnocasecmp_to(ib.nombre)
+		return ia.id < ib.id if comparacion == 0 else comparacion < 0
+	)
 	return lista
 
 ## Comprueba si el inventario no tiene objetos

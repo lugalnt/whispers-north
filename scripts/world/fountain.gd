@@ -69,3 +69,13 @@ func _actualizar_audio() -> void:
 			_audio_player.play()
 	else:
 		_audio_player.stop()
+
+var _tiempo_salpicar: float = 0.0
+
+func _process(delta: float) -> void:
+	if Engine.is_editor_hint() or not animar_agua or not is_visible_in_tree():
+		return
+	_tiempo_salpicar += delta
+	if _tiempo_salpicar >= 0.9:
+		_tiempo_salpicar = 0.0
+		preload("res://scripts/vfx/nordic_vfx.gd").emitir(self, &"agua", global_position + Vector3.UP * 1.6, 0.75)

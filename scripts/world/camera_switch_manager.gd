@@ -39,6 +39,9 @@ func _ready() -> void:
 func _activar_camara_inicial() -> void:
 	if camara_inicial_num <= 0:
 		return
+	var vp := get_viewport()
+	if vp != null and vp.get_camera_3d() != null:
+		return
 	var cam_name = "Camera%d" % camara_inicial_num
 	var root = get_tree().current_scene if get_tree() else owner
 	if root == null:

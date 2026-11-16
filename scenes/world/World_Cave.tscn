@@ -1,0 +1,272 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/zona_mundo.gd" id="1_2gsow"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_v1/dirt_path.png" id="2_am23e"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/rock01_snow_c.png" id="3_blvhu"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/rock01_snow_n.png" id="4_lr5i1"]
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/CameraSwitch.tscn" id="5_1caiw"]
+[ext_resource type="Script" path="res://scripts/world/camera_switch.gd" id="6_v3fp4"]
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/WorldTransition.tscn" id="7_3e3bh"]
+[ext_resource type="Script" path="res://scripts/world/world_transition.gd" id="8_tbwub"]
+[ext_resource type="PackedScene" path="res://scenes/player/player_32.tscn" id="9_dscf8"]
+[ext_resource type="Script" path="res://scripts/player/player.gd" id="10_rgj82"]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_surfaces_v2/cave_rock.png" id="tex_cave_rock"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_surfaces_v2/fractured_rock.png" id="tex_fractured_rock"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_surfaces_v2/packed_snow.png" id="tex_packed_snow"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_surfaces_v2/frozen_ice.png" id="tex_frozen_ice"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_wood_v1/weathered_boardwalk.png" id="tex_weathered_boardwalk"]
+
+[sub_resource type="Environment" id="Environment_pfb61"]
+background_mode = 1
+background_color = Color(0.01, 0.01, 0.015, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.35, 0.4, 0.5, 1)
+ambient_light_energy = 0.35
+tonemap_mode = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gnnco"]
+albedo_color = Color(0.55, 0.5, 0.45, 1)
+albedo_texture = ExtResource("2_am23e")
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7o8f6"]
+albedo_color = Color(0.45, 0.42, 0.4, 1)
+albedo_texture = ExtResource("3_blvhu")
+normal_enabled = true
+normal_texture = ExtResource("4_lr5i1")
+uv1_scale = Vector3(0.35, 0.35, 0.35)
+uv1_triplanar = true
+texture_filter = 0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2krg2"]
+size = Vector3(90, 3, 0.4)
+
+[sub_resource type="StandardMaterial3D" id="mat_cave_rock"]
+albedo_texture = ExtResource("tex_cave_rock")
+texture_filter = 0
+roughness = 1.0
+uv1_triplanar = true
+uv1_scale = Vector3(0.3, 0.3, 0.3)
+
+[sub_resource type="StandardMaterial3D" id="mat_fractured_rock"]
+albedo_texture = ExtResource("tex_fractured_rock")
+texture_filter = 0
+roughness = 1.0
+uv1_triplanar = true
+uv1_scale = Vector3(0.4, 0.4, 0.4)
+
+[sub_resource type="StandardMaterial3D" id="mat_packed_snow"]
+albedo_texture = ExtResource("tex_packed_snow")
+texture_filter = 0
+roughness = 1.0
+uv1_triplanar = true
+uv1_scale = Vector3(0.6, 0.6, 0.6)
+
+[sub_resource type="StandardMaterial3D" id="mat_frozen_ice"]
+albedo_texture = ExtResource("tex_frozen_ice")
+texture_filter = 0
+roughness = 1.0
+uv1_triplanar = true
+uv1_scale = Vector3(0.6, 0.6, 0.6)
+
+[sub_resource type="StandardMaterial3D" id="mat_weathered_boardwalk"]
+albedo_texture = ExtResource("tex_weathered_boardwalk")
+texture_filter = 0
+roughness = 1.0
+uv1_triplanar = true
+uv1_scale = Vector3(0.4, 0.4, 0.4)
+
+[node name="WorldCave" type="Node3D" unique_id=1778051884]
+script = ExtResource("1_2gsow")
+marcador_inicial = "Llegada_DesdePueblo"
+camara_inicial = "Camera1"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=919449766]
+environment = SubResource("Environment_pfb61")
+
+[node name="Tunel" type="Node3D" parent="." unique_id=1688355019]
+
+[node name="Piso" type="CSGBox3D" parent="Tunel" unique_id=1446758750]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, -0.25, 0)
+use_collision = true
+size = Vector3(90, 0.5, 7.2)
+material = SubResource("StandardMaterial3D_gnnco")
+
+[node name="ParedFondo" type="CSGBox3D" parent="Tunel" unique_id=1159979884]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 3, -3.4)
+use_collision = true
+size = Vector3(90, 6, 0.4)
+material = SubResource("mat_cave_rock")
+
+[node name="Techo" type="CSGBox3D" parent="Tunel" unique_id=1331995841]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 6.2, 0)
+use_collision = true
+size = Vector3(90, 0.4, 7.2)
+material = SubResource("mat_cave_rock")
+
+[node name="ParedOeste" type="CSGBox3D" parent="Tunel" unique_id=2013075045]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2, 3, 0)
+use_collision = true
+size = Vector3(0.4, 6, 7.2)
+material = SubResource("mat_cave_rock")
+
+[node name="ParedEste" type="CSGBox3D" parent="Tunel" unique_id=1077527723]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 86.2, 3, 0)
+use_collision = true
+size = Vector3(0.4, 6, 7.2)
+material = SubResource("mat_cave_rock")
+
+[node name="RebordeFrontal" type="CSGBox3D" parent="Tunel" unique_id=816210574]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0.35, 3.6)
+size = Vector3(90, 0.7, 0.4)
+material = SubResource("mat_fractured_rock")
+
+[node name="LimiteFrontal" type="StaticBody3D" parent="Tunel" unique_id=688960335]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 1.5, 3.4)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Tunel/LimiteFrontal" unique_id=178892313]
+shape = SubResource("BoxShape3D_2krg2")
+
+[node name="Luces" type="Node3D" parent="." unique_id=1740021113]
+
+[node name="LuzBocaOeste" type="OmniLight3D" parent="Luces" unique_id=768813758]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 3, 0)
+light_color = Color(0.8, 0.9, 1, 1)
+light_energy = 2.0
+omni_range = 8.0
+
+[node name="LuzGrieta1" type="OmniLight3D" parent="Luces" unique_id=1149915124]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 5.5, -1)
+light_color = Color(1, 0.92, 0.75, 1)
+light_energy = 1.6
+omni_range = 8.0
+
+[node name="LuzGrieta2" type="OmniLight3D" parent="Luces" unique_id=1573448817]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 5.5, -1)
+light_color = Color(1, 0.92, 0.75, 1)
+light_energy = 1.6
+omni_range = 8.0
+
+[node name="LuzGrieta3" type="OmniLight3D" parent="Luces" unique_id=466259653]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63, 5.5, -1)
+light_color = Color(1, 0.92, 0.75, 1)
+light_energy = 1.6
+omni_range = 8.0
+
+[node name="LuzBocaEste" type="OmniLight3D" parent="Luces" unique_id=767422453]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 84.5, 3, 0)
+light_color = Color(0.8, 0.95, 0.85, 1)
+light_energy = 2.0
+omni_range = 8.0
+
+[node name="Cameras" type="Node3D" parent="." unique_id=606100985]
+
+[node name="Camera1" type="Camera3D" parent="Cameras" unique_id=1451525862]
+transform = Transform3D(1, 0, 0, 0, 0.90630776, 0.42261827, 0, -0.42261827, 0.90630776, 9.5, 5, 11)
+fov = 60.0
+
+[node name="Camera2" type="Camera3D" parent="Cameras" unique_id=1384517099]
+transform = Transform3D(1, 0, 0, 0, 0.90630776, 0.42261827, 0, -0.42261827, 0.90630776, 31.5, 5, 11)
+fov = 60.0
+
+[node name="Camera3" type="Camera3D" parent="Cameras" unique_id=583242738]
+transform = Transform3D(1, 0, 0, 0, 0.90630776, 0.42261827, 0, -0.42261827, 0.90630776, 52.5, 5, 11)
+fov = 60.0
+
+[node name="Camera4" type="Camera3D" parent="Cameras" unique_id=1429830439]
+transform = Transform3D(1, 0, 0, 0, 0.90630776, 0.42261827, 0, -0.42261827, 0.90630776, 74.5, 5, 11)
+fov = 60.0
+
+[node name="ZonasCamara" type="Node3D" parent="." unique_id=1440315377]
+
+[node name="ZonaCam_1" type="Area3D" parent="ZonasCamara" unique_id=1982736450 instance=ExtResource("5_1caiw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, 0, 0)
+collision_layer = 0
+script = ExtResource("6_v3fp4")
+modo = 2
+camara_b_num = 0
+tamano_trigger = Vector3(23, 3, 6.4)
+
+[node name="ZonaCam_2" type="Area3D" parent="ZonasCamara" unique_id=1902392249 instance=ExtResource("5_1caiw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.5, 0, 0)
+collision_layer = 0
+script = ExtResource("6_v3fp4")
+modo = 2
+camara_a_num = 2
+camara_b_num = 0
+tamano_trigger = Vector3(21, 3, 6.4)
+
+[node name="ZonaCam_3" type="Area3D" parent="ZonasCamara" unique_id=320815453 instance=ExtResource("5_1caiw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 52.5, 0, 0)
+collision_layer = 0
+script = ExtResource("6_v3fp4")
+modo = 2
+camara_a_num = 3
+camara_b_num = 0
+tamano_trigger = Vector3(21, 3, 6.4)
+
+[node name="ZonaCam_4" type="Area3D" parent="ZonasCamara" unique_id=1935206563 instance=ExtResource("5_1caiw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 74.5, 0, 0)
+collision_layer = 0
+script = ExtResource("6_v3fp4")
+modo = 2
+camara_a_num = 4
+camara_b_num = 0
+tamano_trigger = Vector3(23, 3, 6.4)
+
+[node name="Transiciones" type="Node3D" parent="." unique_id=1666747782]
+
+[node name="Entrada_Pueblo" type="Area3D" parent="Transiciones" unique_id=892347102 instance=ExtResource("7_3e3bh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2, 1.1, 0)
+collision_layer = 0
+script = ExtResource("8_tbwub")
+escena_destino = "res://scenes/world/World_Town.tscn"
+nombre_marcador_destino = "Llegada_DesdeCueva"
+camara_destino = "Camera12"
+tamano_zona = Vector3(1.2, 3, 6.4)
+
+[node name="Salida_Bosque" type="Area3D" parent="Transiciones" unique_id=1123547051 instance=ExtResource("7_3e3bh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 85.2, 1.1, 0)
+collision_layer = 0
+script = ExtResource("8_tbwub")
+escena_destino = "res://scenes/world/World_ForestRuins.tscn"
+nombre_marcador_destino = "Llegada_DesdeCueva"
+tamano_zona = Vector3(1.2, 3, 6.4)
+
+[node name="Marcadores" type="Node3D" parent="." unique_id=72457512]
+
+[node name="Llegada_DesdePueblo" type="Marker3D" parent="Marcadores" unique_id=1377173620]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6, 1.1, 0)
+
+[node name="Llegada_DesdeBosque" type="Marker3D" parent="Marcadores" unique_id=1230423495]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 82.4, 1.1, 0)
+
+[node name="Ref_Encuentro_Cueva" type="Marker3D" parent="Marcadores" unique_id=223662052]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 0, 0)
+
+[node name="Ref_Cofre_Oculto" type="Marker3D" parent="Marcadores" unique_id=1174148284]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 0, -2.6)
+
+[node name="Player32" type="CharacterBody3D" parent="." unique_id=820540263 instance=ExtResource("9_dscf8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6, 1.1, 0)
+script = ExtResource("10_rgj82")
+
+[node name="DetallesSuperficies" type="Node3D" parent="."]
+
+[node name="NieveEntrada" type="CSGBox3D" parent="DetallesSuperficies"]
+position = Vector3(0, 0.015, 2.3)
+size = Vector3(3, 0.02, 1.3)
+material = SubResource("mat_packed_snow")
+
+[node name="CharcoHelado" type="CSGBox3D" parent="DetallesSuperficies"]
+position = Vector3(9, 0.015, 2.2)
+size = Vector3(2.5, 0.02, 1.1)
+material = SubResource("mat_frozen_ice")
+
+[node name="TablonesPaso" type="CSGBox3D" parent="DetallesSuperficies"]
+position = Vector3(22, 0.025, 0)
+size = Vector3(4, 0.04, 2.4)
+material = SubResource("mat_weathered_boardwalk")

@@ -1,0 +1,534 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/casa.gd" id="1_n14k2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_v1/wood_wall.png" id="2_vqaks"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_v1/wood_wall.png" id="3_1jau0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_v1/wood_wall.png" id="4_74obj"]
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/CameraSwitch.tscn" id="5_cd8go"]
+[ext_resource type="Script" path="res://scripts/world/camera_switch.gd" id="6_6hdas"]
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/WorldTransition.tscn" id="7_rrmn7"]
+[ext_resource type="Script" path="res://scripts/world/world_transition.gd" id="8_8f8mi"]
+[ext_resource type="PackedScene" path="res://scenes/player/player_32.tscn" id="9_544yy"]
+[ext_resource type="Script" path="res://scripts/player/player.gd" id="10_sf7k5"]
+
+[ext_resource type="Script" path="res://scripts/world/transicion_casa.gd" id="11_paso"]
+[ext_resource type="Script" path="res://scripts/dialogue/interaccion_dialogo.gd" id="12_dialogo"]
+[ext_resource type="Texture2D" path="res://assets/sprites/player/Erland (Padre)/16x16 Walk-Sheet.png" id="13_padre"]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_wood_v1/light_pine_planks.png" id="tex_light_pine_planks"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_wood_v1/dark_oak_panels.png" id="tex_dark_oak_panels"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_wood_v1/birch_furniture.png" id="tex_birch_furniture"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_surfaces_v2/cream_plaster.png" id="tex_cream_plaster"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_surfaces_v2/woven_wool.png" id="tex_woven_wool"]
+
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/FarolInterior.tscn" id="farol_interior"]
+
+[sub_resource type="Environment" id="Environment_6njgx"]
+background_mode = 1
+background_color = Color(0.02, 0.02, 0.025, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.79, 0.85, 0.94, 1)
+ambient_light_energy = 0.30
+tonemap_mode = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6spt7"]
+albedo_texture = ExtResource("2_vqaks")
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a0dx0"]
+albedo_texture = ExtResource("3_1jau0")
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+texture_filter = 0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kktym"]
+size = Vector3(8, 3, 0.4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wk1ao"]
+albedo_texture = ExtResource("4_74obj")
+uv1_triplanar = true
+texture_filter = 0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bwh1f"]
+size = Vector3(12, 3, 0.4)
+
+[sub_resource type="StandardMaterial3D" id="MatTela"]
+albedo_color = Color(0.16, 0.32, 0.37, 1)
+roughness = 0.85
+
+[sub_resource type="StandardMaterial3D" id="MatLino"]
+albedo_color = Color(0.85, 0.80, 0.65, 1)
+roughness = 0.85
+
+[sub_resource type="StandardMaterial3D" id="MatCaja"]
+albedo_color = Color(0.48, 0.30, 0.15, 1)
+roughness = 0.85
+
+[sub_resource type="StandardMaterial3D" id="MatPapel"]
+albedo_color = Color(0.94, 0.88, 0.69, 1)
+roughness = 0.85
+
+[sub_resource type="StandardMaterial3D" id="MatLibro"]
+albedo_color = Color(0.45, 0.12, 0.10, 1)
+roughness = 0.85
+
+[sub_resource type="StandardMaterial3D" id="MatCristal"]
+albedo_color = Color(0.37, 0.56, 0.60, 1)
+roughness = 0.85
+
+[sub_resource type="StandardMaterial3D" id="MatAlfombra"]
+albedo_color = Color(0.43, 0.22, 0.16, 1)
+roughness = 0.85
+
+[sub_resource type="AtlasTexture" id="PadreAtlas"]
+atlas = ExtResource("13_padre")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="StandardMaterial3D" id="mat_light_pine_planks"]
+albedo_texture = ExtResource("tex_light_pine_planks")
+albedo_color = Color(0.72, 0.75, 0.78, 1)
+texture_filter = 0
+roughness = 1.0
+uv1_triplanar = true
+uv1_scale = Vector3(0.35, 0.35, 0.35)
+
+[sub_resource type="StandardMaterial3D" id="mat_dark_oak_panels"]
+albedo_texture = ExtResource("tex_birch_furniture")
+albedo_color = Color(0.48, 0.38, 0.29, 1)
+texture_filter = 0
+roughness = 1.0
+uv1_triplanar = true
+uv1_scale = Vector3(0.35, 0.35, 0.35)
+
+[sub_resource type="StandardMaterial3D" id="mat_birch_furniture"]
+albedo_texture = ExtResource("tex_birch_furniture")
+albedo_color = Color(0.62, 0.51, 0.40, 1)
+texture_filter = 0
+roughness = 1.0
+uv1_triplanar = true
+uv1_scale = Vector3(0.35, 0.35, 0.35)
+
+[sub_resource type="StandardMaterial3D" id="mat_cream_plaster"]
+albedo_texture = ExtResource("tex_cream_plaster")
+texture_filter = 0
+roughness = 1.0
+uv1_triplanar = true
+uv1_scale = Vector3(0.6, 0.6, 0.6)
+
+[sub_resource type="StandardMaterial3D" id="mat_woven_wool"]
+albedo_texture = ExtResource("tex_woven_wool")
+texture_filter = 0
+roughness = 1.0
+uv1_triplanar = true
+uv1_scale = Vector3(0.6, 0.6, 0.6)
+
+[node name="WorldHouse" type="Node3D" unique_id=118850924]
+script = ExtResource("1_n14k2")
+marcador_inicial = "Llegada_Cama"
+camara_inicial = "Camera1"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1252173227]
+environment = SubResource("Environment_6njgx")
+
+[node name="Cuarto" type="Node3D" parent="." unique_id=878068030]
+
+[node name="Piso" type="CSGBox3D" parent="Cuarto" unique_id=1589048531]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0.5)
+use_collision = true
+size = Vector3(8.4, 0.5, 7.4)
+material = SubResource("mat_light_pine_planks")
+
+[node name="ParedFondo" type="CSGBox3D" parent="Cuarto" unique_id=807778841]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.25, -3.2)
+use_collision = true
+size = Vector3(8.4, 4.5, 0.4)
+material = SubResource("mat_cream_plaster")
+
+[node name="ParedIzquierda" type="CSGBox3D" parent="Cuarto" unique_id=553781318]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.2, 2.25, 0.5)
+use_collision = true
+size = Vector3(0.4, 4.5, 7.4)
+material = SubResource("mat_cream_plaster")
+
+[node name="ParedDerecha" type="CSGBox3D" parent="Cuarto" unique_id=2095310958]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.2, 2.25, 0.5)
+use_collision = true
+size = Vector3(0.4, 4.5, 7.4)
+material = SubResource("mat_cream_plaster")
+
+[node name="LimiteFrontal" type="StaticBody3D" parent="Cuarto" unique_id=202110224]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 2.4)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Cuarto/LimiteFrontal" unique_id=1086246868]
+shape = SubResource("BoxShape3D_kktym")
+
+[node name="PuertaCuarto" type="CSGBox3D" parent="Cuarto" unique_id=1227263305]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.97, 1.1, 0.5)
+size = Vector3(0.08, 2.2, 1.2)
+material = SubResource("mat_dark_oak_panels")
+
+[node name="LuzCuarto" type="OmniLight3D" parent="Cuarto" unique_id=1049747524]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.2, 0)
+light_color = Color(1, 0.97, 0.92, 1)
+light_energy = 0.40
+omni_range = 8.0
+light_specular = 0.0
+
+[node name="Llegada_Cama" type="Marker3D" parent="Cuarto" unique_id=910837126]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1.1, 0.3)
+
+[node name="Llegada_PuertaCuarto" type="Marker3D" parent="Cuarto" unique_id=1414056061]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.1, 0.5)
+
+[node name="PlantaBaja" type="Node3D" parent="." unique_id=2013922275]
+
+[node name="Piso" type="CSGBox3D" parent="PlantaBaja" unique_id=101135924]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, -0.25, 0.5)
+use_collision = true
+size = Vector3(12.4, 0.5, 7.4)
+material = SubResource("mat_light_pine_planks")
+
+[node name="ParedFondo" type="CSGBox3D" parent="PlantaBaja" unique_id=409220101]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 2.25, -3.2)
+use_collision = true
+size = Vector3(12.4, 4.5, 0.4)
+material = SubResource("mat_cream_plaster")
+
+[node name="ParedIzquierda" type="CSGBox3D" parent="PlantaBaja" unique_id=1432457021]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.8, 2.25, 0.5)
+use_collision = true
+size = Vector3(0.4, 4.5, 7.4)
+material = SubResource("mat_cream_plaster")
+
+[node name="ParedDerecha" type="CSGBox3D" parent="PlantaBaja" unique_id=1703273176]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46.2, 2.25, 0.5)
+use_collision = true
+size = Vector3(0.4, 4.5, 7.4)
+material = SubResource("mat_cream_plaster")
+
+[node name="LimiteFrontal" type="StaticBody3D" parent="PlantaBaja" unique_id=125611453]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 1.5, 2.4)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlantaBaja/LimiteFrontal" unique_id=2037519539]
+shape = SubResource("BoxShape3D_bwh1f")
+
+[node name="Escalera" type="CSGBox3D" parent="PlantaBaja" unique_id=507412939]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.9, 0.6, -2.4)
+size = Vector3(1.6, 1.2, 1)
+material = SubResource("mat_dark_oak_panels")
+
+[node name="PuertaSalida" type="CSGBox3D" parent="PlantaBaja" unique_id=1159087092]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.97, 1.1, 0.5)
+size = Vector3(0.08, 2.2, 1.4)
+material = SubResource("mat_dark_oak_panels")
+
+[node name="LuzPlantaBaja" type="OmniLight3D" parent="PlantaBaja" unique_id=1413302139]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 3.2, 0)
+light_color = Color(1, 0.97, 0.92, 1)
+light_energy = 0.40
+omni_range = 8.0
+light_specular = 0.0
+
+[node name="Llegada_Escalera" type="Marker3D" parent="PlantaBaja" unique_id=385849498]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.6, 1.1, -1)
+
+[node name="Llegada_DesdeVecindad" type="Marker3D" parent="PlantaBaja" unique_id=1977150209]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 1.1, 0.5)
+
+[node name="Cameras" type="Node3D" parent="." unique_id=776154780]
+
+[node name="Camera1" type="Camera3D" parent="Cameras" unique_id=1773109824]
+transform = Transform3D(1, 0, 0, 0, 0.81915206, 0.57357645, 0, -0.57357645, 0.81915206, 0, 3.3, 4)
+fov = 60.0
+
+[node name="Camera2" type="Camera3D" parent="Cameras" unique_id=314088977]
+transform = Transform3D(1, 0, 0, 0, 0.81915206, 0.57357645, 0, -0.57357645, 0.81915206, 40, 4.2, 5.4)
+fov = 60.0
+
+[node name="ZonasCamara" type="Node3D" parent="." unique_id=1288437286]
+
+[node name="ZonaCam_1" type="Area3D" parent="ZonasCamara" unique_id=1982736450 instance=ExtResource("5_cd8go")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.4)
+collision_layer = 0
+script = ExtResource("6_6hdas")
+modo = 2
+camara_b_num = 0
+tamano_trigger = Vector3(8, 3, 5.2)
+
+[node name="ZonaCam_2" type="Area3D" parent="ZonasCamara" unique_id=1272743950 instance=ExtResource("5_cd8go")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, -0.4)
+collision_layer = 0
+script = ExtResource("6_6hdas")
+modo = 2
+camara_a_num = 2
+camara_b_num = 0
+tamano_trigger = Vector3(12, 3, 5.2)
+
+[node name="Transiciones" type="Node3D" parent="." unique_id=1519795706]
+
+[node name="Puerta_Cuarto_Escalera" type="Area3D" parent="Transiciones" unique_id=892347102 instance=ExtResource("7_rrmn7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6, 1.1, 0.5)
+collision_layer = 0
+script = ExtResource("11_paso")
+escena_destino = "res://scenes/world/World_House.tscn"
+nombre_marcador_destino = "Llegada_Escalera"
+camara_destino = "Camera2"
+tamano_zona = Vector3(0.8, 3, 1.4)
+mostrar_particulas_viento = false
+progreso_requerido = &"tutorial.diario_casa"
+
+[node name="Escalera_Subir" type="Area3D" parent="Transiciones" unique_id=1636041952 instance=ExtResource("7_rrmn7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.6, 1.1, -2.5)
+collision_layer = 0
+script = ExtResource("11_paso")
+escena_destino = "res://scenes/world/World_House.tscn"
+nombre_marcador_destino = "Llegada_PuertaCuarto"
+tamano_zona = Vector3(1.2, 3, 1)
+mostrar_particulas_viento = false
+
+[node name="Puerta_Salida_Vecindad" type="Area3D" parent="Transiciones" unique_id=432621882 instance=ExtResource("7_rrmn7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.6, 1.1, 0.5)
+collision_layer = 0
+script = ExtResource("8_8f8mi")
+escena_destino = "res://scenes/world/World.tscn"
+nombre_marcador_destino = "Llegada_DesdeCasa"
+tamano_zona = Vector3(0.8, 3, 1.6)
+mostrar_particulas_viento = false
+
+[node name="Player32" type="CharacterBody3D" parent="." unique_id=820540263 instance=ExtResource("9_544yy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1.1, 0.3)
+script = ExtResource("10_sf7k5")
+
+[node name="Cama" type="CSGBox3D" parent="Cuarto"]
+position = Vector3(-3.05, 0.35, -1.95)
+size = Vector3(1.55, 0.7, 1.65)
+use_collision = true
+material = SubResource("mat_birch_furniture")
+
+[node name="Colchon" type="CSGBox3D" parent="Cuarto"]
+position = Vector3(-3.05, 0.77, -1.95)
+size = Vector3(1.5, 0.2, 1.6)
+use_collision = false
+material = SubResource("MatLino")
+
+[node name="Manta" type="CSGBox3D" parent="Cuarto"]
+position = Vector3(-3.05, 0.89, -1.6)
+size = Vector3(1.5, 0.08, 0.9)
+use_collision = false
+material = SubResource("mat_woven_wool")
+
+[node name="Almohada" type="CSGBox3D" parent="Cuarto"]
+position = Vector3(-3.05, 0.92, -2.5)
+size = Vector3(0.9, 0.15, 0.38)
+use_collision = false
+material = SubResource("MatPapel")
+
+[node name="Ropero" type="CSGBox3D" parent="Cuarto"]
+position = Vector3(2.7, 1.25, -2.5)
+size = Vector3(1.7, 2.5, 0.85)
+use_collision = true
+material = SubResource("mat_birch_furniture")
+
+[node name="PuertaRopero" type="CSGBox3D" parent="Cuarto"]
+position = Vector3(2.7, 1.25, -2.05)
+size = Vector3(0.03, 2.3, 0.04)
+use_collision = false
+material = SubResource("mat_dark_oak_panels")
+
+[node name="MesaDiario" type="CSGBox3D" parent="Cuarto"]
+position = Vector3(-0.8, 0.8, -1.95)
+size = Vector3(1.45, 0.18, 0.85)
+use_collision = true
+material = SubResource("mat_birch_furniture")
+
+[node name="Pata-1.38-2.24" type="CSGBox3D" parent="Cuarto"]
+position = Vector3(-1.38, 0.4, -2.24)
+size = Vector3(0.12, 0.8, 0.12)
+use_collision = false
+material = SubResource("mat_birch_furniture")
+
+[node name="Pata-1.38-1.65" type="CSGBox3D" parent="Cuarto"]
+position = Vector3(-1.38, 0.4, -1.65)
+size = Vector3(0.12, 0.8, 0.12)
+use_collision = false
+material = SubResource("mat_birch_furniture")
+
+[node name="Pata-0.22-2.24" type="CSGBox3D" parent="Cuarto"]
+position = Vector3(-0.22, 0.4, -2.24)
+size = Vector3(0.12, 0.8, 0.12)
+use_collision = false
+material = SubResource("mat_birch_furniture")
+
+[node name="Pata-0.22-1.65" type="CSGBox3D" parent="Cuarto"]
+position = Vector3(-0.22, 0.4, -1.65)
+size = Vector3(0.12, 0.8, 0.12)
+use_collision = false
+material = SubResource("mat_birch_furniture")
+
+[node name="Diario" type="Node3D" parent="Cuarto"]
+position = Vector3(-0.8, 1, -1.8)
+
+[node name="Tapa" type="CSGBox3D" parent="Cuarto/Diario"]
+position = Vector3(0, 0, 0)
+size = Vector3(0.48, 0.07, 0.35)
+use_collision = false
+material = SubResource("MatLibro")
+
+[node name="Paginas" type="CSGBox3D" parent="Cuarto/Diario"]
+position = Vector3(0, 0.05, 0)
+size = Vector3(0.41, 0.04, 0.29)
+use_collision = false
+material = SubResource("MatPapel")
+
+[node name="InteraccionDialogo" type="Area3D" parent="Cuarto/Diario"]
+script = ExtResource("12_dialogo")
+nombre_hablante = "Diario"
+lineas_rapidas = Array[String](["Primer día en la casa nueva."])
+radio_interaccion = 1.65
+orientar_npc_al_jugador = false
+activar_objeto_al_terminar = false
+offset_indicador = Vector3(0, 1.6, 0)
+sfx_iniciar = null
+
+[node name="CajaMudanza" type="CSGBox3D" parent="Cuarto"]
+position = Vector3(0.9, 0.35, -2.5)
+size = Vector3(0.8, 0.7, 0.7)
+use_collision = true
+material = SubResource("mat_birch_furniture")
+
+[node name="CajaSobrepuesta" type="CSGBox3D" parent="Cuarto"]
+position = Vector3(1, 0.95, -2.5)
+size = Vector3(0.6, 0.5, 0.6)
+use_collision = true
+material = SubResource("mat_birch_furniture")
+
+[node name="EspejoMarco" type="CSGBox3D" parent="Cuarto"]
+position = Vector3(0.25, 1.75, -2.95)
+size = Vector3(0.9, 1.6, 0.1)
+use_collision = true
+material = SubResource("mat_birch_furniture")
+
+[node name="Espejo" type="CSGBox3D" parent="Cuarto"]
+position = Vector3(0.25, 1.75, -2.88)
+size = Vector3(0.72, 1.38, 0.03)
+use_collision = false
+material = SubResource("MatCristal")
+
+[node name="Alfombra" type="CSGBox3D" parent="Cuarto"]
+position = Vector3(-0.5, 0.015, 0.5)
+size = Vector3(2.3, 0.025, 1.6)
+use_collision = false
+material = SubResource("mat_woven_wool")
+
+[node name="Aparador" type="CSGBox3D" parent="PlantaBaja"]
+position = Vector3(40, 0.6, -2.5)
+size = Vector3(2.2, 1.2, 0.8)
+use_collision = true
+material = SubResource("mat_birch_furniture")
+
+[node name="CuadroMarco" type="CSGBox3D" parent="PlantaBaja"]
+position = Vector3(40, 2.35, -2.96)
+size = Vector3(1.7, 0.95, 0.1)
+use_collision = true
+material = SubResource("mat_birch_furniture")
+
+[node name="Cuadro" type="CSGBox3D" parent="PlantaBaja"]
+position = Vector3(40, 2.35, -2.89)
+size = Vector3(1.5, 0.75, 0.02)
+use_collision = false
+material = SubResource("MatTela")
+
+[node name="CajasMudanza" type="CSGBox3D" parent="PlantaBaja"]
+position = Vector3(43.6, 0.45, -2.2)
+size = Vector3(1.2, 0.9, 0.9)
+use_collision = true
+material = SubResource("mat_birch_furniture")
+
+[node name="MesaComedor" type="CSGBox3D" parent="PlantaBaja"]
+position = Vector3(42, 0.85, -2.4)
+size = Vector3(1.4, 0.18, 0.9)
+use_collision = true
+material = SubResource("mat_birch_furniture")
+
+[node name="BarreraComedor" type="CSGBox3D" parent="PlantaBaja"]
+position = Vector3(42, 0.45, -1.85)
+size = Vector3(1.6, 0.9, 0.12)
+use_collision = true
+material = SubResource("mat_birch_furniture")
+
+[node name="Peldaño0" type="CSGBox3D" parent="PlantaBaja"]
+position = Vector3(34.9, 0.12, -1.6)
+size = Vector3(1.6, 0.24, 0.3)
+use_collision = false
+material = SubResource("mat_dark_oak_panels")
+
+[node name="Peldaño1" type="CSGBox3D" parent="PlantaBaja"]
+position = Vector3(34.9, 0.24, -1.8800000000000001)
+size = Vector3(1.6, 0.48, 0.3)
+use_collision = false
+material = SubResource("mat_dark_oak_panels")
+
+[node name="Peldaño2" type="CSGBox3D" parent="PlantaBaja"]
+position = Vector3(34.9, 0.36, -2.16)
+size = Vector3(1.6, 0.72, 0.3)
+use_collision = false
+material = SubResource("mat_dark_oak_panels")
+
+[node name="Erland" type="Node3D" parent="PlantaBaja"]
+position = Vector3(38.5, 0, -1)
+
+[node name="Sprite" type="Sprite3D" parent="PlantaBaja/Erland"]
+position = Vector3(0, 1.05, 0)
+texture = SubResource("PadreAtlas")
+pixel_size = 0.085
+texture_filter = 0
+billboard = 1
+
+[node name="InteraccionDialogo" type="Area3D" parent="PlantaBaja/Erland"]
+script = ExtResource("12_dialogo")
+nombre_hablante = "Papá"
+lineas_rapidas = Array[String](["¿Dormiste bien? Aún tenemos media casa dentro de estas cajas.", "Si vas a salir, abrígate. El camino lleva al pueblo; allí podrás orientarte.", "Puedes volver cuando quieras. Yo terminaré de ordenar aquí."])
+radio_interaccion = 2.0
+orientar_npc_al_jugador = false
+activar_objeto_al_terminar = false
+offset_indicador = Vector3(0, 1.6, 0)
+sfx_iniciar = null
+
+[node name="Ayuda" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="Margen" type="MarginContainer" parent="Ayuda"]
+offset_left = 24.0
+offset_top = 18.0
+offset_right = 650.0
+offset_bottom = 150.0
+mouse_filter = 2
+
+[node name="Texto" type="Label" parent="Ayuda/Margen"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.77, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 18
+text = "Lee el diario sobre la mesa antes de bajar."
+autowrap_mode = 2
+
+[node name="FarolCama" parent="." instance=ExtResource("farol_interior")]
+position = Vector3(-2.9, 2.35, -2.77)
+
+[node name="FarolEscritorio" parent="." instance=ExtResource("farol_interior")]
+position = Vector3(1.25, 2.35, -2.77)
+
+[node name="FarolEscalera" parent="." instance=ExtResource("farol_interior")]
+position = Vector3(35.3, 2.35, -2.77)
+
+[node name="FarolComedor" parent="." instance=ExtResource("farol_interior")]
+position = Vector3(38.3, 2.35, -2.77)
+
+[node name="FarolEntrada" parent="." instance=ExtResource("farol_interior")]
+position = Vector3(44.5, 2.35, -2.77)
+

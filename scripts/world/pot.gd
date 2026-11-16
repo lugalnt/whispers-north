@@ -422,6 +422,9 @@ func _obtener_jarrones_vinculados() -> Array:
 func _iniciar_evento_combate(jugador: CharacterBody3D) -> void:
 	if estado == Estado.COMBATIENDO:
 		return
+	# No ocultar al grupo ni desbloquear un diálogo por una solicitud rechazada.
+	if not get_node("/root/CoordinadorEncuentros").disponible(jugador):
+		return
 	estado = Estado.COMBATIENDO
 	velocity = Vector3.ZERO
 	_secuencia += 1
@@ -436,8 +439,6 @@ func _iniciar_evento_combate(jugador: CharacterBody3D) -> void:
 			j.estado = Estado.COMBATIENDO
 			j.velocity = Vector3.ZERO
 			j._secuencia += 1
-			if j.modelo:
-				j.modelo.hide()
 
 	var enc: EncuentroCombate = _obtener_encuentro()
 	var resultado: CombatArena.ResultadoCombate
@@ -470,7 +471,10 @@ func _iniciar_evento_combate(jugador: CharacterBody3D) -> void:
 		elif grupo.size() > 1:
 			enc.exp_recompensa = 20 * grupo.size()
 
-		resultado = await enc.iniciar_combate(jugador, null)
+		enc.reserva_confirmada.connect(_registrar_grupo_en_sesion.bind(grupo), CONNECT_ONE_SHOT)
+		resultado = await enc.iniciar_combate(jugador, null, func(): return is_instance_valid(jugador) and _distancia_xz(jugador) <= distancia_contacto)
+		if enc.reserva_confirmada.is_connected(_registrar_grupo_en_sesion.bind(grupo)):
+			enc.reserva_confirmada.disconnect(_registrar_grupo_en_sesion.bind(grupo))
 	else:
 		# Fallback autónomo si no existiera el componente EncuentroCombate
 		var encuentro_temp: EncuentroCombate = EncuentroCombate.new()
@@ -501,14 +505,20 @@ func _iniciar_evento_combate(jugador: CharacterBody3D) -> void:
 		elif grupo.size() > 1:
 			encuentro_temp.exp_recompensa = 20 * grupo.size()
 		add_child(encuentro_temp)
-		resultado = await encuentro_temp.iniciar_combate(jugador, null)
+		encuentro_temp.reserva_confirmada.connect(_registrar_grupo_en_sesion.bind(grupo), CONNECT_ONE_SHOT)
+		resultado = await encuentro_temp.iniciar_combate(jugador, null, func(): return is_instance_valid(jugador) and _distancia_xz(jugador) <= distancia_contacto)
 		encuentro_temp.queue_free()
 
-	# Procesar el resultado según las reglas pedidas:
+	if not is_instance_valid(jugador):
+		for j in grupo:
+			if is_instance_valid(j):
+				j.modelo.show()
+				j._reiniciar_jarron()
+		return
+	# El coordinador ya restauró el control antes de devolver el resultado.
 	match resultado:
 		CombatArena.ResultadoCombate.VICTORIA:
 			# Ganar: todos los jarrones del grupo se rompen con fragmentos/partículas y desaparecen
-			_bloquear_jugador(jugador, false)
 			for j in grupo:
 				if is_instance_valid(j):
 					j._destruir(j.global_position + Vector3(0.0, 0.6, 0.0))
@@ -522,7 +532,6 @@ func _iniciar_evento_combate(jugador: CharacterBody3D) -> void:
 			await _explotar_jugador(jugador)
 		CombatArena.ResultadoCombate.HUIDA:
 			# Huir: vuelves al mundo y todos los jarrones quedan aturdidos para poder escapar
-			_bloquear_jugador(jugador, false)
 			for j in grupo:
 				if is_instance_valid(j):
 					if j.modelo:
@@ -538,6 +547,19 @@ func _iniciar_evento_combate(jugador: CharacterBody3D) -> void:
 # ---------------------------------------------------------------------------
 # Evento de cercanía original (textbox)
 # ---------------------------------------------------------------------------
+
+func _registrar_grupo_en_sesion(sesion: RefCounted, grupo: Array) -> void:
+	for j in grupo:
+		if is_instance_valid(j):
+			sesion.recordar_visual(j.modelo)
+			j.modelo.hide()
+			sesion.finalizada.connect(j._recuperar_cancelacion_grupal.bind(sesion), CONNECT_ONE_SHOT)
+
+
+func _recuperar_cancelacion_grupal(sesion: RefCounted) -> void:
+	if sesion.cancelada:
+		_reiniciar_jarron()
+
 
 func _iniciar_contacto() -> void:
 	estado = Estado.EN_CONTACTO

@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/combat/CombatArena.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/combat/battlers/JarritoBattler.tscn" id="2"]
+
+[node name="JarritoCombatTest" instance=ExtResource("1")]
+escena_battler_enemigo_defecto = ExtResource("2")

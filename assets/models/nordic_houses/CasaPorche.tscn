@@ -1,0 +1,556 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_wood_v1/red_painted_siding.png" id="red"]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_wood_v1/dark_oak_panels.png" id="oak"]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_wood_v1/light_pine_planks.png" id="pine"]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_surfaces_v2/cream_plaster.png" id="plaster"]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_surfaces_v2/ruin_masonry.png" id="stone"]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_v1/red_roof.png" id="roof"]
+
+[sub_resource type="StandardMaterial3D" id="red"]
+albedo_texture = ExtResource("red")
+texture_filter = 0
+roughness = 1.0
+
+[sub_resource type="StandardMaterial3D" id="oak"]
+albedo_texture = ExtResource("oak")
+texture_filter = 0
+roughness = 1.0
+
+[sub_resource type="StandardMaterial3D" id="pine"]
+albedo_texture = ExtResource("pine")
+texture_filter = 0
+roughness = 1.0
+
+[sub_resource type="StandardMaterial3D" id="plaster"]
+albedo_texture = ExtResource("plaster")
+texture_filter = 0
+roughness = 1.0
+
+[sub_resource type="StandardMaterial3D" id="stone"]
+albedo_texture = ExtResource("stone")
+texture_filter = 0
+roughness = 1.0
+
+[sub_resource type="StandardMaterial3D" id="roof"]
+albedo_texture = ExtResource("roof")
+texture_filter = 0
+roughness = 1.0
+
+[sub_resource type="StandardMaterial3D" id="trim"]
+albedo_color = Color(0.83, 0.79, 0.66, 1)
+roughness = 0.85
+
+[sub_resource type="StandardMaterial3D" id="glass"]
+albedo_color = Color(0.25, 0.43, 0.46, 1)
+roughness = 0.85
+
+[sub_resource type="StandardMaterial3D" id="brass"]
+albedo_color = Color(0.65, 0.46, 0.2, 1)
+roughness = 0.85
+
+[sub_resource type="StandardMaterial3D" id="dark"]
+albedo_color = Color(0.16, 0.2, 0.22, 1)
+roughness = 0.85
+
+[sub_resource type="BoxMesh" id="mesh_Foundation"]
+size = Vector3(5.920000, 0.350000, 4.720000)
+
+[sub_resource type="BoxMesh" id="mesh_Walls"]
+size = Vector3(5.800000, 2.900000, 4.600000)
+
+[sub_resource type="PrismMesh" id="mesh_Gable"]
+size = Vector3(5.800000, 1.800000, 4.600000)
+
+[sub_resource type="BoxMesh" id="mesh_Roof_1"]
+size = Vector3(3.766300, 0.160000, 5.250000)
+
+[sub_resource type="BoxMesh" id="mesh_Eave_1"]
+size = Vector3(0.160000, 0.220000, 5.300000)
+
+[sub_resource type="BoxMesh" id="mesh_Barge_1_2_6399999999999997"]
+size = Vector3(3.766300, 0.140000, 0.140000)
+
+[sub_resource type="BoxMesh" id="mesh_Barge_12_6399999999999997"]
+size = Vector3(3.766300, 0.140000, 0.140000)
+
+[sub_resource type="BoxMesh" id="mesh_Roof1"]
+size = Vector3(3.766300, 0.160000, 5.250000)
+
+[sub_resource type="BoxMesh" id="mesh_Eave1"]
+size = Vector3(0.160000, 0.220000, 5.300000)
+
+[sub_resource type="BoxMesh" id="mesh_Barge1_2_6399999999999997"]
+size = Vector3(3.766300, 0.140000, 0.140000)
+
+[sub_resource type="BoxMesh" id="mesh_Barge12_6399999999999997"]
+size = Vector3(3.766300, 0.140000, 0.140000)
+
+[sub_resource type="BoxMesh" id="mesh_Ridge"]
+size = Vector3(0.200000, 0.180000, 5.320000)
+
+[sub_resource type="BoxMesh" id="mesh_Corner_2_9_2_3"]
+size = Vector3(0.180000, 3.020000, 0.180000)
+
+[sub_resource type="BoxMesh" id="mesh_Corner_2_92_3"]
+size = Vector3(0.180000, 3.020000, 0.180000)
+
+[sub_resource type="BoxMesh" id="mesh_Corner2_9_2_3"]
+size = Vector3(0.180000, 3.020000, 0.180000)
+
+[sub_resource type="BoxMesh" id="mesh_Corner2_92_3"]
+size = Vector3(0.180000, 3.020000, 0.180000)
+
+[sub_resource type="BoxMesh" id="mesh_DoorFrame"]
+size = Vector3(1.280000, 2.180000, 0.160000)
+
+[sub_resource type="BoxMesh" id="mesh_Door"]
+size = Vector3(1.040000, 1.980000, 0.120000)
+
+[sub_resource type="BoxMesh" id="mesh_DoorInset"]
+size = Vector3(0.720000, 0.650000, 0.040000)
+
+[sub_resource type="BoxMesh" id="mesh_Handle"]
+size = Vector3(0.090000, 0.090000, 0.080000)
+
+[sub_resource type="BoxMesh" id="mesh_Threshold"]
+size = Vector3(1.450000, 0.180000, 0.350000)
+
+[sub_resource type="BoxMesh" id="Window_1_74Frame"]
+size = Vector3(1.150000, 1.250000, 0.120000)
+
+[sub_resource type="BoxMesh" id="Window_1_74Glass"]
+size = Vector3(0.940000, 1.040000, 0.060000)
+
+[sub_resource type="BoxMesh" id="Window_1_74Mullion"]
+size = Vector3(0.070000, 1.040000, 0.060000)
+
+[sub_resource type="BoxMesh" id="Window_1_74Cross"]
+size = Vector3(0.940000, 0.070000, 0.060000)
+
+[sub_resource type="BoxMesh" id="Window_1_74Sill"]
+size = Vector3(1.320000, 0.130000, 0.280000)
+
+[sub_resource type="BoxMesh" id="Window1_74Frame"]
+size = Vector3(1.150000, 1.250000, 0.120000)
+
+[sub_resource type="BoxMesh" id="Window1_74Glass"]
+size = Vector3(0.940000, 1.040000, 0.060000)
+
+[sub_resource type="BoxMesh" id="Window1_74Mullion"]
+size = Vector3(0.070000, 1.040000, 0.060000)
+
+[sub_resource type="BoxMesh" id="Window1_74Cross"]
+size = Vector3(0.940000, 0.070000, 0.060000)
+
+[sub_resource type="BoxMesh" id="Window1_74Sill"]
+size = Vector3(1.320000, 0.130000, 0.280000)
+
+[sub_resource type="BoxMesh" id="WindowSide_1Frame"]
+size = Vector3(1.150000, 1.250000, 0.120000)
+
+[sub_resource type="BoxMesh" id="WindowSide_1Glass"]
+size = Vector3(0.940000, 1.040000, 0.060000)
+
+[sub_resource type="BoxMesh" id="WindowSide_1Mullion"]
+size = Vector3(0.070000, 1.040000, 0.060000)
+
+[sub_resource type="BoxMesh" id="WindowSide_1Cross"]
+size = Vector3(0.940000, 0.070000, 0.060000)
+
+[sub_resource type="BoxMesh" id="WindowSide_1Sill"]
+size = Vector3(1.320000, 0.130000, 0.280000)
+
+[sub_resource type="BoxMesh" id="WindowSide1Frame"]
+size = Vector3(1.150000, 1.250000, 0.120000)
+
+[sub_resource type="BoxMesh" id="WindowSide1Glass"]
+size = Vector3(0.940000, 1.040000, 0.060000)
+
+[sub_resource type="BoxMesh" id="WindowSide1Mullion"]
+size = Vector3(0.070000, 1.040000, 0.060000)
+
+[sub_resource type="BoxMesh" id="WindowSide1Cross"]
+size = Vector3(0.940000, 0.070000, 0.060000)
+
+[sub_resource type="BoxMesh" id="WindowSide1Sill"]
+size = Vector3(1.320000, 0.130000, 0.280000)
+
+[sub_resource type="BoxMesh" id="WindowBackFrame"]
+size = Vector3(1.150000, 1.250000, 0.120000)
+
+[sub_resource type="BoxMesh" id="WindowBackGlass"]
+size = Vector3(0.940000, 1.040000, 0.060000)
+
+[sub_resource type="BoxMesh" id="WindowBackMullion"]
+size = Vector3(0.070000, 1.040000, 0.060000)
+
+[sub_resource type="BoxMesh" id="WindowBackCross"]
+size = Vector3(0.940000, 0.070000, 0.060000)
+
+[sub_resource type="BoxMesh" id="WindowBackSill"]
+size = Vector3(1.320000, 0.130000, 0.280000)
+
+[sub_resource type="BoxMesh" id="mesh_AtticFrame"]
+size = Vector3(0.660000, 0.740000, 0.120000)
+
+[sub_resource type="BoxMesh" id="mesh_AtticGlass"]
+size = Vector3(0.460000, 0.540000, 0.060000)
+
+[sub_resource type="BoxMesh" id="mesh_Chimney"]
+size = Vector3(0.550000, 1.600000, 0.650000)
+
+[sub_resource type="BoxMesh" id="mesh_ChimneyCap"]
+size = Vector3(0.730000, 0.170000, 0.830000)
+
+[sub_resource type="BoxMesh" id="mesh_PorchDeck"]
+size = Vector3(4.060000, 0.280000, 1.350000)
+
+[sub_resource type="BoxMesh" id="mesh_PorchCanopy"]
+size = Vector3(4.350000, 0.130000, 1.600000)
+
+[sub_resource type="BoxMesh" id="mesh_PorchPost_1_74"]
+size = Vector3(0.140000, 2.300000, 0.140000)
+
+[sub_resource type="BoxMesh" id="mesh_PorchPost1_74"]
+size = Vector3(0.140000, 2.300000, 0.140000)
+
+[sub_resource type="BoxShape3D" id="collision"]
+size = Vector3(5.800000, 3.250000, 4.600000)
+
+[node name="CasaPorche" type="Node3D"]
+
+[node name="Foundation" type="MeshInstance3D" parent="."]
+position = Vector3(0.000000, 0.175000, 0.000000)
+rotation = Vector3(0.000000, 0.000000, 0.000000)
+mesh = SubResource("mesh_Foundation")
+material_override = SubResource("stone")
+
+[node name="Walls" type="MeshInstance3D" parent="."]
+position = Vector3(0.000000, 1.800000, 0.000000)
+rotation = Vector3(0.000000, 0.000000, 0.000000)
+mesh = SubResource("mesh_Walls")
+material_override = SubResource("oak")
+
+[node name="Gable" type="MeshInstance3D" parent="."]
+position = Vector3(0.000000, 4.150000, 0.000000)
+rotation = Vector3(0.000000, 0.000000, 0.000000)
+mesh = SubResource("mesh_Gable")
+material_override = SubResource("oak")
+
+[node name="Roof_1" type="MeshInstance3D" parent="."]
+position = Vector3(-1.600000, 4.056897, 0.000000)
+rotation = Vector3(0.000000, 0.000000, 0.555494)
+mesh = SubResource("mesh_Roof_1")
+material_override = SubResource("roof")
+
+[node name="Eave_1" type="MeshInstance3D" parent="."]
+position = Vector3(-3.200000, 3.130000, 0.000000)
+rotation = Vector3(0.000000, 0.000000, 0.000000)
+mesh = SubResource("mesh_Eave_1")
+material_override = SubResource("trim")
+
+[node name="Barge_1_2_6399999999999997" type="MeshInstance3D" parent="."]
+position = Vector3(-1.600000, 4.056897, -2.640000)
+rotation = Vector3(0.000000, 0.000000, 0.555494)
+mesh = SubResource("mesh_Barge_1_2_6399999999999997")
+material_override = SubResource("trim")
+
+[node name="Barge_12_6399999999999997" type="MeshInstance3D" parent="."]
+position = Vector3(-1.600000, 4.056897, 2.640000)
+rotation = Vector3(0.000000, 0.000000, 0.555494)
+mesh = SubResource("mesh_Barge_12_6399999999999997")
+material_override = SubResource("trim")
+
+[node name="Roof1" type="MeshInstance3D" parent="."]
+position = Vector3(1.600000, 4.056897, 0.000000)
+rotation = Vector3(0.000000, 0.000000, -0.555494)
+mesh = SubResource("mesh_Roof1")
+material_override = SubResource("roof")
+
+[node name="Eave1" type="MeshInstance3D" parent="."]
+position = Vector3(3.200000, 3.130000, 0.000000)
+rotation = Vector3(0.000000, 0.000000, 0.000000)
+mesh = SubResource("mesh_Eave1")
+material_override = SubResource("trim")
+
+[node name="Barge1_2_6399999999999997" type="MeshInstance3D" parent="."]
+position = Vector3(1.600000, 4.056897, -2.640000)
+rotation = Vector3(0.000000, 0.000000, -0.555494)
+mesh = SubResource("mesh_Barge1_2_6399999999999997")
+material_override = SubResource("trim")
+
+[node name="Barge12_6399999999999997" type="MeshInstance3D" parent="."]
+position = Vector3(1.600000, 4.056897, 2.640000)
+rotation = Vector3(0.000000, 0.000000, -0.555494)
+mesh = SubResource("mesh_Barge12_6399999999999997")
+material_override = SubResource("trim")
+
+[node name="Ridge" type="MeshInstance3D" parent="."]
+position = Vector3(0.000000, 5.130000, 0.000000)
+rotation = Vector3(0.000000, 0.000000, 0.000000)
+mesh = SubResource("mesh_Ridge")
+material_override = SubResource("dark")
+
+[node name="Corner_2_9_2_3" type="MeshInstance3D" parent="."]
+position = Vector3(-2.900000, 1.800000, -2.300000)
+rotation = Vector3(0.000000, 0.000000, 0.000000)
+mesh = SubResource("mesh_Corner_2_9_2_3")
+material_override = SubResource("trim")
+
+[node name="Corner_2_92_3" type="MeshInstance3D" parent="."]
+position = Vector3(-2.900000, 1.800000, 2.300000)
+rotation = Vector3(0.000000, 0.000000, 0.000000)
+mesh = SubResource("mesh_Corner_2_92_3")
+material_override = SubResource("trim")
+
+[node name="Corner2_9_2_3" type="MeshInstance3D" parent="."]
+position = Vector3(2.900000, 1.800000, -2.300000)
+rotation = Vector3(0.000000, 0.000000, 0.000000)
+mesh = SubResource("mesh_Corner2_9_2_3")
+material_override = SubResource("trim")
+
+[node name="Corner2_92_3" type="MeshInstance3D" parent="."]
+position = Vector3(2.900000, 1.800000, 2.300000)
+rotation = Vector3(0.000000, 0.000000, 0.000000)
+mesh = SubResource("mesh_Corner2_92_3")
+material_override = SubResource("trim")
+
+[node name="DoorFrame" type="MeshInstance3D" parent="."]
+position = Vector3(0.000000, 1.420000, 2.380000)
+rotation = Vector3(0.000000, 0.000000, 0.000000)
+mesh = SubResource("mesh_DoorFrame")
+material_override = SubResource("trim")
+
+[node name="Door" type="MeshInstance3D" parent="."]
+position = Vector3(0.000000, 1.390000, 2.480000)
+rotation = Vector3(0.000000, 0.000000, 0.000000)
+mesh = SubResource("mesh_Door")
+material_override = SubResource("oak")
+
+[node name="DoorInset" type="MeshInstance3D" parent="."]
+position = Vector3(0.000000, 1.850000, 2.560000)
+rotation = Vector3(0.000000, 0.000000, 0.000000)
+mesh = SubResource("mesh_DoorInset")
+material_override = SubResource("pine")
+
+[node name="Handle" type="MeshInstance3D" parent="."]
+position = Vector3(0.360000, 1.290000, 2.580000)
+rotation = Vector3(0.000000, 0.000000, 0.000000)
+mesh = SubResource("mesh_Handle")
+material_override = SubResource("brass")
+
+[node name="Threshold" type="MeshInstance3D" parent="."]
+position = Vector3(0.000000, 0.270000, 2.460000)
+rotation = Vector3(0.000000, 0.000000, 0.000000)
+mesh = SubResource("mesh_Threshold")
+material_override = SubResource("stone")
+
+[node name="Window_1_74" type="Node3D" parent="."]
+position = Vector3(-1.740000, 1.950000, 2.360000)
+rotation = Vector3(0.000000, 0.000000, 0.000000)
+
+[node name="Frame" type="MeshInstance3D" parent="Window_1_74"]
+position = Vector3(0.000000, 0.000000, 0.000000)
+mesh = SubResource("Window_1_74Frame")
+material_override = SubResource("trim")
+
+[node name="Glass" type="MeshInstance3D" parent="Window_1_74"]
+position = Vector3(0.000000, 0.000000, 0.090000)
+mesh = SubResource("Window_1_74Glass")
+material_override = SubResource("glass")
+
+[node name="Mullion" type="MeshInstance3D" parent="Window_1_74"]
+position = Vector3(0.000000, 0.000000, 0.140000)
+mesh = SubResource("Window_1_74Mullion")
+material_override = SubResource("trim")
+
+[node name="Cross" type="MeshInstance3D" parent="Window_1_74"]
+position = Vector3(0.000000, 0.000000, 0.140000)
+mesh = SubResource("Window_1_74Cross")
+material_override = SubResource("trim")
+
+[node name="Sill" type="MeshInstance3D" parent="Window_1_74"]
+position = Vector3(0.000000, -0.660000, 0.050000)
+mesh = SubResource("Window_1_74Sill")
+material_override = SubResource("oak")
+
+[node name="Window1_74" type="Node3D" parent="."]
+position = Vector3(1.740000, 1.950000, 2.360000)
+rotation = Vector3(0.000000, 0.000000, 0.000000)
+
+[node name="Frame" type="MeshInstance3D" parent="Window1_74"]
+position = Vector3(0.000000, 0.000000, 0.000000)
+mesh = SubResource("Window1_74Frame")
+material_override = SubResource("trim")
+
+[node name="Glass" type="MeshInstance3D" parent="Window1_74"]
+position = Vector3(0.000000, 0.000000, 0.090000)
+mesh = SubResource("Window1_74Glass")
+material_override = SubResource("glass")
+
+[node name="Mullion" type="MeshInstance3D" parent="Window1_74"]
+position = Vector3(0.000000, 0.000000, 0.140000)
+mesh = SubResource("Window1_74Mullion")
+material_override = SubResource("trim")
+
+[node name="Cross" type="MeshInstance3D" parent="Window1_74"]
+position = Vector3(0.000000, 0.000000, 0.140000)
+mesh = SubResource("Window1_74Cross")
+material_override = SubResource("trim")
+
+[node name="Sill" type="MeshInstance3D" parent="Window1_74"]
+position = Vector3(0.000000, -0.660000, 0.050000)
+mesh = SubResource("Window1_74Sill")
+material_override = SubResource("oak")
+
+[node name="WindowSide_1" type="Node3D" parent="."]
+position = Vector3(-2.960000, 1.950000, 0.000000)
+rotation = Vector3(0.000000, -1.570796, 0.000000)
+
+[node name="Frame" type="MeshInstance3D" parent="WindowSide_1"]
+position = Vector3(0.000000, 0.000000, 0.000000)
+mesh = SubResource("WindowSide_1Frame")
+material_override = SubResource("trim")
+
+[node name="Glass" type="MeshInstance3D" parent="WindowSide_1"]
+position = Vector3(0.000000, 0.000000, 0.090000)
+mesh = SubResource("WindowSide_1Glass")
+material_override = SubResource("glass")
+
+[node name="Mullion" type="MeshInstance3D" parent="WindowSide_1"]
+position = Vector3(0.000000, 0.000000, 0.140000)
+mesh = SubResource("WindowSide_1Mullion")
+material_override = SubResource("trim")
+
+[node name="Cross" type="MeshInstance3D" parent="WindowSide_1"]
+position = Vector3(0.000000, 0.000000, 0.140000)
+mesh = SubResource("WindowSide_1Cross")
+material_override = SubResource("trim")
+
+[node name="Sill" type="MeshInstance3D" parent="WindowSide_1"]
+position = Vector3(0.000000, -0.660000, 0.050000)
+mesh = SubResource("WindowSide_1Sill")
+material_override = SubResource("oak")
+
+[node name="WindowSide1" type="Node3D" parent="."]
+position = Vector3(2.960000, 1.950000, 0.000000)
+rotation = Vector3(0.000000, 1.570796, 0.000000)
+
+[node name="Frame" type="MeshInstance3D" parent="WindowSide1"]
+position = Vector3(0.000000, 0.000000, 0.000000)
+mesh = SubResource("WindowSide1Frame")
+material_override = SubResource("trim")
+
+[node name="Glass" type="MeshInstance3D" parent="WindowSide1"]
+position = Vector3(0.000000, 0.000000, 0.090000)
+mesh = SubResource("WindowSide1Glass")
+material_override = SubResource("glass")
+
+[node name="Mullion" type="MeshInstance3D" parent="WindowSide1"]
+position = Vector3(0.000000, 0.000000, 0.140000)
+mesh = SubResource("WindowSide1Mullion")
+material_override = SubResource("trim")
+
+[node name="Cross" type="MeshInstance3D" parent="WindowSide1"]
+position = Vector3(0.000000, 0.000000, 0.140000)
+mesh = SubResource("WindowSide1Cross")
+material_override = SubResource("trim")
+
+[node name="Sill" type="MeshInstance3D" parent="WindowSide1"]
+position = Vector3(0.000000, -0.660000, 0.050000)
+mesh = SubResource("WindowSide1Sill")
+material_override = SubResource("oak")
+
+[node name="WindowBack" type="Node3D" parent="."]
+position = Vector3(0.000000, 1.950000, -2.360000)
+rotation = Vector3(0.000000, 3.141593, 0.000000)
+
+[node name="Frame" type="MeshInstance3D" parent="WindowBack"]
+position = Vector3(0.000000, 0.000000, 0.000000)
+mesh = SubResource("WindowBackFrame")
+material_override = SubResource("trim")
+
+[node name="Glass" type="MeshInstance3D" parent="WindowBack"]
+position = Vector3(0.000000, 0.000000, 0.090000)
+mesh = SubResource("WindowBackGlass")
+material_override = SubResource("glass")
+
+[node name="Mullion" type="MeshInstance3D" parent="WindowBack"]
+position = Vector3(0.000000, 0.000000, 0.140000)
+mesh = SubResource("WindowBackMullion")
+material_override = SubResource("trim")
+
+[node name="Cross" type="MeshInstance3D" parent="WindowBack"]
+position = Vector3(0.000000, 0.000000, 0.140000)
+mesh = SubResource("WindowBackCross")
+material_override = SubResource("trim")
+
+[node name="Sill" type="MeshInstance3D" parent="WindowBack"]
+position = Vector3(0.000000, -0.660000, 0.050000)
+mesh = SubResource("WindowBackSill")
+material_override = SubResource("oak")
+
+[node name="AtticFrame" type="MeshInstance3D" parent="."]
+position = Vector3(0.000000, 3.750000, 2.380000)
+rotation = Vector3(0.000000, 0.000000, 0.000000)
+mesh = SubResource("mesh_AtticFrame")
+material_override = SubResource("trim")
+
+[node name="AtticGlass" type="MeshInstance3D" parent="."]
+position = Vector3(0.000000, 3.750000, 2.460000)
+rotation = Vector3(0.000000, 0.000000, 0.000000)
+mesh = SubResource("mesh_AtticGlass")
+material_override = SubResource("glass")
+
+[node name="Chimney" type="MeshInstance3D" parent="."]
+position = Vector3(-1.450000, 4.546000, -1.150000)
+rotation = Vector3(0.000000, 0.000000, 0.000000)
+mesh = SubResource("mesh_Chimney")
+material_override = SubResource("stone")
+
+[node name="ChimneyCap" type="MeshInstance3D" parent="."]
+position = Vector3(-1.450000, 5.376000, -1.150000)
+rotation = Vector3(0.000000, 0.000000, 0.000000)
+mesh = SubResource("mesh_ChimneyCap")
+material_override = SubResource("dark")
+
+[node name="PorchDeck" type="MeshInstance3D" parent="."]
+position = Vector3(0.000000, 0.140000, 2.970000)
+rotation = Vector3(0.000000, 0.000000, 0.000000)
+mesh = SubResource("mesh_PorchDeck")
+material_override = SubResource("pine")
+
+[node name="PorchCanopy" type="MeshInstance3D" parent="."]
+position = Vector3(0.000000, 2.650000, 2.950000)
+rotation = Vector3(-0.120000, 0.000000, 0.000000)
+mesh = SubResource("mesh_PorchCanopy")
+material_override = SubResource("roof")
+
+[node name="PorchPost_1_74" type="MeshInstance3D" parent="."]
+position = Vector3(-1.740000, 1.400000, 3.450000)
+rotation = Vector3(0.000000, 0.000000, 0.000000)
+mesh = SubResource("mesh_PorchPost_1_74")
+material_override = SubResource("oak")
+
+[node name="PorchPost1_74" type="MeshInstance3D" parent="."]
+position = Vector3(1.740000, 1.400000, 3.450000)
+rotation = Vector3(0.000000, 0.000000, 0.000000)
+mesh = SubResource("mesh_PorchPost1_74")
+material_override = SubResource("oak")
+
+[node name="Body" type="StaticBody3D" parent="."]
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body"]
+position = Vector3(0.000000, 1.625000, 0.000000)
+shape = SubResource("collision")
+
+[node name="Entrance" type="Marker3D" parent="."]
+position = Vector3(0.000000, 0.000000, 3.900000)

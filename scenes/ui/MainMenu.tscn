@@ -13,6 +13,8 @@
 [ext_resource type="AudioStream" uid="uid://cw2yj3alvtw0s" path="res://assets/audio/music/MusicaMenu.mp3" id="10_mg3m2"]
 [ext_resource type="PackedScene" path="res://scenes/ui/ControlsMenu.tscn" id="11_crmenu"]
 
+[ext_resource type="Theme" path="res://assets/sprites/ui/nordic_carved_v1/nordic_menu_theme.tres" id="nordic_theme"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kncl5"]
 content_margin_left = 4.0
 content_margin_top = 4.0
@@ -245,6 +247,8 @@ texture = ExtResource("8_8u0te")
 offset = Vector2(15.905, -13.245)
 
 [node name="Menu" type="Control" parent="." unique_id=107006992]
+texture_filter = 1
+theme = ExtResource("nordic_theme")
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -269,6 +273,8 @@ offset_bottom = 445.0
 scale = Vector2(0.8, 0.8)
 
 [node name="Inicio" type="Button" parent="Menu/ListaDeBotones" unique_id=1314068645]
+texture_filter = 1
+theme = ExtResource("nordic_theme")
 custom_minimum_size = Vector2(300, 70)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("10_0k4wn")
@@ -276,6 +282,8 @@ theme_override_font_sizes/font_size = 25
 text = "Nueva Partida"
 
 [node name="Opciones" type="Button" parent="Menu/ListaDeBotones" unique_id=1727526883]
+texture_filter = 1
+theme = ExtResource("nordic_theme")
 custom_minimum_size = Vector2(300, 70)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("10_0k4wn")
@@ -283,14 +291,17 @@ theme_override_font_sizes/font_size = 25
 text = "Opciones"
 
 [node name="Salir" type="Button" parent="Menu/ListaDeBotones" unique_id=1138628442]
+texture_filter = 1
+theme = ExtResource("nordic_theme")
 custom_minimum_size = Vector2(300, 70)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("10_0k4wn")
 theme_override_font_sizes/font_size = 25
-theme_override_styles/normal = SubResource("StyleBoxFlat_kncl5")
 text = "Salir"
 
 [node name="PanelOpciones" type="Control" parent="." unique_id=2001000001]
+texture_filter = 1
+theme = ExtResource("nordic_theme")
 layout_mode = 3
 anchors_preset = 0
 offset_top = 29.0
@@ -378,18 +389,23 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("10_0k4wn")
 
 [node name="BtnControles" type="Button" parent="PanelOpciones/ListaOpciones" unique_id=2001000015]
+texture_filter = 1
+theme = ExtResource("nordic_theme")
 custom_minimum_size = Vector2(300, 55)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("10_0k4wn")
 theme_override_font_sizes/font_size = 20
-theme_override_styles/normal = SubResource("StyleBoxFlat_ctrl1")
 text = "Controles"
 
 [node name="Separador" type="Control" parent="PanelOpciones/ListaOpciones" unique_id=2001000013]
+texture_filter = 1
+theme = ExtResource("nordic_theme")
 custom_minimum_size = Vector2(0, 3)
 layout_mode = 2
 
 [node name="Regresar" type="Button" parent="PanelOpciones/ListaOpciones" unique_id=2001000012]
+texture_filter = 1
+theme = ExtResource("nordic_theme")
 custom_minimum_size = Vector2(200, 60)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("10_0k4wn")
@@ -397,6 +413,8 @@ theme_override_font_sizes/font_size = 22
 text = "< Regresar"
 
 [node name="PanelControles" type="Control" parent="." unique_id=2001000016]
+texture_filter = 1
+theme = ExtResource("nordic_theme")
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

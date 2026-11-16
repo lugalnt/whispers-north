@@ -285,33 +285,22 @@ func _asegurar_accion_desbloqueada(battler: Battler, ruta_script: String) -> voi
 		battler.acciones.append(nueva_accion)
 
 func _posicionar_combatientes_inicial() -> void:
-	var cant_aliados = aliados.size()
-	for i in range(cant_aliados):
-		var a = aliados[i]
-		var offset_x: float
-		if cant_aliados == 1:
-			offset_x = -3.0
-		else:
-			var sep = clampf(2.4 / float(cant_aliados - 1), 0.85, 1.3)
-			offset_x = -2.2 - float(i) * sep
-		var offset_z: float = float(i) * 0.35
-		a.position = Vector3(offset_x, 0.0, offset_z)
-		a.posicion_base = a.global_position if a.is_inside_tree() else a.position
-		a.mirar_al_frente()
+	_colocar_formacion(aliados, -1.0)
+	_colocar_formacion(enemigos, 1.0)
 
-	var cant_enemigos = enemigos.size()
-	for i in range(cant_enemigos):
-		var e = enemigos[i]
-		var offset_x: float
-		if cant_enemigos == 1:
-			offset_x = 3.0
-		else:
-			var sep = clampf(2.2 / float(cant_enemigos - 1), 0.85, 1.25)
-			offset_x = 2.4 + float(i) * sep
-		var offset_z: float = float(i) * 0.35
-		e.position = Vector3(offset_x, 0.0, offset_z)
-		e.posicion_base = e.global_position if e.is_inside_tree() else e.position
-		e.mirar_al_frente()
+## Filas en profundidad y columnas escalonadas: cada unidad conserva su espacio.
+## El trío forma un zigzag; grupos mayores abren otra columna cada tres unidades.
+func _colocar_formacion(bando: Array[Battler], lado: float) -> void:
+	var filas: int = mini(bando.size(), 3)
+	for i in range(bando.size()):
+		var fila: int = i % filas
+		var columna: int = i / filas
+		var profundidad: float = (float(fila) - float(filas - 1) * 0.5) * 2.8
+		var escalon: float = 1.5 if fila % 2 == 1 else 0.0
+		var b: Battler = bando[i]
+		b.position = Vector3(lado * (2.7 + columna * 2.8 + escalon), 0.0, profundidad)
+		b.posicion_base = b.global_position if b.is_inside_tree() else b.position
+		b.mirar_al_frente()
 
 ## Proyecta un punto 3D del mundo a coordenadas 2D en pantalla basándose en la cámara y resolución
 func proyectar_posicion_pantalla(pos_3d: Vector3, tam_pantalla: Vector2) -> Vector2:
@@ -405,15 +394,9 @@ func _ajustar_encuadre_camara_y_combatientes() -> void:
 			break
 		
 		if fuera_derecha > 1.0:
-			for e in enemigos:
-				if is_instance_valid(e):
-					e.position.x = maxf(1.5, e.position.x - 0.2)
 			camara.position += camara.transform.basis.z * 0.35
 		
 		if fuera_izquierda > 1.0:
-			for a in aliados:
-				if is_instance_valid(a):
-					a.position.x = minf(-1.5, a.position.x + 0.2)
 			camara.position += camara.transform.basis.z * 0.35
 		
 		if fuera_arriba > 1.0:
@@ -432,7 +415,7 @@ func _ajustar_encuadre_camara_y_combatientes() -> void:
 			suelo.scale = Vector3(escala_suelo, 1.0, escala_suelo)
 		var fondo = nodo_escenario.get_node_or_null("FondoSprite") as Node3D
 		if fondo and is_instance_valid(fondo):
-			var escala_fondo: float = 3.8 * (1.0 + dist_extra * 0.2)
+			var escala_fondo: float = 3.8 * (1.0 + dist_extra * 0.04)
 			fondo.scale = Vector3(escala_fondo, escala_fondo, 3.8)
 			fondo.position.y = 4.2 + dist_extra * 0.12
 
@@ -995,6 +978,13 @@ func _reconstruir_hud() -> void:
 
 func _crear_panel_hud(battler: Battler, color_borde: Color) -> Control:
 	var contenedor: PanelContainer = PanelContainer.new()
+	var marco_hud := StyleBoxTexture.new()
+	marco_hud.texture = preload("res://assets/sprites/ui/nordic_carved_v1/button_normal.png")
+	marco_hud.content_margin_left = 14.0
+	marco_hud.content_margin_right = 14.0
+	marco_hud.content_margin_top = 10.0
+	marco_hud.content_margin_bottom = 10.0
+	contenedor.add_theme_stylebox_override("panel", marco_hud)
 	contenedor.name = "HUD_" + str(battler.get_instance_id())
 	var vbox: VBoxContainer = VBoxContainer.new()
 	contenedor.add_child(vbox)

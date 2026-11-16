@@ -110,7 +110,10 @@ func _actualizar_visual() -> void:
 		if item != null and item.icono != null:
 			sprite.texture = item.icono
 		elif sprite.texture == null:
-			sprite.texture = preload("res://assets/sprites/items/placeholder.png")
+			sprite.texture = preload("res://assets/sprites/items/nordic_v1/nordic_cheese.png")
+
+		if sprite.texture != null:
+			sprite.pixel_size = 0.96 / maxf(sprite.texture.get_width(), sprite.texture.get_height())
 
 func _on_body_entered(body: Node3D) -> void:
 	if _ya_recogido:
@@ -130,37 +133,42 @@ func _on_body_exited(body: Node3D) -> void:
 func _es_jugador(node: Node) -> bool:
 	if node == null:
 		return false
-	return node.is_in_group("player") or node is CharacterBody3D or node.name.to_lower().contains("player") or node.name.to_lower().contains("eric")
+	if not node.is_in_group("player") or not node is CharacterBody3D:
+		return false
+	if not node.is_visible_in_tree() or not node.is_physics_processing():
+		return false
+	var mundo := get_tree().current_scene
+	return mundo == null or not mundo.has_method("get_active_player") or mundo.call("get_active_player") == node
 
 ## Ejecuta la recolección del objeto, lo agrega al inventario y muestra retroalimentación visual/sonora
 func recoger(_jugador: Node3D = null) -> void:
-	if _ya_recogido:
+	if _ya_recogido or (_jugador != null and not _es_jugador(_jugador)):
 		return
+	var gs = _obtener_game_state()
+	if gs == null or item == null:
+		return
+	# Bloquear reentradas durante las señales de inventario.
 	_ya_recogido = true
+	var aceptada: int = gs.agregar_item(item, cantidad)
+	if aceptada == 0:
+		_ya_recogido = false
+		if mostrar_texto_flotante:
+			_mostrar_texto_flotante_mundo("No cabe más " + item.nombre, global_position)
+		return
+	preload("res://scripts/vfx/nordic_vfx.gd").emitir(get_parent(), &"recogida", global_position + Vector3.UP * 0.35, 0.65)
+	cantidad -= aceptada
+	_reproducir_sfx(sfx_recoger)
+	if mostrar_texto_flotante and is_inside_tree():
+		_mostrar_texto_flotante_mundo(formato_texto_recogido % [aceptada, item.nombre], global_position + Vector3.UP * 0.8)
+	recogido.emit(item, aceptada)
+	if cantidad > 0:
+		# El sobrante sigue en el mundo; se puede recoger al volver a acercarse.
+		_ya_recogido = false
+		return
 	set_deferred("monitoring", false)
 	set_deferred("monitorable", false)
-	
-	var item_a_entregar: InventoryItem = item
-	if item_a_entregar == null:
-		item_a_entregar = load("res://data/items/queso_nordico.tres") as InventoryItem
-	
-	# 1. Agregar a GameState
-	var gs = _obtener_game_state()
-	if gs and gs.has_method("agregar_item"):
-		gs.agregar_item(item_a_entregar, cantidad)
-	elif gs and "inventario" in gs and gs.inventario != null:
-		gs.inventario.agregar(item_a_entregar, cantidad)
-	
-	# 2. SFX
-	_reproducir_sfx(sfx_recoger)
-	
-	# 3. Notificación / texto flotante
-	if mostrar_texto_flotante and item_a_entregar != null and is_inside_tree():
-		var texto = formato_texto_recogido % [cantidad, item_a_entregar.nombre]
-		_mostrar_texto_flotante_mundo(texto, global_position + Vector3.UP * 0.8)
-	
-	recogido.emit(item_a_entregar, cantidad)
-	
+	animar_flotacion = false
+
 	# 4. Animación de recogida y eliminación: se expande a 64x64 (escala 1.0) y flota hacia arriba
 	if is_inside_tree():
 		var tw = create_tween()
@@ -168,7 +176,7 @@ func recoger(_jugador: Node3D = null) -> void:
 			tw.set_parallel(true)
 			tw.tween_property(self, "position:y", position.y + 0.45, 0.22).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 			tw.tween_property(self, "scale", Vector3(1.0, 1.0, 1.0), 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-			tw.chain().tween_property(self, "scale", Vector3.ZERO, 0.12).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+			tw.chain().tween_property(self, "scale", Vector3.ONE * 0.001, 0.12).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 			await tw.finished
 	queue_free()
 

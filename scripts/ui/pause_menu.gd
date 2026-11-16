@@ -114,6 +114,8 @@ var _panel_controles_activo: Control = null
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	layer = 50
+	get_viewport().size_changed.connect(_ajustar_panel)
+	_ajustar_panel.call_deferred()
 	hide()
 	
 	_aplicar_textos_configurados()
@@ -142,8 +144,14 @@ func _ready() -> void:
 	if game_state:
 		if not game_state.inventario_modificado.is_connected(_actualizar_vista_inventario):
 			game_state.inventario_modificado.connect(_actualizar_vista_inventario)
-		if not game_state.stats_modificadas.is_connected(_actualizar_vista_stats):
-			game_state.stats_modificadas.connect(_actualizar_vista_stats)
+		if not game_state.stats_modificadas.is_connected(_al_cambiar_stats):
+			game_state.stats_modificadas.connect(_al_cambiar_stats)
+
+func _al_cambiar_stats() -> void:
+	_actualizar_vista_stats()
+	var gs = _obtener_game_state()
+	if gs and not _item_seleccionado_id.is_empty():
+		_mostrar_detalle_item(gs.inventario.obtener_item(_item_seleccionado_id))
 
 func _aplicar_textos_configurados() -> void:
 	if lbl_header_titulo and not texto_titulo_menu.is_empty():
@@ -282,6 +290,7 @@ func _actualizar_estilo_pestanas() -> void:
 
 func _actualizar_vista_inventario() -> void:
 	for c in grid_items.get_children():
+		grid_items.remove_child(c)
 		c.queue_free()
 	_botones_slots.clear()
 	
@@ -297,6 +306,11 @@ func _actualizar_vista_inventario() -> void:
 	
 	lbl_vacio.hide()
 	var lista_items: Array = inventario.obtener_lista_items()
+	# Conservar el objeto seleccionado aunque cambie el orden de la lista.
+	for i in range(lista_items.size()):
+		if lista_items[i]["item"].id == _item_seleccionado_id:
+			_indice_slot_enfocado = i
+			break
 	
 	for i in range(lista_items.size()):
 		var registro = lista_items[i]
@@ -306,13 +320,19 @@ func _actualizar_vista_inventario() -> void:
 			continue
 		
 		var slot_btn: Button = Button.new()
-		slot_btn.custom_minimum_size = Vector2(72, 72)
+		slot_btn.custom_minimum_size = Vector2(80, 80)
+		var marco := StyleBoxTexture.new()
+		marco.texture = preload("res://assets/sprites/ui/nordic_carved_v1/inventory_slot.png")
+		for estado_slot in ["normal", "hover", "pressed", "hover_pressed"]:
+			slot_btn.add_theme_stylebox_override(estado_slot, marco)
 		slot_btn.focus_mode = Control.FOCUS_ALL
 		slot_btn.mouse_filter = Control.MOUSE_FILTER_PASS
+		slot_btn.tooltip_text = "%s ×%d" % [item.nombre, cant]
 		
 		# Contenedor interno del slot
 		var margen: MarginContainer = MarginContainer.new()
 		margen.set_anchors_preset(Control.PRESET_FULL_RECT)
+		margen.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		margen.add_theme_constant_override("margin_left", 6)
 		margen.add_theme_constant_override("margin_top", 6)
 		margen.add_theme_constant_override("margin_right", 6)
@@ -323,6 +343,7 @@ func _actualizar_vista_inventario() -> void:
 		tex_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		tex_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		tex_rect.texture = item.icono
+		tex_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		margen.add_child(tex_rect)
 		
 		if cant > 1:
@@ -385,12 +406,17 @@ func _mostrar_detalle_item(item: InventoryItem) -> void:
 	_item_seleccionado_id = item.id
 	detalle_icono.texture = item.icono
 	detalle_nombre.text = item.nombre
-	detalle_categoria.text = "[" + item.obtener_nombre_categoria() + "]"
+	var gs = _obtener_game_state()
+	var cantidad: int = gs.inventario.obtener_cantidad(item.id) if gs else 0
+	detalle_categoria.text = "%s · %d / %d" % [item.obtener_nombre_categoria(), cantidad, item.cantidad_maxima]
 	detalle_desc.text = item.descripcion
 	
 	if item.puede_usarse():
 		detalle_btn_usar.show()
-		detalle_btn_usar.text = "%s (+%d HP) [Interactuar]" % [texto_boton_usar, item.curacion_hp]
+		var motivo: String = gs.motivo_no_usable(item.id) if gs else "No disponible"
+		detalle_btn_usar.disabled = not motivo.is_empty()
+		var curacion: int = mini(item.curacion_hp, gs.stats.max_hp - gs.hp_actual) if gs and gs.stats else 0
+		detalle_btn_usar.text = "%s (+%d HP)" % [texto_boton_usar, curacion] if motivo.is_empty() else motivo
 	else:
 		detalle_btn_usar.hide()
 
@@ -419,16 +445,11 @@ func _consumir_item(item: InventoryItem) -> void:
 	if not game_state:
 		return
 	
-	var curado: int = item.curacion_hp
 	if game_state.usar_item(item.id):
 		_reproducir_sonido(sfx_confirmar if sfx_confirmar else sfx_cursor)
-		
-		# Feedback temporal en el botón de consumir
-		if detalle_btn_usar and is_instance_valid(detalle_btn_usar):
-			detalle_btn_usar.text = "¡Consumido! (+%d HP)" % curado
-		
-		_actualizar_vista_inventario()
-		_actualizar_vista_stats()
+	else:
+		_reproducir_sonido(sfx_error)
+		_mostrar_detalle_item(item)
 
 
 # ---------------------------------------------------------------------------
@@ -555,3 +576,12 @@ func _reproducir_sonido(stream: AudioStream) -> void:
 	get_tree().root.add_child(player)
 	player.finished.connect(player.queue_free)
 	player.play()
+
+func _ajustar_panel() -> void:
+	var panel: Control = $ContenedorPrincipal
+	var area := get_viewport().get_visible_rect().size
+	var factor := minf(1.0, minf((area.x - 24.0) / 960.0, (area.y - 24.0) / 600.0))
+	panel.set_anchors_preset(Control.PRESET_TOP_LEFT)
+	panel.size = Vector2(960, 600)
+	panel.scale = Vector2.ONE * factor
+	panel.position = (area - panel.size * factor) * 0.5

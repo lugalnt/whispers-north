@@ -28,6 +28,7 @@ buses/default_bus_layout="res://data/default_bus_layout.tres"
 [autoload]
 
 GameState="*res://scripts/core/game_state.gd"
+CoordinadorEncuentros="*res://scripts/combat/coordinador_encuentros.gd"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 
 [display]

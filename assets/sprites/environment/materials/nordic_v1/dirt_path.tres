@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_v1/dirt_path.png" id="1"]
+
+[resource]
+resource_name = "Nordic dirt_path"
+albedo_texture = ExtResource("1")
+texture_filter = 0
+texture_repeat = true
+roughness = 1.0
+

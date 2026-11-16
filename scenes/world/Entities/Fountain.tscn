@@ -5,7 +5,7 @@
 [ext_resource type="Material" path="res://assets/models/DS _ DSi - Pokemon Black 2 _ White 2 - Fountains - Fountain 02/materials/mat_shadow.tres" id="2_hft80"]
 [ext_resource type="Material" path="res://assets/models/DS _ DSi - Pokemon Black 2 _ White 2 - Fountains - Fountain 02/materials/mat_water_rim.tres" id="3_y3dpx"]
 [ext_resource type="Material" path="res://assets/models/DS _ DSi - Pokemon Black 2 _ White 2 - Fountains - Fountain 02/materials/mat_basin_floor.tres" id="4_mdiof"]
-[ext_resource type="Material" path="res://assets/models/DS _ DSi - Pokemon Black 2 _ White 2 - Fountains - Fountain 02/materials/mat_water_pool.tres" id="5_g8kax"]
+[ext_resource type="Material" path="res://data/combat/nordic_fountain_water.tres" id="5_g8kax"]
 [ext_resource type="Material" path="res://assets/models/DS _ DSi - Pokemon Black 2 _ White 2 - Fountains - Fountain 02/materials/mat_water_stream.tres" id="6_bk66y"]
 [ext_resource type="Material" path="res://assets/models/DS _ DSi - Pokemon Black 2 _ White 2 - Fountains - Fountain 02/materials/mat_stone_base.tres" id="7_ciqmi"]
 [ext_resource type="Material" path="res://assets/models/DS _ DSi - Pokemon Black 2 _ White 2 - Fountains - Fountain 02/materials/mat_stone_trim.tres" id="8_8ilkr"]

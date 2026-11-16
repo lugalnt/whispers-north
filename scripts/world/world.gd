@@ -8,6 +8,7 @@ extends Node3D
 var _menu_pausa: PauseMenu = null
 
 func _ready() -> void:
+	add_child(preload("res://scripts/world/world_presentation.gd").new())
 	_setup_camera_switches()
 	# Los controles (move_*, interact) se definen en Project Settings > Input Map
 	# El juego empieza solo con el personaje de 16x16 activo
@@ -16,7 +17,12 @@ func _ready() -> void:
 
 	if escena_menu_pausa:
 		_menu_pausa = escena_menu_pausa.instantiate() as PauseMenu
+		_menu_pausa.name = "PauseMenu"
 		add_child(_menu_pausa)
+	
+	var gs = _obtener_game_state()
+	if gs != null:
+		gs.zona_actual = scene_file_path
 	
 	_procesar_transicion_entrada()
 
@@ -30,14 +36,16 @@ func _procesar_transicion_entrada() -> void:
 		cambiar_personaje(player_16, player_32)
 	
 	var active = get_active_player()
+	var marcador_nombre: String = gs.spawn_nombre_marcador
 	
 	# 1. Colocar al jugador en el punto de entrada
 	var pos_destino: Vector3 = gs.consumir_posicion_spawn(self)
-	if pos_destino != Vector3.ZERO and active != null:
+	if active != null and find_child(marcador_nombre, true, false) != null:
 		if active.is_inside_tree():
 			active.global_position = pos_destino
 		else:
 			active.position = pos_destino
+		active.velocity = Vector3.ZERO
 		active.reset_physics_interpolation()
 	
 	# 2. Activar la cámara de destino (ej: Camera6)

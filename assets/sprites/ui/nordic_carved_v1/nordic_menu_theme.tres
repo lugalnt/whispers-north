@@ -1,0 +1,80 @@
+[gd_resource type="Theme" load_steps=14 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/ui/nordic_carved_v1/button_normal.png" id="button_normal"]
+[ext_resource type="Texture2D" path="res://assets/sprites/ui/nordic_carved_v1/button_hover.png" id="button_hover"]
+[ext_resource type="Texture2D" path="res://assets/sprites/ui/nordic_carved_v1/button_pressed.png" id="button_pressed"]
+[ext_resource type="Texture2D" path="res://assets/sprites/ui/nordic_carved_v1/menu_panel.png" id="menu_panel"]
+[ext_resource type="Texture2D" path="res://assets/sprites/ui/nordic_carved_v1/inventory_slot.png" id="inventory_slot"]
+
+[ext_resource type="FontFile" path="res://assets/fonts/BridgeParapet.ttf" id="font"]
+
+[sub_resource type="StyleBoxTexture" id="button_normal"]
+texture = ExtResource("button_normal")
+content_margin_left = 24.0
+content_margin_right = 24.0
+content_margin_top = 16.0
+content_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="button_hover"]
+texture = ExtResource("button_hover")
+content_margin_left = 24.0
+content_margin_right = 24.0
+content_margin_top = 16.0
+content_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="button_pressed"]
+texture = ExtResource("button_pressed")
+content_margin_left = 24.0
+content_margin_right = 24.0
+content_margin_top = 16.0
+content_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="menu_panel"]
+texture = ExtResource("menu_panel")
+content_margin_left = 48.0
+content_margin_right = 48.0
+content_margin_top = 48.0
+content_margin_bottom = 48.0
+
+[sub_resource type="StyleBoxTexture" id="inventory_slot"]
+texture = ExtResource("inventory_slot")
+content_margin_left = 24.0
+content_margin_right = 24.0
+content_margin_top = 16.0
+content_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="disabled"]
+texture = ExtResource("button_normal")
+modulate_color = Color(0.55, 0.58, 0.6, 0.85)
+content_margin_left = 24.0
+content_margin_right = 24.0
+content_margin_top = 16.0
+content_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxFlat" id="focus"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.73, 0.81, 0.65, 1)
+
+[resource]
+default_font = ExtResource("font")
+default_font_size = 20
+Button/colors/font_color = Color(0.914, 0.875, 0.773, 1)
+Button/colors/font_hover_color = Color(1, 0.96, 0.85, 1)
+Button/colors/font_pressed_color = Color(0.97, 0.84, 0.63, 1)
+Button/colors/font_disabled_color = Color(0.5, 0.55, 0.55, 1)
+Button/styles/normal = SubResource("button_normal")
+Button/styles/hover = SubResource("button_hover")
+Button/styles/pressed = SubResource("button_pressed")
+Button/styles/hover_pressed = SubResource("button_pressed")
+Button/styles/disabled = SubResource("disabled")
+Button/styles/focus = SubResource("focus")
+Panel/styles/panel = SubResource("menu_panel")
+PanelContainer/styles/panel = SubResource("menu_panel")
+Label/colors/font_color = Color(0.914, 0.875, 0.773, 1)
+InventorySlot/base_type = &"PanelContainer"
+InventorySlot/styles/panel = SubResource("inventory_slot")
+

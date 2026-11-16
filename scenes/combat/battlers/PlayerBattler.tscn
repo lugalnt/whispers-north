@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cb3pl1bat001"]
 
-[ext_resource type="Script" uid="uid://dop1q8g1sik7i" path="res://scripts/combat/battler.gd" id="1_battler"]
+[ext_resource type="Script" path="res://scripts/combat/player_battler.gd" id="1_battler"]
 [ext_resource type="Script" uid="uid://dsqsl4jcuos6g" path="res://scripts/combat/battler_stats.gd" id="2_stats"]
 [ext_resource type="Script" uid="uid://dkh872n1t181d" path="res://scripts/combat/acciones/accion_golpe.gd" id="3_golpe"]
 [ext_resource type="Script" uid="uid://cb14ax1ksjqb8" path="res://scripts/combat/battler_action.gd" id="3_mmx4l"]
@@ -21,6 +21,7 @@ script = ExtResource("3_golpe")
 nombre = "Golpear"
 descripcion = "Pulsa el botón de interactuar justo en el impacto para infligir daño extra."
 poder = 1
+tiempo_impacto = 0.4
 
 [node name="PlayerBattler" type="Node3D" unique_id=149152612]
 script = ExtResource("1_battler")
@@ -32,7 +33,7 @@ copiar_sprite_del_jugador = true
 radio = 0.5
 anim_reposo = &"walk_side"
 anim_caminar = &"walk_side"
-anim_ataque = &"interact_side"
+anim_ataque = &"punch_down_site"
 sfx_ataque_golpe = ExtResource("7_ufsl7")
 sfx_ataque_exito = ExtResource("8_7aayp")
 sfx_ataque_especial = ExtResource("9_mysnp")

@@ -14,7 +14,7 @@ const MENU_X_VISIBLE: float = 0.0
 const MENU_X_OCULTO: float = -500.0
 
 # Posición X visible del panel de opciones
-const OPCIONES_X_VISIBLE: float = 200.0
+var OPCIONES_X_VISIBLE: float = 200.0
 
 # FondoMenu es hijo directo del MainMenu (sin SubViewport)
 @onready var fondo_menu = $FondoMenu
@@ -129,6 +129,7 @@ func _ready() -> void:
 
 	# Poblar resoluciones dinámicamente según el monitor actual
 	_poblar_resoluciones()
+	_ajustar_opciones()
 
 	# Sincronizar volumen
 	slider_volumen.value = db_to_linear(audio_player.volume_db)
@@ -319,7 +320,13 @@ func _on_inicio_pressed() -> void:
 
 
 func _ir_a_juego() -> void:
-	get_tree().change_scene_to_file("res://scenes/world/World.tscn")
+	# "Inicio" siempre comienza una Nueva partida: reinicia progreso, stats e inventario
+	var gs: Node = get_node_or_null("/root/GameState")
+	var destino: String = "res://scenes/world/World.tscn"
+	if gs != null:
+		gs.nueva_partida()
+		destino = gs.escena_nueva_partida
+	get_tree().change_scene_to_file(destino)
 
 
 # ─────────────────────────────────────────────
@@ -377,6 +384,7 @@ func _ir_al_menu() -> void:
 # Se llama automáticamente cada vez que la resolución o modo de ventana cambia.
 # Reposiciona los paneles sin animación para que coincidan con el nuevo tamaño.
 func _on_viewport_size_changed() -> void:
+	_ajustar_opciones()
 	if _animando:
 		# Si hay una animación en curso, esperamos a que termine antes de corregir
 		await get_tree().create_timer(DURACION_TRANSICION + 0.05).timeout
@@ -611,3 +619,41 @@ func _aplicar_resolucion(index: int) -> void:
 	get_window().size     = nueva_res
 	@warning_ignore("integer_division")
 	get_window().position = pant_pos + (pant_size - nueva_res) / 2
+
+func _ajustar_opciones() -> void:
+	var area := get_viewport().get_visible_rect().size
+	var fondo_escala := maxf(area.x / 1140.0, area.y / 650.0)
+	$FondoMenu.scale = Vector2.ONE * fondo_escala
+	$FondoMenu.position = (area - Vector2(1140, 650) * fondo_escala) * 0.5
+	var factor := minf(1.0, minf((area.x - 32.0) / 520.0, (area.y - 32.0) / 610.0))
+	panel_opciones.size = Vector2(520, 610)
+	panel_opciones.scale = Vector2.ONE * factor
+	panel_opciones.position.y = (area.y - 610.0 * factor) * 0.5
+	OPCIONES_X_VISIBLE = (area.x - 520.0 * factor) * 0.5
+	var tema := preload("res://assets/sprites/ui/nordic_carved_v1/nordic_gameplay_theme.tres")
+	panel_opciones.theme = tema
+	for node in panel_opciones.find_children("*", "Control", true, false):
+		node.theme = tema
+		node.remove_theme_font_override("font")
+		node.add_theme_font_size_override("font_size", 18)
+		if node is Label:
+			node.remove_theme_stylebox_override("normal")
+			node.remove_theme_stylebox_override("focus")
+	var fondo: Panel = panel_opciones.get_node("FondoOpciones")
+	fondo.size = Vector2(520, 610)
+	var estilo := StyleBoxFlat.new()
+	estilo.bg_color = Color(0.045, 0.07, 0.085, 0.97)
+	estilo.set_corner_radius_all(12)
+	fondo.add_theme_stylebox_override("panel", estilo)
+	var titulo: Label = panel_opciones.get_node("TituloOpciones")
+	titulo.position = Vector2(28, 18)
+	titulo.size = Vector2(464, 42)
+	titulo.add_theme_font_size_override("font_size", 28)
+	var lista: VBoxContainer = panel_opciones.get_node("ListaOpciones")
+	lista.position = Vector2(28, 78)
+	lista.size = Vector2(464, 500)
+	lista.add_theme_constant_override("separation", 8)
+	for child in lista.get_children():
+		if child is BaseButton or child is Slider:
+			child.custom_minimum_size = Vector2(0, 38)
+			if child is Button: child.add_theme_font_size_override("font_size", 18)

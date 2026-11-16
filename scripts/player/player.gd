@@ -1,6 +1,7 @@
 extends CharacterBody3D
 
 const SPEED = 5.0
+var _distancia_polvo: float = 0.0
 @onready var anim_sprite = $Sprite2_5D
 
 # Estado de interacción: bloquea el movimiento mientras suena la animación de interactuar
@@ -66,7 +67,9 @@ func _physics_process(delta):
 		anim_sprite.stop() 
 		# Ojo: si prefieres que tenga animación de respirar cuando esté quieto, usa: anim_sprite.play("idle")
 
+	var antes_paso: Vector3 = global_position
 	move_and_slide()
+	_actualizar_polvo(antes_paso)
 
 func update_animation(input_dir: Vector2):
 	last_input_dir = input_dir
@@ -201,3 +204,22 @@ func _obtener_game_state():
 	# Autoload GameState (acceso por nodo para compatibilidad con scripts headless)
 	var ml := Engine.get_main_loop() as SceneTree
 	return ml.root.get_node_or_null("GameState") if ml else null
+
+## Emitir por distancia recorrida: nunca estando quieto, en el aire o en diálogo.
+func _actualizar_polvo(posicion_anterior: Vector3) -> void:
+	if not is_on_floor() or not is_visible_in_tree() or is_interacting:
+		_distancia_polvo = 0.0
+		return
+	var distancia := Vector2(global_position.x - posicion_anterior.x, global_position.z - posicion_anterior.z).length()
+	if distancia > 1.0:
+		_distancia_polvo = 0.0
+		return
+	_distancia_polvo += distancia
+	if _distancia_polvo < 1.1:
+		return
+	_distancia_polvo = 0.0
+	for i in get_slide_collision_count():
+		var contacto := get_slide_collision(i)
+		if contacto.get_normal().dot(Vector3.UP) > 0.7:
+			preload("res://scripts/vfx/nordic_vfx.gd").emitir(get_parent(), &"paso", contacto.get_position() + Vector3.UP * 0.12, 0.5)
+			break

@@ -1,5 +1,9 @@
 # Sistema de Cámaras y Switches Autónomos (Whispers of the North)
 
+## Estado vigente — 16 de noviembre de 2026
+
+World conserva `SwitchC_*`; las otras zonas usan CameraSwitch. `scripts/world/world_presentation.gd`, añadido por World y ZonaMundo, protege el encuadre del jugador con una zona segura y corrige la cámara de exploración al salir de ella; también atenúa vegetación que se interpone. Admite cámaras directas y bajo `Cameras`, y excluye la cámara de combate. Conserva altura al corregir y orienta 30° hacia abajo. No sustituye los switches ni garantiza ausencia de oclusiones por edificios. Las muestras de cinco zonas pasaron `presentation_test.gd`; queda recorrido manual exhaustivo. El combate tiene cámara base (0, 7.6, 12), FOV 44 y ajuste propio según formación.
+
 Este documento detalla el sistema moderno de conmutación de cámaras entre áreas, plazas y calles del juego (por ejemplo en `World_Town` o `World`), reemplazando la necesidad de escribir scripts de escena tediosos o nombrar strings manualmente a ciegas.
 
 ---

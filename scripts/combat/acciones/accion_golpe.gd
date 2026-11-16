@@ -9,10 +9,8 @@ extends BattlerAction
 ##      pulsar `interact` justo cuando el golpe conecta = +bonus de daño.
 ##   3. Aplica el daño, reacción del objetivo y vuelve a su sitio.
 ##
-## ANIMACIÓN PLACEHOLDER: usa `anim_ataque` del battler (ahora "interact_side" del personaje)
-## más un empujón procedural. Cuando exista una animación de ataque real (p. ej. del
-## "16x16 Attack-Sheet.png"), basta con cambiar `anim_ataque` en la escena del battler y,
-## si hace falta, ajustar `tiempo_impacto` para que coincida con el frame del golpe.
+## El jugador usa Punch_Down_Side (punch_down_site): anticipación e impacto
+## a los 400 ms. Otros battlers conservan la animación procedural de respaldo.
 
 @export_group("Tiempos")
 @export var duracion_acercarse: float = 0.5
@@ -66,12 +64,17 @@ func ejecutar(origen: Battler, objetivos: Array[Battler], arena: Node) -> void:
 	if victima.esta_vivo():
 		victima.animar_herido()
 	await arena.esperar(0.4)
+	await origen.esperar_animacion()
 
 	# 4. Volver
 	await origen.volver_a_base(duracion_volver)
 
 ## Carga hacia atrás y golpe hacia delante, terminando justo en `tiempo_impacto`
 func _animar_golpe(origen: Battler, victima: Battler) -> void:
+	if origen.anim_ataque == &"punch_down_site" and origen.reproducir(origen.anim_ataque):
+		# El atlas ya contiene carga, extensión del puño y recuperación.
+		# Evitar squash procedural y reproducirlo completo desde el primer cuadro.
+		return
 	var t_carga: float = tiempo_impacto * 0.6
 	var t_golpe: float = tiempo_impacto - t_carga
 	var dir: float = signf(victima.global_position.x - origen.global_position.x)

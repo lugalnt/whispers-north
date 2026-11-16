@@ -1,0 +1,44 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/combat/jarrito_battler.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/combat/battler_stats.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/combat/acciones/accion_embestida_jarrito.gd" id="3"]
+[ext_resource type="Script" path="res://scripts/combat/battler_action.gd" id="4"]
+[ext_resource type="SpriteFrames" path="res://data/combat/jarrito_frames.tres" id="5"]
+
+[sub_resource type="Resource" id="Stats"]
+script = ExtResource("2")
+max_hp = 24
+ataque = 10
+velocidad = 8
+
+[sub_resource type="Resource" id="Embestida"]
+script = ExtResource("3")
+nombre = "Embestida"
+descripcion = "Embestida corta. Pulsa interactuar a tiempo para esquivarla con un salto."
+poder = 1
+
+[node name="JarritoBattler" type="Node3D"]
+script = ExtResource("1")
+nombre = "Jarrito"
+margen_inferior_sprite_px = 10
+stats = SubResource("Stats")
+acciones = Array[ExtResource("4")]([SubResource("Embestida")])
+sprite_mira_a_la_derecha = false
+anim_reposo = &"idle"
+reposo_estatico = false
+anim_caminar = &"idle"
+anim_ataque = &"attack"
+anim_herido = &"hurt"
+respiracion = 0.0
+
+[node name="Visual" type="AnimatedSprite3D" parent="."]
+position = Vector3(0, 1.28, 0)
+pixel_size = 0.04
+billboard = 2
+transparent = true
+shaded = false
+texture_filter = 0
+sprite_frames = ExtResource("5")
+animation = &"idle"
+autoplay = "idle"

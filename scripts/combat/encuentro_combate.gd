@@ -16,6 +16,11 @@ signal combate_terminado(resultado: CombatArena.ResultadoCombate)
 signal victoria()
 signal derrota()
 signal huida()
+signal encuentro_rechazado(motivo: String)
+signal combate_cancelado(motivo: String)
+signal reserva_confirmada(sesion: RefCounted)
+
+const Sesion = preload("res://scripts/combat/sesion_encuentro.gd")
 
 const CombatArenaScript = preload("res://scripts/combat/combat_arena.gd")
 const ArenaDefaultScene = preload("res://scenes/combat/CombatArena.tscn")
@@ -95,6 +100,7 @@ const PotBattlerScene = preload("res://scenes/combat/battlers/PotBattler.tscn")
 @export var auto_eliminar_padre_en_victoria: bool = false
 
 var _combate_en_curso: bool = false
+var ultima_cancelacion: String = ""
 
 func _ready() -> void:
 	if auto_iniciar_en_area:
@@ -106,7 +112,8 @@ func _on_parent_area_body_entered(body: Node3D) -> void:
 	if not activo or _combate_en_curso:
 		return
 	if body.is_in_group("player") or "is_interacting" in body:
-		iniciar_combate(body as CharacterBody3D, get_parent())
+		var area: Area3D = get_parent() as Area3D
+		iniciar_combate(body as CharacterBody3D, area, func(): return is_instance_valid(body) and area.overlaps_body(body))
 
 ## Inicia el flujo completo del encuentro de combate:
 ## 1. Congela al jugador y guarda la cámara del supramundo.
@@ -115,159 +122,158 @@ func _on_parent_area_body_entered(body: Node3D) -> void:
 ## 4. Oculta el nodo de la entidad en el mundo mientras dura la batalla.
 ## 5. Revela la arena configurada y ejecuta el combate.
 ## 6. Al finalizar, restaura cámaras, visibilidad y emite señales.
-func iniciar_combate(jugador: CharacterBody3D = null, nodo_a_ocultar: Node = null) -> CombatArena.ResultadoCombate:
+func iniciar_combate(jugador: CharacterBody3D = null, nodo_a_ocultar: Node = null, validar_alcance: Callable = Callable()) -> CombatArena.ResultadoCombate:
 	if not activo or _combate_en_curso:
+		encuentro_rechazado.emit("inactivo_o_en_curso")
 		return CombatArena.ResultadoCombate.HUIDA
-
-	_combate_en_curso = true
-
 	if jugador == null:
 		jugador = _obtener_jugador()
-
-	# Bloquear movimiento del jugador en el supramundo
-	_bloquear_jugador(jugador, true)
-
-	# Guardar la cámara activa del mundo para restaurarla al terminar
-	var cam_mundo: Camera3D = get_viewport().get_camera_3d()
-
-	# Instanciar anticipadamente la arena para leer o sobreescribir propiedades visuales
-	var escena_a_usar: PackedScene = escena_arena if escena_arena else ArenaDefaultScene
-	var arena: CombatArena = escena_a_usar.instantiate() as CombatArena
-	arena.auto_iniciar_si_esta_vacio = false
-	get_tree().current_scene.add_child(arena)
-	arena.global_position = Vector3(0.0, altura_aislamiento, 0.0)
-
-	# Determinar jingle: usar el del encuentro si se definió, sino el del nodo principal de CombatArena
-	var jingle_a_usar: AudioStream = jingle_inicio
-	if jingle_a_usar == null and arena.jingle_inicio != null:
-		jingle_a_usar = arena.jingle_inicio
-
-	# 1. Reproducir jingle de inicio de combate al arrancar la transición
-	if jingle_a_usar != null:
-		_reproducir_audio(jingle_a_usar)
-		arena._jingle_reproducido = true
-
-	# 2. Transición de entrada: destellos (flash) seguidos de cortina
-	var canvas_transicion: CanvasLayer = CanvasLayer.new()
-	canvas_transicion.layer = 105
-	var fade_rect: ColorRect = ColorRect.new()
-	fade_rect.color = color_flash if flash_activo else color_fundido_entrada
-	fade_rect.modulate.a = 0.0
-	fade_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
-	canvas_transicion.add_child(fade_rect)
-	get_tree().root.add_child(canvas_transicion)
-
-	if flash_activo and cantidad_flashes > 0:
-		var tween_flash: Tween = create_tween()
-		for i in range(cantidad_flashes):
-			tween_flash.tween_property(fade_rect, "modulate:a", 1.0, duracion_flash).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-			if i < cantidad_flashes - 1:
-				tween_flash.tween_property(fade_rect, "modulate:a", 0.0, duracion_flash * 0.8).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-		await tween_flash.finished
-		fade_rect.color = color_fundido_entrada
-	else:
-		var tween_in: Tween = create_tween()
-		tween_in.tween_property(fade_rect, "modulate:a", 1.0, duracion_fundido_entrada)
-		await tween_in.finished
-
-	# Ocultar visuales del supramundo mientras pelean en la arena
-	if nodo_a_ocultar and is_instance_valid(nodo_a_ocultar) and nodo_a_ocultar.has_method("hide"):
-		nodo_a_ocultar.hide()
-	var sprite_jugador: Node = null
-	if jugador:
-		sprite_jugador = jugador.get_node_or_null("Sprite2_5D")
-		if sprite_jugador:
-			sprite_jugador.hide()
-
-	# Aplicar personalizaciones del encuentro (música, fondo, recompensas, jingle y textos)
-	if arena.has_method("aplicar_configuracion_encuentro"):
-		arena.aplicar_configuracion_encuentro(
-			musica_combate,
-			textura_fondo,
-			texto_recompensas,
-			exp_recompensa,
-			jingle_a_usar,
-			texto_inicio_combate,
-			texto_victoria,
-			texto_derrota,
-			texto_huida,
-			texto_titulo_recompensas
-		)
-
-	# Inicializar combatientes
-	var lista_aliados: Array = aliados if not aliados.is_empty() else [JugadorBattlerScene]
-	var lista_enemigos: Array = enemigos if not enemigos.is_empty() else [PotBattlerScene]
-	arena.inicializar(lista_aliados, lista_enemigos, jugador)
-
-	# Quitar cortina de entrada para revelar la arena
-	var tween_unfade: Tween = create_tween()
-	tween_unfade.tween_property(fade_rect, "modulate:a", 0.0, 0.2)
-	await tween_unfade.finished
-	canvas_transicion.queue_free()
-
-	combate_iniciado.emit()
-
-	# Comenzar batalla y esperar resultado
-	arena.comenzar_combate()
-	var resultado: CombatArena.ResultadoCombate = await arena.combate_terminado
-
-	# Sincronizar vida restante del jugador de vuelta a GameState
-	var gs = _obtener_game_state()
-	if gs:
-		for a in arena.aliados:
-			if is_instance_valid(a) and a.controlado_por_jugador:
-				gs.actualizar_hp(a.hp)
-				break
-
-	# Transición de salida
-	var canvas_salida: CanvasLayer = CanvasLayer.new()
-	canvas_salida.layer = 100
-	var fade_salida: ColorRect = ColorRect.new()
-	fade_salida.color = color_fundido_salida
-	fade_salida.modulate.a = 0.0
-	fade_salida.set_anchors_preset(Control.PRESET_FULL_RECT)
-	canvas_salida.add_child(fade_salida)
-	get_tree().root.add_child(canvas_salida)
-
-	var tween_fade_out: Tween = create_tween()
-	tween_fade_out.tween_property(fade_salida, "modulate:a", 1.0, duracion_fundido_salida)
-	await tween_fade_out.finished
-
-	# Liberar arena y restaurar cámara
-	arena.queue_free()
-	if cam_mundo and is_instance_valid(cam_mundo):
-		cam_mundo.make_current()
-
-	# Restaurar visuales del supramundo
-	if nodo_a_ocultar and is_instance_valid(nodo_a_ocultar) and nodo_a_ocultar.has_method("show"):
-		nodo_a_ocultar.show()
-	if sprite_jugador and is_instance_valid(sprite_jugador):
-		sprite_jugador.show()
-
-	# Desvanecer cortina de salida
-	var tween_unfade_out: Tween = create_tween()
-	tween_unfade_out.tween_property(fade_salida, "modulate:a", 0.0, 0.22)
-	await tween_unfade_out.finished
-	canvas_salida.queue_free()
-
+	var gestor: Node = get_node("/root/CoordinadorEncuentros")
+	var sesion: Sesion = gestor.reservar(self, jugador, validar_alcance)
+	if sesion == null:
+		encuentro_rechazado.emit("no_disponible_o_fuera_de_alcance")
+		return CombatArena.ResultadoCombate.HUIDA
+	_combate_en_curso = true
+	ultima_cancelacion = ""
+	sesion.recordar_visual(nodo_a_ocultar)
+	sesion.recordar_visual(jugador.get_node_or_null("Sprite2_5D"))
+	reserva_confirmada.emit(sesion)
+	if not sesion.terminada:
+		_ejecutar_encuentro(sesion, nodo_a_ocultar)
+	# La sesión, no la arena, completa también cancelación y salidas excepcionales.
+	if not sesion.terminada:
+		await sesion.finalizada
 	_combate_en_curso = false
-
-	# Emitir señales correspondientes
+	if sesion.cancelada:
+		ultima_cancelacion = sesion.motivo
+		combate_cancelado.emit(sesion.motivo)
+		return CombatArena.ResultadoCombate.HUIDA
+	var resultado: CombatArena.ResultadoCombate = sesion.resultado as CombatArena.ResultadoCombate
 	combate_terminado.emit(resultado)
 	match resultado:
 		CombatArena.ResultadoCombate.VICTORIA:
 			_entregar_recompensas()
 			victoria.emit()
 			if auto_eliminar_padre_en_victoria:
-				var padre: Node = get_parent()
-				if padre and is_instance_valid(padre):
-					padre.queue_free()
+				get_parent().queue_free()
 		CombatArena.ResultadoCombate.DERROTA:
 			derrota.emit()
 		CombatArena.ResultadoCombate.HUIDA:
 			huida.emit()
-
 	return resultado
+
+
+func cancelar_combate(motivo: String = "cancelado") -> void:
+	get_node("/root/CoordinadorEncuentros").cancelar(self, motivo)
+
+
+func _ejecutar_encuentro(sesion: Sesion, nodo_a_ocultar: Node) -> void:
+	var gestor: Node = get_node("/root/CoordinadorEncuentros")
+	var escena: PackedScene = escena_arena if escena_arena else ArenaDefaultScene
+	var instancia: Node = escena.instantiate()
+	if not instancia is CombatArena:
+		if instancia != null:
+			instancia.free()
+		gestor.cancelar(self, "escena_arena_invalida")
+		return
+	var arena: CombatArena = instancia as CombatArena
+	sesion.recursos.append(arena)
+	var lista_aliados: Array = aliados if not aliados.is_empty() else [JugadorBattlerScene]
+	var lista_enemigos: Array = enemigos if not enemigos.is_empty() else [PotBattlerScene]
+	if not _validar_battlers(lista_aliados) or not _validar_battlers(lista_enemigos):
+		gestor.cancelar(self, "battler_invalido")
+		return
+	arena.auto_iniciar_si_esta_vacio = false
+	sesion.mundo.add_child(arena)
+	arena.global_position = Vector3(0.0, altura_aislamiento, 0.0)
+	var jingle: AudioStream = jingle_inicio if jingle_inicio else arena.jingle_inicio
+	if jingle != null:
+		sesion.recursos.append(_reproducir_audio(jingle))
+		arena._jingle_reproducido = true
+
+	var canvas: CanvasLayer = CanvasLayer.new()
+	canvas.layer = 105
+	sesion.recursos.append(canvas)
+	var cortina: ColorRect = ColorRect.new()
+	cortina.color = color_flash if flash_activo else color_fundido_entrada
+	cortina.modulate.a = 0.0
+	cortina.set_anchors_preset(Control.PRESET_FULL_RECT)
+	canvas.add_child(cortina)
+	get_tree().root.add_child(canvas)
+	var entrada: Tween = create_tween()
+	if flash_activo and cantidad_flashes > 0:
+		for i in cantidad_flashes:
+			entrada.tween_property(cortina, "modulate:a", 1.0, duracion_flash)
+			if i < cantidad_flashes - 1:
+				entrada.tween_property(cortina, "modulate:a", 0.0, duracion_flash * 0.8)
+	else:
+		entrada.tween_property(cortina, "modulate:a", 1.0, duracion_fundido_entrada)
+	if not await _esperar_tween(entrada, sesion):
+		return
+	cortina.color = color_fundido_entrada
+	if is_instance_valid(nodo_a_ocultar) and nodo_a_ocultar.has_method("hide"):
+		nodo_a_ocultar.hide()
+	var sprite: Node = sesion.jugador.get_node_or_null("Sprite2_5D")
+	if sprite != null:
+		sprite.hide()
+	arena.aplicar_configuracion_encuentro(musica_combate, textura_fondo, texto_recompensas,
+		exp_recompensa, jingle, texto_inicio_combate, texto_victoria, texto_derrota,
+		texto_huida, texto_titulo_recompensas)
+	arena.inicializar(lista_aliados, lista_enemigos, sesion.jugador)
+	var revelar: Tween = create_tween()
+	revelar.tween_property(cortina, "modulate:a", 0.0, 0.2)
+	if not await _esperar_tween(revelar, sesion):
+		return
+
+	gestor.ejecutar(sesion, arena)
+	arena.combate_terminado.connect(sesion.registrar_resultado)
+	combate_iniciado.emit()
+	if sesion.terminada:
+		return
+	if sesion.fase == Sesion.Fase.EJECUTANDO:
+		arena.comenzar_combate()
+	while not sesion.terminada and sesion.fase == Sesion.Fase.EJECUTANDO:
+		await get_tree().process_frame
+	if sesion.terminada:
+		return
+	var gs = _obtener_game_state()
+	if gs:
+		for aliado in arena.aliados:
+			if is_instance_valid(aliado) and aliado.controlado_por_jugador:
+				gs.actualizar_hp(aliado.hp)
+				break
+	cortina.color = color_fundido_salida
+	var salida: Tween = create_tween()
+	salida.tween_property(cortina, "modulate:a", 1.0, duracion_fundido_salida)
+	if not await _esperar_tween(salida, sesion):
+		return
+	arena.queue_free()
+	gestor.restaurar_visuales(sesion)
+	var retorno: Tween = create_tween()
+	retorno.tween_property(cortina, "modulate:a", 0.0, 0.22)
+	if not await _esperar_tween(retorno, sesion):
+		return
+	gestor.finalizar(sesion)
+
+
+func _esperar_tween(tween: Tween, sesion: Sesion) -> bool:
+	sesion.tweens.append(tween)
+	while not sesion.terminada and tween.is_valid() and tween.is_running():
+		await get_tree().process_frame
+	return not sesion.terminada
+
+
+func _validar_battlers(escenas: Array) -> bool:
+	for escena in escenas:
+		if not escena is PackedScene:
+			return false
+		var instancia: Node = escena.instantiate()
+		var valido: bool = instancia is Battler
+		if instancia != null:
+			instancia.free()
+		if not valido:
+			return false
+	return true
 
 # ---------------------------------------------------------------------------
 # Utilidades auxiliares
@@ -282,20 +288,16 @@ func _obtener_jugador() -> CharacterBody3D:
 		return jugador as CharacterBody3D
 	return null
 
-func _bloquear_jugador(jugador: CharacterBody3D, bloquear: bool) -> void:
-	if not is_instance_valid(jugador) or not ("is_interacting" in jugador):
-		return
-	jugador.is_interacting = bloquear
-
 ## Reproduce un SFX o jingle de forma global e independiente
-func _reproducir_audio(stream: AudioStream) -> void:
+func _reproducir_audio(stream: AudioStream) -> AudioStreamPlayer:
 	if stream == null or not is_inside_tree():
-		return
+		return null
 	var player: AudioStreamPlayer = AudioStreamPlayer.new()
 	player.stream = stream
 	get_tree().root.add_child(player)
 	player.finished.connect(player.queue_free)
 	player.play()
+	return player
 
 func _obtener_game_state():
 	# Autoload GameState (acceso por nodo para compatibilidad con scripts headless)

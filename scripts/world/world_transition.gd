@@ -69,6 +69,11 @@ func _asegurar_colision() -> void:
 		box.size = tamano_zona
 		_shape_colision.shape = box
 	else:
+		# El BoxShape3D viene del prefab y lo comparten todas las instancias:
+		# duplicarlo para que cada transición conserve su propio tamano_zona.
+		if not _shape_colision.shape.resource_local_to_scene:
+			_shape_colision.shape = _shape_colision.shape.duplicate()
+			_shape_colision.shape.resource_local_to_scene = true
 		(_shape_colision.shape as BoxShape3D).size = tamano_zona
 
 func _actualizar_forma_colision() -> void:
@@ -155,6 +160,13 @@ func _on_body_entered(body: Node3D) -> void:
 	_iniciar_transicion(body)
 
 func _iniciar_transicion(jugador: Node3D) -> void:
+	if _transicionando or not is_instance_valid(jugador):
+		return
+	if "is_interacting" in jugador and jugador.is_interacting:
+		return
+	var coordinador: Node = get_node_or_null("/root/CoordinadorEncuentros")
+	if coordinador != null and not coordinador.bloquear_actividad(self):
+		return
 	_transicionando = true
 	transicion_iniciada.emit(escena_destino)
 	print("[WorldTransition] Cruzando hacia: %s (Marcador: %s)" % [escena_destino, nombre_marcador_destino])
@@ -199,7 +211,19 @@ func _iniciar_transicion(jugador: Node3D) -> void:
 	await tw.finished
 	
 	# 5. Cambiar a la escena de destino
-	get_tree().change_scene_to_file(escena_destino)
+	var error: Error = get_tree().change_scene_to_file(escena_destino)
+	if error != OK:
+		_transicionando = false
+		if is_instance_valid(jugador) and "is_interacting" in jugador:
+			jugador.is_interacting = false
+		if coordinador != null:
+			coordinador.liberar_actividad(self)
+		if gs:
+			gs.consumir_posicion_spawn(null)
+			gs.consumir_camara_spawn()
+		canvas.queue_free()
+		push_error("WorldTransition: no se pudo cargar %s" % escena_destino)
+		return
 	
 	# La cortina se desvanece suavemente una vez que la nueva escena cargue
 	var tw_out = canvas.create_tween()

@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://bxku1th18an3c"]
+
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/Jarrito.tscn" id="1_jarrito"]
+[ext_resource type="PackedScene" uid="uid://bmq2ghxhosxj" path="res://scenes/player/player_32.tscn" id="2_player"]
+[ext_resource type="Script" uid="uid://bxx5uhda5835p" path="res://scripts/world/jarrito_test.gd" id="3_script"]
+
+[sub_resource type="Environment" id="Environment_test"]
+background_mode = 1
+background_color = Color(0.13, 0.17, 0.23, 1)
+ambient_light_source = 3
+ambient_light_color = Color(0.8, 0.85, 1, 1)
+ambient_light_energy = 0.7
+
+[sub_resource type="StandardMaterial3D" id="Material_floor"]
+albedo_color = Color(0.22, 0.29, 0.3, 1)
+
+[sub_resource type="BoxMesh" id="Mesh_floor"]
+material = SubResource("Material_floor")
+size = Vector3(32, 0.3, 24)
+
+[sub_resource type="BoxShape3D" id="Shape_floor"]
+size = Vector3(32, 0.3, 24)
+
+[sub_resource type="LabelSettings" id="Label_title"]
+font_size = 22
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[node name="JarritoTest" type="Node3D" unique_id=426680784]
+script = ExtResource("3_script")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1962673380]
+environment = SubResource("Environment_test")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1353793716]
+transform = Transform3D(0.90630776, 0.34618863, -0.24240388, 0, 0.57357645, 0.81915206, 0.42261827, -0.74240386, 0.5198368, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Suelo" type="StaticBody3D" parent="." unique_id=1428668014]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Suelo" unique_id=1716488575]
+mesh = SubResource("Mesh_floor")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Suelo" unique_id=489814320]
+shape = SubResource("Shape_floor")
+
+[node name="Player32" parent="." unique_id=854270992 instance=ExtResource("2_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 1, 0)
+
+[node name="Jarrito" parent="." unique_id=2023586807 instance=ExtResource("1_jarrito")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+
+[node name="Jarrito2" parent="." unique_id=1845245180 instance=ExtResource("1_jarrito")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.889494, 0.42718297, -1.4997344)
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1243501986]
+transform = Transform3D(1, 0, 0, 0, 0.76604444, 0.6427876, 0, -0.6427876, 0.76604444, 0, 15, 18)
+projection = 1
+current = true
+size = 27.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1241409464]
+
+[node name="Ayuda" type="Label" parent="CanvasLayer" unique_id=721464817]
+offset_left = 20.0
+offset_top = 16.0
+offset_right = 1100.0
+offset_bottom = 50.0
+text = "Jarrito — Acércate con los controles de movimiento habituales (teclado o gamepad)."
+label_settings = SubResource("Label_title")
+
+[node name="Estado" type="Label" parent="CanvasLayer" unique_id=29656672]
+offset_left = 20.0
+offset_top = 52.0
+offset_right = 1100.0
+offset_bottom = 110.0
+text = "Jarrito: Idle. Acércate para activar Alert → Walk → Encounter."

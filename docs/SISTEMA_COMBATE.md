@@ -1,5 +1,9 @@
 # Sistema de Combate RPG por Turnos (Estilo Paper Mario)
 
+## Estado vigente — 16 de noviembre de 2026
+
+Encuentros coordinados por CoordinadorEncuentros. Los mapas usan un Jarrito individual en World y un trío conjunto en World_Town; Pot permanece como recurso de compatibilidad/prueba. El contacto corporal dispara el combate. PlayerBattler siempre toma la base de 32 × 32 y el ataque coloreado `punch_down_site`. La cámara base está en (0, 7.6, 12), inclinada 30° hacia abajo, FOV 44; formación en profundidad con separación 2.8 y alternancia lateral 1.5. Panorama nórdico con cielo de soporte y efecto de impacto conectados. El uso de consumibles durante el combate todavía no está implementado. Detalle específico en [JARRITO_COMBATE.md](JARRITO_COMBATE.md).
+
 Documentación técnica y guía de uso para desarrolladores y diseñadores en Godot 4 (GDScript).
 
 ---

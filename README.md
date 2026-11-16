@@ -26,97 +26,48 @@ Mientras que muchos juegos basados en la cultura y mitología nórdica tratan de
 
 ---
 
-## 🏗️ Arquitectura del Proyecto — Árbol de Nodos (Godot)
-(IASIADA INVESTIGADA CAMBIAR A COMO QUEDE MEJOR SI HAY PROBLEMA)
+## Estado del proyecto — 16 de noviembre de 2026
 
-La estructura está diseñada para trabajo **asíncrono por módulos**: cada integrante puede trabajar en una rama separada sin conflictos.
+Demo en Godot 4.7.2 / GL Compatibility. Hay cinco zonas conectadas, casa con tutorial, combate contra Jarritos, inventario de exploración y presentación nórdica integrada. El contenido completo de cueva/bosque, jefe/final, consumibles en combate y guardado completo siguen pendientes. Investigación, puzzles, bestiario y elementos descritos arriba son parte de la visión, no una lista de sistemas terminados.
 
-```
-whispers-north/
-│
-├── 📁 scenes/               ← Escenas .tscn (trabajo paralelo por área)
-│   ├── world/               ← Mapas, zonas del pueblo, naturaleza
-│   │   ├── VillageHub.tscn      [Mapa central / hub principal]
-│   │   ├── ForestZone.tscn
-│   │   └── ...
-│   ├── ui/                  ← Interfaces de usuario
-│   │   ├── MainMenu.tscn
-│   │   ├── HUD.tscn             [Health, stamina, elementos activos]
-│   │   ├── PauseMenu.tscn
-│   │   ├── BestiaryUI.tscn
-│   │   ├── InventoryUI.tscn
-│   │   └── DialogueBox.tscn
-│   ├── combat/              ← Sistema de combate por turnos (ver docs/SISTEMA_COMBATE.md)
-│   │   ├── CombatArena.tscn     [Arena de combate estilo Paper Mario]
-│   │   └── battlers/            [Combatientes: PlayerBattler.tscn, PotBattler.tscn, ...]
-│   └── cutscenes/           ← Cinemáticas / secuencias narrativas
-│
-├── 📁 scripts/              ← Código GDScript (uno por responsable)
-│   ├── core/                ← Sistemas globales (Autoloads)
-│   │   ├── GameManager.gd       [Autoload: estado global del juego]
-│   │   ├── EventBus.gd          [Autoload: señales globales desacopladas]
-│   │   ├── SaveSystem.gd        [Autoload: guardado/carga]
-│   │   └── AudioManager.gd      [Autoload: música y SFX]
-│   ├── player/
-│   │   ├── Player.gd            [Movimiento, interacción, stats]
-│   │   └── PlayerInventory.gd
-│   ├── enemies/
-│   │   ├── BaseEnemy.gd         [Clase base heredable]
-│   │   └── CreatureAI.gd
-│   ├── combat/              ← Sistema de combate (Paper Mario + Open RPG)
-│   │   ├── encuentro_combate.gd [Nodo custom configurable desde el editor]
-│   │   ├── combat_arena.gd      [Gestión de turnos, HUD, QTE y arena]
-│   │   ├── battler.gd           [Combatiente base]
-│   │   └── acciones/            [BattlerAction: timing, QTE y ataques]
-│   ├── dialogue/
-│   │   ├── DialogueManager.gd   [Carga y muestra diálogos desde JSON]
-│   │   └── DialogueBox.gd
-│   ├── puzzles/
-│   │   ├── BasePuzzle.gd
-│   │   └── PuzzleManager.gd
-│   ├── bestiary/
-│   │   ├── Bestiary.gd          [Registro y desbloqueo de criaturas]
-│   │   └── BestiaryEntry.gd
-│   └── inventory/
-│       ├── Inventory.gd
-│       └── Item.gd
-│
-├── 📁 assets/               ← Recursos binarios (versionados con LFS)
-│   ├── sprites/
-│   │   ├── player/
-│   │   ├── enemies/
-│   │   ├── environment/
-│   │   └── ui/
-│   ├── audio/
-│   │   ├── music/
-│   │   └── sfx/
-│   ├── fonts/
-│   └── shaders/             ← Shaders GLSL personalizados
-│
-├── 📁 data/                 ← Datos en JSON/TRES (sin binarios)
-│   ├── dialogues/           ← Guiones de diálogo en JSON
-│   ├── bestiary/            ← Fichas de criaturas en JSON
-│   ├── items/               ← Definiciones de ítems
-│   └── quests/              ← Datos de misiones
-│
-├── 📁 docs/                 ← Documentación interna del equipo
-│
-├── project.godot            ← Config principal de Godot
-├── .gitignore
-├── .gitattributes           ← Reglas de Git LFS
-└── README.md
+- [Estado por fases, validaciones y pendientes](docs/AVANCE_DEMO.md)
+- [Assets, decoración e iluminación](docs/ASSETS_INTEGRACION.md)
+- [Inventario y pausa](docs/MENU_PAUSA_E_INVENTARIO.md)
+- [Combate](docs/SISTEMA_COMBATE.md) y [Jarrito](docs/JARRITO_COMBATE.md)
+- [Cámaras](docs/SISTEMA_CAMARAS_Y_SWITCHES.md) y [controles](docs/INPUT_MAP.md)
+
+## Ejecutar la demo
+
+Abrir `project.godot` en Godot 4.7.2 y ejecutar F5. La escena principal es `scenes/ui/MainMenu.tscn`; Nueva partida inicia en la casa. F6 permite ejecutar un mapa o escena de prueba individual. Los controles efectivos se consultan en el Input Map y el menú Controles.
+
+## Estructura actual
+
+```text
+scenes/world/       World_House, World, World_Town, World_Cave, World_ForestRuins
+scenes/world/Entities/  Jarrito, cofres, arbustos, fuente, faroles y NordicProps
+scenes/ui/          MainMenu, PauseMenu, ControlsMenu
+scenes/combat/      CombatArena, battlers y escenas de prueba
+scripts/core/      game_state.gd
+scripts/world/     Controladores de zona, entidades, transiciones y presentación
+scripts/combat/    Coordinación de encuentros, turnos, combatientes y acciones
+scripts/inventory/ Inventory, InventoryItem, ItemDatabase y pools
+scripts/dialogue/ Interacciones integradas con Dialogue Manager
+scripts/vfx/       Efectos transitorios nórdicos
+data/              Objetos, pools, diálogos, combate y buses de audio
+assets/            Modelos, sprites, audio, fuentes y shaders
+tests/             Suites funcionales y scripts de revisión visual
+docs/              Estado, integración y guías técnicas
 ```
 
-### 🔌 Nodos Autoload (Singletons globales)
+### Autoloads registrados
 
-Registrar en **Proyecto → Configuración del Proyecto → Autoload**:
+| Nombre | Ruta | Uso |
+| --- | --- | --- |
+| GameState | `scripts/core/game_state.gd` | HP, stats, inventario y progreso entre mapas; reinicio de partida. |
+| CoordinadorEncuentros | `scripts/combat/coordinador_encuentros.gd` | Reserva, sesión y cierre de encuentros. |
+| DialogueManager | `addons/dialogue_manager/dialogue_manager.gd` | Motor de diálogos. |
 
-| Nombre | Script | Descripción |
-|---|---|---|
-| `GameManager` | `scripts/core/GameManager.gd` | Estado global, progreso |
-| `EventBus` | `scripts/core/EventBus.gd` | Señales desacopladas entre nodos |
-| `SaveSystem` | `scripts/core/SaveSystem.gd` | Guardar y cargar partidas |
-| `AudioManager` | `scripts/core/AudioManager.gd` | Control de música y SFX |
+No existe un SaveSystem global integrado. La persistencia del recorrido se mantiene en memoria durante la partida.
 
 ### 🌿 Ramas de Git sugeridas por módulo
 

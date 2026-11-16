@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=3 format=3]
+[ext_resource type="Script" path="res://scripts/inventory/inventory_item.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/items/nordic_v1/short_sword.png" id="2"]
+[resource]
+script = ExtResource("1")
+id = "espada_corta"
+nombre = "Espada corta"
+descripcion = "Espada corta de hierro con empuñadura de cuero."
+icono = ExtResource("2")
+categoria = 0
+curacion_hp = 0

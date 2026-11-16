@@ -164,6 +164,12 @@ func iniciar_dialogo(jugador_ref: Node3D = null) -> void:
 	_jugador_activo = jugador_ref if jugador_ref else _jugador_en_rango
 	if _jugador_activo == null:
 		_jugador_activo = _buscar_jugador()
+	var coordinador: Node = get_node_or_null("/root/CoordinadorEncuentros")
+	if _jugador_activo != null and "is_interacting" in _jugador_activo and _jugador_activo.is_interacting:
+		return
+	# Incluye diálogos configurados sin bloqueo del movimiento.
+	if coordinador != null and not coordinador.bloquear_actividad(self):
+		return
 	
 	_en_dialogo = true
 	dialogo_iniciado.emit()
@@ -227,6 +233,9 @@ func iniciar_dialogo(jugador_ref: Node3D = null) -> void:
 		_finalizar_dialogo()
 
 func _finalizar_dialogo() -> void:
+	var coordinador: Node = get_node_or_null("/root/CoordinadorEncuentros")
+	if coordinador != null:
+		coordinador.liberar_actividad(self)
 	_en_dialogo = false
 	_contador_interacciones += 1
 	var jugador_guardado = _jugador_activo

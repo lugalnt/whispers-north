@@ -35,6 +35,92 @@ var spawn_offset: Vector3 = Vector3.ZERO
 var spawn_camara_siguiente: String = ""
 var usar_personaje_32: bool = false
 
+# ---------------------------------------------------------------------------
+# Recorrido de la demo y progresión entre mapas
+# ---------------------------------------------------------------------------
+
+signal progreso_cambiado(id: StringName, valor: Variant)
+
+## Escenas del recorrido Casa → Vecindad → Pueblo → Cueva → Bosque y ruinas.
+const ESCENA_CASA: String = "res://scenes/world/World_House.tscn"
+const ESCENA_VECINDAD: String = "res://scenes/world/World.tscn"
+const ESCENA_PUEBLO: String = "res://scenes/world/World_Town.tscn"
+const ESCENA_CUEVA: String = "res://scenes/world/World_Cave.tscn"
+const ESCENA_BOSQUE: String = "res://scenes/world/World_ForestRuins.tscn"
+
+## Escena en la que empieza una Nueva partida.
+## La demo comienza junto a la cama, con el diario como tutorial inicial.
+var escena_nueva_partida: String = ESCENA_CASA
+
+## Identificadores ESTABLES de progresión (no renombrar: son claves persistentes).
+## Formato "categoria.nombre". Ver docs/AVANCE_DEMO.md.
+const PROGRESO_TUTORIAL_DIARIO: StringName = &"tutorial.diario_casa"
+const PROGRESO_CHARLA_PROGENITOR: StringName = &"dialogo.progenitor_casa"
+const RECOMPENSA_NPC_UTIL: StringName = &"recompensa.npc_util_pueblo"
+const ENCUENTRO_POT_VECINDAD: StringName = &"encuentro.pot_vecindad"
+const ENCUENTRO_TRIO_POTS_PUEBLO: StringName = &"encuentro.trio_pots_pueblo"
+const COFRE_CUEVA_OCULTO: StringName = &"cofre.cueva_oculto"
+const OBJETO_IMPORTANTE_RUINAS: StringName = &"evento.objeto_importante_ruinas"
+const JEFE_RUINAS_DERROTADO: StringName = &"jefe.ruinas_derrotado"
+const DEMO_COMPLETADA: StringName = &"demo.completada"
+
+## Banderas de progresión: StringName -> Variant (normalmente bool).
+## Solo vive en memoria durante la partida (sin guardado en disco).
+var progreso: Dictionary = {}
+## Ruta de la zona cargada actualmente (la actualiza ZonaMundo/World al entrar).
+var zona_actual: String = ""
+
+## Marca una bandera de progreso (cofre abierto, tutorial visto, jefe derrotado...).
+func marcar_progreso(id: StringName, valor: Variant = true) -> void:
+	if id == &"":
+		push_warning("GameState: id de progreso vacío")
+		return
+	progreso[id] = valor
+	progreso_cambiado.emit(id, valor)
+
+## Devuelve true si la bandera existe y es verdadera.
+func tiene_progreso(id: StringName) -> bool:
+	return bool(progreso.get(id, false))
+
+## Devuelve el valor guardado para la bandera o `defecto` si no existe.
+func obtener_progreso(id: StringName, defecto: Variant = null) -> Variant:
+	return progreso.get(id, defecto)
+
+## Reclama un evento único: devuelve true SOLO la primera vez y lo marca.
+## Usar para recompensas únicas, cofres, encuentros relevantes y secuencias del jefe.
+func reclamar_unico(id: StringName) -> bool:
+	if id == &"" or tiene_progreso(id):
+		return false
+	marcar_progreso(id, true)
+	return true
+
+## Reinicia todo el estado de partida para comenzar una Nueva partida coherente.
+## No toca nombre/título del jugador ni configuración de audio/vídeo.
+func nueva_partida() -> void:
+	var coordinador: Node = get_node_or_null("/root/CoordinadorEncuentros")
+	if coordinador != null and coordinador.has_method("cancelar"):
+		coordinador.cancelar(null, "nueva_partida")
+	nivel = 1
+	exp_actual = 0
+	exp_para_siguiente_nivel = EXP_INICIAL_SIGUIENTE_NIVEL
+	stats = null
+	_inicializar_stats()
+	tiene_rata = false
+	acciones_desbloqueadas.clear()
+	spawn_nombre_marcador = ""
+	spawn_offset = Vector3.ZERO
+	spawn_camara_siguiente = ""
+	usar_personaje_32 = false
+	progreso.clear()
+	zona_actual = ""
+	# Vaciar en el mismo recurso para conservar las conexiones de señales existentes
+	inventario.items.clear()
+	_cargar_items_iniciales()
+	inventario.inventario_actualizado.emit()
+	stats_modificadas.emit()
+
+const EXP_INICIAL_SIGUIENTE_NIVEL: int = 50
+
 ## Comprueba si hay un cambio de mundo en curso esperando ubicar al jugador
 func hay_transicion_pendiente() -> bool:
 	return not spawn_nombre_marcador.is_empty()
@@ -117,7 +203,7 @@ func _cargar_items_iniciales() -> void:
 		inventario.agregar(item, cant)
 
 ## Añade un ítem al inventario pasando su recurso InventoryItem o su ID en String
-func agregar_item(item_o_id, cantidad: int = 1) -> void:
+func agregar_item(item_o_id, cantidad: int = 1) -> int:
 	var item: InventoryItem = null
 	if item_o_id is String:
 		item = ItemDatabase.obtener_item(item_o_id)
@@ -125,7 +211,8 @@ func agregar_item(item_o_id, cantidad: int = 1) -> void:
 		item = item_o_id
 	
 	if item != null:
-		inventario.agregar(item, cantidad)
+		return inventario.agregar(item, cantidad)
+	return 0
 
 ## Suma experiencia y sube de nivel si corresponde
 func agregar_exp(cantidad: int) -> void:
@@ -173,16 +260,27 @@ func curar_hp(cantidad: int) -> int:
 	stats_modificadas.emit()
 	return curado
 
-## Consume un ítem consumible y aplica sus efectos
-func usar_item(item_id: String) -> bool:
+## Motivo legible por el que un objeto no puede usarse en exploración.
+func motivo_no_usable(item_id: String) -> String:
 	var item: InventoryItem = inventario.obtener_item(item_id)
-	if item == null or not item.puede_usarse():
+	if item == null or inventario.obtener_cantidad(item_id) <= 0:
+		return "No tienes este objeto."
+	if not item.puede_usarse():
+		return "Este objeto no se consume desde el inventario."
+	if stats == null or hp_actual <= 0:
+		return "Este objeto no puede revivir al personaje."
+	if hp_actual >= stats.max_hp:
+		return "Salud completa."
+	return ""
+
+## Consume una unidad únicamente cuando puede aplicar su efecto.
+func usar_item(item_id: String) -> bool:
+	if not motivo_no_usable(item_id).is_empty():
 		return false
-	
-	if item.curacion_hp > 0:
-		curar_hp(item.curacion_hp)
-	
-	inventario.quitar(item_id, 1)
+	var item: InventoryItem = inventario.obtener_item(item_id)
+	if not inventario.quitar(item_id, 1):
+		return false
+	curar_hp(item.curacion_hp)
 	return true
 
 ## Desbloquea una nueva acción de combate para el jugador

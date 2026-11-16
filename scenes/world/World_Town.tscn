@@ -1,29 +1,33 @@
 [gd_scene format=3 uid="uid://67dcvy6q4m36"]
 
-[ext_resource type="Texture2D" uid="uid://ds6en71aom1gh" path="res://assets/sprites/environment/backgrounds/mountain_snowy_background.png" id="1_fwgll"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/backgrounds/nordic_v1/snowy_mountain_panorama.png" id="1_fwgll"]
 [ext_resource type="PackedScene" uid="uid://bmq2ghxhosxj" path="res://scenes/player/player_32.tscn" id="1_s5k7d"]
 [ext_resource type="Texture2D" uid="uid://cgt45814xeiem" path="res://assets/sprites/items/placeholder.png" id="2_i618c"]
-[ext_resource type="Texture2D" uid="uid://qcuc2g14unqg" path="res://assets/sprites/environment/materials/pokemon_grass.png" id="2_rq4xl"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_v1/cold_grass.png" id="2_rq4xl"]
 [ext_resource type="Script" uid="uid://ojlc0i8sf3xn" path="res://scripts/world/path_patch.gd" id="3_kdiqa"]
 [ext_resource type="PackedScene" uid="uid://d276us1ef7vn2" path="res://scenes/world/Paths/World_Town/Main_Path_Town_Section1.tscn" id="4_y4oph"]
 [ext_resource type="PackedScene" uid="uid://bi4mty8e2lew4" path="res://scenes/world/Entities/Tree.tscn" id="5_j7b52"]
 [ext_resource type="PackedScene" uid="uid://dxsn6l7x0h2ta" path="res://scenes/world/Entities/Tree_Pine.tscn" id="6_tamvi"]
-[ext_resource type="Texture2D" uid="uid://cxou354dqi2mf" path="res://assets/sprites/environment/materials/rock01_snow_c.png" id="7_b7lm3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_surfaces_v2/fractured_rock.png" id="7_b7lm3"]
 [ext_resource type="Texture2D" uid="uid://bslm2ejupfom4" path="res://assets/sprites/environment/materials/rock01_snow_n.png" id="8_af2fx"]
-[ext_resource type="PackedScene" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon HeartGold _ SoulSilver - Map Objects - Cianwood City House/Cianwood_City_House.tscn" id="9_fahh1"]
+[ext_resource type="PackedScene" path="res://assets/models/nordic_houses/CasaRoja.tscn" id="9_fahh1"]
 [ext_resource type="PackedScene" path="res://scenes/world/Entities/CameraSwitch.tscn" id="10_fhhgm"]
-[ext_resource type="PackedScene" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon HeartGold _ SoulSilver - Map Objects - Violet City House/Violet_City_House.tscn" id="10_xhxc1"]
-[ext_resource type="PackedScene" path="res://assets/models/placeholder houses/DS _ DSi - Pokemon Platinum - Map Objects - Pastoria City House/Pastoria_City_House.tscn" id="11_3hbph"]
+[ext_resource type="PackedScene" path="res://assets/models/nordic_houses/CasaPorche.tscn" id="10_xhxc1"]
+[ext_resource type="PackedScene" path="res://assets/models/nordic_houses/CasaEntramado.tscn" id="11_3hbph"]
 [ext_resource type="PackedScene" uid="uid://bo22auxjhymkm" path="res://scenes/world/Entities/placeholder_npc.tscn" id="12_xhxc1"]
 [ext_resource type="PackedScene" path="res://scenes/world/Entities/Fountain.tscn" id="14_fi4bx"]
 [ext_resource type="Script" uid="uid://dincpu7fdiqik" path="res://scripts/world/camera_switch_manager.gd" id="15_switchmgr"]
 [ext_resource type="Script" uid="uid://cptj7rkplojal" path="res://scripts/dialogue/interaccion_dialogo.gd" id="15_utsce"]
 [ext_resource type="Texture2D" uid="uid://cyjdhv31rlu27" path="res://assets/sprites/enemies/test_npc_portrait.png" id="16_fhhgm"]
 [ext_resource type="AudioStream" uid="uid://bafi4fmf3gk58" path="res://assets/audio/sfx/bottles_Sound.mp3" id="17_fhhgm"]
-[ext_resource type="PackedScene" path="res://scenes/world/Entities/Pot.tscn" id="19_6eawn"]
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/Jarrito.tscn" id="19_6eawn"]
 [ext_resource type="AudioStream" uid="uid://dhmy8wgyl8emk" path="res://assets/audio/sfx/Roar_0.wav" id="20_hep7u"]
 [ext_resource type="Script" uid="uid://d0kw3ycrnbgay" path="res://scripts/world/world_town.gd" id="21_worldtown"]
 [ext_resource type="PackedScene" uid="uid://c3q8fkm1r4t2v" path="res://scenes/world/Entities/WorldTransition.tscn" id="22_worldtrans"]
+
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/NordicProps/wildflowers.tscn" id="decor_f"]
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/NordicProps/grass_tuft.tscn" id="decor_g"]
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/NordicProps/mossy_rock.tscn" id="decor_r"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rq4xl"]
 size = Vector3(0.2977295, 1, 1)
@@ -39,8 +43,8 @@ background_color = Color(0.35686275, 0.627451, 0.93333334, 1)
 background_energy_multiplier = 0.8
 sky = SubResource("Sky_6eebf")
 ambient_light_source = 2
-ambient_light_color = Color(0.76862746, 0.8, 0.827451, 1)
-ambient_light_energy = 0.08
+ambient_light_color = Color(0.79, 0.86, 0.96, 1)
+ambient_light_energy = 0.32
 tonemap_mode = 3
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qh0kd"]
@@ -57,8 +61,6 @@ size = Vector3(0.9116516, 1.0889893, 1.1767044)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j7b52"]
 albedo_texture = ExtResource("7_b7lm3")
-normal_enabled = true
-normal_texture = ExtResource("8_af2fx")
 uv1_triplanar = true
 texture_filter = 0
 
@@ -86,6 +88,10 @@ size = Vector3(16.406338, 8.6710205, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_fwgll"]
 size = Vector3(21.339367, 8.6710205, 1)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bocacueva"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
 [node name="WorldTown" type="Node3D" unique_id=1701017460]
 script = ExtResource("21_worldtown")
 
@@ -101,24 +107,31 @@ transform = Transform3D(89.81132, 0, 0, 0, 49.69762, 0, 0, 0, 6.247612, -9.60198
 cast_shadow = 0
 texture_filter = 0
 texture = ExtResource("1_fwgll")
+pixel_size = 0.0028748591
 
 [node name="Sprite3D2" type="Sprite3D" parent="Background" unique_id=1635568874]
 transform = Transform3D(137.14447, 0, 0, 0, 60.60583, 0, -4.5474735e-13, 0, 6.247612, -38.929512, 38.53347, 205.87383)
 cast_shadow = 0
 texture_filter = 0
 texture = ExtResource("1_fwgll")
+pixel_size = 0.0028748591
+visible = false
 
 [node name="Sprite3D3" type="Sprite3D" parent="Background" unique_id=1592774923]
 transform = Transform3D(95.31145, 0, 0, 0, 49.69762, 0, 0, 0, 6.247612, -55.672516, -23.31043, 205.87383)
 cast_shadow = 0
 texture_filter = 0
 texture = ExtResource("1_fwgll")
+pixel_size = 0.0028748591
+visible = false
 
 [node name="Sprite3D4" type="Sprite3D" parent="Background" unique_id=814513778]
 transform = Transform3D(87.81964, 0, 0, 0, 49.69762, 0, 0, 0, 6.247612, -174.44754, -13.905706, 121.770615)
 cast_shadow = 0
 texture_filter = 0
 texture = ExtResource("1_fwgll")
+pixel_size = 0.0028748591
+visible = false
 
 [node name="Background3" type="StaticBody3D" parent="." unique_id=1840022368]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -3.7505436, -48.765377, -41.722946)
@@ -132,24 +145,32 @@ transform = Transform3D(89.81132, 0, 0, 0, 49.69762, 0, 0, 0, 6.247612, -9.60198
 cast_shadow = 0
 texture_filter = 0
 texture = ExtResource("1_fwgll")
+pixel_size = 0.0028748591
+visible = false
 
 [node name="Sprite3D2" type="Sprite3D" parent="Background3" unique_id=1925216536]
 transform = Transform3D(137.14447, 0, 0, 0, 60.60583, 0, -4.5474735e-13, 0, 6.247612, -38.929512, 38.53347, 205.87383)
 cast_shadow = 0
 texture_filter = 0
 texture = ExtResource("1_fwgll")
+pixel_size = 0.0028748591
+visible = false
 
 [node name="Sprite3D3" type="Sprite3D" parent="Background3" unique_id=1295364883]
 transform = Transform3D(95.31145, 0, 0, 0, 49.69762, 0, 0, 0, 6.247612, -55.672516, -23.31043, 205.87383)
 cast_shadow = 0
 texture_filter = 0
 texture = ExtResource("1_fwgll")
+pixel_size = 0.0028748591
+visible = false
 
 [node name="Sprite3D4" type="Sprite3D" parent="Background3" unique_id=1007572453]
 transform = Transform3D(87.81964, 0, 0, 0, 49.69762, 0, 0, 0, 6.247612, -174.44754, -13.905706, 121.770615)
 cast_shadow = 0
 texture_filter = 0
 texture = ExtResource("1_fwgll")
+pixel_size = 0.0028748591
+visible = false
 
 [node name="Background2" type="StaticBody3D" parent="." unique_id=1984949903]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -3.7505436, 1.0824051, -41.722946)
@@ -163,31 +184,43 @@ transform = Transform3D(89.81132, 0, 0, 0, 49.69762, 0, 0, 0, 6.247612, -9.60198
 cast_shadow = 0
 texture_filter = 0
 texture = ExtResource("1_fwgll")
+pixel_size = 0.0028748591
 
 [node name="Sprite3D2" type="Sprite3D" parent="Background2" unique_id=1480714184]
 transform = Transform3D(137.14447, 0, 0, 0, 60.60583, 0, -4.5474735e-13, 0, 6.247612, -38.929512, 38.53347, 205.87383)
 cast_shadow = 0
 texture_filter = 0
 texture = ExtResource("1_fwgll")
+pixel_size = 0.0028748591
+visible = false
 
 [node name="Sprite3D3" type="Sprite3D" parent="Background2" unique_id=1612445360]
 transform = Transform3D(95.31145, 0, 0, 0, 49.69762, 0, 0, 0, 6.247612, -55.672516, -23.31043, 205.87383)
 cast_shadow = 0
 texture_filter = 0
 texture = ExtResource("1_fwgll")
+pixel_size = 0.0028748591
+visible = false
 
 [node name="Sprite3D4" type="Sprite3D" parent="Background2" unique_id=1684666521]
 transform = Transform3D(87.81964, 0, 0, 0, 49.69762, 0, 0, 0, 6.247612, -174.44754, -13.905706, 121.770615)
 cast_shadow = 0
 texture_filter = 0
 texture = ExtResource("1_fwgll")
+pixel_size = 0.0028748591
+visible = false
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=487776008]
 environment = SubResource("Environment_s5k7d")
 
 [node name="Sol" type="DirectionalLight3D" parent="." unique_id=462675487]
-transform = Transform3D(0.819152, 0.36868787, -0.4393851, 0, 0.76604444, 0.6427877, 0.5735765, -0.52654076, 0.62750685, -18.220196, 10.639449, 2.8805351)
+rotation_degrees = Vector3(-48, 32, 0)
 shadow_enabled = true
+light_color = Color(1, 0.96, 0.88, 1)
+light_energy = 0.55
+light_specular = 0.35
+shadow_opacity = 0.72
+directional_shadow_max_distance = 90.0
 
 [node name="Piso" type="CSGBox3D" parent="." unique_id=235782659]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.420189, -0.21069336, 0.7850418)
@@ -1008,6 +1041,10 @@ fov = 60.0
 transform = Transform3D(1, 0, 0, 0, 0.8241262, 0.56640625, 0, -0.56640625, 0.8241262, 34.1564, 6.838628, 11.181486)
 fov = 60.0
 
+[node name="Camera12" type="Camera3D" parent="Cameras" unique_id=1730042220]
+transform = Transform3D(1, 0, 0, 0, 0.8241262, 0.56640625, 0, -0.56640625, 0.8241262, 44.5, 6.838628, 11.181486)
+fov = 60.0
+
 [node name="Switches" type="Node3D" parent="." unique_id=2081928374]
 script = ExtResource("15_switchmgr")
 nuevo_switch_par = Vector2i(9, 11)
@@ -1086,46 +1123,79 @@ camara_a_num = 9
 camara_b_num = 11
 tamano_trigger = Vector3(6.2, 3.5, 1.8)
 
+[node name="Switch_11_12" parent="Switches" unique_id=1730042221 instance=ExtResource("10_fhhgm")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 40.5, 0, 4.2)
+modo = 1
+camara_a_num = 11
+camara_b_num = 12
+tamano_trigger = Vector3(6.2, 3.5, 1.8)
+
 [node name="Houses" type="Node3D" parent="." unique_id=1944536437]
 
 [node name="House_A" parent="Houses" unique_id=453238937 instance=ExtResource("9_fahh1")]
-transform = Transform3D(-4.371139e-09, 0, 0.1, 0, 0.1, 0, -0.1, 0, -4.371139e-09, -27.68959, -0.036049843, -9.306185)
+position = Vector3(-27.68959, 0.07861329, -9.306185)
+rotation_degrees = Vector3(0, 90, 0)
+scale = Vector3(0.76, 0.76, 0.76)
 
 [node name="House_A2" parent="Houses" unique_id=155833816 instance=ExtResource("9_fahh1")]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -2.1316404, -0.036049843, -1.40979)
+position = Vector3(-2.1316404, 0.07861329, -1.40979)
+rotation_degrees = Vector3(0, 0, 0)
+scale = Vector3(0.76, 0.76, 0.76)
 
 [node name="House_A3" parent="Houses" unique_id=1680891188 instance=ExtResource("9_fahh1")]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 17.832962, -0.036049843, -1.40979)
+position = Vector3(17.832962, 0.07861329, -1.40979)
+rotation_degrees = Vector3(0, 0, 0)
+scale = Vector3(0.76, 0.76, 0.76)
 
 [node name="House_A5" parent="Houses" unique_id=495217974 instance=ExtResource("9_fahh1")]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 13.582903, -0.036049843, -8.170225)
+position = Vector3(13.582903, 0.07861329, -8.170225)
+rotation_degrees = Vector3(0, 0, 0)
+scale = Vector3(0.76, 0.76, 0.76)
 
 [node name="House_A4" parent="Houses" unique_id=1574951128 instance=ExtResource("9_fahh1")]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 37.977135, -0.036049843, -1.40979)
+position = Vector3(37.977135, 0.07861329, -1.40979)
+rotation_degrees = Vector3(0, 0, 0)
+scale = Vector3(0.76, 0.76, 0.76)
 
 [node name="House_B" parent="Houses" unique_id=1580575251 instance=ExtResource("10_xhxc1")]
-transform = Transform3D(-4.371139e-09, 0, -0.1, 0, 0.1, 0, 0.1, 0, -4.371139e-09, 7.4726753, -0.028921127, -15.219931)
+position = Vector3(7.4726753, 0.07861329, -15.219931)
+rotation_degrees = Vector3(0, -90, 0)
+scale = Vector3(0.76, 0.76, 0.76)
 
 [node name="House_B2" parent="Houses" unique_id=1646970949 instance=ExtResource("10_xhxc1")]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 8.059161, -0.028921127, -1.5242939)
+position = Vector3(8.059161, 0.07861329, -1.5242939)
+rotation_degrees = Vector3(0, 0, 0)
+scale = Vector3(0.76, 0.76, 0.76)
 
 [node name="House_B3" parent="Houses" unique_id=1480972593 instance=ExtResource("10_xhxc1")]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 23.21949, -0.028921127, -7.609277)
+position = Vector3(23.21949, 0.07861329, -7.609277)
+rotation_degrees = Vector3(0, 0, 0)
+scale = Vector3(0.76, 0.76, 0.76)
 
 [node name="House_C" parent="Houses" unique_id=1697781114 instance=ExtResource("11_3hbph")]
-transform = Transform3D(-4.371139e-09, 0, 0.1, 0, 0.1, 0, -0.1, 0, -4.371139e-09, -27.121416, -0.11078739, 2.5295439)
+position = Vector3(-27.121416, 0.07861329, 2.5295439)
+rotation_degrees = Vector3(0, 90, 0)
+scale = Vector3(0.76, 0.76, 0.76)
 
 [node name="House_C3" parent="Houses" unique_id=1253752101 instance=ExtResource("11_3hbph")]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 28.153463, -0.11078739, -0.8753004)
+position = Vector3(28.153463, 0.07861329, -0.8753004)
+rotation_degrees = Vector3(0, 0, 0)
+scale = Vector3(0.76, 0.76, 0.76)
 
 [node name="House_C5" parent="Houses" unique_id=877658952 instance=ExtResource("11_3hbph")]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 33.157158, -0.11078739, -8.196471)
+position = Vector3(33.157158, 0.07861329, -8.196471)
+rotation_degrees = Vector3(0, 0, 0)
+scale = Vector3(0.76, 0.76, 0.76)
 
 [node name="House_C4" parent="Houses" unique_id=378448174 instance=ExtResource("11_3hbph")]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 3.1868, -0.11078739, -7.579833)
+position = Vector3(3.1868, 0.07861329, -7.579833)
+rotation_degrees = Vector3(0, 0, 0)
+scale = Vector3(0.76, 0.76, 0.76)
 
 [node name="House_C2" parent="Houses" unique_id=741616285 instance=ExtResource("11_3hbph")]
-transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, -12.762271, -0.11078739, -1.9391732)
+position = Vector3(-12.762271, 0.07861329, -1.9391732)
+rotation_degrees = Vector3(0, 0, 0)
+scale = Vector3(1.05, 1.05, 1.05)
 
 [node name="Npc" parent="." unique_id=691415349 instance=ExtResource("12_xhxc1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.883728, 1.3016276, 13.414091)
@@ -1256,26 +1326,23 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71.13285, -1.3882184, 8.65975
 shape = SubResource("BoxShape3D_fwgll")
 debug_color = Color(0, 0, 0, 1)
 
-[node name="Pot" parent="." unique_id=1699643971 instance=ExtResource("19_6eawn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46.48463, -0.019107819, 4.734478)
-combate_grupal = true
-jarrones_vinculados = Array[NodePath]([NodePath("../Pot2"), NodePath("../Pot3")])
-grupo_jarrones = &"trio_pots_town"
-sonido_avistamiento = ExtResource("20_hep7u")
+[node name="Jarrito" parent="." unique_id=1699643971 instance=ExtResource("19_6eawn")]
+grupo_encuentro = &"trio_jarritos_pueblo"
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.48463, -0.019107819, 4.734478)
+radio_deteccion = 9.0
+distancia_perdida = 18.0
 
-[node name="Pot2" parent="." unique_id=1847396616 instance=ExtResource("19_6eawn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.095085, -0.019107819, 5.3089814)
-combate_grupal = true
-jarrones_vinculados = Array[NodePath]([NodePath("../Pot"), NodePath("../Pot3")])
-grupo_jarrones = &"trio_pots_town"
-sonido_avistamiento = ExtResource("20_hep7u")
+[node name="Jarrito2" parent="." unique_id=1847396616 instance=ExtResource("19_6eawn")]
+grupo_encuentro = &"trio_jarritos_pueblo"
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.095085, -0.019107819, 5.3089814)
+radio_deteccion = 9.0
+distancia_perdida = 18.0
 
-[node name="Pot3" parent="." unique_id=316411335 instance=ExtResource("19_6eawn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.31285, -0.019107819, 3.72479)
-combate_grupal = true
-jarrones_vinculados = Array[NodePath]([NodePath("../Pot"), NodePath("../Pot2")])
-grupo_jarrones = &"trio_pots_town"
-sonido_avistamiento = ExtResource("20_hep7u")
+[node name="Jarrito3" parent="." unique_id=316411335 instance=ExtResource("19_6eawn")]
+grupo_encuentro = &"trio_jarritos_pueblo"
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.31285, -0.019107819, 3.72479)
+radio_deteccion = 9.0
+distancia_perdida = 18.0
 
 [node name="Marker_Exit_World" parent="." unique_id=1508003745 instance=ExtResource("22_worldtrans")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.966436, 1.0824051, -18.085182)
@@ -1283,3 +1350,217 @@ escena_destino = "res://scenes/world/World.tscn"
 camara_destino = "Camera6"
 offset_aparicion = Vector3(2.8, 0, -0.5)
 tamano_zona = Vector3(5, 3, 2.5)
+
+[node name="Salida_Cueva" parent="." unique_id=1730042222 instance=ExtResource("22_worldtrans")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.9, 1.0824051, 4.3)
+escena_destino = "res://scenes/world/World_Cave.tscn"
+nombre_marcador_destino = "Llegada_DesdePueblo"
+camara_destino = "Camera1"
+tamano_zona = Vector3(1.4, 3, 4.2)
+
+[node name="Llegada_DesdeCueva" type="Marker3D" parent="." unique_id=1730042223]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46.3, 1.0824051, 4.3)
+
+[node name="BocaCueva" type="Node3D" parent="." unique_id=1730042224]
+
+[node name="Roca" type="CSGBox3D" parent="BocaCueva" unique_id=1730042225]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53, 4, 4.3)
+use_collision = true
+size = Vector3(6.8, 8, 13)
+material = SubResource("StandardMaterial3D_j7b52")
+
+[node name="Abertura" type="CSGBox3D" parent="BocaCueva" unique_id=1730042226]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 49.55, 1.6, 4.3)
+size = Vector3(0.1, 3.2, 3.8)
+material = SubResource("StandardMaterial3D_bocacueva")
+
+[node name="DecoracionEntorno" type="Node3D" parent="."]
+
+[node name="wildflowers_01" parent="DecoracionEntorno" instance=ExtResource("decor_f")]
+position = Vector3(-17, 0.09361329, 8)
+scale = Vector3(0.95, 0.95, 0.95)
+
+[node name="grass_tuft_02" parent="DecoracionEntorno" instance=ExtResource("decor_g")]
+position = Vector3(-17.65, 0.09361329, 8.55)
+scale = Vector3(0.95, 0.95, 0.95)
+
+[node name="wildflowers_03" parent="DecoracionEntorno" instance=ExtResource("decor_f")]
+position = Vector3(-16, 0.09361329, 14)
+scale = Vector3(1.0699999999999998, 1.0699999999999998, 1.0699999999999998)
+
+[node name="grass_tuft_04" parent="DecoracionEntorno" instance=ExtResource("decor_g")]
+position = Vector3(-16.65, 0.09361329, 14.55)
+scale = Vector3(1.0699999999999998, 1.0699999999999998, 1.0699999999999998)
+
+[node name="grass_tuft_05" parent="DecoracionEntorno" instance=ExtResource("decor_g")]
+position = Vector3(-12, 0.09361329, 15)
+scale = Vector3(1.19, 1.19, 1.19)
+
+[node name="wildflowers_06" parent="DecoracionEntorno" instance=ExtResource("decor_f")]
+position = Vector3(-12.65, 0.09361329, 15.55)
+scale = Vector3(1.19, 1.19, 1.19)
+
+[node name="wildflowers_07" parent="DecoracionEntorno" instance=ExtResource("decor_f")]
+position = Vector3(-2, 0.09361329, 8)
+scale = Vector3(1.31, 1.31, 1.31)
+
+[node name="grass_tuft_08" parent="DecoracionEntorno" instance=ExtResource("decor_g")]
+position = Vector3(-2.65, 0.09361329, 8.55)
+scale = Vector3(1.31, 1.31, 1.31)
+
+[node name="wildflowers_09" parent="DecoracionEntorno" instance=ExtResource("decor_f")]
+position = Vector3(1, 0.09361329, 14)
+scale = Vector3(0.95, 0.95, 0.95)
+
+[node name="grass_tuft_10" parent="DecoracionEntorno" instance=ExtResource("decor_g")]
+position = Vector3(0.35, 0.09361329, 14.55)
+scale = Vector3(0.95, 0.95, 0.95)
+
+[node name="mossy_rock_11" parent="DecoracionEntorno" instance=ExtResource("decor_r")]
+position = Vector3(-18, 0.09361329, 11)
+scale = Vector3(0.52, 0.52, 0.52)
+
+[node name="Obstacle" parent="DecoracionEntorno/mossy_rock_11" index="1"]
+collision_layer = 0
+collision_mask = 0
+
+[node name="grass_tuft_12" parent="DecoracionEntorno" instance=ExtResource("decor_g")]
+position = Vector3(-18.65, 0.09361329, 11.55)
+scale = Vector3(1.0699999999999998, 1.0699999999999998, 1.0699999999999998)
+
+[node name="mossy_rock_13" parent="DecoracionEntorno" instance=ExtResource("decor_r")]
+position = Vector3(-1, 0.09361329, 15)
+scale = Vector3(0.38, 0.38, 0.38)
+
+[node name="Obstacle" parent="DecoracionEntorno/mossy_rock_13" index="1"]
+collision_layer = 0
+collision_mask = 0
+
+[node name="grass_tuft_14" parent="DecoracionEntorno" instance=ExtResource("decor_g")]
+position = Vector3(-1.65, 0.09361329, 15.55)
+scale = Vector3(1.19, 1.19, 1.19)
+
+[node name="wildflowers_15" parent="DecoracionEntorno" instance=ExtResource("decor_f")]
+position = Vector3(-4, 0.09361329, 1.4)
+scale = Vector3(1.31, 1.31, 1.31)
+
+[node name="grass_tuft_16" parent="DecoracionEntorno" instance=ExtResource("decor_g")]
+position = Vector3(-4.65, 0.09361329, 1.95)
+scale = Vector3(1.31, 1.31, 1.31)
+
+[node name="wildflowers_17" parent="DecoracionEntorno" instance=ExtResource("decor_f")]
+position = Vector3(0, 0.09361329, 1.4)
+scale = Vector3(0.95, 0.95, 0.95)
+
+[node name="grass_tuft_18" parent="DecoracionEntorno" instance=ExtResource("decor_g")]
+position = Vector3(-0.65, 0.09361329, 1.95)
+scale = Vector3(0.95, 0.95, 0.95)
+
+[node name="grass_tuft_19" parent="DecoracionEntorno" instance=ExtResource("decor_g")]
+position = Vector3(6, 0.09361329, 1.4)
+scale = Vector3(1.0699999999999998, 1.0699999999999998, 1.0699999999999998)
+
+[node name="wildflowers_20" parent="DecoracionEntorno" instance=ExtResource("decor_f")]
+position = Vector3(5.35, 0.09361329, 1.95)
+scale = Vector3(1.0699999999999998, 1.0699999999999998, 1.0699999999999998)
+
+[node name="wildflowers_21" parent="DecoracionEntorno" instance=ExtResource("decor_f")]
+position = Vector3(10, 0.09361329, 1.4)
+scale = Vector3(1.19, 1.19, 1.19)
+
+[node name="grass_tuft_22" parent="DecoracionEntorno" instance=ExtResource("decor_g")]
+position = Vector3(9.35, 0.09361329, 1.95)
+scale = Vector3(1.19, 1.19, 1.19)
+
+[node name="wildflowers_23" parent="DecoracionEntorno" instance=ExtResource("decor_f")]
+position = Vector3(16, 0.09361329, 1.4)
+scale = Vector3(1.31, 1.31, 1.31)
+
+[node name="grass_tuft_24" parent="DecoracionEntorno" instance=ExtResource("decor_g")]
+position = Vector3(15.35, 0.09361329, 1.95)
+scale = Vector3(1.31, 1.31, 1.31)
+
+[node name="grass_tuft_25" parent="DecoracionEntorno" instance=ExtResource("decor_g")]
+position = Vector3(20, 0.09361329, 1.4)
+scale = Vector3(0.95, 0.95, 0.95)
+
+[node name="wildflowers_26" parent="DecoracionEntorno" instance=ExtResource("decor_f")]
+position = Vector3(19.35, 0.09361329, 1.95)
+scale = Vector3(0.95, 0.95, 0.95)
+
+[node name="wildflowers_27" parent="DecoracionEntorno" instance=ExtResource("decor_f")]
+position = Vector3(26, 0.09361329, 1.5)
+scale = Vector3(1.0699999999999998, 1.0699999999999998, 1.0699999999999998)
+
+[node name="grass_tuft_28" parent="DecoracionEntorno" instance=ExtResource("decor_g")]
+position = Vector3(25.35, 0.09361329, 2.05)
+scale = Vector3(1.0699999999999998, 1.0699999999999998, 1.0699999999999998)
+
+[node name="grass_tuft_29" parent="DecoracionEntorno" instance=ExtResource("decor_g")]
+position = Vector3(30, 0.09361329, 1.5)
+scale = Vector3(1.19, 1.19, 1.19)
+
+[node name="wildflowers_30" parent="DecoracionEntorno" instance=ExtResource("decor_f")]
+position = Vector3(29.35, 0.09361329, 2.05)
+scale = Vector3(1.19, 1.19, 1.19)
+
+[node name="wildflowers_31" parent="DecoracionEntorno" instance=ExtResource("decor_f")]
+position = Vector3(38, 0.09361329, 1.5)
+scale = Vector3(1.31, 1.31, 1.31)
+
+[node name="grass_tuft_32" parent="DecoracionEntorno" instance=ExtResource("decor_g")]
+position = Vector3(37.35, 0.09361329, 2.05)
+scale = Vector3(1.31, 1.31, 1.31)
+
+[node name="mossy_rock_33" parent="DecoracionEntorno" instance=ExtResource("decor_r")]
+position = Vector3(16, 0.09361329, 10)
+scale = Vector3(0.45, 0.45, 0.45)
+
+[node name="Obstacle" parent="DecoracionEntorno/mossy_rock_33" index="1"]
+collision_layer = 0
+collision_mask = 0
+
+[node name="grass_tuft_34" parent="DecoracionEntorno" instance=ExtResource("decor_g")]
+position = Vector3(15.35, 0.09361329, 10.55)
+scale = Vector3(0.95, 0.95, 0.95)
+
+[node name="grass_tuft_35" parent="DecoracionEntorno" instance=ExtResource("decor_g")]
+position = Vector3(22, 0.09361329, 13)
+scale = Vector3(1.0699999999999998, 1.0699999999999998, 1.0699999999999998)
+
+[node name="wildflowers_36" parent="DecoracionEntorno" instance=ExtResource("decor_f")]
+position = Vector3(21.35, 0.09361329, 13.55)
+scale = Vector3(1.0699999999999998, 1.0699999999999998, 1.0699999999999998)
+
+[node name="mossy_rock_37" parent="DecoracionEntorno" instance=ExtResource("decor_r")]
+position = Vector3(30, 0.09361329, 15)
+scale = Vector3(0.38, 0.38, 0.38)
+
+[node name="Obstacle" parent="DecoracionEntorno/mossy_rock_37" index="1"]
+collision_layer = 0
+collision_mask = 0
+
+[node name="grass_tuft_38" parent="DecoracionEntorno" instance=ExtResource("decor_g")]
+position = Vector3(29.35, 0.09361329, 15.55)
+scale = Vector3(1.19, 1.19, 1.19)
+
+[node name="grass_tuft_39" parent="DecoracionEntorno" instance=ExtResource("decor_g")]
+position = Vector3(39, 0.09361329, 11)
+scale = Vector3(1.31, 1.31, 1.31)
+
+[node name="wildflowers_40" parent="DecoracionEntorno" instance=ExtResource("decor_f")]
+position = Vector3(38.35, 0.09361329, 11.55)
+scale = Vector3(1.31, 1.31, 1.31)
+
+[node name="mossy_rock_41" parent="DecoracionEntorno" instance=ExtResource("decor_r")]
+position = Vector3(44, 0.09361329, 8.5)
+scale = Vector3(0.52, 0.52, 0.52)
+
+[node name="Obstacle" parent="DecoracionEntorno/mossy_rock_41" index="1"]
+collision_layer = 0
+collision_mask = 0
+
+[node name="grass_tuft_42" parent="DecoracionEntorno" instance=ExtResource("decor_g")]
+position = Vector3(43.35, 0.09361329, 9.05)
+scale = Vector3(0.95, 0.95, 0.95)
+

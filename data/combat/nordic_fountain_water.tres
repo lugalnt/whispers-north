@@ -1,0 +1,14 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_surfaces_v2/nordic_water.png" id="1_n6od2"]
+
+[resource]
+resource_local_to_scene = true
+resource_name = "mat_water_pool"
+transparency = 1
+cull_mode = 2
+albedo_color = Color(1, 1, 1, 0.85)
+albedo_texture = ExtResource("1_n6od2")
+roughness = 0.1
+uv1_offset = Vector3(0.24333477, 0.24333477, 0)
+texture_filter = 0

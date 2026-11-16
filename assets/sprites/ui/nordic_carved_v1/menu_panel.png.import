@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ktdq4gmhwt56"
-path="res://.godot/imported/16x16 Walk-Sheet.png-49e0c65f5009fac827bcde1aa36296c3.ctex"
+uid="uid://dbmslckfdqx10"
+path="res://.godot/imported/menu_panel.png-728b007d78cb580a32cff358b17e1265.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/player/movimiento/16x16 Walk-Sheet.png"
-dest_files=["res://.godot/imported/16x16 Walk-Sheet.png-49e0c65f5009fac827bcde1aa36296c3.ctex"]
+source_file="res://assets/sprites/ui/nordic_carved_v1/menu_panel.png"
+dest_files=["res://.godot/imported/menu_panel.png-728b007d78cb580a32cff358b17e1265.ctex"]
 
 [params]
 
@@ -23,7 +23,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -37,4 +37,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1

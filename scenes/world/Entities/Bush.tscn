@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://2lshed6yy75"]
 
 [ext_resource type="Script" uid="uid://dw76phuhh61my" path="res://scripts/world/bush.gd" id="1_bush"]
-[ext_resource type="Texture2D" uid="uid://c5eggyr8cf8jb" path="res://assets/sprites/environment/trees/bush.png" id="2_sko0y"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/nordic_props_v1/dense_bush.png" id="2_sko0y"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_g4v7s"]
 height = 0.85884094
@@ -21,8 +21,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.07379913, 0)
 shape = SubResource("CylinderShape3D_g4v7s")
 
 [node name="Bush" type="Sprite3D" parent="StaticBody3D" unique_id=2009374489]
-transform = Transform3D(3.096771, 0, 0, 0, 2.9829545, 0, 0, 0, 0.9860128, 0, 0, 0)
-billboard = 1
+position = Vector3(0.0004960914010823812, -0.0065995189416717115, 0)
+pixel_size = 0.0009921828021647624
+billboard = 2
 alpha_cut = 1
 texture_filter = 0
 texture = ExtResource("2_sko0y")

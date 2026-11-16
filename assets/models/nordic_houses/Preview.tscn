@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="PackedScene" path="res://assets/models/nordic_houses/CasaRoja.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://assets/models/nordic_houses/CasaEntramado.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://assets/models/nordic_houses/CasaPorche.tscn" id="3"]
+[sub_resource type="Environment" id="env"]
+background_mode = 1
+background_color = Color(0.18, 0.25, 0.28, 1)
+ambient_light_source = 3
+ambient_light_color = Color(0.75, 0.84, 0.91, 1)
+ambient_light_energy = 0.65
+tonemap_mode = 0
+[sub_resource type="PlaneMesh" id="ground"]
+size = Vector2(40, 22)
+[sub_resource type="StandardMaterial3D" id="groundmat"]
+albedo_color = Color(0.24, 0.32, 0.29, 1)
+roughness = 1.0
+
+[node name="CasasNordicas" type="Node3D"]
+[node name="Roja" parent="." instance=ExtResource("1")]
+position = Vector3(-8, 0, 0)
+[node name="Entramado" parent="." instance=ExtResource("2")]
+[node name="Porche" parent="." instance=ExtResource("3")]
+position = Vector3(8, 0, 0)
+[node name="Ground" type="MeshInstance3D" parent="."]
+position = Vector3(0, -0.02, 0)
+mesh = SubResource("ground")
+material_override = SubResource("groundmat")
+[node name="Environment" type="WorldEnvironment" parent="."]
+environment = SubResource("env")
+[node name="Sun" type="DirectionalLight3D" parent="."]
+rotation_degrees = Vector3(-48, -30, 0)
+light_color = Color(1, 0.92, 0.80, 1)
+light_energy = 0.9
+shadow_enabled = true
+[node name="Camera3D" type="Camera3D" parent="."]
+position = Vector3(11, 12, 25)
+rotation_degrees = Vector3(-22, 23, 0)
+projection = 1
+size = 29.0
+current = true

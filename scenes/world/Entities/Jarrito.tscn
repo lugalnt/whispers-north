@@ -1,0 +1,61 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/jarrito.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://assets/creatures/Jarro/model/Jarron_3D.glb" id="2_model"]
+[ext_resource type="Script" path="res://scripts/combat/encuentro_combate.gd" id="3_encuentro"]
+[ext_resource type="PackedScene" path="res://scenes/combat/battlers/JarritoBattler.tscn" id="4_battler"]
+
+[sub_resource type="CylinderShape3D" id="Shape_body"]
+radius = 0.65
+height = 1.0
+
+[sub_resource type="CylinderShape3D" id="Shape_detection"]
+radius = 7.0
+height = 2.5
+
+[sub_resource type="CylinderShape3D" id="Shape_encounter"]
+radius = 0.67
+height = 1.0
+
+[node name="Jarrito" type="CharacterBody3D"]
+collision_layer = 4
+collision_mask = 1
+script = ExtResource("1_script")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.5, 0)
+shape = SubResource("Shape_body")
+
+[node name="Visual" type="Node3D" parent="."]
+
+[node name="EncuentroCombate" type="Node" parent="."]
+script = ExtResource("3_encuentro")
+enemigos = Array[PackedScene]([ExtResource("4_battler")])
+
+[node name="Modelo" parent="Visual" instance=ExtResource("2_model")]
+position = Vector3(0, 0.01, 0)
+scale = Vector3(0.5, 0.5, 0.5)
+
+[node name="BodyAnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Visual/Modelo")
+
+[node name="FlameAnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Visual/Modelo")
+
+[node name="DetectionArea" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 1
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DetectionArea"]
+position = Vector3(0, 1.25, 0)
+shape = SubResource("Shape_detection")
+
+[node name="EncounterArea" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 1
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EncounterArea"]
+position = Vector3(0, 0.5, 0)
+shape = SubResource("Shape_encounter")

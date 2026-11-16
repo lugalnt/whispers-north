@@ -1,0 +1,647 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/zona_mundo.gd" id="1_6p8ob"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_v1/cold_grass.png" id="2_n74xt"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_v1/dirt_path.png" id="3_e6bgt"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_surfaces_v2/fractured_rock.png" id="4_hvw5r"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/rock01_snow_n.png" id="5_8ru80"]
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/CameraSwitch.tscn" id="6_s6i5t"]
+[ext_resource type="Script" path="res://scripts/world/camera_switch.gd" id="7_8x5sv"]
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/WorldTransition.tscn" id="8_6dkvt"]
+[ext_resource type="Script" path="res://scripts/world/world_transition.gd" id="9_57agk"]
+[ext_resource type="PackedScene" path="res://scenes/player/player_32.tscn" id="10_r2sa7"]
+[ext_resource type="Script" path="res://scripts/player/player.gd" id="11_ranf4"]
+
+[ext_resource type="Material" path="res://assets/sprites/environment/materials/nordic_v1/village_stone.tres" id="nordic_stone"]
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/NordicProps/grass_tuft.tscn" id="nordic_grass_tuft"]
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/NordicProps/wildflowers.tscn" id="nordic_wildflowers"]
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/NordicProps/mossy_rock.tscn" id="nordic_mossy_rock"]
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/NordicProps/snow_bank.tscn" id="nordic_snow_bank"]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_surfaces_v2/ruin_masonry.png" id="tex_ruin_masonry"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_wood_v1/mossy_old_timber.png" id="tex_mossy_old_timber"]
+
+[sub_resource type="Environment" id="Environment_vjvlu"]
+background_mode = 1
+background_color = Color(0.42, 0.55, 0.62, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.79, 0.86, 0.96, 1)
+ambient_light_energy = 0.32
+tonemap_mode = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rar2x"]
+albedo_texture = ExtResource("2_n74xt")
+uv1_scale = Vector3(0.25, 0.25, 0.25)
+uv1_triplanar = true
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sys0y"]
+albedo_texture = ExtResource("3_e6bgt")
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ckqu1"]
+albedo_color = Color(0.13, 0.27, 0.16, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e8s8r"]
+albedo_color = Color(0.6, 0.55, 0.5, 1)
+albedo_texture = ExtResource("4_hvw5r")
+uv1_scale = Vector3(0.25, 0.25, 0.25)
+uv1_triplanar = true
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3qlci"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_ruin_masonry"]
+albedo_texture = ExtResource("tex_ruin_masonry")
+texture_filter = 0
+roughness = 1.0
+uv1_triplanar = true
+uv1_scale = Vector3(0.6, 0.6, 0.6)
+
+[sub_resource type="StandardMaterial3D" id="mat_mossy_old_timber"]
+albedo_texture = ExtResource("tex_mossy_old_timber")
+texture_filter = 0
+roughness = 1.0
+uv1_triplanar = true
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+
+[node name="WorldForestRuins" type="Node3D" unique_id=1464632974]
+script = ExtResource("1_6p8ob")
+marcador_inicial = "Llegada_DesdeCueva"
+camara_inicial = "Camera1"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=506190570]
+environment = SubResource("Environment_vjvlu")
+
+[node name="Sol" type="DirectionalLight3D" parent="." unique_id=1089497486]
+rotation_degrees = Vector3(-48, 32, 0)
+shadow_enabled = true
+light_color = Color(1, 0.96, 0.88, 1)
+light_energy = 0.55
+light_specular = 0.35
+shadow_opacity = 0.72
+directional_shadow_max_distance = 90.0
+
+[node name="Terreno" type="Node3D" parent="." unique_id=496081094]
+
+[node name="Piso" type="CSGBox3D" parent="Terreno" unique_id=1637066301]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, -0.25, 37)
+use_collision = true
+size = Vector3(110, 0.5, 82)
+material = SubResource("StandardMaterial3D_rar2x")
+
+[node name="Caminos" type="Node3D" parent="Terreno" unique_id=400722917]
+
+[node name="Claro_Entrada" type="CSGBox3D" parent="Terreno/Caminos" unique_id=134421025]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0.02, 61)
+size = Vector3(10, 0.04, 10)
+material = SubResource("StandardMaterial3D_sys0y")
+
+[node name="Camino_Inferior" type="CSGBox3D" parent="Terreno/Caminos" unique_id=1292201459]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43, 0.022, 61)
+size = Vector3(58, 0.04, 6)
+material = SubResource("StandardMaterial3D_sys0y")
+
+[node name="Claro_RuinaSE" type="CSGBox3D" parent="Terreno/Caminos" unique_id=1889219162]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70, 0.024, 61)
+size = Vector3(16, 0.04, 14)
+material = ExtResource("nordic_stone")
+
+[node name="Camino_Norte" type="CSGBox3D" parent="Terreno/Caminos" unique_id=1342067906]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 0.026, 40)
+size = Vector3(6, 0.04, 36)
+material = SubResource("StandardMaterial3D_sys0y")
+
+[node name="Desvio_Este" type="CSGBox3D" parent="Terreno/Caminos" unique_id=1629468533]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0.028, 47)
+size = Vector3(4, 0.04, 6)
+material = SubResource("StandardMaterial3D_sys0y")
+
+[node name="Claro_RuinaEste" type="CSGBox3D" parent="Terreno/Caminos" unique_id=119637172]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 0.03, 47)
+size = Vector3(8, 0.04, 10)
+material = ExtResource("nordic_stone")
+
+[node name="Desvio_Oeste" type="CSGBox3D" parent="Terreno/Caminos" unique_id=1961301225]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33, 0.032, 41)
+size = Vector3(6, 0.04, 6)
+material = SubResource("StandardMaterial3D_sys0y")
+
+[node name="Claro_RuinaOeste" type="CSGBox3D" parent="Terreno/Caminos" unique_id=684476962]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0.034, 40)
+size = Vector3(8, 0.04, 12)
+material = ExtResource("nordic_stone")
+
+[node name="Enlace_Noroeste" type="CSGBox3D" parent="Terreno/Caminos" unique_id=966463111]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0.036, 25)
+size = Vector3(12, 0.04, 6)
+material = SubResource("StandardMaterial3D_sys0y")
+
+[node name="Claro_Noroeste" type="CSGBox3D" parent="Terreno/Caminos" unique_id=725437947]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0.038, 26)
+size = Vector3(12, 0.04, 12)
+material = SubResource("StandardMaterial3D_sys0y")
+
+[node name="Ruinas_Noroeste" type="CSGBox3D" parent="Terreno/Caminos" unique_id=288276629]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0.04, 13)
+size = Vector3(24, 0.04, 14)
+material = ExtResource("nordic_stone")
+
+[node name="Camino_Este" type="CSGBox3D" parent="Terreno/Caminos" unique_id=1051509718]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 0.042, 23)
+size = Vector3(16, 0.04, 6)
+material = SubResource("StandardMaterial3D_sys0y")
+
+[node name="Ruina_Grande" type="CSGBox3D" parent="Terreno/Caminos" unique_id=425482995]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 68, 0.044, 18)
+size = Vector3(24, 0.04, 16)
+material = ExtResource("nordic_stone")
+
+[node name="Zona_Jefe" type="CSGBox3D" parent="Terreno/Caminos" unique_id=2036503920]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 89, 0.046, 16)
+size = Vector3(18, 0.04, 16)
+material = SubResource("StandardMaterial3D_sys0y")
+
+[node name="Arboleda" type="Node3D" parent="." unique_id=482790527]
+
+[node name="Masa_01" type="CSGBox3D" parent="Arboleda" unique_id=647628602]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 0.8, 3)
+use_collision = true
+size = Vector3(108, 1.6, 6)
+material = SubResource("StandardMaterial3D_ckqu1")
+
+[node name="Masa_02" type="CSGBox3D" parent="Arboleda" unique_id=289395056]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67, 0.8, 7)
+use_collision = true
+size = Vector3(74, 1.6, 2)
+material = SubResource("StandardMaterial3D_ckqu1")
+
+[node name="Masa_03" type="CSGBox3D" parent="Arboleda" unique_id=782535589]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 0.8, 9)
+use_collision = true
+size = Vector3(50, 1.6, 2)
+material = SubResource("StandardMaterial3D_ckqu1")
+
+[node name="Masa_04" type="CSGBox3D" parent="Arboleda" unique_id=1254143573]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.8, 13)
+use_collision = true
+size = Vector3(10, 1.6, 14)
+material = SubResource("StandardMaterial3D_ckqu1")
+
+[node name="Masa_05" type="CSGBox3D" parent="Arboleda" unique_id=1419947489]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43, 0.8, 15)
+use_collision = true
+size = Vector3(26, 1.6, 10)
+material = SubResource("StandardMaterial3D_ckqu1")
+
+[node name="Masa_06" type="CSGBox3D" parent="Arboleda" unique_id=1482856165]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0.8, 21)
+use_collision = true
+size = Vector3(8, 1.6, 2)
+material = SubResource("StandardMaterial3D_ckqu1")
+
+[node name="Masa_07" type="CSGBox3D" parent="Arboleda" unique_id=1553098809]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 101, 0.8, 16)
+use_collision = true
+size = Vector3(6, 1.6, 16)
+material = SubResource("StandardMaterial3D_ckqu1")
+
+[node name="Masa_08" type="CSGBox3D" parent="Arboleda" unique_id=1550884744]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 92, 0.8, 25)
+use_collision = true
+size = Vector3(24, 1.6, 2)
+material = SubResource("StandardMaterial3D_ckqu1")
+
+[node name="Masa_09" type="CSGBox3D" parent="Arboleda" unique_id=1611739031]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0.8, 26)
+use_collision = true
+size = Vector3(26, 1.6, 12)
+material = SubResource("StandardMaterial3D_ckqu1")
+
+[node name="Masa_10" type="CSGBox3D" parent="Arboleda" unique_id=768629632]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 0.8, 30)
+use_collision = true
+size = Vector3(2, 1.6, 4)
+material = SubResource("StandardMaterial3D_ckqu1")
+
+[node name="Masa_11" type="CSGBox3D" parent="Arboleda" unique_id=1433560024]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0.8, 33)
+use_collision = true
+size = Vector3(40, 1.6, 2)
+material = SubResource("StandardMaterial3D_ckqu1")
+
+[node name="Masa_12" type="CSGBox3D" parent="Arboleda" unique_id=249693644]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33, 0.8, 36)
+use_collision = true
+size = Vector3(6, 1.6, 4)
+material = SubResource("StandardMaterial3D_ckqu1")
+
+[node name="Masa_13" type="CSGBox3D" parent="Arboleda" unique_id=1251504750]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73, 0.8, 34)
+use_collision = true
+size = Vector3(62, 1.6, 16)
+material = SubResource("StandardMaterial3D_ckqu1")
+
+[node name="Masa_14" type="CSGBox3D" parent="Arboleda" unique_id=529831545]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0.8, 43)
+use_collision = true
+size = Vector3(4, 1.6, 2)
+material = SubResource("StandardMaterial3D_ckqu1")
+
+[node name="Masa_15" type="CSGBox3D" parent="Arboleda" unique_id=1269294679]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0.8, 40)
+use_collision = true
+size = Vector3(26, 1.6, 12)
+material = SubResource("StandardMaterial3D_ckqu1")
+
+[node name="Masa_16" type="CSGBox3D" parent="Arboleda" unique_id=796909450]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33, 0.8, 45)
+use_collision = true
+size = Vector3(6, 1.6, 2)
+material = SubResource("StandardMaterial3D_ckqu1")
+
+[node name="Masa_17" type="CSGBox3D" parent="Arboleda" unique_id=652603914]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44, 0.8, 51)
+use_collision = true
+size = Vector3(4, 1.6, 2)
+material = SubResource("StandardMaterial3D_ckqu1")
+
+[node name="Masa_18" type="CSGBox3D" parent="Arboleda" unique_id=877273469]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79, 0.8, 47)
+use_collision = true
+size = Vector3(50, 1.6, 10)
+material = SubResource("StandardMaterial3D_ckqu1")
+
+[node name="Masa_19" type="CSGBox3D" parent="Arboleda" unique_id=397178314]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73, 0.8, 53)
+use_collision = true
+size = Vector3(62, 1.6, 2)
+material = SubResource("StandardMaterial3D_ckqu1")
+
+[node name="Masa_20" type="CSGBox3D" parent="Arboleda" unique_id=1966992150]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0.8, 51)
+use_collision = true
+size = Vector3(40, 1.6, 10)
+material = SubResource("StandardMaterial3D_ckqu1")
+
+[node name="Masa_21" type="CSGBox3D" parent="Arboleda" unique_id=15784419]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0.8, 57)
+use_collision = true
+size = Vector3(22, 1.6, 2)
+material = SubResource("StandardMaterial3D_ckqu1")
+
+[node name="Masa_22" type="CSGBox3D" parent="Arboleda" unique_id=897844953]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 52, 0.8, 56)
+use_collision = true
+size = Vector3(20, 1.6, 4)
+material = SubResource("StandardMaterial3D_ckqu1")
+
+[node name="Masa_23" type="CSGBox3D" parent="Arboleda" unique_id=261033543]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 61)
+use_collision = true
+size = Vector3(8, 1.6, 10)
+material = SubResource("StandardMaterial3D_ckqu1")
+
+[node name="Masa_24" type="CSGBox3D" parent="Arboleda" unique_id=159851805]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0.8, 65)
+use_collision = true
+size = Vector3(48, 1.6, 2)
+material = SubResource("StandardMaterial3D_ckqu1")
+
+[node name="Masa_25" type="CSGBox3D" parent="Arboleda" unique_id=1931724122]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 0.8, 67)
+use_collision = true
+size = Vector3(66, 1.6, 2)
+material = SubResource("StandardMaterial3D_ckqu1")
+
+[node name="Masa_26" type="CSGBox3D" parent="Arboleda" unique_id=503311318]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 91, 0.8, 61)
+use_collision = true
+size = Vector3(26, 1.6, 14)
+material = SubResource("StandardMaterial3D_ckqu1")
+
+[node name="Masa_27" type="CSGBox3D" parent="Arboleda" unique_id=995618381]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 0.8, 72)
+use_collision = true
+size = Vector3(108, 1.6, 8)
+material = SubResource("StandardMaterial3D_ckqu1")
+
+[node name="Montana" type="Node3D" parent="." unique_id=864349175]
+
+[node name="Roca" type="CSGBox3D" parent="Montana" unique_id=1212846551]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 62)
+use_collision = true
+size = Vector3(8, 7, 20)
+material = SubResource("StandardMaterial3D_e8s8r")
+
+[node name="BocaCueva" type="CSGBox3D" parent="Montana" unique_id=1783863915]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.1, 1.6, 61)
+size = Vector3(0.2, 3.2, 4.4)
+material = SubResource("StandardMaterial3D_3qlci")
+
+[node name="Cameras" type="Node3D" parent="." unique_id=334467109]
+
+[node name="Camera1" type="Camera3D" parent="Cameras" unique_id=1640145095]
+transform = Transform3D(1, 0, 0, 0, 0.76604444, 0.6427876, 0, -0.6427876, 0.76604444, 14, 9, 72)
+fov = 60.0
+
+[node name="Camera2" type="Camera3D" parent="Cameras" unique_id=1145916862]
+transform = Transform3D(1, 0, 0, 0, 0.76604444, 0.6427876, 0, -0.6427876, 0.76604444, 39, 9, 71)
+fov = 60.0
+
+[node name="Camera3" type="Camera3D" parent="Cameras" unique_id=1955778824]
+transform = Transform3D(1, 0, 0, 0, 0.76604444, 0.6427876, 0, -0.6427876, 0.76604444, 67, 9, 73)
+fov = 60.0
+
+[node name="Camera4" type="Camera3D" parent="Cameras" unique_id=551084163]
+transform = Transform3D(1, 0, 0, 0, 0.76604444, 0.6427876, 0, -0.6427876, 0.76604444, 44, 9, 57)
+fov = 60.0
+
+[node name="Camera5" type="Camera3D" parent="Cameras" unique_id=2035088713]
+transform = Transform3D(1, 0, 0, 0, 0.76604444, 0.6427876, 0, -0.6427876, 0.76604444, 28, 9, 53)
+fov = 60.0
+
+[node name="Camera6" type="Camera3D" parent="Cameras" unique_id=2065182814]
+transform = Transform3D(1, 0, 0, 0, 0.76604444, 0.6427876, 0, -0.6427876, 0.76604444, 32, 9, 38)
+fov = 60.0
+
+[node name="Camera7" type="Camera3D" parent="Cameras" unique_id=923346722]
+transform = Transform3D(1, 0, 0, 0, 0.76604444, 0.6427876, 0, -0.6427876, 0.76604444, 18, 9, 25)
+fov = 60.0
+
+[node name="Camera8" type="Camera3D" parent="Cameras" unique_id=1965325643]
+transform = Transform3D(1, 0, 0, 0, 0.76604444, 0.6427876, 0, -0.6427876, 0.76604444, 53, 9, 31)
+fov = 60.0
+
+[node name="Camera9" type="Camera3D" parent="Cameras" unique_id=1389040627]
+transform = Transform3D(1, 0, 0, 0, 0.76604444, 0.6427876, 0, -0.6427876, 0.76604444, 71, 9, 29)
+fov = 60.0
+
+[node name="Camera10" type="Camera3D" parent="Cameras" unique_id=136585871]
+transform = Transform3D(1, 0, 0, 0, 0.76604444, 0.6427876, 0, -0.6427876, 0.76604444, 89, 9, 29)
+fov = 60.0
+
+[node name="ZonasCamara" type="Node3D" parent="." unique_id=757540808]
+
+[node name="ZonaCam_1" type="Area3D" parent="ZonasCamara" unique_id=1982736450 instance=ExtResource("6_s6i5t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 61)
+collision_layer = 0
+script = ExtResource("7_8x5sv")
+modo = 2
+camara_b_num = 0
+tamano_trigger = Vector3(24, 3, 18)
+
+[node name="ZonaCam_2" type="Area3D" parent="ZonasCamara" unique_id=1799246239 instance=ExtResource("6_s6i5t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 0, 61)
+collision_layer = 0
+script = ExtResource("7_8x5sv")
+modo = 2
+camara_a_num = 2
+camara_b_num = 0
+tamano_trigger = Vector3(26, 3, 18)
+
+[node name="ZonaCam_3" type="Area3D" parent="ZonasCamara" unique_id=1085077872 instance=ExtResource("6_s6i5t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66, 0, 61)
+collision_layer = 0
+script = ExtResource("7_8x5sv")
+modo = 2
+camara_a_num = 3
+camara_b_num = 0
+tamano_trigger = Vector3(28, 3, 18)
+
+[node name="ZonaCam_4" type="Area3D" parent="ZonasCamara" unique_id=413909132 instance=ExtResource("6_s6i5t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 0, 42.5)
+collision_layer = 0
+script = ExtResource("7_8x5sv")
+modo = 2
+camara_a_num = 4
+camara_b_num = 0
+tamano_trigger = Vector3(22, 3, 19)
+
+[node name="ZonaCam_5" type="Area3D" parent="ZonasCamara" unique_id=1844032 instance=ExtResource("6_s6i5t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 40.5)
+collision_layer = 0
+script = ExtResource("7_8x5sv")
+modo = 2
+camara_a_num = 5
+camara_b_num = 0
+tamano_trigger = Vector3(16, 3, 15)
+
+[node name="ZonaCam_6" type="Area3D" parent="ZonasCamara" unique_id=1712537929 instance=ExtResource("6_s6i5t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31, 0, 26.5)
+collision_layer = 0
+script = ExtResource("7_8x5sv")
+modo = 2
+camara_a_num = 6
+camara_b_num = 0
+tamano_trigger = Vector3(26, 3, 13)
+
+[node name="ZonaCam_7" type="Area3D" parent="ZonasCamara" unique_id=218595937 instance=ExtResource("6_s6i5t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, 12)
+collision_layer = 0
+script = ExtResource("7_8x5sv")
+modo = 2
+camara_a_num = 7
+camara_b_num = 0
+tamano_trigger = Vector3(30, 3, 16)
+
+[node name="ZonaCam_8" type="Area3D" parent="ZonasCamara" unique_id=1615613522 instance=ExtResource("6_s6i5t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53, 0, 19.5)
+collision_layer = 0
+script = ExtResource("7_8x5sv")
+modo = 2
+camara_a_num = 8
+camara_b_num = 0
+tamano_trigger = Vector3(18, 3, 27)
+
+[node name="ZonaCam_9" type="Area3D" parent="ZonasCamara" unique_id=129460622 instance=ExtResource("6_s6i5t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71, 0, 19.5)
+collision_layer = 0
+script = ExtResource("7_8x5sv")
+modo = 2
+camara_a_num = 9
+camara_b_num = 0
+tamano_trigger = Vector3(18, 3, 27)
+
+[node name="ZonaCam_10" type="Area3D" parent="ZonasCamara" unique_id=1595912724 instance=ExtResource("6_s6i5t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90, 0, 17)
+collision_layer = 0
+script = ExtResource("7_8x5sv")
+modo = 2
+camara_a_num = 10
+camara_b_num = 0
+tamano_trigger = Vector3(20, 3, 26)
+
+[node name="Transiciones" type="Node3D" parent="." unique_id=990737829]
+
+[node name="Entrada_Cueva" type="Area3D" parent="Transiciones" unique_id=892347102 instance=ExtResource("8_6dkvt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1.1, 61)
+collision_layer = 0
+script = ExtResource("9_57agk")
+escena_destino = "res://scenes/world/World_Cave.tscn"
+nombre_marcador_destino = "Llegada_DesdeBosque"
+camara_destino = "Camera4"
+tamano_zona = Vector3(1.2, 3, 5)
+
+[node name="Marcadores" type="Node3D" parent="." unique_id=265531440]
+
+[node name="Llegada_DesdeCueva" type="Marker3D" parent="Marcadores" unique_id=1097371628]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.1, 61)
+
+[node name="Ref_Encuentro_Inferior" type="Marker3D" parent="Marcadores" unique_id=2013509642]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58, 0, 61)
+
+[node name="Ref_Tesoro_RuinaSE" type="Marker3D" parent="Marcadores" unique_id=1163643856]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72, 0, 62)
+
+[node name="Ref_Tesoro_RuinaEste" type="Marker3D" parent="Marcadores" unique_id=1220394411]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 0, 47)
+
+[node name="Ref_Encuentro_RuinaOeste" type="Marker3D" parent="Marcadores" unique_id=2027820919]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 40)
+
+[node name="Ref_Encuentro_RuinasNO" type="Marker3D" parent="Marcadores" unique_id=1086210195]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 14)
+
+[node name="Ref_Tesoro_RuinasNO" type="Marker3D" parent="Marcadores" unique_id=346747384]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 10)
+
+[node name="Ref_Encuentro_RuinaGrande" type="Marker3D" parent="Marcadores" unique_id=1243067476]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59, 0, 21)
+
+[node name="Ref_Tesoro_RuinaGrande" type="Marker3D" parent="Marcadores" unique_id=544791263]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69, 0, 13)
+
+[node name="Ref_Encuentro_Jefe" type="Marker3D" parent="Marcadores" unique_id=950322496]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 88, 0, 19)
+
+[node name="Ref_ObjetoImportante" type="Marker3D" parent="Marcadores" unique_id=412749052]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 94, 0, 14)
+
+[node name="Player32" type="CharacterBody3D" parent="." unique_id=820540263 instance=ExtResource("10_r2sa7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.1, 61)
+script = ExtResource("11_ranf4")
+
+[node name="DecoracionNordica" type="Node3D" parent="."]
+
+[node name="grass_tuft_0" parent="DecoracionNordica" instance=ExtResource("nordic_grass_tuft")]
+position = Vector3(6, 0.04, 56.5)
+
+[node name="wildflowers_1" parent="DecoracionNordica" instance=ExtResource("nordic_wildflowers")]
+position = Vector3(11, 0.04, 56.8)
+
+[node name="mossy_rock_2" parent="DecoracionNordica" instance=ExtResource("nordic_mossy_rock")]
+position = Vector3(13, 0.04, 65)
+
+[node name="Obstacle" parent="DecoracionNordica/mossy_rock_2"]
+collision_layer = 0
+collision_mask = 0
+
+[node name="snow_bank_3" parent="DecoracionNordica" instance=ExtResource("nordic_snow_bank")]
+position = Vector3(5, 0.04, 65)
+
+[node name="Obstacle" parent="DecoracionNordica/snow_bank_3"]
+collision_layer = 0
+collision_mask = 0
+
+[node name="grass_tuft_4" parent="DecoracionNordica" instance=ExtResource("nordic_grass_tuft")]
+position = Vector3(18, 0.04, 57.8)
+
+[node name="wildflowers_5" parent="DecoracionNordica" instance=ExtResource("nordic_wildflowers")]
+position = Vector3(25, 0.04, 64.2)
+
+[node name="mossy_rock_6" parent="DecoracionNordica" instance=ExtResource("nordic_mossy_rock")]
+position = Vector3(34, 0.04, 55.8)
+
+[node name="Obstacle" parent="DecoracionNordica/mossy_rock_6"]
+collision_layer = 0
+collision_mask = 0
+
+[node name="grass_tuft_7" parent="DecoracionNordica" instance=ExtResource("nordic_grass_tuft")]
+position = Vector3(42.4, 0.04, 50)
+
+[node name="wildflowers_8" parent="DecoracionNordica" instance=ExtResource("nordic_wildflowers")]
+position = Vector3(35.7, 0.04, 45)
+
+[node name="grass_tuft_9" parent="DecoracionNordica" instance=ExtResource("nordic_grass_tuft")]
+position = Vector3(43, 0.04, 26.4)
+
+[node name="snow_bank_10" parent="DecoracionNordica" instance=ExtResource("nordic_snow_bank")]
+position = Vector3(72, 0.04, 27)
+
+[node name="Obstacle" parent="DecoracionNordica/snow_bank_10"]
+collision_layer = 0
+collision_mask = 0
+
+[node name="FragmentosRuina" type="Node3D" parent="."]
+
+[node name="PilarRoto0" type="CSGBox3D" parent="FragmentosRuina"]
+position = Vector3(65, 0.8, 57)
+size = Vector3(0.8, 1.6, 0.8)
+material = SubResource("mat_ruin_masonry")
+
+[node name="VigaCaida0" type="CSGBox3D" parent="FragmentosRuina"]
+position = Vector3(66.2, 0.15, 57)
+rotation = Vector3(0, 0.3, 0)
+size = Vector3(2.4, 0.3, 0.35)
+material = SubResource("mat_mossy_old_timber")
+
+[node name="PilarRoto1" type="CSGBox3D" parent="FragmentosRuina"]
+position = Vector3(74, 0.8, 57)
+size = Vector3(0.8, 1.6, 0.8)
+material = SubResource("mat_ruin_masonry")
+
+[node name="VigaCaida1" type="CSGBox3D" parent="FragmentosRuina"]
+position = Vector3(75.2, 0.15, 57)
+rotation = Vector3(0, 0.3, 0)
+size = Vector3(2.4, 0.3, 0.35)
+material = SubResource("mat_mossy_old_timber")
+
+[node name="PilarRoto2" type="CSGBox3D" parent="FragmentosRuina"]
+position = Vector3(48, 0.8, 44)
+size = Vector3(0.8, 1.6, 0.8)
+material = SubResource("mat_ruin_masonry")
+
+[node name="VigaCaida2" type="CSGBox3D" parent="FragmentosRuina"]
+position = Vector3(49.2, 0.15, 44)
+rotation = Vector3(0, 0.3, 0)
+size = Vector3(2.4, 0.3, 0.35)
+material = SubResource("mat_mossy_old_timber")
+
+[node name="PilarRoto3" type="CSGBox3D" parent="FragmentosRuina"]
+position = Vector3(23, 0.8, 36)
+size = Vector3(0.8, 1.6, 0.8)
+material = SubResource("mat_ruin_masonry")
+
+[node name="VigaCaida3" type="CSGBox3D" parent="FragmentosRuina"]
+position = Vector3(24.2, 0.15, 36)
+rotation = Vector3(0, 0.3, 0)
+size = Vector3(2.4, 0.3, 0.35)
+material = SubResource("mat_mossy_old_timber")
+
+[node name="PilarRoto4" type="CSGBox3D" parent="FragmentosRuina"]
+position = Vector3(15, 0.8, 9)
+size = Vector3(0.8, 1.6, 0.8)
+material = SubResource("mat_ruin_masonry")
+
+[node name="VigaCaida4" type="CSGBox3D" parent="FragmentosRuina"]
+position = Vector3(16.2, 0.15, 9)
+rotation = Vector3(0, 0.3, 0)
+size = Vector3(2.4, 0.3, 0.35)
+material = SubResource("mat_mossy_old_timber")
+
+[node name="PilarRoto5" type="CSGBox3D" parent="FragmentosRuina"]
+position = Vector3(63, 0.8, 13)
+size = Vector3(0.8, 1.6, 0.8)
+material = SubResource("mat_ruin_masonry")
+
+[node name="VigaCaida5" type="CSGBox3D" parent="FragmentosRuina"]
+position = Vector3(64.2, 0.15, 13)
+rotation = Vector3(0, 0.3, 0)
+size = Vector3(2.4, 0.3, 0.35)
+material = SubResource("mat_mossy_old_timber")
+
