@@ -37,6 +37,10 @@
 [ext_resource type="PackedScene" path="res://scenes/world/Entities/villager_elder.tscn" id="new_villager_elder"]
 [ext_resource type="PackedScene" path="res://scenes/world/Entities/NordicProps/dense_bush.tscn" id="town_bush"]
 
+[ext_resource type="Texture2D" path="res://assets/sprites/npcs/townsfolk_v1/villager_woman.png" id="portrait_source_woman"]
+[ext_resource type="Texture2D" path="res://assets/sprites/npcs/townsfolk_v1/villager_worker.png" id="portrait_source_worker"]
+[ext_resource type="Texture2D" path="res://assets/sprites/npcs/townsfolk_v1/villager_elder.png" id="portrait_source_elder"]
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_rq4xl"]
 size = Vector3(0.2977295, 1, 1)
 
@@ -99,6 +103,21 @@ size = Vector3(21.339367, 8.6710205, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bocacueva"]
 shading_mode = 0
 albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="AtlasTexture" id="portrait_woman"]
+atlas = ExtResource("portrait_source_woman")
+region = Rect2(240, 70, 540, 650)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="portrait_worker"]
+atlas = ExtResource("portrait_source_worker")
+region = Rect2(240, 70, 540, 650)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="portrait_elder"]
+atlas = ExtResource("portrait_source_elder")
+region = Rect2(240, 70, 540, 650)
+filter_clip = true
 
 [node name="WorldTown" type="Node3D" unique_id=1701017460]
 script = ExtResource("21_worldtown")
@@ -1213,7 +1232,7 @@ offset_indicador = Vector3(0, 1.02698569, 0)
 script = ExtResource("15_utsce")
 maximo_interacciones = 1
 nombre_hablante = "Aldeana"
-retrato_hablante = null
+retrato_hablante = SubResource("portrait_woman")
 lineas_rapidas = Array[String](["Bienvenido al pueblo. Si necesitas descansar, hay bancos junto a la fuente.", "A esta hora suele correr una brisa fresca entre las casas."])
 sfx_iniciar = null
 sfx_voz_hablante = ExtResource("17_fhhgm")
@@ -1228,7 +1247,7 @@ offset_indicador = Vector3(0, 1.12698569, 0)
 script = ExtResource("15_utsce")
 maximo_interacciones = 1
 nombre_hablante = "Aldeano"
-retrato_hablante = null
+retrato_hablante = SubResource("portrait_worker")
 lineas_rapidas = Array[String](["Siempre hay algo que reparar antes de que llegue el frío.", "Que tengas buen día, viajero. Yo debo volver al trabajo."])
 sfx_iniciar = null
 sfx_voz_hablante = ExtResource("17_fhhgm")
@@ -1244,7 +1263,7 @@ offset_indicador = Vector3(0, 0.9269856900000002, 0)
 script = ExtResource("15_utsce")
 maximo_interacciones = 5
 nombre_hablante = "Anciana del Pueblo"
-retrato_hablante = null
+retrato_hablante = SubResource("portrait_elder")
 lineas_rapidas = Array[String](["He visto pasar a muchos viajeros por estos caminos.", "Si vas a salir del pueblo, lleva provisiones y no bajes la guardia.", "Déjame enseñarte algo que podría ayudarte en el camino."])
 sfx_iniciar = null
 sfx_voz_hablante = ExtResource("17_fhhgm")

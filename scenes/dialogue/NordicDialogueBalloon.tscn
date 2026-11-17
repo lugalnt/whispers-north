@@ -95,11 +95,11 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -286.0
+offset_top = -218.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_right = 50
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_right = 100
 theme_override_constants/margin_bottom = 20
 
 [node name="PanelContainer" type="PanelContainer" parent="Balloon/MarginContainer" unique_id=330877509]
@@ -120,14 +120,14 @@ theme_override_constants/separation = 22
 [node name="PortraitContainer" type="PanelContainer" parent="Balloon/MarginContainer/PanelContainer/Padding/HBox" unique_id=1748748493]
 unique_name_in_owner = true
 visible = false
-custom_minimum_size = Vector2(180, 180)
+custom_minimum_size = Vector2(112, 112)
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_portrait")
 
 [node name="PortraitRect" type="TextureRect" parent="Balloon/MarginContainer/PanelContainer/Padding/HBox/PortraitContainer" unique_id=1194309102]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(164, 164)
+custom_minimum_size = Vector2(96, 96)
 layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
@@ -167,7 +167,7 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = -296.0
+offset_bottom = -228.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
