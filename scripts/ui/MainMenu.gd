@@ -93,6 +93,10 @@ func _ready() -> void:
 	else:
 		_crear_panel_opciones()
 
+	# Ambos controles heredan alineación izquierda: reservar el centro del marco.
+	check_pantalla.alignment = HORIZONTAL_ALIGNMENT_CENTER
+	opciones_res.alignment = HORIZONTAL_ALIGNMENT_CENTER
+
 	# ── Obtener referencia al panel de controles ─────────────────────
 	panel_controles = get_node_or_null("PanelControles")
 	if panel_controles:

@@ -12,6 +12,8 @@
 
 [ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_v1/red_roof.png" id="roof"]
 
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/house_ambient_v1/window_glass.png" id="new_glass"]
+
 [sub_resource type="StandardMaterial3D" id="red"]
 albedo_texture = ExtResource("red")
 texture_filter = 0
@@ -47,8 +49,9 @@ albedo_color = Color(0.83, 0.79, 0.66, 1)
 roughness = 0.85
 
 [sub_resource type="StandardMaterial3D" id="glass"]
-albedo_color = Color(0.25, 0.43, 0.46, 1)
-roughness = 0.85
+albedo_texture = ExtResource("new_glass")
+texture_filter = 0
+roughness = 0.8
 
 [sub_resource type="StandardMaterial3D" id="brass"]
 albedo_color = Color(0.65, 0.46, 0.2, 1)

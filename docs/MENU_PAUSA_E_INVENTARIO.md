@@ -30,7 +30,7 @@ Arquitectura inspirada en Godot Open RPG (`gdquest-demos/godot-open-rpg`), adapt
   │ InventoryItem (Res)  │    │           PauseMenu              │
   │ - id, nombre, desc   │    │  (scenes/ui/PauseMenu.tscn)      │
   │ - icono, categoria   │◄───┤  - Pestaña 1: Inventario         │
-  │ - curacion_hp, etc.  │    │  - Pestaña 2: Stats (Eric + Rata)│
+  │ - curacion_hp, etc.  │    │  - Pestaña 2: Stats (Finn + Rata)│
   └──────────────────────┘    │  - Pestaña 3: Sistema            │
                               └──────────────────────────────────┘
 ```
@@ -61,7 +61,7 @@ Gestor reactivo desacoplado de la UI:
 
 ### 2.3 `GameState` (`scripts/core/game_state.gd`)
 Autoload global registrado en `project.godot`:
-- Persiste los stats del protagonista Eric (`BattlerStats`), salud actual (`hp_actual`), nivel, experiencia (`exp_actual`, `exp_para_siguiente_nivel`), estado de compañeros (`tiene_rata`) y la instancia global del `inventario`.
+- Persiste los stats del protagonista Finn (`BattlerStats`), salud actual (`hp_actual`), nivel, experiencia (`exp_actual`, `exp_para_siguiente_nivel`), estado de compañeros (`tiene_rata`) y la instancia global del `inventario`.
 - `actualizar_hp(nuevo_hp: int)` y `curar_hp(cantidad: int)` gestionan la salud persistente entre el supramundo, objetos consumibles y combates.
 - `agregar_exp(cantidad: int)` gestiona subidas de nivel de forma reactiva emitiendo `nivel_subido(nuevo_nivel)`.
 
@@ -73,7 +73,7 @@ Interfaz gráfica completa con `process_mode = PROCESS_MODE_ALWAYS` y **altament
   - *Textos de Inventario*: mensajes de zurrón vacío, selección y texto del botón consumir.
   - *Textos de Estadísticas*: título del perfil (`texto_titulo_perfil`, respeta configuraciones como `"El Fuki"`), etiquetas de HP, Ataque, Defensa, Velocidad, y estado del compañero (`texto_companero_activo` y `texto_companero_descanso`).
   - *Textos de Sistema*: botones de Reanudar, Controles y Menú Principal.
-  - *Visuales y Retratos*: textura de retrato de Eric y del compañero.
+  - *Visuales y Retratos*: textura de retrato de Finn y del compañero.
   - *Audio y Efectos*: streams de sonido para abrir, cerrar, cursor, confirmar y error.
 - **Detección Automática de Acompañante**:
   - `_detectar_companero()` inspecciona si el jugador activo tiene a la rata anclada como hijo o en el grupo `"rat"`.
@@ -84,7 +84,7 @@ Interfaz gráfica completa con `process_mode = PROCESS_MODE_ALWAYS` y **altament
   - El foco de la interfaz se retiene en el slot activo tras consumir, evitando desorientación o bloqueo del foco.
   - Panel lateral de detalles (icono, nombre, categoría, cantidad, descripción completa y botón Usar interactivo).
 - **Pestaña Estadísticas**:
-  - Retrato de Eric y título/perfil respetando fielmente el valor asignado en el Inspector visual.
+  - Retrato de Finn y título/perfil respetando fielmente el valor asignado en el Inspector visual.
   - Nivel, barra de EXP, barra de HP sincronizada en tiempo real con `GameState.hp_actual`.
   - Insignias de combate: Ataque, Defensa, Velocidad.
 - **Pestaña Sistema**:

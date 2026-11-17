@@ -32,6 +32,9 @@
 [ext_resource type="PackedScene" path="res://scenes/world/Entities/NordicDecor/town_bench.tscn" id="new_town_bench"]
 [ext_resource type="PackedScene" path="res://scenes/world/Entities/NordicDecor/town_flower_planter.tscn" id="new_town_flower_planter"]
 
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/villager_woman.tscn" id="new_villager_woman"]
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/villager_worker.tscn" id="new_villager_worker"]
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/villager_elder.tscn" id="new_villager_elder"]
 [sub_resource type="BoxShape3D" id="BoxShape3D_rq4xl"]
 size = Vector3(0.2977295, 1, 1)
 
@@ -1200,43 +1203,46 @@ position = Vector3(-12.762271, 0.07861329, -1.9391732)
 rotation_degrees = Vector3(0, 0, 0)
 scale = Vector3(1.05, 1.05, 1.05)
 
-[node name="Npc" parent="." unique_id=691415349 instance=ExtResource("12_xhxc1")]
+[node name="Npc" parent="." unique_id=691415349 instance=ExtResource("new_villager_woman")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.883728, 1.3016276, 13.414091)
 
 [node name="InteraccionDialogo" type="Area3D" parent="Npc" unique_id=137124227]
+offset_indicador = Vector3(0, 1.02698569, 0)
 script = ExtResource("15_utsce")
 maximo_interacciones = 1
 nombre_hablante = "NPC"
-retrato_hablante = ExtResource("16_fhhgm")
+retrato_hablante = null
 lineas_rapidas = Array[String](["No me hables."])
 sfx_iniciar = null
 sfx_voz_hablante = ExtResource("17_fhhgm")
 metadata/_custom_type_script = "uid://cptj7rkplojal"
 
-[node name="Npc_Exp" parent="." unique_id=479512314 instance=ExtResource("12_xhxc1")]
+[node name="Npc_Exp" parent="." unique_id=479512314 instance=ExtResource("new_villager_worker")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.3989906, 1.3016276, 4.4688797)
 explotar_al_terminar_dialogo = true
 
 [node name="InteraccionDialogo" type="Area3D" parent="Npc_Exp" unique_id=1615668233]
+offset_indicador = Vector3(0, 1.12698569, 0)
 script = ExtResource("15_utsce")
 maximo_interacciones = 1
 nombre_hablante = "NPC"
-retrato_hablante = ExtResource("16_fhhgm")
+retrato_hablante = null
 lineas_rapidas = Array[String](["Ser NPC de pruebas es cosa dificil, chabal.", "Bye."])
 sfx_iniciar = null
 sfx_voz_hablante = ExtResource("17_fhhgm")
 metadata/_custom_type_script = "uid://cptj7rkplojal"
 
-[node name="Npc_Util" parent="." unique_id=1690203017 instance=ExtResource("12_xhxc1")]
+[node name="Npc_Util" parent="." unique_id=1690203017 instance=ExtResource("new_villager_elder")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3919077, 1.3016276, -16.85178)
 aumentar_ataque_al_terminar = true
 desbloquear_ataque_al_terminar = true
 
 [node name="InteraccionDialogo" type="Area3D" parent="Npc_Util" unique_id=1846260343]
+offset_indicador = Vector3(0, 0.9269856900000002, 0)
 script = ExtResource("15_utsce")
 maximo_interacciones = 5
 nombre_hablante = "NPC Util."
-retrato_hablante = ExtResource("16_fhhgm")
+retrato_hablante = null
 lineas_rapidas = Array[String](["Soy el unico NPC util de aqui.", "Toma!!!"])
 sfx_iniciar = null
 sfx_voz_hablante = ExtResource("17_fhhgm")

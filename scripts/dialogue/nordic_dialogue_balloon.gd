@@ -180,7 +180,7 @@ func apply_dialogue_line() -> void:
 
 func _resolver_retrato_por_nombre(nom: String) -> void:
 	match nom.to_lower():
-		"eric", "hero", "jugador":
+		"finn", "hero", "jugador":
 			_mostrar_retrato(load("res://assets/sprites/player/test_hero_portrait.png"))
 		"rata", "rat", "dani":
 			_mostrar_retrato(load("res://assets/sprites/items/placeholder.png"))

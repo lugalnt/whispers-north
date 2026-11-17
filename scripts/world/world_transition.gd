@@ -4,7 +4,7 @@ extends Area3D
 
 ## Zona de transición entre mapas/mundos (ej: World <-> World_Town).
 ## Detecta al jugador, ejecuta una transición cinematográfica con fundido
-## y sonido de ambiente, y transporta a Eric al marcador de destino.
+## y sonido de ambiente, y transporta a Finn al marcador de destino.
 
 signal transicion_iniciada(escena_destino: String)
 

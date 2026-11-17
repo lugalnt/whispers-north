@@ -41,7 +41,7 @@ static var _interactuables_en_rango: Array[InteraccionDialogo] = []
 @export_group("Comportamiento y Cinemática")
 ## Si es true, bloquea el movimiento del jugador mientras dure el diálogo.
 @export var bloquear_jugador: bool = true
-## Si es true, gira a Eric para que mire hacia el interactuable al iniciar la conversación.
+## Si es true, gira a Finn para que mire hacia el interactuable al iniciar la conversación.
 @export var orientar_jugador_al_hablar: bool = true
 ## Si es true, gira al NPC o entidad hacia el jugador durante la charla.
 @export var orientar_npc_al_jugador: bool = true
@@ -393,7 +393,7 @@ func _es_jugador(node: Node) -> bool:
 	if script and script.resource_path.ends_with("player.gd"):
 		return true
 	var lower_name = node.name.to_lower()
-	return lower_name.contains("player") or lower_name.contains("eric")
+	return lower_name.contains("player") or lower_name.contains("finn")
 
 func _buscar_jugador() -> Node3D:
 	var tree := get_tree()

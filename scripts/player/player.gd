@@ -32,11 +32,14 @@ func _ready() -> void:
 		relleno.light_cull_mask = 2
 		relleno.shadow_enabled = false
 		add_child(relleno)
-	if get_parent().scene_file_path.ends_with("World_House.tscn"):
-		# Reducir el visual manteniendo los pies y las colisiones de interacción.
-		var tex: Texture2D = anim_sprite.sprite_frames.get_frame_texture(anim_sprite.animation, 0)
-		anim_sprite.position.y -= tex.get_height() * anim_sprite.pixel_size * 0.5 * 0.30
-		anim_sprite.scale *= 0.70
+	# Finn mide 1.92 unidades en exteriores, comparable a los aldeanos (1.85–2.05).
+	# La casa conserva su ajuste previo de 1.79; no acumular ambas reducciones.
+	var escala_visual: float = 0.70 if get_parent().scene_file_path.ends_with("World_House.tscn") else 0.75
+	var tex: Texture2D = anim_sprite.sprite_frames.get_frame_texture(anim_sprite.animation, 0)
+	if tex:
+		var semialtura: float = tex.get_height() * anim_sprite.pixel_size * anim_sprite.scale.y * 0.5
+		anim_sprite.position.y -= semialtura * (1.0 - escala_visual)
+		anim_sprite.scale *= escala_visual
 	# Las animaciones de interacción se reproducen una sola vez (para poder esperar a que terminen)
 	var frames: SpriteFrames = anim_sprite.sprite_frames
 	if frames:

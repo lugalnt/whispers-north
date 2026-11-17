@@ -25,7 +25,7 @@ tiempo_impacto = 0.4
 
 [node name="PlayerBattler" type="Node3D" unique_id=149152612]
 script = ExtResource("1_battler")
-nombre = "Jugador"
+nombre = "Finn"
 stats = SubResource("Resource_player_stats")
 acciones = Array[ExtResource("3_mmx4l")]([SubResource("Resource_player_golpe")])
 controlado_por_jugador = true

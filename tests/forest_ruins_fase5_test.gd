@@ -106,8 +106,8 @@ func _ejecutar() -> void:
 	await cuadros(4)
 	comprobar(gs.tiene_progreso(gs.OBJETO_IMPORTANTE_RUINAS), "Progreso OBJETO_IMPORTANTE_RUINAS marcado al reclamar el Mandoble")
 	comprobar(gs.inventario.obtener_cantidad("mandoble_ruinas") == 1, "Mandoble de las Ruinas añadido al inventario")
-	comprobar(gs.stats.ataque == atq_inicial + 4, "El Mandoble aumenta el ataque de Eric en +4 (%d -> %d)" % [atq_inicial, gs.stats.ataque])
-	comprobar(gs.hp_actual == gs.stats.max_hp, "El altar restaura la salud de Eric antes del jefe")
+	comprobar(gs.stats.ataque == atq_inicial + 4, "El Mandoble aumenta el ataque de Finn en +4 (%d -> %d)" % [atq_inicial, gs.stats.ataque])
+	comprobar(gs.hp_actual == gs.stats.max_hp, "El altar restaura la salud de Finn antes del jefe")
 	comprobar(not escena.espada_visual.visible, "El sprite del Mandoble sobre el pedestal se oculta tras recogerlo")
 
 	# 7. Simular victoria contra el Jefe Final (Coloso de las Ruinas) y pantalla de Fin de Demo

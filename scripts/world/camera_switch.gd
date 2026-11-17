@@ -336,7 +336,7 @@ func _es_jugador(nodo: Node) -> bool:
 	if script and script.resource_path.ends_with("player.gd"):
 		return true
 	var lower_name = nodo.name.to_lower()
-	return lower_name.contains("player") or lower_name.contains("eric")
+	return lower_name.contains("player") or lower_name.contains("finn")
 
 func _verificar_camara_inicial() -> void:
 	var viewport = get_viewport()
