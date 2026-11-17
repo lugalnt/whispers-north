@@ -13,7 +13,7 @@ const PlayerBattlerScene = preload("res://scenes/combat/battlers/PlayerBattler.t
 
 var inventario: Inventory = Inventory.new()
 
-var nombre_jugador: String = "Eric"
+var nombre_jugador: String = "Finn"
 var titulo_jugador: String = "Explorador del Norte"
 var nivel: int = 1
 var exp_actual: int = 0

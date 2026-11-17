@@ -32,6 +32,8 @@
 [ext_resource type="Texture2D" uid="uid://di2aidiplimjr" path="res://assets/sprites/environment/materials/nordic_wood_v1/dark_oak_panels.png" id="tex_dark_oak_panels"]
 [ext_resource type="Texture2D" uid="uid://mq318avwp1sc" path="res://assets/sprites/environment/materials/nordic_wood_v1/red_painted_siding.png" id="tex_red_painted_siding"]
 
+[ext_resource type="Resource" path="res://data/items/espada_corta.tres" id="espada_cofre"]
+
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_qxiha"]
 
 [sub_resource type="Sky" id="Sky_6eebf"]
@@ -2641,16 +2643,20 @@ transform = Transform3D(1.0027877, 0, -1.4551915e-11, 0, 1, 0, -9.313226e-10, 0,
 transform = Transform3D(0.43260226, 0, -3.0559022e-10, 0, 0.33737203, 0, -5.5879354e-09, 0, 0.13652273, 0.973495, -0.30568847, -0.00091838837)
 
 [node name="Chest" parent="." unique_id=1324083416 instance=ExtResource("11_16fjv")]
+contiene_rata = false
+item_recompensa = ExtResource("espada_cofre")
+cantidad_item = 1
+soltar_como_pickup_3d = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.803303, 0.73356843, 33.455223)
 
 [node name="InteraccionDialogo" parent="Chest" unique_id=1217865924 instance=ExtResource("15_xclow")]
-maximo_interacciones = 999
+maximo_interacciones = 1
 nombre_hablante = "Cofre"
-retrato_hablante = ExtResource("16_dobjl")
-lineas_rapidas = Array[String](["(Es la Dani.)"])
-sfx_iniciar = ExtResource("16_hon07")
+retrato_hablante = null
+lineas_rapidas = Array[String](["Dentro del cofre hay una espada corta de hierro. Sencilla, pero todavía en buen estado."])
+sfx_iniciar = null
 es_objeto_interactuable = true
-pasar_input_al_padre = true
+pasar_input_al_padre = false
 
 [node name="Rat" parent="." unique_id=993836924 instance=ExtResource("12_ckp8c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8463783, 10.900915, -2.9572194)

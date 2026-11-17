@@ -369,6 +369,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_3da5a")
 text = "Pantalla Completa"
 
 [node name="CheckPantalla" type="CheckButton" parent="PanelOpciones/ListaOpciones" unique_id=2001000009]
+alignment = 1
 layout_mode = 2
 text = "Activar"
 
@@ -384,6 +385,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.6, 0.8, 1, 0.85)
 
 [node name="OpcionesResolucion" type="OptionButton" parent="PanelOpciones/ListaOpciones" unique_id=2001000011]
+alignment = 1
 custom_minimum_size = Vector2(300, 40)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("10_0k4wn")

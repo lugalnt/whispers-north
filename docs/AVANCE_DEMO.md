@@ -151,7 +151,7 @@ Validación: tests/inventario_fase25_test.gd cubre 20 comprobaciones de cantidad
   - Recurso `InventoryItem` del objeto/arma importante del desenlace y `Battler` propio para el jefe final.
   - Packs externos de Itch.io mencionados en el documento (no presentes en el repositorio).
 - **Decisiones provisionales adoptadas:**
-  - Mantener el nombre `"Eric"` en `GameState` sin renombrado global por inferencia.
+  - Nombre oficial confirmado por el usuario el 17/11/2026: `"Finn"`, aplicado globalmente en juego y documentación.
   - Conservar el inicio de Nueva partida en `World.tscn` durante la Fase 1 y conmutarlo a `World_House.tscn` al completar y validar la Fase 2.
 
 ---
@@ -267,7 +267,7 @@ godot --path . --rendering-method gl_compatibility --windowed --max-fps 60 --scr
 ### Recursos provisionales y límites
 
 - Arte de mobiliario mediante geometría simple y materiales existentes; no se presenta como arte final.
-- El padre usa el sprite local existente, de aspecto genérico; no se dibujó un personaje definitivo. Se conserva Eric en GameState, sin resolver por inferencia el nombre Finn.
+- El padre usa el sprite local existente, de aspecto genérico; no se dibujó un personaje definitivo. El nombre oficial Finn quedó confirmado por el usuario el 17/11/2026 y aplicado en GameState.
 - El espejo es decorativo: no simula reflejos ni abre estadísticas (el plan lo proponía como interacción opcional).
 - Pasos sintetizados como tres golpes suaves de madera al no localizarse un recurso local específico; pendiente aprobación auditiva o sustitución por foley final en `sonido_pasos`.
 - Diálogo del progenitor provisional y breve, sin añadir lore definitivo. Hablar con él es opcional; completar el diario sí es requisito para bajar por primera vez.
@@ -371,7 +371,7 @@ Los ocho assets de nordic_decor_v1 están integrados mediante prefabs editables 
 ## Correcciones tras revisión de capturas — 16/11/2026
 
 - Aumentadas las alturas base de estanterías (2.65), leñeros (1.05), bancos (1.65) y jardineras (1.20). Sustituyen los tamaños anteriores del ajuste de NordicDecor.
-- Eric usa el 70% de escala visual solo en World_House, conservando apoyo de pies, cápsula y lógica de interacción. Combate y exteriores conservan su tamaño.
+- Finn usa el 70% de escala visual solo en World_House, conservando apoyo de pies, cápsula y lógica de interacción. Combate y exteriores conservan su tamaño.
 - En cueva el sprite recibe iluminación real y un relleno frío limitado a su capa visual para que no brille a intensidad completa ni quede negro; no ilumina el entorno.
 - Cambios de cámara cercanos interpolados en 0.45 segundos. Teletransportes lejanos conservan su fundido. Mientras se mantiene una misma dirección de entrada, el movimiento conserva el rumbo del mundo al cruzar cámaras; al soltar o cambiar de dirección se toma la cámara nueva.
 - Arena: montañas alejadas a Z=-22, vegetación intermedia con alturas y posiciones variadas, suelo con borde posterior oculto por vegetación y cielo ampliado. Luz solar orientada hacia el suelo, sombras habilitadas y sombras suaves de contacto bajo decoraciones.
@@ -385,3 +385,28 @@ Los ocho assets de nordic_decor_v1 están integrados mediante prefabs editables 
 - Tres cámaras fijas adicionales en el pueblo cubren la plaza sur, plaza este y calle central (Camera13–15). Validado el encuadre completo en siete puntos y que las 15 cámaras mantengan su transformación; fixed_cameras_test sin fallos. camera_comfort_test actualizado al contrato de cámaras fijas, sin fallos.
 - Muebles cercanos a la fuente desplazados al exterior: centros a más de 6.5 unidades de ella. Añadidos tres bancos y cinco jardineras; total del paquete en el pueblo: cinco bancos y nueve jardineras. Captura revisada sin intersecciones con la fuente.
 - Esta revisión sustituye la interpolación de cámaras descrita en el registro anterior. No se ha medido el coste de sombras adicionales en hardware de gama baja.
+
+
+## Nombre oficial del protagonista — 17/11/2026
+
+Finn es el nombre oficial confirmado. Actualizados GameState, menú de pausa, nombre base de combate, resolución del retrato de diálogo, reconocimiento por nombre del jugador, comentarios, mensajes de pruebas y documentación. El plan DOCX no contenía menciones del nombre anterior.
+
+
+## Escala de Finn frente a aldeanos — 17/11/2026
+
+Reducida la escala visual de exploración al 75% (32 px × 0.08 × 0.75 = 1.92 unidades), comparable a los aldeanos de 1.85–2.05. Compensada la posición vertical para conservar los pies. La casa mantiene el 70% ya aplicado; la arena usa su combatiente independiente. Sin cambios en movimiento ni colisiones de interacción.
+
+## Márgenes de combate, diálogo nórdico y cruces — 17/11/2026
+
+- HUD de combate: márgenes laterales 38 y verticales 28, panel mínimo 236×128 y nombres con ajuste de línea. Vida y texto permanecen dentro de la zona libre del marco tallado.
+- Diálogo: reutiliza button_normal del paquete nordic_carved_v1, texto marfil, opciones verde oscuro y bordes oliva/dorados. Mayor espacio interior y altura; captura de revisión en tests/ui_dialogue_preview.gd.
+- Caminos: sustituidos 24 tiles cóncavos que introducían huecos de pasto y diferencias de tono dentro de cruces conectados. Conservadas las 1218 celdas y las dimensiones de las cinco escenas; herramientas de migración actualizadas para no reintroducirlos. Los bordes exteriores conservan su atlas; el grano de los originales todavía presenta variación entre tiles.
+- Verificación: capturas del HUD con tres Jarritos, diálogo y cruce central del pueblo revisadas. grupo_jarrito_test sin fallos; casa_fase2_test 23 pruebas, 0 fallos.
+
+## Opciones centradas y árboles de arena — 17/11/2026
+- CheckPantalla y OpcionesResolucion centrados tanto en escena como en creación dinámica para evitar invadir los adornos laterales.
+- Árboles de combate: AtlasTexture recortado a píxeles con alfa >= 0.5, descompresión previa de imágenes importadas, base calculada sobre ese recorte y raíces hundidas 0.12 unidades. Se mantiene distribución, iluminación y sombras.
+- Capturas de opciones a 900×700 y combate revisadas; botón dentro del panel y grupo_jarrito_test sin fallos.
+
+## Arbustos del pueblo — 17/11/2026
+Añadidos 65 arbustos dense_bush bajo ArbustosPueblo, editables en la escena. Escalas 0.48–0.78, orientación variada, iluminación y sombras activas. Posiciones excluyen celdas de caminos con margen, casas, NPCs, fuente y mobiliario; arbustos decorativos sin bloqueo físico. Revisadas capturas de calles y plaza con assets_preview y decoration_preview, sin errores de carga.

@@ -257,7 +257,7 @@ stretch_mode = 5
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.9, 0.4, 1)
 theme_override_font_sizes/font_size = 18
-text = "Eric"
+text = "Finn"
 horizontal_alignment = 1
 
 [node name="LabelTitulo" type="Label" parent="ContenedorPrincipal/Margen/VBox/Vistas/VistaStats/HBox/PanelPerfil/VBox" unique_id=291109709]

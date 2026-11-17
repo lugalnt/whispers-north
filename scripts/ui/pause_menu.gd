@@ -477,7 +477,7 @@ func _detectar_companero() -> bool:
 		for r in ratas:
 			if is_instance_valid(r):
 				var padre = r.get_parent()
-				if padre != null and (padre is CharacterBody3D or padre.name.to_lower().contains("player") or padre.name.to_lower().contains("eric")):
+				if padre != null and (padre is CharacterBody3D or padre.name.to_lower().contains("player") or padre.name.to_lower().contains("finn")):
 					tiene = true
 					break
 
@@ -496,7 +496,7 @@ func _detectar_companero() -> bool:
 func _actualizar_vista_stats() -> void:
 	var game_state = _obtener_game_state()
 	
-	var nom: String = game_state.nombre_jugador if (game_state and not game_state.nombre_jugador.is_empty()) else "Eric"
+	var nom: String = game_state.nombre_jugador if (game_state and not game_state.nombre_jugador.is_empty()) else "Finn"
 	# Priorizar la configuración del título establecida en el nodo principal (ej: "El Fuki")
 	var tit: String = texto_titulo_perfil
 	if tit.is_empty():

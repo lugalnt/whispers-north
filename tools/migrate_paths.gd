@@ -25,12 +25,7 @@ func _initialize() -> void:
 			elif not e: atlas.x = 2
 			if not n: atlas.y = 0
 			elif not s: atlas.y = 2
-			if n and s and w and e:
-				for esquina in [Vector2i(-1,-1), Vector2i(1,-1), Vector2i(-1,1), Vector2i(1,1)]:
-					if not ocupado.has(c + esquina):
-						fuente = 1
-						atlas = esquina + Vector2i.ONE
-						break
+			# Cuatro vecinos conectados requieren tierra continua, sin recorte interior.
 			capa.set_cell(c, fuente, atlas)
 		assert(capa.get_used_cells().size() == cells.size())
 		var packed := PackedScene.new()

@@ -19,7 +19,7 @@ Sistema modular y optimizado para la interacción conversacional en *Whispers of
       │                                                         │
       │  - Detección 3D / Proximidad del jugador                │
       │  - Prompt flotante ("[E] Hablar") con bobbing suave     │
-      │  - Bloqueo/desbloqueo automático de Eric                │
+      │  - Bloqueo/desbloqueo automático de Finn                │
       │  - Orientación cinemática bidireccional                 │
       │  - Doble modalidad: .dialogue O líneas rápidas          │
       └───────────────────────────┬─────────────────────────────┘
@@ -52,9 +52,9 @@ Nodo `Area3D` reutilizable diseñado para soltarse como hijo de cualquier entida
   - **Modalidad A (Archivos `.dialogue`)**: Asignar un recurso compilado en `recurso_dialogo` y especificar `titulo_o_cue` (ej: `"start"`, `"tienda"`). Permite ramificaciones complejas, opciones de respuesta y chequeo de variables.
   - **Modalidad B (Inspector Rápido)**: Para carteles o charlas simples de 1 o 2 líneas, basta con escribir en `lineas_rapidas` y opcionalmente `nombre_hablante`. El sistema compila y genera el recurso al vuelo automáticamente sin crear archivos adicionales.
 - **Cinemática e Inmersión**:
-  - `bloquear_jugador`: Pausa a Eric (`player.is_interacting = true`), detiene su inercia y previene que se abra el menú de pausa durante la conversación.
-  - `orientar_jugador_al_hablar`: Eric se gira automáticamente hacia el objeto o NPC que le habla.
-  - `orientar_npc_al_jugador`: El NPC (modelo 3D o sprite 2.5D con billboard) se gira para mirar a Eric mientras conversan y recupera su pose original al despedirse.
+  - `bloquear_jugador`: Pausa a Finn (`player.is_interacting = true`), detiene su inercia y previene que se abra el menú de pausa durante la conversación.
+  - `orientar_jugador_al_hablar`: Finn se gira automáticamente hacia el objeto o NPC que le habla.
+  - `orientar_npc_al_jugador`: El NPC (modelo 3D o sprite 2.5D con billboard) se gira para mirar a Finn mientras conversan y recupera su pose original al despedirse.
 - **Indicador Flotante (Prompt 3D)**:
   - Crea automáticamente una etiqueta 3D con suave balanceo senoidal (`[E] Hablar`, `[E] Examinar`, etc.) y fundido suave al entrar o salir del radio de detección.
   - Solo el interactuable más cercano al jugador responde al input, previniendo disparos dobles accidentales.
@@ -72,7 +72,7 @@ Globo de diálogo personalizado para *Whispers of the North*:
 
 ### 2.3 `PlaceholderNPC` (`scripts/world/placeholder_npc.gd` / `scenes/world/Entities/placeholder_npc.tscn`)
 Controlador de comportamiento visual y presencia para personajes 2.5D en el mundo:
-- **Seguimiento con la Mirada (`mirar_al_jugador`)**: Cuando el jugador entra dentro de su `radio_vision` (por defecto 4.5m), el NPC detecta el ángulo hacia Eric relativo a la cámara activa y selecciona el primer frame (`frame = 0`) de su animación de interacción correspondiente (`interact_down`, `interact_down_side`, `interact_side`, `interact_up_side`, `interact_up`), simulando que está observando atentamente a Eric mientras se desplaza a su alrededor.
+- **Seguimiento con la Mirada (`mirar_al_jugador`)**: Cuando el jugador entra dentro de su `radio_vision` (por defecto 4.5m), el NPC detecta el ángulo hacia Finn relativo a la cámara activa y selecciona el primer frame (`frame = 0`) de su animación de interacción correspondiente (`interact_down`, `interact_down_side`, `interact_side`, `interact_up_side`, `interact_up`), simulando que está observando atentamente a Finn mientras se desplaza a su alrededor.
 - **Pose de Reposo**: Cuando el jugador sale del radio, el NPC regresa suavemente a la pose y dirección de reposo original configurada en el editor.
 - **Aislamiento Total de Interacción**: Los NPCs pertenecen al grupo `"npc"`, asegurando que `InteraccionDialogo` jamás los confunda con el jugador, erradicando por completo el cruce de líneas entre personajes cercanos.
 
@@ -89,14 +89,14 @@ Controlador de comportamiento visual y presencia para personajes 2.5D en el mund
    - `Nombre Hablante`: Ej. `"Cartel de la Aldea"` o `"Anciana Freya"`.
    - `Líneas Rápidas`: Añade una o varias líneas (ej: `"Hacia el norte: Montaña de Fuego."`, `"Ten cuidado con los caminos nevados."`).
    - `Texto Indicador`: `"[E] Leer"` o `"[E] Hablar"`.
-5. ¡Listo! Al acercarte con Eric y pulsar `E` o el botón `A` del mando, hablará inmediatamente.
+5. ¡Listo! Al acercarte con Finn y pulsar `E` o el botón `A` del mando, hablará inmediatamente.
 
 ### Opción B: Crear un Diálogo Ramificado con Opciones y Recompensas (`.dialogue`)
 1. En la carpeta `res://data/dialogues/`, crea un archivo de texto con extensión `.dialogue` (ej. `mision_bosque.dialogue`).
 2. Escribe la conversación usando la sintaxis de Dialogue Manager:
    ```dialogue
    ~ start
-   Freya: ¡Saludos, Eric! Hacía tiempo que no te veía por aquí.
+   Freya: ¡Saludos, Finn! Hacía tiempo que no te veía por aquí.
    - ¿Qué novedades hay en el pueblo?
        Freya: Las noches son cada vez más frías...
        - Tomaré precauciones.

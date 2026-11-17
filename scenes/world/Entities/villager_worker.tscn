@@ -1,0 +1,27 @@
+[gd_scene format=3]
+[ext_resource type="Texture2D" path="res://assets/sprites/npcs/townsfolk_v1/villager_worker.png" id="tex"]
+[ext_resource type="Script" path="res://scripts/world/placeholder_npc.gd" id="script"]
+[sub_resource type="AtlasTexture" id="crop"]
+atlas = ExtResource("tex")
+region = Rect2(256, 89, 511, 1380)
+[sub_resource type="SpriteFrames" id="frames"]
+animations = [{"frames": [{"duration": 1.0, "texture": SubResource("crop")}], "loop": true, "name": &"interact_down", "speed": 1.0}]
+[sub_resource type="CapsuleShape3D" id="body"]
+radius = 0.4
+height = 2.05
+[node name="Aldeano" type="CharacterBody3D"]
+script = ExtResource("script")
+mirar_al_jugador = false
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+position = Vector3(0, -0.19801431000000003, 0)
+shape = SubResource("body")
+[node name="Sprite2_5D" type="AnimatedSprite3D" parent="."]
+position = Vector3(0, -0.19801431000000003, 0)
+pixel_size = 0.0014855072463768114
+billboard = 2
+shaded = true
+texture_filter = 0
+alpha_cut = 1
+cast_shadow = 2
+sprite_frames = SubResource("frames")
+animation = &"interact_down"

@@ -32,6 +32,11 @@
 [ext_resource type="PackedScene" path="res://scenes/world/Entities/NordicDecor/town_bench.tscn" id="new_town_bench"]
 [ext_resource type="PackedScene" path="res://scenes/world/Entities/NordicDecor/town_flower_planter.tscn" id="new_town_flower_planter"]
 
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/villager_woman.tscn" id="new_villager_woman"]
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/villager_worker.tscn" id="new_villager_worker"]
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/villager_elder.tscn" id="new_villager_elder"]
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/NordicProps/dense_bush.tscn" id="town_bush"]
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_rq4xl"]
 size = Vector3(0.2977295, 1, 1)
 
@@ -1200,44 +1205,47 @@ position = Vector3(-12.762271, 0.07861329, -1.9391732)
 rotation_degrees = Vector3(0, 0, 0)
 scale = Vector3(1.05, 1.05, 1.05)
 
-[node name="Npc" parent="." unique_id=691415349 instance=ExtResource("12_xhxc1")]
+[node name="Npc" parent="." unique_id=691415349 instance=ExtResource("new_villager_woman")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.883728, 1.3016276, 13.414091)
 
 [node name="InteraccionDialogo" type="Area3D" parent="Npc" unique_id=137124227]
+offset_indicador = Vector3(0, 1.02698569, 0)
 script = ExtResource("15_utsce")
 maximo_interacciones = 1
-nombre_hablante = "NPC"
-retrato_hablante = ExtResource("16_fhhgm")
-lineas_rapidas = Array[String](["No me hables."])
+nombre_hablante = "Aldeana"
+retrato_hablante = null
+lineas_rapidas = Array[String](["Bienvenido al pueblo. Si necesitas descansar, hay bancos junto a la fuente.", "A esta hora suele correr una brisa fresca entre las casas."])
 sfx_iniciar = null
 sfx_voz_hablante = ExtResource("17_fhhgm")
 metadata/_custom_type_script = "uid://cptj7rkplojal"
 
-[node name="Npc_Exp" parent="." unique_id=479512314 instance=ExtResource("12_xhxc1")]
+[node name="Npc_Exp" parent="." unique_id=479512314 instance=ExtResource("new_villager_worker")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.3989906, 1.3016276, 4.4688797)
 explotar_al_terminar_dialogo = true
 
 [node name="InteraccionDialogo" type="Area3D" parent="Npc_Exp" unique_id=1615668233]
+offset_indicador = Vector3(0, 1.12698569, 0)
 script = ExtResource("15_utsce")
 maximo_interacciones = 1
-nombre_hablante = "NPC"
-retrato_hablante = ExtResource("16_fhhgm")
-lineas_rapidas = Array[String](["Ser NPC de pruebas es cosa dificil, chabal.", "Bye."])
+nombre_hablante = "Aldeano"
+retrato_hablante = null
+lineas_rapidas = Array[String](["Siempre hay algo que reparar antes de que llegue el frío.", "Que tengas buen día, viajero. Yo debo volver al trabajo."])
 sfx_iniciar = null
 sfx_voz_hablante = ExtResource("17_fhhgm")
 metadata/_custom_type_script = "uid://cptj7rkplojal"
 
-[node name="Npc_Util" parent="." unique_id=1690203017 instance=ExtResource("12_xhxc1")]
+[node name="Npc_Util" parent="." unique_id=1690203017 instance=ExtResource("new_villager_elder")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3919077, 1.3016276, -16.85178)
 aumentar_ataque_al_terminar = true
 desbloquear_ataque_al_terminar = true
 
 [node name="InteraccionDialogo" type="Area3D" parent="Npc_Util" unique_id=1846260343]
+offset_indicador = Vector3(0, 0.9269856900000002, 0)
 script = ExtResource("15_utsce")
 maximo_interacciones = 5
-nombre_hablante = "NPC Util."
-retrato_hablante = ExtResource("16_fhhgm")
-lineas_rapidas = Array[String](["Soy el unico NPC util de aqui.", "Toma!!!"])
+nombre_hablante = "Anciana del Pueblo"
+retrato_hablante = null
+lineas_rapidas = Array[String](["He visto pasar a muchos viajeros por estos caminos.", "Si vas a salir del pueblo, lleva provisiones y no bajes la guardia.", "Déjame enseñarte algo que podría ayudarte en el camino."])
 sfx_iniciar = null
 sfx_voz_hablante = ExtResource("17_fhhgm")
 metadata/_custom_type_script = "uid://cptj7rkplojal"
@@ -1794,3 +1802,915 @@ rotation = Vector3(-0.6021386, 0, 0)
 fov = 60.0
 metadata/sector_centro = Vector2(38, 18)
 metadata/sector_radio = Vector2(9, 7)
+
+[node name="ArbustosPueblo" type="Node3D" parent="."]
+
+[node name="Arbusto_01" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(-15.427675, 0.078613, 11.573629)
+scale = Vector3(0.525715, 0.525715, 0.525715)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_01" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = true
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_01" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_02" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(31.323368, 0.078613, 18.359177)
+scale = Vector3(0.598416, 0.598416, 0.598416)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_02" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = false
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_02" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_03" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(43.043167, 0.078613, 0.198912)
+scale = Vector3(0.689116, 0.689116, 0.689116)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_03" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = true
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_03" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_04" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(23.255821, 0.078613, 18.248230)
+scale = Vector3(0.746491, 0.746491, 0.746491)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_04" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = true
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_04" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_05" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(40.446159, 0.078613, 14.011068)
+scale = Vector3(0.741560, 0.741560, 0.741560)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_05" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = false
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_05" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_06" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(4.211544, 0.078613, 0.418279)
+scale = Vector3(0.618017, 0.618017, 0.618017)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_06" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = true
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_06" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_07" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(0.594116, 0.078613, 12.299076)
+scale = Vector3(0.706088, 0.706088, 0.706088)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_07" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = false
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_07" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_08" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(-8.317106, 0.078613, -11.313080)
+scale = Vector3(0.595984, 0.595984, 0.595984)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_08" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = false
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_08" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_09" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(-0.849236, 0.078613, -12.516111)
+scale = Vector3(0.645637, 0.645637, 0.645637)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_09" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = true
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_09" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_10" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(-8.733342, 0.078613, -8.689243)
+scale = Vector3(0.728851, 0.728851, 0.728851)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_10" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = true
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_10" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_11" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(34.998352, 0.078613, -12.421112)
+scale = Vector3(0.679306, 0.679306, 0.679306)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_11" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = true
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_11" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_12" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(42.920273, 0.078613, -8.673176)
+scale = Vector3(0.758683, 0.758683, 0.758683)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_12" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = true
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_12" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_13" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(36.260651, 0.078613, -10.365828)
+scale = Vector3(0.542284, 0.542284, 0.542284)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_13" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = true
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_13" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_14" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(-13.590689, 0.078613, 1.636827)
+scale = Vector3(0.697855, 0.697855, 0.697855)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_14" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = false
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_14" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_15" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(10.965630, 0.078613, -12.862023)
+scale = Vector3(0.621190, 0.621190, 0.621190)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_15" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = false
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_15" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_16" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(24.342651, 0.078613, 12.030441)
+scale = Vector3(0.531491, 0.531491, 0.531491)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_16" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = true
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_16" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_17" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(13.328468, 0.078613, 0.542134)
+scale = Vector3(0.515755, 0.515755, 0.515755)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_17" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = false
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_17" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_18" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(36.025951, 0.078613, 14.343126)
+scale = Vector3(0.599395, 0.599395, 0.599395)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_18" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = true
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_18" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_19" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(38.556503, 0.078613, -8.216002)
+scale = Vector3(0.634942, 0.634942, 0.634942)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_19" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = true
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_19" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_20" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(26.535450, 0.078613, 11.549227)
+scale = Vector3(0.772422, 0.772422, 0.772422)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_20" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = true
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_20" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_21" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(-8.902354, 0.078613, -6.093843)
+scale = Vector3(0.648677, 0.648677, 0.648677)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_21" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = false
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_21" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_22" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(18.740379, 0.078613, 7.886213)
+scale = Vector3(0.676425, 0.676425, 0.676425)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_22" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = false
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_22" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_23" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(-5.640566, 0.078613, -7.861543)
+scale = Vector3(0.681749, 0.681749, 0.681749)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_23" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = false
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_23" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_24" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(17.191429, 0.078613, -6.532886)
+scale = Vector3(0.614084, 0.614084, 0.614084)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_24" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = true
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_24" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_25" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(-5.733984, 0.078613, -6.229324)
+scale = Vector3(0.657386, 0.657386, 0.657386)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_25" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = false
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_25" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_26" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(42.936737, 0.078613, -12.380136)
+scale = Vector3(0.558647, 0.558647, 0.558647)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_26" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = true
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_26" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_27" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(29.520206, 0.078613, -7.824559)
+scale = Vector3(0.632096, 0.632096, 0.632096)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_27" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = false
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_27" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_28" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(26.843056, 0.078613, -12.384075)
+scale = Vector3(0.649417, 0.649417, 0.649417)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_28" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = false
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_28" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_29" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(38.217125, 0.078613, 13.724607)
+scale = Vector3(0.558661, 0.558661, 0.558661)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_29" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = true
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_29" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_30" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(30.549053, 0.078613, 9.482670)
+scale = Vector3(0.717655, 0.717655, 0.717655)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_30" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = false
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_30" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_31" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(-1.703587, 0.078613, -10.070324)
+scale = Vector3(0.683493, 0.683493, 0.683493)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_31" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = true
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_31" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_32" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(-14.892067, 0.078613, -13.179421)
+scale = Vector3(0.772172, 0.772172, 0.772172)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_32" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = true
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_32" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_33" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(33.783333, 0.078613, 11.147863)
+scale = Vector3(0.764764, 0.764764, 0.764764)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_33" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = false
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_33" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_34" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(33.267536, 0.078613, 7.790195)
+scale = Vector3(0.542519, 0.542519, 0.542519)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_34" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = false
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_34" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_35" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(22.695488, 0.078613, 11.165497)
+scale = Vector3(0.766135, 0.766135, 0.766135)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_35" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = true
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_35" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_36" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(27.548122, 0.078613, -9.214898)
+scale = Vector3(0.656104, 0.656104, 0.656104)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_36" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = false
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_36" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_37" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(19.458897, 0.078613, 12.189665)
+scale = Vector3(0.540994, 0.540994, 0.540994)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_37" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = false
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_37" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_38" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(1.427231, 0.078613, 10.764387)
+scale = Vector3(0.570436, 0.570436, 0.570436)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_38" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = false
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_38" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_39" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(9.542465, 0.078613, -10.135579)
+scale = Vector3(0.600148, 0.600148, 0.600148)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_39" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = false
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_39" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_40" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(-15.865643, 0.078613, 1.476331)
+scale = Vector3(0.686089, 0.686089, 0.686089)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_40" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = false
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_40" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_41" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(35.198513, 0.078613, 1.385702)
+scale = Vector3(0.513369, 0.513369, 0.513369)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_41" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = true
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_41" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_42" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(19.846127, 0.078613, -9.669518)
+scale = Vector3(0.618705, 0.618705, 0.618705)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_42" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = false
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_42" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_43" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(41.089813, 0.078613, 7.823357)
+scale = Vector3(0.581963, 0.581963, 0.581963)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_43" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = false
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_43" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_44" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(12.289417, 0.078613, 12.213062)
+scale = Vector3(0.522810, 0.522810, 0.522810)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_44" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = true
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_44" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_45" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(33.632565, 0.078613, 13.221972)
+scale = Vector3(0.739200, 0.739200, 0.739200)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_45" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = true
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_45" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_46" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(3.473766, 0.078613, 14.024155)
+scale = Vector3(0.489206, 0.489206, 0.489206)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_46" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = false
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_46" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_47" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(28.255592, 0.078613, -10.592690)
+scale = Vector3(0.593993, 0.593993, 0.593993)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_47" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = true
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_47" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_48" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(39.776062, 0.078613, -10.488196)
+scale = Vector3(0.530831, 0.530831, 0.530831)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_48" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = true
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_48" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_49" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(42.142761, 0.078613, 18.790802)
+scale = Vector3(0.546485, 0.546485, 0.546485)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_49" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = false
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_49" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_50" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(42.713074, 0.078613, 7.523636)
+scale = Vector3(0.545033, 0.545033, 0.545033)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_50" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = true
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_50" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_51" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(18.741074, 0.078613, -12.414124)
+scale = Vector3(0.591496, 0.591496, 0.591496)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_51" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = false
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_51" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_52" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(24.620129, 0.078613, -11.000399)
+scale = Vector3(0.481644, 0.481644, 0.481644)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_52" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = true
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_52" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_53" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(-5.106993, 0.078613, -10.265454)
+scale = Vector3(0.688682, 0.688682, 0.688682)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_53" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = false
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_53" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_54" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(2.659527, 0.078613, -11.356487)
+scale = Vector3(0.511702, 0.511702, 0.511702)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_54" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = false
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_54" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_55" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(9.102997, 0.078613, -8.563894)
+scale = Vector3(0.776282, 0.776282, 0.776282)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_55" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = false
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_55" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_56" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(21.680584, 0.078613, -12.476385)
+scale = Vector3(0.560695, 0.560695, 0.560695)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_56" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = true
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_56" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_57" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(42.551987, 0.078613, -6.493619)
+scale = Vector3(0.483130, 0.483130, 0.483130)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_57" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = true
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_57" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_58" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(38.222546, 0.078613, -9.677229)
+scale = Vector3(0.582488, 0.582488, 0.582488)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_58" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = true
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_58" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_59" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(25.087040, 0.078613, -13.966038)
+scale = Vector3(0.584191, 0.584191, 0.584191)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_59" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = true
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_59" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_60" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(-16.967875, 0.078613, -9.402237)
+scale = Vector3(0.709000, 0.709000, 0.709000)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_60" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = false
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_60" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_61" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(-6.655605, 0.078613, -9.958414)
+scale = Vector3(0.515043, 0.515043, 0.515043)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_61" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = true
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_61" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_62" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(28.692432, 0.078613, -13.251099)
+scale = Vector3(0.534797, 0.534797, 0.534797)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_62" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = false
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_62" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_63" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(42.917625, 0.078613, 15.015417)
+scale = Vector3(0.723975, 0.723975, 0.723975)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_63" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = false
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_63" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_64" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(-13.336220, 0.078613, -10.959086)
+scale = Vector3(0.535213, 0.535213, 0.535213)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_64" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = false
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_64" index="1"]
+collision_layer = 0
+
+[node name="Arbusto_65" parent="ArbustosPueblo" instance=ExtResource("town_bush")]
+position = Vector3(10.920712, 0.078613, 7.241238)
+scale = Vector3(0.484987, 0.484987, 0.484987)
+
+[node name="Visual" parent="ArbustosPueblo/Arbusto_65" index="0"]
+shaded = true
+cast_shadow = 2
+flip_h = true
+
+[node name="Obstacle" parent="ArbustosPueblo/Arbusto_65" index="1"]
+collision_layer = 0
+
+[editable path="ArbustosPueblo/Arbusto_01"]
+
+[editable path="ArbustosPueblo/Arbusto_02"]
+
+[editable path="ArbustosPueblo/Arbusto_03"]
+
+[editable path="ArbustosPueblo/Arbusto_04"]
+
+[editable path="ArbustosPueblo/Arbusto_05"]
+
+[editable path="ArbustosPueblo/Arbusto_06"]
+
+[editable path="ArbustosPueblo/Arbusto_07"]
+
+[editable path="ArbustosPueblo/Arbusto_08"]
+
+[editable path="ArbustosPueblo/Arbusto_09"]
+
+[editable path="ArbustosPueblo/Arbusto_10"]
+
+[editable path="ArbustosPueblo/Arbusto_11"]
+
+[editable path="ArbustosPueblo/Arbusto_12"]
+
+[editable path="ArbustosPueblo/Arbusto_13"]
+
+[editable path="ArbustosPueblo/Arbusto_14"]
+
+[editable path="ArbustosPueblo/Arbusto_15"]
+
+[editable path="ArbustosPueblo/Arbusto_16"]
+
+[editable path="ArbustosPueblo/Arbusto_17"]
+
+[editable path="ArbustosPueblo/Arbusto_18"]
+
+[editable path="ArbustosPueblo/Arbusto_19"]
+
+[editable path="ArbustosPueblo/Arbusto_20"]
+
+[editable path="ArbustosPueblo/Arbusto_21"]
+
+[editable path="ArbustosPueblo/Arbusto_22"]
+
+[editable path="ArbustosPueblo/Arbusto_23"]
+
+[editable path="ArbustosPueblo/Arbusto_24"]
+
+[editable path="ArbustosPueblo/Arbusto_25"]
+
+[editable path="ArbustosPueblo/Arbusto_26"]
+
+[editable path="ArbustosPueblo/Arbusto_27"]
+
+[editable path="ArbustosPueblo/Arbusto_28"]
+
+[editable path="ArbustosPueblo/Arbusto_29"]
+
+[editable path="ArbustosPueblo/Arbusto_30"]
+
+[editable path="ArbustosPueblo/Arbusto_31"]
+
+[editable path="ArbustosPueblo/Arbusto_32"]
+
+[editable path="ArbustosPueblo/Arbusto_33"]
+
+[editable path="ArbustosPueblo/Arbusto_34"]
+
+[editable path="ArbustosPueblo/Arbusto_35"]
+
+[editable path="ArbustosPueblo/Arbusto_36"]
+
+[editable path="ArbustosPueblo/Arbusto_37"]
+
+[editable path="ArbustosPueblo/Arbusto_38"]
+
+[editable path="ArbustosPueblo/Arbusto_39"]
+
+[editable path="ArbustosPueblo/Arbusto_40"]
+
+[editable path="ArbustosPueblo/Arbusto_41"]
+
+[editable path="ArbustosPueblo/Arbusto_42"]
+
+[editable path="ArbustosPueblo/Arbusto_43"]
+
+[editable path="ArbustosPueblo/Arbusto_44"]
+
+[editable path="ArbustosPueblo/Arbusto_45"]
+
+[editable path="ArbustosPueblo/Arbusto_46"]
+
+[editable path="ArbustosPueblo/Arbusto_47"]
+
+[editable path="ArbustosPueblo/Arbusto_48"]
+
+[editable path="ArbustosPueblo/Arbusto_49"]
+
+[editable path="ArbustosPueblo/Arbusto_50"]
+
+[editable path="ArbustosPueblo/Arbusto_51"]
+
+[editable path="ArbustosPueblo/Arbusto_52"]
+
+[editable path="ArbustosPueblo/Arbusto_53"]
+
+[editable path="ArbustosPueblo/Arbusto_54"]
+
+[editable path="ArbustosPueblo/Arbusto_55"]
+
+[editable path="ArbustosPueblo/Arbusto_56"]
+
+[editable path="ArbustosPueblo/Arbusto_57"]
+
+[editable path="ArbustosPueblo/Arbusto_58"]
+
+[editable path="ArbustosPueblo/Arbusto_59"]
+
+[editable path="ArbustosPueblo/Arbusto_60"]
+
+[editable path="ArbustosPueblo/Arbusto_61"]
+
+[editable path="ArbustosPueblo/Arbusto_62"]
+
+[editable path="ArbustosPueblo/Arbusto_63"]
+
+[editable path="ArbustosPueblo/Arbusto_64"]
+
+[editable path="ArbustosPueblo/Arbusto_65"]

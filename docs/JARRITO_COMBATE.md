@@ -51,7 +51,7 @@ Ejecutar `godot --headless --path . --script res://tests/jarrito_combat_test.gd`
 También ejecutar `tests/encuentros_test.gd` y `tests/recorrido_fase1_test.gd`.
 
 Prueba manual: abrir `scenes/combat/tests/JarritoCombatTest.tscn` y ejecutar F6.
-Revisar escala frente a Eric, pies/sombra y márgenes, orientación hacia el jugador,
+Revisar escala frente a Finn, pies/sombra y márgenes, orientación hacia el jugador,
 nitidez y alpha. Dejar actuar a Jarrito, golpearlo y derrotarlo; observar attack
 completo, hurt y último cuadro de defeat sin retorno a idle. En JarritoTest del
 mundo, comprobar transición, huida y restauración del modelo 3D y su llama.
@@ -62,7 +62,7 @@ cubre estos tres resultados mediante la acción `interact`.
 Validación realizada (Godot 4.7.2, 2026-11-12): las tres suites finalizaron
 con 0 fallos. También pasó la suite de Jarrito con renderizado OpenGL; captura
 inspeccionada en `.godot/jarrito_combat_preview.png`, con sprite completo,
-transparencia y píxeles nítidos junto a Eric. Para regenerarla, ejecutar el test
+transparencia y píxeles nítidos junto a Finn. Para regenerarla, ejecutar el test
 sin `--headless`, con `--rendering-method gl_compatibility` y añadir
 `-- --capture`. Queda pendiente la revisión manual del ritmo y escala artística.
 La importación headless reportó UID duplicados en sprites de Erland/otros sprites

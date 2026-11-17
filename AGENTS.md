@@ -28,7 +28,7 @@ Detalle completo, ejemplos y plan de remapeo: [docs/INPUT_MAP.md](docs/INPUT_MAP
 
 ## Sistema de Menú de Pausa, Inventario y Estadísticas
 
-- Autoload `GameState` ([scripts/core/game_state.gd](scripts/core/game_state.gd)) gestiona la progresión, nivel, stats de Eric, compañero (rata) e inventario reactivo.
+- Autoload `GameState` ([scripts/core/game_state.gd](scripts/core/game_state.gd)) gestiona la progresión, nivel, stats de Finn, compañero (rata) e inventario reactivo.
 - Menú de pausa en [scenes/ui/PauseMenu.tscn](scenes/ui/PauseMenu.tscn) / [scripts/ui/pause_menu.gd](scripts/ui/pause_menu.gd), integrado en `World.tscn` mediante la acción `pause` (`Escape`, `P`, Gamepad `Start`).
 - Los objetos heredan de `InventoryItem` ([scripts/inventory/inventory_item.gd](scripts/inventory/inventory_item.gd)) y son gestionados por `Inventory` ([scripts/inventory/inventory.gd](scripts/inventory/inventory.gd)).
 - Guía completa de arquitectura y uso: [docs/MENU_PAUSA_E_INVENTARIO.md](docs/MENU_PAUSA_E_INVENTARIO.md).
@@ -47,7 +47,7 @@ Detalle completo, ejemplos y plan de remapeo: [docs/INPUT_MAP.md](docs/INPUT_MAP
 - La orquestación y detección de diálogos en el mundo 3D se gestiona con `InteraccionDialogo` ([scripts/dialogue/interaccion_dialogo.gd](scripts/dialogue/interaccion_dialogo.gd) / [scenes/dialogue/InteraccionDialogo.tscn](scenes/dialogue/InteraccionDialogo.tscn)), integrable como hijo de cualquier NPC, cartel, objeto o zona de disparo.
 - Soporta tanto archivos `.dialogue` complejos como líneas rápidas configurables directamente desde el Inspector sin crear archivos.
 - Globo de diálogo temático nórdico en [scenes/dialogue/NordicDialogueBalloon.tscn](scenes/dialogue/NordicDialogueBalloon.tscn).
-- Congela a Eric durante la charla, orienta cinemáticamente a los personajes y muestra indicadores 3D animados `[E] Hablar`.
+- Congela a Finn durante la charla, orienta cinemáticamente a los personajes y muestra indicadores 3D animados `[E] Hablar`.
 - Guía completa y ejemplos: [docs/SISTEMA_DIALOGO.md](docs/SISTEMA_DIALOGO.md).
 
 ## Sistema de Cámaras y Switches Autónomos

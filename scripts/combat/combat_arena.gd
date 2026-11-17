@@ -985,18 +985,20 @@ func _crear_panel_hud(battler: Battler, color_borde: Color) -> Control:
 	var contenedor: PanelContainer = PanelContainer.new()
 	var marco_hud := StyleBoxTexture.new()
 	marco_hud.texture = preload("res://assets/sprites/ui/nordic_carved_v1/button_normal.png")
-	marco_hud.content_margin_left = 20.0
-	marco_hud.content_margin_right = 20.0
-	marco_hud.content_margin_top = 18.0
-	marco_hud.content_margin_bottom = 18.0
+	marco_hud.content_margin_left = 38.0
+	marco_hud.content_margin_right = 38.0
+	marco_hud.content_margin_top = 28.0
+	marco_hud.content_margin_bottom = 28.0
 	contenedor.add_theme_stylebox_override("panel", marco_hud)
-	contenedor.custom_minimum_size = Vector2(210, 108)
+	contenedor.custom_minimum_size = Vector2(236, 128)
 	contenedor.name = "HUD_" + str(battler.get_instance_id())
 	var vbox: VBoxContainer = VBoxContainer.new()
 	contenedor.add_child(vbox)
 
 	var lbl_nombre: Label = Label.new()
 	lbl_nombre.text = battler.nombre
+	lbl_nombre.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	lbl_nombre.custom_minimum_size.x = 160
 	lbl_nombre.add_theme_font_size_override("font_size", 16)
 	lbl_nombre.add_theme_color_override("font_color", color_borde)
 	vbox.add_child(lbl_nombre)
@@ -1110,7 +1112,19 @@ func _crear_profundidad_y_sombras() -> void:
 	for ruta in rutas:
 		var tex: Texture2D = load(ruta)
 		texturas.append(tex)
-		recortes.append(tex.get_image().get_used_rect())
+		# Ignorar píxeles casi transparentes que no sobreviven al alpha-cut.
+		var imagen := tex.get_image()
+		if imagen.is_compressed(): imagen.decompress()
+		var mascara := BitMap.new()
+		mascara.create_from_image_alpha(imagen, 0.5)
+		var minimo := Vector2i(imagen.get_width(), imagen.get_height())
+		var maximo := Vector2i.ZERO
+		for y in imagen.get_height():
+			for x in imagen.get_width():
+				if mascara.get_bit(x, y):
+					minimo = minimo.min(Vector2i(x, y))
+					maximo = maximo.max(Vector2i(x + 1, y + 1))
+		recortes.append(Rect2i(minimo, maximo - minimo))
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 161126
 	var puntos: Array[Vector2] = []
@@ -1125,12 +1139,17 @@ func _crear_profundidad_y_sombras() -> void:
 		var alto := rng.randf_range(2.8, 5.0)
 		var arbol := Node3D.new()
 		$Escenario/DecoracionNueva.add_child(arbol)
-		arbol.position = Vector3(punto.x, -0.06, punto.y)
+		arbol.name = "ArbolArena_%03d" % puntos.size()
+		# Las raíces penetran ligeramente el suelo para evitar una junta visible.
+		arbol.position = Vector3(punto.x, -0.12, punto.y)
 		var visual := Sprite3D.new()
 		visual.name = "Visual"
-		visual.texture = texturas[tipo]
+		var atlas := AtlasTexture.new()
+		atlas.atlas = texturas[tipo]
+		atlas.region = recortes[tipo]
+		visual.texture = atlas
 		visual.pixel_size = alto / recortes[tipo].size.y
-		visual.position.y = (recortes[tipo].end.y - texturas[tipo].get_height() * 0.5) * visual.pixel_size
+		visual.position.y = alto * 0.5
 		visual.billboard = BaseMaterial3D.BILLBOARD_FIXED_Y
 		visual.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
 		visual.flip_h = rng.randf() < 0.5

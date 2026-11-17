@@ -21,12 +21,13 @@ Estado general por fases: [AVANCE_DEMO.md](AVANCE_DEMO.md). La integración de c
 
 ## Catálogo de assets generados
 
-Actualizado el 16 de noviembre de 2026 mediante revisión de archivos y referencias de escenas, scripts y recursos. Hay **59 PNG originales en once paquetes** (sin contar capturas de revisión). «Generado» significa que el archivo está disponible; «integrado» significa que existe una referencia en el juego. La creación de un material o una escena reutilizable no implica que se haya colocado en un mapa.
+Actualizado el 16 de noviembre de 2026 mediante revisión de archivos y referencias de escenas, scripts y recursos. Hay **77 PNG originales en catorce paquetes** (sin contar capturas de revisión). «Generado» significa que el archivo está disponible; «integrado» significa que existe una referencia en el juego. La creación de un material o una escena reutilizable no implica que se haya colocado en un mapa.
 
 Las rutas de esta tabla son relativas a `res://`. Los README de cada paquete conservan sus prompts de `image_gen`, instrucciones y limitaciones de generación; este documento registra el estado de integración posterior.
 
 | Paquete | Ruta | PNG | Contenido y estado |
 | --- | --- | ---: | --- |
+| Casa y ambiente | `assets/sprites/environment/house_ambient_v1/` | 14 | Nueve texturas para geometría de casa/ventanas, dos adornos de pared y tres sprites ambientales. Generados; pendientes de asignación y animación. |
 | Decoración de cuatro zonas | `assets/sprites/environment/nordic_decor_v1/` | 8 | Ocho assets integrados en casa, arena, pueblo y cueva; ver detalle al final. |
 | Superficies base | `assets/sprites/environment/materials/nordic_v1/` | 6 | `wood_wall`, `red_roof`, `cold_grass`, `dirt_path`, `combat_ground`, `village_stone`. Integrados en superficies compatibles; detalles abajo. |
 | Vegetación y obstáculos | `assets/sprites/environment/nordic_props_v1/` | 6 | `nordic_pine`, `grass_tuft`, `mossy_rock`, `snow_bank`, `wildflowers`, `dense_bush`. Incluyen escenas en `scenes/world/Entities/NordicProps/`; integración inicial y restricciones descritas abajo. |
@@ -94,7 +95,7 @@ Los materiales usan filtro Nearest y escalas adaptadas. Las superficies nuevas n
 
 ## Comprobación
 
-- Catálogo: 59 PNG en once paquetes; los dos atlas del camino ya están integrados en World y World_Town; las seis maderas, ocho superficies complementarias y cuatro VFX tienen usos conectados en el proyecto. El panorama nuevo está integrado y revisado como se detalla arriba. Las pruebas siguientes conservan su historial previo.
+- Catálogo: 77 PNG en catorce paquetes; los dos atlas del camino ya están integrados en World y World_Town; las seis maderas, ocho superficies complementarias y cuatro VFX tienen usos conectados en el proyecto. El panorama nuevo está integrado y revisado como se detalla arriba. Las pruebas siguientes conservan su historial previo.
 - `assets_nordic_test.gd`: carga/render de escenas y recursos, 0 fallos; inspeccionada la casa con la nueva paleta.
 - `presentation_test.gd`: opciones dentro del panel, estadísticas dentro del marco, vegetación registrada para apoyo, veinte muestras de encuadre en cinco zonas y vida útil de cuatro VFX, 0 fallos. Capturas revisadas de opciones, pausa y World en formato ancho y ventana 900 × 700. Son muestras automatizadas, no una revisión manual de cada punto del mapa ni garantía contra toda oclusión por edificios.
 - Regresiones ejecutadas: recorrido_fase1, casa_fase2, inventario_fase25, grupo_jarrito y encuentros; consultar el registro de avance para resultados finales.
@@ -175,7 +176,7 @@ Los ocho assets de nordic_decor_v1 están integrados mediante prefabs editables 
 ## Correcciones tras revisión de capturas — 16/11/2026
 
 - Aumentadas las alturas base de estanterías (2.65), leñeros (1.05), bancos (1.65) y jardineras (1.20). Sustituyen los tamaños anteriores del ajuste de NordicDecor.
-- Eric usa el 70% de escala visual solo en World_House, conservando apoyo de pies, cápsula y lógica de interacción. Combate y exteriores conservan su tamaño.
+- Finn usa el 70% de escala visual solo en World_House, conservando apoyo de pies, cápsula y lógica de interacción. Combate y exteriores conservan su tamaño.
 - En cueva el sprite recibe iluminación real y un relleno frío limitado a su capa visual para que no brille a intensidad completa ni quede negro; no ilumina el entorno.
 - Cambios de cámara cercanos interpolados en 0.45 segundos. Teletransportes lejanos conservan su fundido. Mientras se mantiene una misma dirección de entrada, el movimiento conserva el rumbo del mundo al cruzar cámaras; al soltar o cambiar de dirección se toma la cámara nueva.
 - Arena: montañas alejadas a Z=-22, vegetación intermedia con alturas y posiciones variadas, suelo con borde posterior oculto por vegetación y cielo ampliado. Luz solar orientada hacia el suelo, sombras habilitadas y sombras suaves de contacto bajo decoraciones.
@@ -189,3 +190,45 @@ Los ocho assets de nordic_decor_v1 están integrados mediante prefabs editables 
 - Tres cámaras fijas adicionales en el pueblo cubren la plaza sur, plaza este y calle central (Camera13–15). Validado el encuadre completo en siete puntos y que las 15 cámaras mantengan su transformación; fixed_cameras_test sin fallos. camera_comfort_test actualizado al contrato de cámaras fijas, sin fallos.
 - Muebles cercanos a la fuente desplazados al exterior: centros a más de 6.5 unidades de ella. Añadidos tres bancos y cinco jardineras; total del paquete en el pueblo: cinco bancos y nueve jardineras. Captura revisada sin intersecciones con la fuente.
 - Esta revisión sustituye la interpolación de cámaras descrita en el registro anterior. No se ha medido el coste de sombras adicionales en hardware de gama baja.
+
+## Texturas de casa, pared y ambiente — 16 de noviembre de 2026
+
+- Paquete: `assets/sprites/environment/house_ambient_v1/`. 14 PNG nuevos mediante image_gen integrada; análisis por nodo y recomendaciones de UV en README, prompts finales en PROMPTS.md.
+- Revisados Cuarto/PlantaBaja de World_House, House_Violet y nodos de ventanas de los modelos nórdicos originales. El interior actual no incluye ventanas; el mapa de vidrio se destina a las ventanas exteriores y al espejo decorativo.
+- Nueve texturas: furniture_oak, bed_linen, book_pages, diary_cover, window_glass, nordic_wool, cabinet_front, moving_crate y mountain_painting. Cubren piezas de cama, mesas, ropero/aparador, cajas, diario, espejo, alfombra, cuadro y superficies de ventanas. Maderas, suelos, puertas y paredes existentes siguen disponibles.
+- Pared: wall_clock y wall_herbs. Ambiente: falling_leaf, dragonfly y flying_bird, una pose por elemento.
+- Validación: revisión visual, integridad de 14 PNG, nueve RGB opacos y cinco RGBA con alfa 0–255. Tamaño 1254 × 1254 salvo reloj 1199 × 1312. Cuatro sprites regenerados para evitar halos.
+- Estado: arte generado, sin asignación a escenas ni pruebas Godot. Pendientes mapeado por cara de frontales/cuadro/diario, materiales, escala y colocación. El vidrio es una representación opaca, no reflexión real. Los sprites de ambiente requieren animación/partículas; no incluyen ciclos de aleteo. No se garantiza repetición seamless de las texturas.
+
+## NPCs genéricos del pueblo — 16 de noviembre de 2026
+
+- Paquete: `assets/sprites/npcs/townsfolk_v1/`. Tres PNG RGBA de 1254 × 1254: villager_woman, villager_worker y villager_elder.
+- Vecina con trenza/ropa verde y terracota, trabajador con gorro azul/abrigo ocre, vecina mayor con chal azul/vestido burdeos. Una pose frontal estática de cuerpo completo por personaje.
+- Generados con image_gen integrada. README y PROMPTS.md incluidos. Variantes iniciales con halo descartadas.
+- Validación: revisión visual e integridad PNG, tamaño y alfa 0–255 de los tres archivos finales.
+- Estado: generados, sin asignar a escenas. Pendientes de escala/pivote, vistas adicionales, animaciones, diálogos y revisión en Godot.
+
+
+### Integración de casa y aldeanos — 16/11/2026
+
+- Integrados 14 assets: nueve texturas de superficies, reloj y hierbas de pared, y tres aldeanos. Excluidos por petición hoja, libélula y ave; no se instancian en escenas.
+- World_House: roble en muebles y marcos; lino en colchón/almohada; papel y tapa del diario; cajas; tejido en manta y alfombra; frontal de ropero/aparador; espejo y cuadro. Paneles ilustrados con UV 0–1 en la cara visible. Espejo desplazado a x=-1.8 para despejar la librería.
+- CasaRoja, CasaEntramado y CasaPorche: cristal dibujado en las ventanas, sin emisión, conservando geometría y marcos.
+- Los tres NPCs existentes de World_Town usan villager_woman/worker/elder; conservan diálogos, recompensas y comportamiento de prueba. Alturas 1.95/2.05/1.85 m, pivote a suelo y=0.078613, colisión adaptada e indicador sobre la cabeza. Una pose frontal: faltan vistas direccionales y animaciones; no se simulan con la antigua plantilla blanca.
+- Materiales iluminados por el escenario, filtrado nearest y sombras en sprites nuevos. Reloj 0.80 m e hierbas 0.70 m, sin billboard y junto a la pared del comedor.
+- Validación: importación sin errores de escenas; casa_fase2_test: 23 pruebas, 0 fallos. Revisión de capturas reales de ambos pisos y los tres aldeanos junto a Finn mediante lighting_preview.gd y assets_preview.gd. Persisten advertencias previas de UID duplicados entre plantillas de Erland/Eris; no corresponden a estos assets.
+
+
+## Preferencia de aldeanos — 17/11/2026
+
+Por elección del usuario, los tres NPCs usan ahora los primeros diseños generados (1024 × 1536 RGBA), restaurados desde los originales. Segundas versiones conservadas en townsfolk_v1/alternatives_second_pass como alternativas de archivo, excluidas del catálogo principal. Recortes AtlasTexture recalculados por alfa >= 128 y pixel_size ajustado para preservar alturas 1.95/2.05/1.85 m, posiciones y colisiones. Integridad de los tres PNG verificada; pendiente nueva revisión visual en Godot. No se han generado imágenes adicionales.
+
+## Cuadro de diálogo — 17/11/2026
+
+- Paquete: `assets/sprites/ui/nordic_dialogue_v1/`. Un PNG original, dialogue_panel.png (2172 × 724 RGBA), generado con image_gen integrada.
+- Estructura basada en NordicDialogueBalloon: panel horizontal, espacio libre para retrato opcional izquierdo, nombre/texto central e indicador derecho. Esos elementos siguen separados del fondo.
+- Madera azul oscura y tallas discretas en las esquinas, referencia button_normal de Nordic Carved. README y PROMPT.md incluidos.
+- Verificado visualmente y validado PNG/alfa 0–255. Generado, sin asignar a la escena; pendientes región, nine-slice, márgenes y revisión de legibilidad/resoluciones en Godot.
+
+### Nuevo panel de diálogo — 17/11/2026
+Integrado nordic_dialogue_v1/dialogue_panel.png en NordicDialogueBalloon. Importación limitada a 768×256, región útil (0,24,768,208) y nine-slice 68/62 px para conservar tallas. Retrato izquierdo de 180×180, nombre encima del texto a la derecha, márgenes protegidos y panel de 286 px incluido margen exterior. Retrato opcional cuando el diálogo no aporta imagen. Captura ui_dialogue_preview con Erland revisada en Godot.

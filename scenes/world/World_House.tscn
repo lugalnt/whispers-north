@@ -29,6 +29,18 @@
 [ext_resource type="PackedScene" path="res://scenes/world/Entities/NordicDecor/house_bookshelf.tscn" id="new_house_bookshelf"]
 [ext_resource type="PackedScene" path="res://scenes/world/Entities/NordicDecor/house_firewood.tscn" id="new_house_firewood"]
 
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/house_ambient_v1/furniture_oak.png" id="new_furniture_oak"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/house_ambient_v1/bed_linen.png" id="new_bed_linen"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/house_ambient_v1/book_pages.png" id="new_book_pages"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/house_ambient_v1/diary_cover.png" id="new_diary_cover"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/house_ambient_v1/window_glass.png" id="new_window_glass"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/house_ambient_v1/nordic_wool.png" id="new_nordic_wool"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/house_ambient_v1/cabinet_front.png" id="new_cabinet_front"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/house_ambient_v1/moving_crate.png" id="new_moving_crate"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/house_ambient_v1/mountain_painting.png" id="new_mountain_painting"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/house_ambient_v1/wall_clock.png" id="new_wall_clock"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/house_ambient_v1/wall_herbs.png" id="new_wall_herbs"]
+
 [sub_resource type="Environment" id="Environment_6njgx"]
 background_mode = 1
 background_color = Color(0.02, 0.02, 0.025, 1)
@@ -129,6 +141,87 @@ texture_filter = 0
 roughness = 1.0
 uv1_triplanar = true
 uv1_scale = Vector3(0.6, 0.6, 0.6)
+
+[sub_resource type="StandardMaterial3D" id="new_furniture_oak"]
+albedo_texture = ExtResource("new_furniture_oak")
+texture_filter = 0
+roughness = 0.95
+
+[sub_resource type="StandardMaterial3D" id="new_bed_linen"]
+albedo_texture = ExtResource("new_bed_linen")
+texture_filter = 0
+roughness = 0.95
+
+[sub_resource type="StandardMaterial3D" id="new_book_pages"]
+albedo_texture = ExtResource("new_book_pages")
+texture_filter = 0
+roughness = 0.95
+
+[sub_resource type="StandardMaterial3D" id="new_diary_cover"]
+albedo_texture = ExtResource("new_diary_cover")
+texture_filter = 0
+roughness = 0.95
+
+[sub_resource type="StandardMaterial3D" id="new_window_glass"]
+albedo_texture = ExtResource("new_window_glass")
+texture_filter = 0
+roughness = 0.95
+
+[sub_resource type="StandardMaterial3D" id="new_nordic_wool"]
+albedo_texture = ExtResource("new_nordic_wool")
+texture_filter = 0
+roughness = 0.95
+
+[sub_resource type="StandardMaterial3D" id="new_cabinet_front"]
+albedo_texture = ExtResource("new_cabinet_front")
+texture_filter = 0
+roughness = 0.95
+
+[sub_resource type="StandardMaterial3D" id="new_moving_crate"]
+albedo_texture = ExtResource("new_moving_crate")
+texture_filter = 0
+roughness = 0.95
+
+[sub_resource type="StandardMaterial3D" id="new_mountain_painting"]
+albedo_texture = ExtResource("new_mountain_painting")
+texture_filter = 0
+roughness = 0.95
+
+[sub_resource type="QuadMesh" id="panel_FrenteRopero"]
+size = Vector2(1.66, 2.46)
+material = SubResource("new_cabinet_front")
+
+[sub_resource type="QuadMesh" id="panel_FrenteAparador"]
+size = Vector2(2.16, 1.16)
+material = SubResource("new_cabinet_front")
+
+[sub_resource type="QuadMesh" id="panel_Pintura"]
+size = Vector2(1.5, 0.75)
+material = SubResource("new_mountain_painting")
+
+[sub_resource type="QuadMesh" id="panel_Cristal"]
+size = Vector2(0.72, 1.38)
+material = SubResource("new_window_glass")
+
+[sub_resource type="QuadMesh" id="panel_Cubierta"]
+size = Vector2(0.48, 0.35)
+material = SubResource("new_diary_cover")
+
+[sub_resource type="QuadMesh" id="panel_TejidoManta"]
+size = Vector2(1.5, 1.4)
+material = SubResource("new_nordic_wool")
+
+[sub_resource type="QuadMesh" id="panel_TejidoAlfombra"]
+size = Vector2(2.3, 1.6)
+material = SubResource("new_nordic_wool")
+
+[sub_resource type="AtlasTexture" id="crop_wall_clock"]
+atlas = ExtResource("new_wall_clock")
+region = Rect2(294, 85, 611, 1169)
+
+[sub_resource type="AtlasTexture" id="crop_wall_herbs"]
+atlas = ExtResource("new_wall_herbs")
+region = Rect2(162, 315, 931, 727)
 
 [node name="WorldHouse" type="Node3D" unique_id=118850924]
 script = ExtResource("1_n14k2")
@@ -311,13 +404,13 @@ script = ExtResource("10_sf7k5")
 position = Vector3(-3.05, 0.35, -1.65)
 size = Vector3(1.55, 0.7, 2.25)
 use_collision = true
-material = SubResource("mat_birch_furniture")
+material = SubResource("new_furniture_oak")
 
 [node name="Colchon" type="CSGBox3D" parent="Cuarto"]
 position = Vector3(-3.05, 0.77, -1.65)
 size = Vector3(1.5, 0.2, 2.2)
 use_collision = false
-material = SubResource("MatLino")
+material = SubResource("new_bed_linen")
 
 [node name="Manta" type="CSGBox3D" parent="Cuarto"]
 position = Vector3(-3.05, 0.89, -1.25)
@@ -329,49 +422,50 @@ material = SubResource("mat_woven_wool")
 position = Vector3(-3.05, 0.92, -2.5)
 size = Vector3(0.9, 0.15, 0.38)
 use_collision = false
-material = SubResource("MatPapel")
+material = SubResource("new_bed_linen")
 
 [node name="Ropero" type="CSGBox3D" parent="Cuarto"]
 position = Vector3(2.7, 1.25, -2.5)
 size = Vector3(1.7, 2.5, 0.85)
 use_collision = true
-material = SubResource("mat_birch_furniture")
+material = SubResource("new_furniture_oak")
 
 [node name="PuertaRopero" type="CSGBox3D" parent="Cuarto"]
 position = Vector3(2.7, 1.25, -2.05)
 size = Vector3(0.03, 2.3, 0.04)
 use_collision = false
 material = SubResource("mat_dark_oak_panels")
+visible = false
 
 [node name="MesaDiario" type="CSGBox3D" parent="Cuarto"]
 position = Vector3(-0.8, 0.8, -1.95)
 size = Vector3(1.45, 0.18, 0.85)
 use_collision = true
-material = SubResource("mat_birch_furniture")
+material = SubResource("new_furniture_oak")
 
 [node name="Pata-1.38-2.24" type="CSGBox3D" parent="Cuarto"]
 position = Vector3(-1.38, 0.4, -2.24)
 size = Vector3(0.12, 0.8, 0.12)
 use_collision = false
-material = SubResource("mat_birch_furniture")
+material = SubResource("new_furniture_oak")
 
 [node name="Pata-1.38-1.65" type="CSGBox3D" parent="Cuarto"]
 position = Vector3(-1.38, 0.4, -1.65)
 size = Vector3(0.12, 0.8, 0.12)
 use_collision = false
-material = SubResource("mat_birch_furniture")
+material = SubResource("new_furniture_oak")
 
 [node name="Pata-0.22-2.24" type="CSGBox3D" parent="Cuarto"]
 position = Vector3(-0.22, 0.4, -2.24)
 size = Vector3(0.12, 0.8, 0.12)
 use_collision = false
-material = SubResource("mat_birch_furniture")
+material = SubResource("new_furniture_oak")
 
 [node name="Pata-0.22-1.65" type="CSGBox3D" parent="Cuarto"]
 position = Vector3(-0.22, 0.4, -1.65)
 size = Vector3(0.12, 0.8, 0.12)
 use_collision = false
-material = SubResource("mat_birch_furniture")
+material = SubResource("new_furniture_oak")
 
 [node name="Diario" type="Node3D" parent="Cuarto"]
 position = Vector3(-0.8, 1, -1.8)
@@ -386,7 +480,7 @@ material = SubResource("MatLibro")
 position = Vector3(0, 0.05, 0)
 size = Vector3(0.41, 0.04, 0.29)
 use_collision = false
-material = SubResource("MatPapel")
+material = SubResource("new_book_pages")
 
 [node name="InteraccionDialogo" type="Area3D" parent="Cuarto/Diario"]
 script = ExtResource("12_dialogo")
@@ -402,22 +496,22 @@ sfx_iniciar = null
 position = Vector3(0.9, 0.35, -2.5)
 size = Vector3(0.8, 0.7, 0.7)
 use_collision = true
-material = SubResource("mat_birch_furniture")
+material = SubResource("new_moving_crate")
 
 [node name="CajaSobrepuesta" type="CSGBox3D" parent="Cuarto"]
 position = Vector3(1, 0.95, -2.5)
 size = Vector3(0.6, 0.5, 0.6)
 use_collision = true
-material = SubResource("mat_birch_furniture")
+material = SubResource("new_moving_crate")
 
 [node name="EspejoMarco" type="CSGBox3D" parent="Cuarto"]
-position = Vector3(0.25, 1.75, -2.95)
+position = Vector3(-1.8, 2.25, -2.95)
 size = Vector3(0.9, 1.6, 0.1)
 use_collision = true
-material = SubResource("mat_birch_furniture")
+material = SubResource("new_furniture_oak")
 
 [node name="Espejo" type="CSGBox3D" parent="Cuarto"]
-position = Vector3(0.25, 1.75, -2.88)
+position = Vector3(-1.8, 2.25, -2.88)
 size = Vector3(0.72, 1.38, 0.03)
 use_collision = false
 material = SubResource("MatCristal")
@@ -432,13 +526,13 @@ material = SubResource("mat_woven_wool")
 position = Vector3(40, 0.6, -2.5)
 size = Vector3(2.2, 1.2, 0.8)
 use_collision = true
-material = SubResource("mat_birch_furniture")
+material = SubResource("new_furniture_oak")
 
 [node name="CuadroMarco" type="CSGBox3D" parent="PlantaBaja"]
 position = Vector3(40, 2.35, -2.96)
 size = Vector3(1.7, 0.95, 0.1)
 use_collision = true
-material = SubResource("mat_birch_furniture")
+material = SubResource("new_furniture_oak")
 
 [node name="Cuadro" type="CSGBox3D" parent="PlantaBaja"]
 position = Vector3(40, 2.35, -2.89)
@@ -450,19 +544,19 @@ material = SubResource("MatTela")
 position = Vector3(43.6, 0.45, -2.2)
 size = Vector3(1.2, 0.9, 0.9)
 use_collision = true
-material = SubResource("mat_birch_furniture")
+material = SubResource("new_moving_crate")
 
 [node name="MesaComedor" type="CSGBox3D" parent="PlantaBaja"]
 position = Vector3(42, 0.85, -2.4)
 size = Vector3(1.4, 0.18, 0.9)
 use_collision = true
-material = SubResource("mat_birch_furniture")
+material = SubResource("new_furniture_oak")
 
 [node name="BarreraComedor" type="CSGBox3D" parent="PlantaBaja"]
 position = Vector3(42, 0.45, -1.85)
 size = Vector3(1.6, 0.9, 0.12)
 use_collision = true
-material = SubResource("mat_birch_furniture")
+material = SubResource("new_furniture_oak")
 
 [node name="Peldaño0" type="CSGBox3D" parent="PlantaBaja"]
 position = Vector3(34.9, 0.12, -1.6)
@@ -600,3 +694,52 @@ rotation = Vector3(-0.61086524, 0, 0)
 fov = 60.0
 metadata/sector_centro = Vector2(44, 0)
 metadata/sector_radio = Vector2(4, 3.5)
+
+[node name="FrenteRopero" type="MeshInstance3D" parent="Cuarto"]
+position = Vector3(2.7, 1.25, -2.065)
+mesh = SubResource("panel_FrenteRopero")
+
+[node name="FrenteAparador" type="MeshInstance3D" parent="PlantaBaja"]
+position = Vector3(40, 0.6, -2.095)
+mesh = SubResource("panel_FrenteAparador")
+
+[node name="Pintura" type="MeshInstance3D" parent="PlantaBaja"]
+position = Vector3(40, 2.35, -2.875)
+mesh = SubResource("panel_Pintura")
+
+[node name="Cristal" type="MeshInstance3D" parent="Cuarto"]
+position = Vector3(-1.8, 2.25, -2.86)
+mesh = SubResource("panel_Cristal")
+
+[node name="Cubierta" type="MeshInstance3D" parent="Cuarto/Diario"]
+position = Vector3(0, 0.076, 0)
+mesh = SubResource("panel_Cubierta")
+rotation_degrees = Vector3(-90, 0, 0)
+
+[node name="TejidoManta" type="MeshInstance3D" parent="Cuarto"]
+position = Vector3(-3.05, 0.935, -1.25)
+mesh = SubResource("panel_TejidoManta")
+rotation_degrees = Vector3(-90, 0, 0)
+
+[node name="TejidoAlfombra" type="MeshInstance3D" parent="Cuarto"]
+position = Vector3(-0.5, 0.032, 0.5)
+mesh = SubResource("panel_TejidoAlfombra")
+rotation_degrees = Vector3(-90, 0, 0)
+
+[node name="wall_clock" type="Sprite3D" parent="PlantaBaja"]
+position = Vector3(43, 2.45, -2.97)
+texture = SubResource("crop_wall_clock")
+pixel_size = 0.0006843455945252353
+shaded = true
+texture_filter = 0
+alpha_cut = 1
+cast_shadow = 2
+
+[node name="wall_herbs" type="Sprite3D" parent="PlantaBaja"]
+position = Vector3(41.9, 2.4, -2.97)
+texture = SubResource("crop_wall_herbs")
+pixel_size = 0.0009628610729023383
+shaded = true
+texture_filter = 0
+alpha_cut = 1
+cast_shadow = 2
