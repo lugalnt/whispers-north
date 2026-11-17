@@ -407,3 +407,6 @@ Reducida la escala visual de exploración al 75% (32 px × 0.08 × 0.75 = 1.92 u
 - CheckPantalla y OpcionesResolucion centrados tanto en escena como en creación dinámica para evitar invadir los adornos laterales.
 - Árboles de combate: AtlasTexture recortado a píxeles con alfa >= 0.5, descompresión previa de imágenes importadas, base calculada sobre ese recorte y raíces hundidas 0.12 unidades. Se mantiene distribución, iluminación y sombras.
 - Capturas de opciones a 900×700 y combate revisadas; botón dentro del panel y grupo_jarrito_test sin fallos.
+
+## Arbustos del pueblo — 17/11/2026
+Añadidos 65 arbustos dense_bush bajo ArbustosPueblo, editables en la escena. Escalas 0.48–0.78, orientación variada, iluminación y sombras activas. Posiciones excluyen celdas de caminos con margen, casas, NPCs, fuente y mobiliario; arbustos decorativos sin bloqueo físico. Revisadas capturas de calles y plaza con assets_preview y decoration_preview, sin errores de carga.

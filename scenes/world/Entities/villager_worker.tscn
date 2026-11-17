@@ -9,7 +9,7 @@ animations = [{"frames": [{"duration": 1.0, "texture": SubResource("crop")}], "l
 [sub_resource type="CapsuleShape3D" id="body"]
 radius = 0.4
 height = 2.05
-[node name="Villager" type="CharacterBody3D"]
+[node name="Aldeano" type="CharacterBody3D"]
 script = ExtResource("script")
 mirar_al_jugador = false
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
