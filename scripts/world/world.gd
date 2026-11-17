@@ -122,14 +122,26 @@ func _setup_camera_switches() -> void:
 func _on_camera_switch_entered(body: Node3D, cam_a: Camera3D, cam_b: Camera3D) -> void:
 	if body != get_active_player():
 		return
+	var candidata: Camera3D = null
 	if cam_a.current:
-		cam_b.make_current()
+		candidata = cam_b
 	elif cam_b.current:
-		cam_a.make_current()
+		candidata = cam_a
+	elif "velocity" in body and body.velocity.length_squared() > 0.1:
+		var vel: Vector3 = body.velocity.normalized()
+		var dot_a := (cam_a.global_position - body.global_position).dot(vel)
+		var dot_b := (cam_b.global_position - body.global_position).dot(vel)
+		candidata = cam_a if dot_a > dot_b else cam_b
 	else:
 		var dist_a := cam_a.global_position.distance_squared_to(body.global_position)
 		var dist_b := cam_b.global_position.distance_squared_to(body.global_position)
-		(cam_a if dist_a < dist_b else cam_b).make_current()
+		candidata = cam_a if dist_a < dist_b else cam_b
+	if candidata and get_viewport():
+		var rect := get_viewport().get_visible_rect().grow(-20.0)
+		var p_pies := body.global_position + Vector3.UP * -0.8
+		var p_cab := body.global_position + Vector3.UP * 1.1
+		if not candidata.is_position_behind(p_pies) and not candidata.is_position_behind(p_cab) and rect.has_point(candidata.unproject_position(p_pies)) and rect.has_point(candidata.unproject_position(p_cab)):
+			candidata.make_current()
 
 # Devuelve el nodo del jugador activo (16x16 o 32x32)
 func get_active_player() -> CharacterBody3D:

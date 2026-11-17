@@ -57,26 +57,25 @@ func _process(_delta: float) -> void:
 			_espera_cambio = maxf(_espera_cambio, 0.45)
 	elif jugador.global_position.distance_to(_pos_ancla_cam) > 1.5 and not _encuadra(cam, jugador, 0.04):
 		_espera_cambio = 0.0
-	# Encuadres inmutables: elegir otra cámara, nunca orientar hacia el jugador.
+	# Encuadres inmutables: mantener la cámara actual mientras encuadre bien al jugador,
+	# evitando saltos rápidos por cámaras intermedias en caminos rectos.
 	if not ("is_interacting" in jugador and jugador.is_interacting):
 		_espera_cambio = maxf(0.0, _espera_cambio - _delta)
 	var centro := jugador.global_position + Vector3.UP * 0.45
-	# Conservar las cámaras principales diseñadas (Camera1..N) mientras encuadren al jugador;
-	# usar las cámaras de cobertura por sector cuando salga de su encuadre o ya esté en un sector.
-	var usar_sector: bool = cam.has_meta("sector_centro") or (_espera_cambio <= 0.0 and not _encuadra(cam, jugador, 0.04))
-	var sector := _sector_preferido(jugador, cam) if usar_sector else null
-	if sector != null and sector != cam and _espera_cambio <= 0.0:
-		sector.make_current()
-		cam = sector
-		_cam_previa = cam
-		_pos_ancla_cam = jugador.global_position
-		_espera_cambio = 0.45
-	if _espera_cambio <= 0.0 and not _encuadra(cam, jugador, 0.06):
+	if _espera_cambio <= 0.0 and not _encuadra(cam, jugador, 0.05):
+		var sector := _sector_preferido(jugador, cam)
+		if sector != null and sector != cam:
+			sector.make_current()
+			cam = sector
+			_cam_previa = cam
+			_pos_ancla_cam = jugador.global_position
+			_espera_cambio = 0.45
+	if _espera_cambio <= 0.0 and not _encuadra(cam, jugador, 0.05):
 		var mejor: Camera3D = null
 		var puntuacion := INF
 		for candidata in zona.find_children("*", "Camera3D", true, false):
 			if candidata.get_parent() != zona and candidata.get_parent().name != "Cameras": continue
-			if candidata == cam or not _encuadra(candidata, jugador, 0.06): continue
+			if candidata == cam or not _encuadra(candidata, jugador, 0.08): continue
 			var uv: Vector2 = candidata.unproject_position(centro) / get_viewport().get_visible_rect().size
 			var valor: float = uv.distance_squared_to(Vector2(0.5, 0.5)) + candidata.global_position.distance_to(centro) * 0.001
 			if valor < puntuacion:
@@ -111,22 +110,44 @@ func _encuadra(cam: Camera3D, jugador: Node3D, margen: float) -> bool:
 	return true
 
 func _sector_preferido(jugador: Node3D, actual: Camera3D) -> Camera3D:
-	var punto := Vector2(jugador.global_position.x, jugador.global_position.z)
-	var mejor: Camera3D = null
-	var valor_mejor := INF
-	var valor_actual := INF
+	# Si una cámara principal cercana (Camera1..N) encuadra bien al jugador, priorizarla
+	# para evitar saltar a un Sector_* justo antes de entrar al volumen de esa cámara principal.
+	var area := get_viewport().get_visible_rect().size
+	var centro_jug := jugador.global_position + Vector3.UP * 0.45
+	var mejor_principal: Camera3D = null
+	var mejor_uv_principal := INF
 	for cam in zona.find_children("*", "Camera3D", true, false):
-		if not cam.has_meta("sector_centro"): continue
-		var centro: Vector2 = cam.get_meta("sector_centro")
-		var radio: Vector2 = cam.get_meta("sector_radio")
-		var distancia := (punto - centro) / radio
-		if absf(distancia.x) > 1.15 or absf(distancia.y) > 1.15: continue
-		if not _encuadra(cam, jugador, 0.08): continue
-		var valor := distancia.length_squared()
-		if cam == actual: valor_actual = valor
-		if valor < valor_mejor:
-			mejor = cam
-			valor_mejor = valor
-	# Histéresis espacial: no alternar al detenerse junto al límite entre dos tramos.
-	if valor_actual < INF and valor_actual <= valor_mejor + 0.22: return actual
-	return mejor
+		if cam.get_parent() != zona and cam.get_parent().name != "Cameras": continue
+		if cam.has_meta("sector_centro") or cam == actual: continue
+		if cam.global_position.distance_to(centro_jug) > 20.0: continue
+		if not _encuadra(cam, jugador, 0.14): continue
+		var uv: Vector2 = cam.unproject_position(centro_jug) / area
+		var d := uv.distance_squared_to(Vector2(0.5, 0.5))
+		if d < mejor_uv_principal:
+			mejor_uv_principal = d
+			mejor_principal = cam
+	if mejor_principal != null:
+		return mejor_principal
+
+	var punto := Vector2(jugador.global_position.x, jugador.global_position.z)
+	for margen_req in [0.14, 0.08]:
+		var mejor: Camera3D = null
+		var valor_mejor := INF
+		var valor_actual := INF
+		for cam in zona.find_children("*", "Camera3D", true, false):
+			if not cam.has_meta("sector_centro"): continue
+			var centro: Vector2 = cam.get_meta("sector_centro")
+			var radio: Vector2 = cam.get_meta("sector_radio")
+			var distancia := (punto - centro) / radio
+			if absf(distancia.x) > 1.15 or absf(distancia.y) > 1.15: continue
+			if not _encuadra(cam, jugador, margen_req): continue
+			var valor := distancia.length_squared()
+			if cam == actual: valor_actual = valor
+			if valor < valor_mejor:
+				mejor = cam
+				valor_mejor = valor
+		if mejor != null:
+			# Histéresis espacial: no alternar al detenerse junto al límite entre dos tramos.
+			if valor_actual < INF and valor_actual <= valor_mejor + 0.22: return actual
+			return mejor
+	return null

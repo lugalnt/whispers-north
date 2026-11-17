@@ -251,6 +251,26 @@ func _cambiar_por_direccion(body: Node3D, cam_a: Camera3D, cam_b: Camera3D) -> v
 func _activar_camara(nueva_cam: Camera3D, previa: Camera3D = null) -> void:
 	if nueva_cam == null or nueva_cam.current:
 		return
+	var mundo := get_tree().current_scene
+	if mundo and mundo.has_method("get_active_player"):
+		var jug := mundo.call("get_active_player") as Node3D
+		if jug and jug.is_visible_in_tree() and get_viewport():
+			if modo != ModoSwitch.ZONA_FIJA:
+				var rect := get_viewport().get_visible_rect().grow(-50.0)
+				var p_pies := jug.global_position + Vector3.UP * -0.8
+				var p_cab := jug.global_position + Vector3.UP * 1.1
+				if nueva_cam.is_position_behind(p_pies) or nueva_cam.is_position_behind(p_cab) or not rect.has_point(nueva_cam.unproject_position(p_pies)) or not rect.has_point(nueva_cam.unproject_position(p_cab)):
+					return
+			# Si ya hay una cámara puente (Sector_*) encuadrando al jugador mucho más cerca del centro
+			# que la nueva cámara, evitar el salto prematuro de 0.1s al tocar el borde del volumen.
+			var activa := get_viewport().get_camera_3d()
+			if activa != null and activa.has_meta("sector_centro"):
+				var tam := get_viewport().get_visible_rect().size
+				var centro := jug.global_position + Vector3.UP * 0.45
+				var uv_act := activa.unproject_position(centro) / tam
+				var uv_nva := nueva_cam.unproject_position(centro) / tam
+				if absf(uv_act.x - 0.5) + 0.12 < absf(uv_nva.x - 0.5):
+					return
 	
 	nueva_cam.make_current()
 	_ultimo_tiempo_cambio = Time.get_ticks_msec() / 1000.0
