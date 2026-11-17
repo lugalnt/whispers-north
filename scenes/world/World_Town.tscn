@@ -1332,20 +1332,20 @@ debug_color = Color(0, 0, 0, 1)
 [node name="Jarrito" parent="." unique_id=1699643971 instance=ExtResource("19_6eawn")]
 grupo_encuentro = &"trio_jarritos_pueblo"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.48463, -0.019107819, 4.734478)
-radio_deteccion = 9.0
-distancia_perdida = 18.0
+radio_deteccion = 4.5
+distancia_perdida = 10.0
 
 [node name="Jarrito2" parent="." unique_id=1847396616 instance=ExtResource("19_6eawn")]
 grupo_encuentro = &"trio_jarritos_pueblo"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.095085, -0.019107819, 5.3089814)
-radio_deteccion = 9.0
-distancia_perdida = 18.0
+radio_deteccion = 4.5
+distancia_perdida = 10.0
 
 [node name="Jarrito3" parent="." unique_id=316411335 instance=ExtResource("19_6eawn")]
 grupo_encuentro = &"trio_jarritos_pueblo"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.31285, -0.019107819, 3.72479)
-radio_deteccion = 9.0
-distancia_perdida = 18.0
+radio_deteccion = 4.5
+distancia_perdida = 10.0
 
 [node name="Marker_Exit_World" parent="." unique_id=1508003745 instance=ExtResource("22_worldtrans")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.966436, 1.0824051, -18.085182)

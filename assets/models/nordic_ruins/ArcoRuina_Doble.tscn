@@ -1,0 +1,336 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_surfaces_v2/ruin_masonry.png" id="tex_masonry"]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_surfaces_v2/fractured_rock.png" id="tex_fractured"]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_v1/village_stone.png" id="tex_village"]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_surfaces_v2/packed_snow.png" id="tex_snow"]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_wood_v1/mossy_old_timber.png" id="tex_timber"]
+
+[sub_resource type="StandardMaterial3D" id="mat_stone_light"]
+albedo_color = Color(0.86, 0.83, 0.75, 1)
+albedo_texture = ExtResource("tex_masonry")
+roughness = 0.95
+uv1_triplanar = true
+uv1_scale = Vector3(0.5500, 0.5500, 0.5500)
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="mat_stone_mid"]
+albedo_color = Color(0.76, 0.73, 0.65, 1)
+albedo_texture = ExtResource("tex_masonry")
+roughness = 0.95
+uv1_triplanar = true
+uv1_scale = Vector3(0.6000, 0.6000, 0.6000)
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="mat_stone_dark"]
+albedo_color = Color(0.52, 0.5, 0.45, 1)
+albedo_texture = ExtResource("tex_fractured")
+roughness = 0.95
+uv1_triplanar = true
+uv1_scale = Vector3(0.5000, 0.5000, 0.5000)
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="mat_stone_moss"]
+albedo_color = Color(0.56, 0.66, 0.52, 1)
+albedo_texture = ExtResource("tex_masonry")
+roughness = 0.95
+uv1_triplanar = true
+uv1_scale = Vector3(0.6000, 0.6000, 0.6000)
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="mat_stone_cap"]
+albedo_color = Color(0.82, 0.78, 0.68, 1)
+albedo_texture = ExtResource("tex_village")
+roughness = 0.95
+uv1_triplanar = true
+uv1_scale = Vector3(0.5000, 0.5000, 0.5000)
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="mat_snow_cap"]
+albedo_color = Color(0.92, 0.95, 0.98, 1)
+albedo_texture = ExtResource("tex_snow")
+roughness = 0.95
+uv1_triplanar = true
+uv1_scale = Vector3(0.6000, 0.6000, 0.6000)
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="mat_crimson_rock"]
+albedo_color = Color(0.46, 0.14, 0.16, 1)
+albedo_texture = ExtResource("tex_fractured")
+roughness = 0.95
+uv1_triplanar = true
+uv1_scale = Vector3(0.4500, 0.4500, 0.4500)
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="mat_crimson_dark"]
+albedo_color = Color(0.3, 0.09, 0.11, 1)
+albedo_texture = ExtResource("tex_masonry")
+roughness = 0.95
+uv1_triplanar = true
+uv1_scale = Vector3(0.5000, 0.5000, 0.5000)
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="mat_rune_cyan"]
+albedo_color = Color(0.45, 0.88, 0.98, 1)
+emission_enabled = true
+emission = Color(0.35, 0.78, 0.95, 1)
+emission_energy_multiplier = 1.8
+roughness = 0.4
+
+[sub_resource type="StandardMaterial3D" id="mat_rune_crimson"]
+albedo_color = Color(0.95, 0.25, 0.22, 1)
+emission_enabled = true
+emission = Color(0.88, 0.18, 0.15, 1)
+emission_energy_multiplier = 2.0
+roughness = 0.4
+
+[sub_resource type="BoxMesh" id="box_1_BaseSlab"]
+size = Vector3(4.8000, 0.0600, 1.5500)
+
+[sub_resource type="BoxMesh" id="box_2_Left_Plinth"]
+size = Vector3(1.2200, 0.2400, 1.2200)
+
+[sub_resource type="BoxMesh" id="box_3_Left_Block_0"]
+size = Vector3(1.0400, 0.6200, 1.0400)
+
+[sub_resource type="BoxMesh" id="box_4_Left_Mortar_1"]
+size = Vector3(0.9200, 0.0700, 0.9200)
+
+[sub_resource type="BoxMesh" id="box_5_Left_Block_1"]
+size = Vector3(1.0400, 0.6200, 1.0400)
+
+[sub_resource type="BoxMesh" id="box_6_Left_Seam_1"]
+size = Vector3(0.0600, 0.6400, 1.0600)
+
+[sub_resource type="BoxMesh" id="box_7_Left_Mortar_2"]
+size = Vector3(0.9200, 0.0700, 0.9200)
+
+[sub_resource type="BoxMesh" id="box_8_Left_Block_2"]
+size = Vector3(1.0400, 0.6200, 1.0400)
+
+[sub_resource type="BoxMesh" id="box_9_Left_Neck"]
+size = Vector3(1.2000, 0.2200, 1.1800)
+
+[sub_resource type="BoxMesh" id="box_10_Left_CapitalMain"]
+size = Vector3(1.6200, 0.5600, 1.3200)
+
+[sub_resource type="PrismMesh" id="prism_11_Left_BrokenTip"]
+left_to_right = 0.20
+size = Vector3(0.5500, 0.5200, 1.2600)
+
+[sub_resource type="BoxMesh" id="box_12_Left_CapitalTop"]
+size = Vector3(1.4200, 0.1800, 1.2000)
+
+[sub_resource type="BoxMesh" id="box_13_Left_Moss"]
+size = Vector3(0.6500, 0.1200, 0.8500)
+
+[sub_resource type="BoxMesh" id="box_14_Right_Plinth"]
+size = Vector3(1.2200, 0.2400, 1.2200)
+
+[sub_resource type="BoxMesh" id="box_15_Right_Block_0"]
+size = Vector3(1.0400, 0.6200, 1.0400)
+
+[sub_resource type="BoxMesh" id="box_16_Right_Mortar_1"]
+size = Vector3(0.9200, 0.0700, 0.9200)
+
+[sub_resource type="BoxMesh" id="box_17_Right_Block_1"]
+size = Vector3(1.0400, 0.6200, 1.0400)
+
+[sub_resource type="BoxMesh" id="box_18_Right_Seam_1"]
+size = Vector3(0.0600, 0.6400, 1.0600)
+
+[sub_resource type="BoxMesh" id="box_19_Right_Mortar_2"]
+size = Vector3(0.9200, 0.0700, 0.9200)
+
+[sub_resource type="BoxMesh" id="box_20_Right_Block_2"]
+size = Vector3(1.0400, 0.6200, 1.0400)
+
+[sub_resource type="BoxMesh" id="box_21_Right_Neck"]
+size = Vector3(1.2000, 0.2200, 1.1800)
+
+[sub_resource type="BoxMesh" id="box_22_Right_CapitalMain"]
+size = Vector3(1.6200, 0.5600, 1.3200)
+
+[sub_resource type="PrismMesh" id="prism_23_Right_BrokenTip"]
+left_to_right = 0.80
+size = Vector3(0.5500, 0.5200, 1.2600)
+
+[sub_resource type="BoxMesh" id="box_24_Right_CapitalTop"]
+size = Vector3(1.4200, 0.1800, 1.2000)
+
+[sub_resource type="BoxMesh" id="box_25_Right_Moss"]
+size = Vector3(0.6500, 0.1200, 0.8500)
+
+[sub_resource type="BoxShape3D" id="col_box_1"]
+size = Vector3(1.1500, 3.2000, 1.1500)
+
+[sub_resource type="BoxShape3D" id="col_box_2"]
+size = Vector3(1.1500, 3.2000, 1.1500)
+
+[node name="ArcoRuina_Doble" type="Node3D"]
+
+[node name="BaseSlab" type="MeshInstance3D" parent="."]
+position = Vector3(0.0000, 0.0300, 0.0000)
+rotation = Vector3(0.0000, 0.0000, 0.0000)
+mesh = SubResource("box_1_BaseSlab")
+material_override = SubResource("mat_stone_dark")
+
+[node name="Left_Plinth" type="MeshInstance3D" parent="."]
+position = Vector3(-1.6500, 0.1500, 0.0000)
+rotation = Vector3(0.0000, 0.0000, 0.0000)
+mesh = SubResource("box_2_Left_Plinth")
+material_override = SubResource("mat_stone_mid")
+
+[node name="Left_Block_0" type="MeshInstance3D" parent="."]
+position = Vector3(-1.6500, 0.5800, 0.0000)
+rotation = Vector3(0.0000, 0.0000, 0.0000)
+mesh = SubResource("box_3_Left_Block_0")
+material_override = SubResource("mat_stone_light")
+
+[node name="Left_Mortar_1" type="MeshInstance3D" parent="."]
+position = Vector3(-1.6500, 0.9250, 0.0000)
+rotation = Vector3(0.0000, 0.0000, 0.0000)
+mesh = SubResource("box_4_Left_Mortar_1")
+material_override = SubResource("mat_stone_dark")
+
+[node name="Left_Block_1" type="MeshInstance3D" parent="."]
+position = Vector3(-1.6500, 1.2700, 0.0000)
+rotation = Vector3(0.0000, 0.0000, 0.0000)
+mesh = SubResource("box_5_Left_Block_1")
+material_override = SubResource("mat_stone_cap")
+
+[node name="Left_Seam_1" type="MeshInstance3D" parent="."]
+position = Vector3(-1.6500, 1.2700, 0.0000)
+rotation = Vector3(0.0000, 0.0000, 0.0000)
+mesh = SubResource("box_6_Left_Seam_1")
+material_override = SubResource("mat_stone_dark")
+
+[node name="Left_Mortar_2" type="MeshInstance3D" parent="."]
+position = Vector3(-1.6500, 1.6150, 0.0000)
+rotation = Vector3(0.0000, 0.0000, 0.0000)
+mesh = SubResource("box_7_Left_Mortar_2")
+material_override = SubResource("mat_stone_dark")
+
+[node name="Left_Block_2" type="MeshInstance3D" parent="."]
+position = Vector3(-1.6500, 1.9600, 0.0000)
+rotation = Vector3(0.0000, 0.0000, 0.0000)
+mesh = SubResource("box_8_Left_Block_2")
+material_override = SubResource("mat_stone_light")
+
+[node name="Left_Neck" type="MeshInstance3D" parent="."]
+position = Vector3(-1.6500, 2.3800, 0.0000)
+rotation = Vector3(0.0000, 0.0000, 0.0000)
+mesh = SubResource("box_9_Left_Neck")
+material_override = SubResource("mat_stone_mid")
+
+[node name="Left_CapitalMain" type="MeshInstance3D" parent="."]
+position = Vector3(-1.3100, 2.7700, 0.0000)
+rotation = Vector3(0.0000, 0.0000, 0.0000)
+mesh = SubResource("box_10_Left_CapitalMain")
+material_override = SubResource("mat_stone_cap")
+
+[node name="Left_BrokenTip" type="MeshInstance3D" parent="."]
+position = Vector3(-0.4300, 2.7500, 0.0000)
+rotation = Vector3(0.0000, 0.0000, 0.3500)
+mesh = SubResource("prism_11_Left_BrokenTip")
+material_override = SubResource("mat_stone_mid")
+
+[node name="Left_CapitalTop" type="MeshInstance3D" parent="."]
+position = Vector3(-1.4120, 3.1300, 0.0000)
+rotation = Vector3(0.0000, 0.0000, 0.0000)
+mesh = SubResource("box_12_Left_CapitalTop")
+material_override = SubResource("mat_stone_light")
+
+[node name="Left_Moss" type="MeshInstance3D" parent="."]
+position = Vector3(-1.4800, 3.2300, 0.1000)
+rotation = Vector3(0.0000, 0.0000, 0.0000)
+mesh = SubResource("box_13_Left_Moss")
+material_override = SubResource("mat_stone_moss")
+
+[node name="Right_Plinth" type="MeshInstance3D" parent="."]
+position = Vector3(1.6500, 0.1500, 0.0000)
+rotation = Vector3(0.0000, 0.0000, 0.0000)
+mesh = SubResource("box_14_Right_Plinth")
+material_override = SubResource("mat_stone_mid")
+
+[node name="Right_Block_0" type="MeshInstance3D" parent="."]
+position = Vector3(1.6500, 0.5800, 0.0000)
+rotation = Vector3(0.0000, 0.0000, 0.0000)
+mesh = SubResource("box_15_Right_Block_0")
+material_override = SubResource("mat_stone_light")
+
+[node name="Right_Mortar_1" type="MeshInstance3D" parent="."]
+position = Vector3(1.6500, 0.9250, 0.0000)
+rotation = Vector3(0.0000, 0.0000, 0.0000)
+mesh = SubResource("box_16_Right_Mortar_1")
+material_override = SubResource("mat_stone_dark")
+
+[node name="Right_Block_1" type="MeshInstance3D" parent="."]
+position = Vector3(1.6500, 1.2700, 0.0000)
+rotation = Vector3(0.0000, 0.0000, 0.0000)
+mesh = SubResource("box_17_Right_Block_1")
+material_override = SubResource("mat_stone_cap")
+
+[node name="Right_Seam_1" type="MeshInstance3D" parent="."]
+position = Vector3(1.6500, 1.2700, 0.0000)
+rotation = Vector3(0.0000, 0.0000, 0.0000)
+mesh = SubResource("box_18_Right_Seam_1")
+material_override = SubResource("mat_stone_dark")
+
+[node name="Right_Mortar_2" type="MeshInstance3D" parent="."]
+position = Vector3(1.6500, 1.6150, 0.0000)
+rotation = Vector3(0.0000, 0.0000, 0.0000)
+mesh = SubResource("box_19_Right_Mortar_2")
+material_override = SubResource("mat_stone_dark")
+
+[node name="Right_Block_2" type="MeshInstance3D" parent="."]
+position = Vector3(1.6500, 1.9600, 0.0000)
+rotation = Vector3(0.0000, 0.0000, 0.0000)
+mesh = SubResource("box_20_Right_Block_2")
+material_override = SubResource("mat_stone_light")
+
+[node name="Right_Neck" type="MeshInstance3D" parent="."]
+position = Vector3(1.6500, 2.3800, 0.0000)
+rotation = Vector3(0.0000, 0.0000, 0.0000)
+mesh = SubResource("box_21_Right_Neck")
+material_override = SubResource("mat_stone_mid")
+
+[node name="Right_CapitalMain" type="MeshInstance3D" parent="."]
+position = Vector3(1.3100, 2.7700, 0.0000)
+rotation = Vector3(0.0000, 0.0000, 0.0000)
+mesh = SubResource("box_22_Right_CapitalMain")
+material_override = SubResource("mat_stone_cap")
+
+[node name="Right_BrokenTip" type="MeshInstance3D" parent="."]
+position = Vector3(0.4300, 2.7500, 0.0000)
+rotation = Vector3(0.0000, 0.0000, -0.3500)
+mesh = SubResource("prism_23_Right_BrokenTip")
+material_override = SubResource("mat_stone_mid")
+
+[node name="Right_CapitalTop" type="MeshInstance3D" parent="."]
+position = Vector3(1.4120, 3.1300, 0.0000)
+rotation = Vector3(0.0000, 0.0000, 0.0000)
+mesh = SubResource("box_24_Right_CapitalTop")
+material_override = SubResource("mat_stone_light")
+
+[node name="Right_Moss" type="MeshInstance3D" parent="."]
+position = Vector3(1.4800, 3.2300, 0.1000)
+rotation = Vector3(0.0000, 0.0000, 0.0000)
+mesh = SubResource("box_25_Right_Moss")
+material_override = SubResource("mat_stone_moss")
+
+[node name="Body" type="StaticBody3D" parent="."]
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape3D_0" type="CollisionShape3D" parent="Body"]
+position = Vector3(-1.6500, 1.6000, 0.0000)
+shape = SubResource("col_box_1")
+
+[node name="CollisionShape3D_1" type="CollisionShape3D" parent="Body"]
+position = Vector3(1.6500, 1.6000, 0.0000)
+shape = SubResource("col_box_2")

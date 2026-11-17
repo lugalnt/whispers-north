@@ -1,0 +1,59 @@
+[gd_scene load_steps=11 format=3]
+
+[ext_resource type="Script" path="res://scripts/combat/battler.gd" id="1_battler"]
+[ext_resource type="Script" path="res://scripts/combat/battler_stats.gd" id="2_stats"]
+[ext_resource type="Script" path="res://scripts/combat/acciones/accion_embestida.gd" id="3_embestida"]
+[ext_resource type="Script" path="res://scripts/combat/battler_action.gd" id="4_action"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/guardian_ruinas_boss.png" id="5_boss_tex"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/Roar_0.wav" id="6_roar"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/snd_punchheavythunder.wav" id="7_heavy_hit"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/snd_badexplosion.wav" id="8_explosion"]
+
+[sub_resource type="Resource" id="Resource_boss_stats"]
+script = ExtResource("2_stats")
+max_hp = 40
+ataque = 4
+defensa = 1
+velocidad = 7
+
+[sub_resource type="Resource" id="Resource_embestida_colosal"]
+script = ExtResource("3_embestida")
+duracion_acercarse = 0.65
+fraccion_acercamiento = 0.5
+duracion_carga = 0.45
+tiempo_impacto = 0.52
+altura_salto = 1.15
+ventana_antes = 0.24
+ventana_despues = 0.07
+sonido_carga = ExtResource("6_roar")
+sonido_golpe = ExtResource("7_heavy_hit")
+nombre = "Aplastamiento Rúnico"
+descripcion = "El Coloso salta con todo su peso. Pulsa interactuar justo antes del impacto para esquivar."
+poder = 2
+
+[sub_resource type="AtlasTexture" id="Atlas_boss"]
+atlas = ExtResource("5_boss_tex")
+region = Rect2(92, 82, 840, 871)
+filter_clip = true
+
+[node name="BossRuinasBattler" type="Node3D"]
+script = ExtResource("1_battler")
+nombre = "Coloso de las Ruinas"
+stats = SubResource("Resource_boss_stats")
+acciones = Array[ExtResource("4_action")]([SubResource("Resource_embestida_colosal")])
+radio = 0.9
+altura = 2.65
+sprite_mira_a_la_derecha = false
+respiracion = 0.035
+color_particulas_derrota = Color(0.95, 0.3, 0.28, 1)
+sonido_herido = ExtResource("7_heavy_hit")
+sonido_derrota = ExtResource("8_explosion")
+
+[node name="Visual" type="Sprite3D" parent="."]
+position = Vector3(0, 1.32, 0)
+pixel_size = 0.00305
+billboard = 2
+transparent = true
+alpha_cut = 1
+texture_filter = 0
+texture = SubResource("Atlas_boss")

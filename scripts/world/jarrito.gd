@@ -1,3 +1,4 @@
+@tool
 class_name Jarrito
 extends CharacterBody3D
 
@@ -10,12 +11,26 @@ enum Estado { IDLE, ALERT, WALK, ENCOUNTER, RETURN }
 const ANIMACIONES: Array[StringName] = [&"Idle", &"Alert", &"Walk", &"Encounter", &"Walk"]
 const RUTA_LLAMA: String = "CTRL_Jarro/Flame_Main"
 
-@export_group("Persecución")
-@export_range(0.1, 20.0, 0.1) var velocidad: float = 3.4
+@export_group("Detección y Persecución")
+## Radio de detección (metros). Actualiza en tiempo real el área y la vista previa 3D en el editor.
+@export_range(0.5, 20.0, 0.25, "or_greater", "suffix:m") var radio_deteccion: float = 4.5:
+	set(valor):
+		radio_deteccion = maxf(valor, 0.1)
+		_sincronizar_area_deteccion()
+		_actualizar_preview_editor()
+## Distancia plana desde Jarrito a la que abandona la persecución y vuelve al origen.
+@export_range(1.0, 35.0, 0.5, "or_greater", "suffix:m") var distancia_perdida: float = 10.0:
+	set(valor):
+		distancia_perdida = maxf(valor, 0.5)
+		_actualizar_preview_editor()
+## Dibuja en el visor 3D del editor el anillo cian de detección y el anillo naranja de abandono.
+@export var mostrar_rango_editor: bool = true:
+	set(valor):
+		mostrar_rango_editor = valor
+		_actualizar_preview_editor()
+@export_range(0.1, 20.0, 0.1, "suffix:m/s") var velocidad: float = 3.4
 @export_range(0.1, 50.0, 0.1) var aceleracion: float = 12.0
 @export_range(0.1, 30.0, 0.1) var velocidad_giro: float = 8.0
-## Distancia de abandono desde el enemigo, independiente del área de detección.
-@export_range(0.1, 100.0, 0.1) var distancia_perdida: float = 18.0
 @export var requiere_linea_de_vista: bool = true
 @export var altura_ojos: float = 0.8
 var _posicion_inicial: Vector3
@@ -31,19 +46,27 @@ var _audio_deteccion: AudioStreamPlayer3D
 var _sesion_grupo: RefCounted
 
 @export_group("Encuentro")
-@export_range(0.1, 30.0, 0.1) var tiempo_recuperacion: float = 3.0
+@export_range(0.1, 30.0, 0.1, "suffix:s") var tiempo_recuperacion: float = 3.0
 @export var combate_habilitado: bool = true
 var _recuperacion: float = 0.0
 var _solicitando: bool = false
 var _derrotado: bool = false
 var _id_derrota: StringName = &""
 
-@export_group("Volúmenes iniciales (al ejecutar)")
-@export_range(0.1, 5.0, 0.05) var radio_cuerpo: float = 0.65
-@export_range(0.1, 10.0, 0.05) var altura_cuerpo: float = 1.0
-@export_range(0.1, 50.0, 0.1) var radio_deteccion: float = 9.0
+@export_group("Dimensiones de colisión")
+@export_range(0.1, 5.0, 0.05, "suffix:m") var radio_cuerpo: float = 0.65:
+	set(valor):
+		radio_cuerpo = maxf(valor, 0.05)
+		_sincronizar_area_cuerpo()
+@export_range(0.1, 10.0, 0.05, "suffix:m") var altura_cuerpo: float = 1.0:
+	set(valor):
+		altura_cuerpo = maxf(valor, 0.05)
+		_sincronizar_area_cuerpo()
 const MARGEN_CONTACTO: float = 0.02
-@export_range(0.1, 10.0, 0.1) var altura_areas: float = 2.5
+@export_range(0.1, 10.0, 0.1, "suffix:m") var altura_areas: float = 2.5:
+	set(valor):
+		altura_areas = maxf(valor, 0.1)
+		_sincronizar_area_deteccion()
 
 var estado: Estado = Estado.IDLE
 var _objetivo: CharacterBody3D
@@ -57,10 +80,20 @@ var _gravedad: float = float(ProjectSettings.get_setting("physics/3d/default_gra
 @onready var _deteccion: Area3D = $DetectionArea
 @onready var _encuentro: Area3D = $EncounterArea
 @onready var _combate: EncuentroCombate = $EncuentroCombate
-@onready var _coordinador: Node = get_node("/root/CoordinadorEncuentros")
+var _coordinador: Node = null
 
 
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		set_physics_process(false)
+		_sincronizar_area_cuerpo()
+		_sincronizar_area_deteccion()
+		_actualizar_preview_editor()
+		return
+	var preview_ed := get_node_or_null("_EditorRangoDeteccion")
+	if preview_ed:
+		preview_ed.queue_free()
+	_coordinador = get_node_or_null("/root/CoordinadorEncuentros")
 	var mundo: Node = get_parent()
 	while mundo != null and not mundo.has_method("get_active_player"):
 		mundo = mundo.get_parent()
@@ -96,10 +129,122 @@ func _ready() -> void:
 
 func _configurar_cilindro(colision: CollisionShape3D, radio: float, altura: float) -> void:
 	var forma: CylinderShape3D = CylinderShape3D.new()
+	forma.resource_local_to_scene = true
 	forma.radius = maxf(radio, 0.01)
 	forma.height = maxf(altura, 0.01)
 	colision.shape = forma
 	colision.position.y = forma.height * 0.5
+
+
+func _sincronizar_area_deteccion() -> void:
+	if not is_node_ready():
+		return
+	var col := get_node_or_null("DetectionArea/CollisionShape3D") as CollisionShape3D
+	if col == null:
+		return
+	var forma := col.shape as CylinderShape3D
+	if forma != null and (not Engine.is_editor_hint() or forma.resource_local_to_scene):
+		forma.radius = maxf(radio_deteccion, 0.1)
+		forma.height = maxf(altura_areas, 0.1)
+		col.position.y = forma.height * 0.5
+
+
+func _sincronizar_area_cuerpo() -> void:
+	if not is_node_ready():
+		return
+	for par in [
+		[get_node_or_null("CollisionShape3D") as CollisionShape3D, radio_cuerpo],
+		[get_node_or_null("EncounterArea/CollisionShape3D") as CollisionShape3D, radio_cuerpo + MARGEN_CONTACTO],
+	]:
+		var col := par[0] as CollisionShape3D
+		if col == null:
+			continue
+		var forma := col.shape as CylinderShape3D
+		if forma != null and (not Engine.is_editor_hint() or forma.resource_local_to_scene):
+			forma.radius = maxf(float(par[1]), 0.05)
+			forma.height = maxf(altura_cuerpo, 0.05)
+			col.position.y = forma.height * 0.5
+
+
+func _actualizar_preview_editor() -> void:
+	if not Engine.is_editor_hint() or not is_inside_tree():
+		return
+	var cont := get_node_or_null("_EditorRangoDeteccion") as Node3D
+	if not mostrar_rango_editor:
+		if cont:
+			cont.hide()
+		return
+	if cont == null:
+		cont = _crear_preview_editor()
+	cont.show()
+	var disco := cont.get_node_or_null("DiscoDeteccion") as MeshInstance3D
+	if disco and disco.mesh is CylinderMesh:
+		var cyl := disco.mesh as CylinderMesh
+		cyl.top_radius = radio_deteccion
+		cyl.bottom_radius = radio_deteccion
+	var anillos := cont.get_node_or_null("Anillos") as MeshInstance3D
+	if anillos and anillos.mesh is ImmediateMesh:
+		_redibujar_anillos_editor(anillos.mesh as ImmediateMesh)
+
+
+func _crear_preview_editor() -> Node3D:
+	var cont := Node3D.new()
+	cont.name = "_EditorRangoDeteccion"
+
+	var disco := MeshInstance3D.new()
+	disco.name = "DiscoDeteccion"
+	disco.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	var cyl := CylinderMesh.new()
+	cyl.top_radius = radio_deteccion
+	cyl.bottom_radius = radio_deteccion
+	cyl.height = 0.02
+	cyl.radial_segments = 48
+	disco.mesh = cyl
+	var mat_disco := StandardMaterial3D.new()
+	mat_disco.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	mat_disco.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	mat_disco.albedo_color = Color(0.15, 0.85, 1.0, 0.12)
+	mat_disco.cull_mode = BaseMaterial3D.CULL_DISABLED
+	disco.material_override = mat_disco
+	disco.position.y = 0.04
+	cont.add_child(disco)
+
+	var anillos := MeshInstance3D.new()
+	anillos.name = "Anillos"
+	anillos.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	anillos.mesh = ImmediateMesh.new()
+	var mat_lin := StandardMaterial3D.new()
+	mat_lin.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	mat_lin.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	mat_lin.vertex_color_use_as_albedo = true
+	anillos.material_override = mat_lin
+	anillos.position.y = 0.06
+	cont.add_child(anillos)
+
+	add_child(cont)
+	return cont
+
+
+func _redibujar_anillos_editor(imm: ImmediateMesh) -> void:
+	imm.clear_surfaces()
+	imm.surface_begin(Mesh.PRIMITIVE_LINES)
+	var pasos := 64
+	var c_det := Color(0.2, 0.95, 1.0, 0.95)
+	for i in pasos:
+		var a0 := TAU * float(i) / float(pasos)
+		var a1 := TAU * float(i + 1) / float(pasos)
+		imm.surface_set_color(c_det)
+		imm.surface_add_vertex(Vector3(cos(a0) * radio_deteccion, 0.0, sin(a0) * radio_deteccion))
+		imm.surface_add_vertex(Vector3(cos(a1) * radio_deteccion, 0.0, sin(a1) * radio_deteccion))
+	var r_aba := maxf(distancia_perdida, radio_deteccion + 0.5)
+	var c_aba := Color(1.0, 0.65, 0.15, 0.55)
+	for i in range(0, pasos, 2):
+		var a0 := TAU * float(i) / float(pasos)
+		var a1 := TAU * float(i + 1) / float(pasos)
+		imm.surface_set_color(c_aba)
+		imm.surface_add_vertex(Vector3(cos(a0) * r_aba, 0.0, sin(a0) * r_aba))
+		imm.surface_add_vertex(Vector3(cos(a1) * r_aba, 0.0, sin(a1) * r_aba))
+	imm.surface_end()
 
 
 func _preparar_animaciones() -> bool:
@@ -145,6 +290,8 @@ func _copiar_pistas(fuente: Animation, solo_fuego: bool) -> Animation:
 
 
 func _physics_process(delta: float) -> void:
+	if Engine.is_editor_hint():
+		return
 	_recuperacion = maxf(0.0, _recuperacion - delta)
 	if not is_on_floor():
 		velocity.y -= _gravedad * delta
@@ -188,7 +335,8 @@ func _physics_process(delta: float) -> void:
 			else:
 				_mover_hacia(_posicion_inicial, delta, 0.7)
 	elif estado != Estado.ENCOUNTER:
-		if not _objetivo_valido() or _distancia_plana(_objetivo.global_position) > distancia_perdida:
+		var limite_perdida: float = maxf(distancia_perdida, radio_deteccion + 0.5)
+		if not _objetivo_valido() or _distancia_plana(_objetivo.global_position) > limite_perdida:
 			_objetivo = null
 			_cambiar_estado(Estado.RETURN)
 		elif estado == Estado.WALK:

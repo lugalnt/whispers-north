@@ -16,9 +16,13 @@ Se reutiliza `player_32.tscn` y su Input Map existente, incluido gamepad.
 
 ## Configuración e integración
 
-- `velocidad`, `aceleracion`, `velocidad_giro`: persecución directa con `move_and_slide`; incluye línea de vista configurable (`requiere_linea_de_vista`), pero no navegación alrededor de obstáculos.
-- `radio_cuerpo`, `altura_cuerpo`, `radio_deteccion`, `altura_areas`: dimensiones iniciales aplicadas en `_ready`. Las formas de la escena muestran los valores predeterminados; los ajustes exportados se reflejan al ejecutar. Cada instancia recibe formas independientes.
-- `distancia_perdida`: distancia plana desde Jarrito al protagonista para abandonar Alert/Walk. Mantenerla mayor que el radio de detección para evitar alternancias en el borde.
+- `Detección y Persecución` (arriba del Inspector, con `@tool`):
+  - `radio_deteccion`: slider de `0.5 m` a `20.0 m` (paso `0.25 m`, admite valores mayores) que actualiza **en tiempo real** el `DetectionArea` y dibuja en el visor 3D del editor un anillo **cian** de detección. Predeterminado: `4.5 m`.
+  - `distancia_perdida`: slider de `1.0 m` a `35.0 m` (paso `0.5 m`) para abandonar Alert/Walk y volver al origen; dibuja en el editor el anillo exterior **naranja**. Predeterminado: `10.0 m` (siempre mantiene margen mínimo sobre `radio_deteccion`).
+  - `mostrar_rango_editor`: activa/oculta los anillos guía 3D en el editor.
+  - `velocidad`, `aceleracion`, `velocidad_giro`: persecución directa con `move_and_slide`; incluye línea de vista configurable (`requiere_linea_de_vista`), pero no navegación alrededor de obstáculos.
+- `radio_cuerpo`, `altura_cuerpo`, `altura_areas`: dimensiones con actualización inmediata en editor (`resource_local_to_scene`) y formas únicas por instancia al ejecutar.
+- Además, `JarritoTest.tscn` (F6) incluye un slider visual en pantalla para probar distintos radios de detección mientras juegas.
 - Los candidatos deben pertenecer a `player`, estar visibles y procesando física. Si el mundo proporciona `get_active_player()`, se respeta su selección.
 - La raíz usa capa física 3 (`collision_layer = 4`) y máscara 1; las áreas observan capa 1, donde está el jugador actual. Esto evita que los interactuables con máscara 1 detecten a Jarrito como jugador. Revisa las máscaras al integrarlo en otros mapas; no se modifica el Input Map ni la configuración global.
 - Ajusta escala/orientación en `Visual/Modelo`, sin editar la jerarquía interna del GLB. La orientación de persecución usa `Visual` y asume frente -Z; un ajuste artístico puede hacerse en `Modelo`.
@@ -27,7 +31,7 @@ Se reutiliza `player_32.tscn` y su Input Map existente, incluido gamepad.
 
 ## Configuración de los mapas
 
-World contiene un Jarrito y World_Town tres con `grupo_encuentro = trio_jarritos_pueblo`. Detección 9 m, abandono 18 m y velocidad 3.4. Sensor de encuentro: radio corporal 0.65 + tolerancia 0.02; altura 1.0. Alerta con `snd_mysterygo.wav` a -6 dB. Una única sesión agrupa el trío; huida/cancelación restaura sus miembros y victoria los desactiva en esa instancia de mapa. No se afirma persistencia de derrota tras recargar el mapa.
+World contiene un Jarrito (`4.5 m` detección / `10.0 m` abandono), World_Town tres con `grupo_encuentro = trio_jarritos_pueblo` (`4.5 m` / `10.0 m`) y World_ForestRuins seis (`4.0 - 4.5 m` / `9.0 - 10.0 m`), todos a velocidad `3.4`. Sensor de encuentro: radio corporal 0.65 + tolerancia 0.02; altura 1.0. Alerta con `snd_mysterygo.wav` a -6 dB. Una única sesión agrupa el trío; huida/cancelación restaura sus miembros y victoria los desactiva en esa instancia de mapa. No se afirma persistencia de derrota tras recargar el mapa.
 
 ## Animación independiente del fuego
 

@@ -2,6 +2,15 @@
 
 Estado general por fases: [AVANCE_DEMO.md](AVANCE_DEMO.md). La integración de casas y caminos incluye revisión visual y nueva ejecución de recorrido_fase1_test.gd sin fallos.
 
+## Arquitectura de ruinas, arma importante y jefe — 16 de noviembre de 2026
+
+- Paquete 3D modular `assets/models/nordic_ruins/` generado con `tools/build_nordic_ruins.py`: cinco variantes de columnas acanaladas rotas (`PilarRoto_Bajo`, `PilarRoto_PuntaBaja`, `PilarRoto_Medio`, `PilarRoto_PuntaAlta`, `PilarRoto_Alto`), portal roto de doble pilar (`ArcoRuina_Doble`), muro bajo de sillería (`MuroRuina_Tramo`), altar del arma (`Pedestal_Reliquia`) y monolito carmesí (`Monolito_Jefe`).
+- Tres sprites RGBA generados e integrados en `World_ForestRuins.tscn`:
+  - `assets/sprites/enemies/guardian_ruinas_boss.png` (`BossRuinasBattler.tscn` y `Guardian_Jefe` en `Zona_Jefe`).
+  - `assets/sprites/items/nordic_v1/great_ruin_greatsword.png` (`data/items/mandoble_ruinas.tres` y `Pedestal_ArmaGrande`).
+  - `assets/sprites/environment/nordic_decor_v1/ruin_runestone_stele.tscn` (`ruin_runestone_stele.png`, 6 estelas leíbles + sello oriental).
+- Validación: `tests/forest_ruins_fase5_test.gd`, `recorrido_fase1_test.gd`, `camera_route_test.gd` y `sector_cameras_test.gd` con 0 fallos y revisión de capturas en `GL Compatibility`.
+
 ## Modelos originales de casas — 16 de noviembre de 2026
 
 - Paquete `assets/models/nordic_houses/`: CasaRoja, CasaEntramado y CasaPorche, cada una en `.tscn` editable y `.glb` exportado. Geometría original con texturas ya existentes; no añade nuevas texturas PNG al catálogo. `preview.png` es una captura de revisión, no un asset de superficie.

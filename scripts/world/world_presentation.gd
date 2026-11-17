@@ -10,6 +10,8 @@ var _pos_ancla_cam: Vector3 = Vector3.ZERO
 func _ready() -> void:
 	zona = get_parent()
 	process_priority = 90
+	if DisplayServer.get_name() == "headless":
+		get_viewport().size = Vector2i(1140, 650)
 	if zona.scene_file_path.get_file() in ["World.tscn", "World_Town.tscn"]:
 		var limites_mundo := preload("res://scripts/world/world_boundary.gd").new()
 		limites_mundo.name = "LimitesMundo"
@@ -21,6 +23,9 @@ func _ready() -> void:
 		excluidos.append(body.get_rid())
 	var limites: Dictionary = {}
 	for sprite in zona.find_children("*", "Sprite3D", true, false):
+		if sprite.get_parent() and sprite.get_parent().name == "BosqueGenerado":
+			vegetacion.append(sprite)
+			continue
 		var fuente: Node = sprite
 		while fuente != zona and fuente.scene_file_path.is_empty(): fuente = fuente.get_parent()
 		if not (fuente.scene_file_path.get_file() in ["Tree.tscn", "Tree_Pine.tscn", "Bush.tscn"] or "/NordicProps/" in fuente.scene_file_path or "/NordicDecor/" in fuente.scene_file_path): continue
@@ -36,8 +41,10 @@ func _ready() -> void:
 		var hit := zona.get_world_3d().direct_space_state.intersect_ray(query)
 		if hit.is_empty(): continue
 		sprite.billboard = BaseMaterial3D.BILLBOARD_FIXED_Y
-		var fondo: float = (float(tex.get_height()) * 0.5 - float(rect.end.y) + sprite.offset.y) * sprite.pixel_size * sprite.global_basis.get_scale().y
-		sprite.global_position.y = hit.position.y - fondo - 0.06
+		var escala_y_spr: float = sprite.global_basis.y.length()
+		var fondo: float = (float(tex.get_height()) * 0.5 - float(rect.end.y) + sprite.offset.y) * sprite.pixel_size * escala_y_spr
+		var hundimiento_manual: float = minf(0.0, fuente.position.y) * escala_y_spr
+		sprite.global_position.y = hit.position.y - fondo - 0.06 + hundimiento_manual
 		# Proyectar la silueta recortada por alfa sobre el suelo.
 		sprite.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_DOUBLE_SIDED
 		sprite.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
@@ -53,50 +60,86 @@ func _process(_delta: float) -> void:
 	if cam != _cam_previa:
 		_cam_previa = cam
 		_pos_ancla_cam = jugador.global_position
-		if not cam.has_meta("sector_centro"):
+		if not cam.has_meta("sector_centro") and _encuadra(cam, jugador, 0.05):
 			_espera_cambio = maxf(_espera_cambio, 0.45)
-	elif jugador.global_position.distance_to(_pos_ancla_cam) > 1.5 and not _encuadra(cam, jugador, 0.04):
+	elif jugador.global_position.distance_to(_pos_ancla_cam) > 1.5 and not _encuadra(cam, jugador, 0.05):
 		_espera_cambio = 0.0
-	# Encuadres inmutables: mantener la cámara actual mientras encuadre bien al jugador,
-	# evitando saltos rápidos por cámaras intermedias en caminos rectos.
-	if not ("is_interacting" in jugador and jugador.is_interacting):
-		_espera_cambio = maxf(0.0, _espera_cambio - _delta)
+	# En World.tscn durante gameplay normal el cambio lo gobiernan SwitchC_1_2..SwitchC_5_6 y Bush.
+	var es_world: bool = zona.scene_file_path.get_file() == "World.tscn"
 	var centro := jugador.global_position + Vector3.UP * 0.45
-	if _espera_cambio <= 0.0 and not _encuadra(cam, jugador, 0.05):
-		var sector := _sector_preferido(jugador, cam)
-		if sector != null and sector != cam:
-			sector.make_current()
-			cam = sector
+	if es_world and not jugador.is_physics_processing():
+		var cam_zona := _camara_por_switches_world(jugador.global_position)
+		if cam_zona != null and cam_zona != cam:
+			cam_zona.make_current()
+			cam = cam_zona
 			_cam_previa = cam
-			_pos_ancla_cam = jugador.global_position
-			_espera_cambio = 0.45
-	if _espera_cambio <= 0.0 and not _encuadra(cam, jugador, 0.05):
-		var mejor: Camera3D = null
-		var puntuacion := INF
-		for candidata in zona.find_children("*", "Camera3D", true, false):
-			if candidata.get_parent() != zona and candidata.get_parent().name != "Cameras": continue
-			if candidata == cam or not _encuadra(candidata, jugador, 0.08): continue
-			var uv: Vector2 = candidata.unproject_position(centro) / get_viewport().get_visible_rect().size
-			var valor: float = uv.distance_squared_to(Vector2(0.5, 0.5)) + candidata.global_position.distance_to(centro) * 0.001
-			if valor < puntuacion:
-				puntuacion = valor
-				mejor = candidata
-		if mejor != null:
-			mejor.make_current()
-			cam = mejor
-			_cam_previa = cam
-			_pos_ancla_cam = jugador.global_position
-			_espera_cambio = 0.65
-	# Atenuar vegetación que tapa al personaje, manteniendo el resto del bosque.
-	var pantalla := cam.unproject_position(centro)
+	elif not es_world:
+		if not ("is_interacting" in jugador and jugador.is_interacting):
+			_espera_cambio = maxf(0.0, _espera_cambio - _delta)
+		if _espera_cambio <= 0.0 and not _encuadra(cam, jugador, 0.05):
+			var sector := _sector_preferido(jugador, cam)
+			if sector != null and sector != cam:
+				sector.make_current()
+				cam = sector
+				_cam_previa = cam
+				_pos_ancla_cam = jugador.global_position
+				_espera_cambio = 0.45
+		if _espera_cambio <= 0.0 and not _encuadra(cam, jugador, 0.05):
+			var mejor: Camera3D = null
+			var puntuacion := INF
+			for candidata in zona.find_children("*", "Camera3D", true, false):
+				if candidata.get_parent() != zona and candidata.get_parent().name != "Cameras": continue
+				if candidata == cam or not _encuadra(candidata, jugador, 0.08): continue
+				var uv: Vector2 = candidata.unproject_position(centro) / get_viewport().get_visible_rect().size
+				var valor: float = uv.distance_squared_to(Vector2(0.5, 0.5)) + candidata.global_position.distance_to(centro) * 0.001
+				if valor < puntuacion:
+					puntuacion = valor
+					mejor = candidata
+			if mejor != null:
+				mejor.make_current()
+				cam = mejor
+				_cam_previa = cam
+				_pos_ancla_cam = jugador.global_position
+				_espera_cambio = 0.65
+	# Atenuar vegetación que tapa al personaje o se interpone frente al lente de la cámara.
+	var p_jug := cam.to_local(centro)
+	var d_jug := -p_jug.z
 	for sprite in vegetacion:
 		if not is_instance_valid(sprite) or not sprite.is_visible_in_tree(): continue
-		var alto := sprite.texture.get_height() * sprite.pixel_size * sprite.global_basis.get_scale().y
-		var ancho := sprite.texture.get_width() * sprite.pixel_size * sprite.global_basis.get_scale().x
-		var a := cam.unproject_position(sprite.global_position + Vector3.UP * alto * 0.5 - cam.global_basis.x * ancho * 0.5)
-		var b := cam.unproject_position(sprite.global_position - Vector3.UP * alto * 0.5 + cam.global_basis.x * ancho * 0.5)
-		var tapa := Rect2(a, b - a).abs().grow(10).has_point(pantalla) and cam.global_position.distance_squared_to(sprite.global_position) < cam.global_position.distance_squared_to(centro)
-		sprite.transparency = move_toward(sprite.transparency, 0.35 if tapa else 0.0, _delta * 1.5)
+		var escala_y := sprite.global_basis.y.length()
+		var escala_x := maxf(sprite.global_basis.x.length(), escala_y * 0.85)
+		var alto := sprite.texture.get_height() * sprite.pixel_size * escala_y
+		var ancho := sprite.texture.get_width() * sprite.pixel_size * escala_x
+		var p_spr := cam.to_local(sprite.global_position)
+		var d_spr := -p_spr.z
+		var tapa := false
+		if d_spr > 0.15 and d_spr < d_jug - 0.15 and d_jug > 0.5:
+			var t_ray := d_spr / d_jug
+			var x_ray := p_jug.x * t_ray
+			var y_ray := p_jug.y * t_ray
+			tapa = absf(x_ray - p_spr.x) <= (ancho * 0.42 + 0.25) and absf(y_ray - p_spr.y) <= (alto * 0.45 + 0.30)
+		if not tapa and es_world and cam.name in ["Camera4", "Camera5"] and d_spr > 0.05 and d_spr < 4.5:
+			# En Camera4/Camera5 atenuar solo árboles pegados al lente que taparían el sendero.
+			if absf(p_spr.x) <= d_spr * 0.55 + 0.45:
+				tapa = true
+		sprite.transparency = move_toward(sprite.transparency, (0.78 if es_world else 0.68) if tapa else 0.0, _delta * 3.2)
+		sprite.modulate.a = 1.0 - sprite.transparency
+		sprite.alpha_cut = SpriteBase3D.ALPHA_CUT_DISABLED if sprite.transparency > 0.02 else SpriteBase3D.ALPHA_CUT_DISCARD
+
+
+func _camara_por_switches_world(pos: Vector3) -> Camera3D:
+	var nombre := "Camera2"
+	if pos.z < 4.98 and pos.x > -10.0:
+		nombre = "Camera1"
+	elif pos.x < -15.48:
+		nombre = "Camera6"
+	elif pos.x < -7.98:
+		nombre = "Camera5"
+	elif pos.x > 24.86:
+		nombre = "Camera4"
+	elif pos.x > 5.14:
+		nombre = "Camera3"
+	return zona.get_node_or_null(nombre) as Camera3D
 
 
 

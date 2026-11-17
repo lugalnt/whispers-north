@@ -1,0 +1,176 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_surfaces_v2/ruin_masonry.png" id="tex_masonry"]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_surfaces_v2/fractured_rock.png" id="tex_fractured"]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_v1/village_stone.png" id="tex_village"]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_surfaces_v2/packed_snow.png" id="tex_snow"]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_wood_v1/mossy_old_timber.png" id="tex_timber"]
+
+[sub_resource type="StandardMaterial3D" id="mat_stone_light"]
+albedo_color = Color(0.86, 0.83, 0.75, 1)
+albedo_texture = ExtResource("tex_masonry")
+roughness = 0.95
+uv1_triplanar = true
+uv1_scale = Vector3(0.5500, 0.5500, 0.5500)
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="mat_stone_mid"]
+albedo_color = Color(0.76, 0.73, 0.65, 1)
+albedo_texture = ExtResource("tex_masonry")
+roughness = 0.95
+uv1_triplanar = true
+uv1_scale = Vector3(0.6000, 0.6000, 0.6000)
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="mat_stone_dark"]
+albedo_color = Color(0.52, 0.5, 0.45, 1)
+albedo_texture = ExtResource("tex_fractured")
+roughness = 0.95
+uv1_triplanar = true
+uv1_scale = Vector3(0.5000, 0.5000, 0.5000)
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="mat_stone_moss"]
+albedo_color = Color(0.56, 0.66, 0.52, 1)
+albedo_texture = ExtResource("tex_masonry")
+roughness = 0.95
+uv1_triplanar = true
+uv1_scale = Vector3(0.6000, 0.6000, 0.6000)
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="mat_stone_cap"]
+albedo_color = Color(0.82, 0.78, 0.68, 1)
+albedo_texture = ExtResource("tex_village")
+roughness = 0.95
+uv1_triplanar = true
+uv1_scale = Vector3(0.5000, 0.5000, 0.5000)
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="mat_snow_cap"]
+albedo_color = Color(0.92, 0.95, 0.98, 1)
+albedo_texture = ExtResource("tex_snow")
+roughness = 0.95
+uv1_triplanar = true
+uv1_scale = Vector3(0.6000, 0.6000, 0.6000)
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="mat_crimson_rock"]
+albedo_color = Color(0.46, 0.14, 0.16, 1)
+albedo_texture = ExtResource("tex_fractured")
+roughness = 0.95
+uv1_triplanar = true
+uv1_scale = Vector3(0.4500, 0.4500, 0.4500)
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="mat_crimson_dark"]
+albedo_color = Color(0.3, 0.09, 0.11, 1)
+albedo_texture = ExtResource("tex_masonry")
+roughness = 0.95
+uv1_triplanar = true
+uv1_scale = Vector3(0.5000, 0.5000, 0.5000)
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="mat_rune_cyan"]
+albedo_color = Color(0.45, 0.88, 0.98, 1)
+emission_enabled = true
+emission = Color(0.35, 0.78, 0.95, 1)
+emission_energy_multiplier = 1.8
+roughness = 0.4
+
+[sub_resource type="StandardMaterial3D" id="mat_rune_crimson"]
+albedo_color = Color(0.95, 0.25, 0.22, 1)
+emission_enabled = true
+emission = Color(0.88, 0.18, 0.15, 1)
+emission_energy_multiplier = 2.0
+roughness = 0.4
+
+[sub_resource type="BoxMesh" id="box_1_BasePlinth"]
+size = Vector3(4.1000, 0.2600, 0.8200)
+
+[sub_resource type="BoxMesh" id="box_2_LowerCourse"]
+size = Vector3(3.9500, 0.5500, 0.6800)
+
+[sub_resource type="BoxMesh" id="box_3_TopBlock_0"]
+size = Vector3(1.1500, 0.4800, 0.6400)
+
+[sub_resource type="BoxMesh" id="box_4_TopBlock_1"]
+size = Vector3(0.9500, 0.3000, 0.6400)
+
+[sub_resource type="BoxMesh" id="box_5_TopBlock_2"]
+size = Vector3(1.2500, 0.5200, 0.6400)
+
+[sub_resource type="BoxMesh" id="box_6_MossPatch"]
+size = Vector3(0.8500, 0.1000, 0.7000)
+
+[sub_resource type="PrismMesh" id="prism_7_BrokenEndL"]
+left_to_right = 0.25
+size = Vector3(0.5500, 0.3800, 0.6200)
+
+[sub_resource type="PrismMesh" id="prism_8_BrokenEndR"]
+left_to_right = 0.75
+size = Vector3(0.6000, 0.4200, 0.6200)
+
+[sub_resource type="BoxShape3D" id="col_box_1"]
+size = Vector3(4.0000, 1.6000, 0.7800)
+
+[node name="MuroRuina_Tramo" type="Node3D"]
+
+[node name="BasePlinth" type="MeshInstance3D" parent="."]
+position = Vector3(0.0000, 0.1300, 0.0000)
+rotation = Vector3(0.0000, 0.0000, 0.0000)
+mesh = SubResource("box_1_BasePlinth")
+material_override = SubResource("mat_stone_dark")
+
+[node name="LowerCourse" type="MeshInstance3D" parent="."]
+position = Vector3(0.0000, 0.5300, 0.0000)
+rotation = Vector3(0.0000, 0.0000, 0.0000)
+mesh = SubResource("box_2_LowerCourse")
+material_override = SubResource("mat_stone_mid")
+
+[node name="TopBlock_0" type="MeshInstance3D" parent="."]
+position = Vector3(-1.3200, 1.0400, 0.0000)
+rotation = Vector3(0.0000, 0.0000, 0.0000)
+mesh = SubResource("box_3_TopBlock_0")
+material_override = SubResource("mat_stone_light")
+
+[node name="TopBlock_1" type="MeshInstance3D" parent="."]
+position = Vector3(-0.2000, 0.9500, 0.0000)
+rotation = Vector3(0.0000, 0.0000, 0.0000)
+mesh = SubResource("box_4_TopBlock_1")
+material_override = SubResource("mat_stone_cap")
+
+[node name="TopBlock_2" type="MeshInstance3D" parent="."]
+position = Vector3(1.0200, 1.0600, 0.0000)
+rotation = Vector3(0.0000, 0.0000, 0.0000)
+mesh = SubResource("box_5_TopBlock_2")
+material_override = SubResource("mat_stone_light")
+
+[node name="MossPatch" type="MeshInstance3D" parent="."]
+position = Vector3(-0.2000, 1.1200, 0.0000)
+rotation = Vector3(0.0000, 0.0000, 0.0000)
+mesh = SubResource("box_6_MossPatch")
+material_override = SubResource("mat_stone_moss")
+
+[node name="BrokenEndL" type="MeshInstance3D" parent="."]
+position = Vector3(-1.6500, 1.4500, 0.0000)
+rotation = Vector3(0.0000, 0.0000, 0.0000)
+mesh = SubResource("prism_7_BrokenEndL")
+material_override = SubResource("mat_stone_mid")
+
+[node name="BrokenEndR" type="MeshInstance3D" parent="."]
+position = Vector3(1.2800, 1.5000, 0.0000)
+rotation = Vector3(0.0000, 0.0000, 0.0000)
+mesh = SubResource("prism_8_BrokenEndR")
+material_override = SubResource("mat_stone_mid")
+
+[node name="Body" type="StaticBody3D" parent="."]
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape3D_0" type="CollisionShape3D" parent="Body"]
+position = Vector3(0.0000, 0.8000, 0.0000)
+shape = SubResource("col_box_1")

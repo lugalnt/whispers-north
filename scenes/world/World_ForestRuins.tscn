@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://scripts/world/zona_mundo.gd" id="1_6p8ob"]
+[ext_resource type="Script" path="res://scripts/world/world_forest_ruins.gd" id="1_6p8ob"]
 [ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_v1/cold_grass.png" id="2_n74xt"]
 [ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_v1/dirt_path.png" id="3_e6bgt"]
 [ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_surfaces_v2/fractured_rock.png" id="4_hvw5r"]
@@ -17,9 +17,41 @@
 [ext_resource type="PackedScene" path="res://scenes/world/Entities/NordicProps/wildflowers.tscn" id="nordic_wildflowers"]
 [ext_resource type="PackedScene" path="res://scenes/world/Entities/NordicProps/mossy_rock.tscn" id="nordic_mossy_rock"]
 [ext_resource type="PackedScene" path="res://scenes/world/Entities/NordicProps/snow_bank.tscn" id="nordic_snow_bank"]
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/NordicProps/dense_bush.tscn" id="nordic_dense_bush"]
 
 [ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_surfaces_v2/ruin_masonry.png" id="tex_ruin_masonry"]
 [ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_wood_v1/mossy_old_timber.png" id="tex_mossy_old_timber"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/backgrounds/nordic_v1/snowy_mountain_panorama.png" id="tex_panorama"]
+
+[ext_resource type="PackedScene" path="res://assets/models/nordic_ruins/PilarRoto_Bajo.tscn" id="ruin_pilar_bajo"]
+[ext_resource type="PackedScene" path="res://assets/models/nordic_ruins/PilarRoto_PuntaBaja.tscn" id="ruin_pilar_puntabaja"]
+[ext_resource type="PackedScene" path="res://assets/models/nordic_ruins/PilarRoto_Medio.tscn" id="ruin_pilar_medio"]
+[ext_resource type="PackedScene" path="res://assets/models/nordic_ruins/PilarRoto_PuntaAlta.tscn" id="ruin_pilar_puntaalta"]
+[ext_resource type="PackedScene" path="res://assets/models/nordic_ruins/PilarRoto_Alto.tscn" id="ruin_pilar_alto"]
+[ext_resource type="PackedScene" path="res://assets/models/nordic_ruins/ArcoRuina_Doble.tscn" id="ruin_arco_doble"]
+[ext_resource type="PackedScene" path="res://assets/models/nordic_ruins/MuroRuina_Tramo.tscn" id="ruin_muro_tramo"]
+[ext_resource type="PackedScene" path="res://assets/models/nordic_ruins/Pedestal_Reliquia.tscn" id="ruin_pedestal"]
+[ext_resource type="PackedScene" path="res://assets/models/nordic_ruins/Monolito_Jefe.tscn" id="ruin_monolito_jefe"]
+
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/NordicDecor/ruin_runestone_stele.tscn" id="decor_runestone"]
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/NordicDecor/combat_brazier.tscn" id="decor_brazier"]
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/NordicDecor/combat_broken_pillar.tscn" id="decor_broken_pillar"]
+
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/Chest.tscn" id="scene_chest"]
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/ItemPickup.tscn" id="scene_item_pickup"]
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/Jarrito.tscn" id="scene_jarrito"]
+[ext_resource type="Script" path="res://scripts/dialogue/interaccion_dialogo.gd" id="script_dialogo"]
+[ext_resource type="Script" path="res://scripts/combat/encuentro_combate.gd" id="script_encuentro"]
+[ext_resource type="PackedScene" path="res://scenes/combat/battlers/BossRuinasBattler.tscn" id="scene_boss_battler"]
+
+[ext_resource type="Resource" path="res://data/items/cristal_bosque.tres" id="item_cristal"]
+[ext_resource type="Resource" path="res://data/items/hacha_lenador.tres" id="item_hacha"]
+[ext_resource type="Resource" path="res://data/items/espada_corta.tres" id="item_espada"]
+[ext_resource type="Resource" path="res://data/items/bayas_bosque.tres" id="item_bayas"]
+[ext_resource type="Resource" path="res://data/items/pan_centeno.tres" id="item_pan"]
+[ext_resource type="Resource" path="res://data/item_pools/pool_mundo_general.tres" id="pool_general"]
+[ext_resource type="Texture2D" path="res://assets/sprites/items/nordic_v1/great_ruin_greatsword.png" id="tex_greatsword"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/guardian_ruinas_boss.png" id="tex_boss_guardian"]
 
 [sub_resource type="Environment" id="Environment_vjvlu"]
 background_mode = 1
@@ -69,10 +101,31 @@ roughness = 1.0
 uv1_triplanar = true
 uv1_scale = Vector3(0.5, 0.5, 0.5)
 
+[sub_resource type="AtlasTexture" id="Atlas_greatsword"]
+atlas = ExtResource("tex_greatsword")
+region = Rect2(51, 51, 922, 922)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_boss_world"]
+atlas = ExtResource("tex_boss_guardian")
+region = Rect2(92, 82, 840, 871)
+filter_clip = true
+
+[sub_resource type="BoxShape3D" id="Shape_trigger_jefe"]
+size = Vector3(3.2, 3.0, 9.0)
+
 [node name="WorldForestRuins" type="Node3D" unique_id=1464632974]
 script = ExtResource("1_6p8ob")
 marcador_inicial = "Llegada_DesdeCueva"
 camara_inicial = "Camera1"
+
+[node name="PanoramaFondo" type="Sprite3D" parent="."]
+position = Vector3(50, 14, -22)
+scale = Vector3(42, 22, 1)
+cast_shadow = 0
+texture_filter = 0
+texture = ExtResource("tex_panorama")
+pixel_size = 0.0028748591
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=506190570]
 environment = SubResource("Environment_vjvlu")
@@ -165,6 +218,11 @@ material = ExtResource("nordic_stone")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 89, 0.046, 16)
 size = Vector3(18, 0.04, 16)
 material = SubResource("StandardMaterial3D_sys0y")
+
+[node name="Plataforma_ColiseoSur" type="CSGBox3D" parent="Terreno/Caminos"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.4, 0.029, 51.4)
+size = Vector3(4.2, 0.04, 10.6)
+material = ExtResource("nordic_stone")
 
 [node name="Arboleda" type="Node3D" parent="." unique_id=482790527]
 
@@ -579,71 +637,425 @@ collision_mask = 0
 
 [node name="FragmentosRuina" type="Node3D" parent="."]
 
-[node name="PilarRoto0" type="CSGBox3D" parent="FragmentosRuina"]
-position = Vector3(65, 0.8, 57)
-size = Vector3(0.8, 1.6, 0.8)
-material = SubResource("mat_ruin_masonry")
+[node name="Ruinas" type="Node3D" parent="."]
 
-[node name="VigaCaida0" type="CSGBox3D" parent="FragmentosRuina"]
-position = Vector3(66.2, 0.15, 57)
-rotation = Vector3(0, 0.3, 0)
-size = Vector3(2.4, 0.3, 0.35)
-material = SubResource("mat_mossy_old_timber")
+[node name="SE_ArcoEntrada" parent="Ruinas" instance=ExtResource("ruin_arco_doble")]
+position = Vector3(62.8, 0.04, 61.0)
+rotation_degrees = Vector3(0, 90, 0)
 
-[node name="PilarRoto1" type="CSGBox3D" parent="FragmentosRuina"]
-position = Vector3(74, 0.8, 57)
-size = Vector3(0.8, 1.6, 0.8)
-material = SubResource("mat_ruin_masonry")
+[node name="SE_MuroNorte1" parent="Ruinas" instance=ExtResource("ruin_muro_tramo")]
+position = Vector3(67.2, 0.04, 54.6)
 
-[node name="VigaCaida1" type="CSGBox3D" parent="FragmentosRuina"]
-position = Vector3(75.2, 0.15, 57)
-rotation = Vector3(0, 0.3, 0)
-size = Vector3(2.4, 0.3, 0.35)
-material = SubResource("mat_mossy_old_timber")
+[node name="SE_MuroNorte2" parent="Ruinas" instance=ExtResource("ruin_muro_tramo")]
+position = Vector3(73.2, 0.04, 54.6)
 
-[node name="PilarRoto2" type="CSGBox3D" parent="FragmentosRuina"]
-position = Vector3(48, 0.8, 44)
-size = Vector3(0.8, 1.6, 0.8)
-material = SubResource("mat_ruin_masonry")
+[node name="SE_MuroSur1" parent="Ruinas" instance=ExtResource("ruin_muro_tramo")]
+position = Vector3(67.2, 0.04, 67.4)
 
-[node name="VigaCaida2" type="CSGBox3D" parent="FragmentosRuina"]
-position = Vector3(49.2, 0.15, 44)
-rotation = Vector3(0, 0.3, 0)
-size = Vector3(2.4, 0.3, 0.35)
-material = SubResource("mat_mossy_old_timber")
+[node name="SE_MuroSur2" parent="Ruinas" instance=ExtResource("ruin_muro_tramo")]
+position = Vector3(73.2, 0.04, 67.4)
 
-[node name="PilarRoto3" type="CSGBox3D" parent="FragmentosRuina"]
-position = Vector3(23, 0.8, 36)
-size = Vector3(0.8, 1.6, 0.8)
-material = SubResource("mat_ruin_masonry")
+[node name="SE_MuroEste" parent="Ruinas" instance=ExtResource("ruin_muro_tramo")]
+position = Vector3(77.4, 0.04, 61.0)
+rotation_degrees = Vector3(0, 90, 0)
 
-[node name="VigaCaida3" type="CSGBox3D" parent="FragmentosRuina"]
-position = Vector3(24.2, 0.15, 36)
-rotation = Vector3(0, 0.3, 0)
-size = Vector3(2.4, 0.3, 0.35)
-material = SubResource("mat_mossy_old_timber")
+[node name="SE_PilarNO" parent="Ruinas" instance=ExtResource("ruin_pilar_alto")]
+position = Vector3(64.2, 0.04, 55.6)
 
-[node name="PilarRoto4" type="CSGBox3D" parent="FragmentosRuina"]
-position = Vector3(15, 0.8, 9)
-size = Vector3(0.8, 1.6, 0.8)
-material = SubResource("mat_ruin_masonry")
+[node name="SE_PilarSO" parent="Ruinas" instance=ExtResource("ruin_pilar_puntabaja")]
+position = Vector3(64.2, 0.04, 66.2)
 
-[node name="VigaCaida4" type="CSGBox3D" parent="FragmentosRuina"]
-position = Vector3(16.2, 0.15, 9)
-rotation = Vector3(0, 0.3, 0)
-size = Vector3(2.4, 0.3, 0.35)
-material = SubResource("mat_mossy_old_timber")
+[node name="SE_PilarNE" parent="Ruinas" instance=ExtResource("ruin_pilar_medio")]
+position = Vector3(76.0, 0.04, 55.8)
 
-[node name="PilarRoto5" type="CSGBox3D" parent="FragmentosRuina"]
-position = Vector3(63, 0.8, 13)
-size = Vector3(0.8, 1.6, 0.8)
-material = SubResource("mat_ruin_masonry")
+[node name="SE_PilarSE" parent="Ruinas" instance=ExtResource("ruin_pilar_bajo")]
+position = Vector3(76.0, 0.04, 66.2)
 
-[node name="VigaCaida5" type="CSGBox3D" parent="FragmentosRuina"]
-position = Vector3(64.2, 0.15, 13)
-rotation = Vector3(0, 0.3, 0)
-size = Vector3(2.4, 0.3, 0.35)
-material = SubResource("mat_mossy_old_timber")
+[node name="ColiseoSur_Muro1" parent="Ruinas" instance=ExtResource("ruin_muro_tramo")]
+position = Vector3(32.9, 0.04, 49.0)
+rotation_degrees = Vector3(0, 90, 0)
+
+[node name="ColiseoSur_Muro2" parent="Ruinas" instance=ExtResource("ruin_muro_tramo")]
+position = Vector3(32.9, 0.04, 53.8)
+rotation_degrees = Vector3(0, 90, 0)
+
+[node name="ColiseoSur_Pilar1" parent="Ruinas" instance=ExtResource("ruin_pilar_bajo")]
+position = Vector3(35.1, 0.04, 55.4)
+
+[node name="ColiseoSur_Pilar2" parent="Ruinas" instance=ExtResource("ruin_pilar_puntabaja")]
+position = Vector3(35.1, 0.04, 53.0)
+
+[node name="ColiseoSur_Pilar3" parent="Ruinas" instance=ExtResource("ruin_pilar_medio")]
+position = Vector3(35.1, 0.04, 49.6)
+
+[node name="ColiseoSur_Pilar4" parent="Ruinas" instance=ExtResource("ruin_pilar_puntaalta")]
+position = Vector3(35.1, 0.04, 47.2)
+
+[node name="Este_MuroNorte" parent="Ruinas" instance=ExtResource("ruin_muro_tramo")]
+position = Vector3(50.2, 0.04, 42.6)
+
+[node name="Este_MuroSur" parent="Ruinas" instance=ExtResource("ruin_muro_tramo")]
+position = Vector3(50.2, 0.04, 51.4)
+
+[node name="Este_MuroFondo" parent="Ruinas" instance=ExtResource("ruin_muro_tramo")]
+position = Vector3(53.5, 0.04, 47.0)
+rotation_degrees = Vector3(0, 90, 0)
+
+[node name="Este_PilarNorte" parent="Ruinas" instance=ExtResource("ruin_pilar_puntaalta")]
+position = Vector3(47.2, 0.04, 43.4)
+
+[node name="Este_PilarSur" parent="Ruinas" instance=ExtResource("ruin_pilar_bajo")]
+position = Vector3(47.2, 0.04, 50.6)
+
+[node name="Oeste_ArcoEntrada" parent="Ruinas" instance=ExtResource("ruin_arco_doble")]
+position = Vector3(29.6, 0.04, 40.0)
+rotation_degrees = Vector3(0, 90, 0)
+
+[node name="Oeste_MuroNorte" parent="Ruinas" instance=ExtResource("ruin_muro_tramo")]
+position = Vector3(25.8, 0.04, 34.6)
+
+[node name="Oeste_MuroSur" parent="Ruinas" instance=ExtResource("ruin_muro_tramo")]
+position = Vector3(25.8, 0.04, 45.4)
+
+[node name="Oeste_MuroFondo" parent="Ruinas" instance=ExtResource("ruin_muro_tramo")]
+position = Vector3(22.4, 0.04, 40.0)
+rotation_degrees = Vector3(0, 90, 0)
+
+[node name="Oeste_PilarNO" parent="Ruinas" instance=ExtResource("ruin_pilar_alto")]
+position = Vector3(23.5, 0.04, 35.8)
+
+[node name="Oeste_PilarSO" parent="Ruinas" instance=ExtResource("ruin_pilar_medio")]
+position = Vector3(23.5, 0.04, 44.2)
+
+[node name="Oeste_PilarNE" parent="Ruinas" instance=ExtResource("ruin_pilar_puntabaja")]
+position = Vector3(28.2, 0.04, 35.8)
+
+[node name="NO_ArcoEntrada" parent="Ruinas" instance=ExtResource("ruin_arco_doble")]
+position = Vector3(23.5, 0.04, 13.0)
+rotation_degrees = Vector3(0, 90, 0)
+
+[node name="NO_MuroNorte1" parent="Ruinas" instance=ExtResource("ruin_muro_tramo")]
+position = Vector3(16.2, 0.04, 6.8)
+
+[node name="NO_MuroNorte2" parent="Ruinas" instance=ExtResource("ruin_muro_tramo")]
+position = Vector3(21.4, 0.04, 6.8)
+
+[node name="NO_MuroOeste1" parent="Ruinas" instance=ExtResource("ruin_muro_tramo")]
+position = Vector3(7.2, 0.04, 11.2)
+rotation_degrees = Vector3(0, 90, 0)
+
+[node name="NO_MuroOeste2" parent="Ruinas" instance=ExtResource("ruin_muro_tramo")]
+position = Vector3(7.2, 0.04, 16.4)
+rotation_degrees = Vector3(0, 90, 0)
+
+[node name="NO_MuroSurEste" parent="Ruinas" instance=ExtResource("ruin_muro_tramo")]
+position = Vector3(19.8, 0.04, 18.8)
+
+[node name="NO_Pilar1" parent="Ruinas" instance=ExtResource("ruin_pilar_alto")]
+position = Vector3(13.8, 0.04, 7.4)
+
+[node name="NO_Pilar2" parent="Ruinas" instance=ExtResource("ruin_pilar_puntaalta")]
+position = Vector3(24.2, 0.04, 7.4)
+
+[node name="NO_Pilar3" parent="Ruinas" instance=ExtResource("ruin_pilar_medio")]
+position = Vector3(9.2, 0.04, 9.2)
+
+[node name="NO_Pilar4" parent="Ruinas" instance=ExtResource("ruin_pilar_bajo")]
+position = Vector3(9.2, 0.04, 18.2)
+
+[node name="NO_Pilar5" parent="Ruinas" instance=ExtResource("ruin_pilar_puntabaja")]
+position = Vector3(16.8, 0.04, 18.0)
+
+[node name="Grande_ArcoOeste" parent="Ruinas" instance=ExtResource("ruin_arco_doble")]
+position = Vector3(57.0, 0.04, 23.0)
+rotation_degrees = Vector3(0, 90, 0)
+
+[node name="Grande_ArcoEste" parent="Ruinas" instance=ExtResource("ruin_arco_doble")]
+position = Vector3(79.5, 0.04, 16.0)
+rotation_degrees = Vector3(0, 90, 0)
+
+[node name="Grande_MuroNorte1" parent="Ruinas" instance=ExtResource("ruin_muro_tramo")]
+position = Vector3(63.2, 0.04, 10.4)
+
+[node name="Grande_MuroNorte2" parent="Ruinas" instance=ExtResource("ruin_muro_tramo")]
+position = Vector3(69.0, 0.04, 10.4)
+
+[node name="Grande_MuroNorte3" parent="Ruinas" instance=ExtResource("ruin_muro_tramo")]
+position = Vector3(74.8, 0.04, 10.4)
+
+[node name="Grande_MuroSur1" parent="Ruinas" instance=ExtResource("ruin_muro_tramo")]
+position = Vector3(64.0, 0.04, 25.4)
+
+[node name="Grande_MuroSur2" parent="Ruinas" instance=ExtResource("ruin_muro_tramo")]
+position = Vector3(73.2, 0.04, 25.4)
+
+[node name="Grande_Columna1" parent="Ruinas" instance=ExtResource("ruin_pilar_bajo")]
+position = Vector3(59.8, 0.04, 11.8)
+
+[node name="Grande_Columna2" parent="Ruinas" instance=ExtResource("ruin_pilar_puntabaja")]
+position = Vector3(63.2, 0.04, 11.8)
+
+[node name="Grande_Columna3" parent="Ruinas" instance=ExtResource("ruin_pilar_puntaalta")]
+position = Vector3(66.0, 0.04, 11.8)
+
+[node name="Grande_Columna4" parent="Ruinas" instance=ExtResource("ruin_pilar_alto")]
+position = Vector3(72.0, 0.04, 11.8)
+
+[node name="Grande_Columna5" parent="Ruinas" instance=ExtResource("ruin_pilar_medio")]
+position = Vector3(75.2, 0.04, 11.8)
+
+[node name="Grande_ColumnaSurOeste" parent="Ruinas" instance=ExtResource("ruin_pilar_alto")]
+position = Vector3(60.5, 0.04, 24.4)
+
+[node name="Grande_ColumnaSurEste" parent="Ruinas" instance=ExtResource("ruin_pilar_puntaalta")]
+position = Vector3(76.8, 0.04, 24.4)
+
+[node name="Brasero_Santuario1" parent="Ruinas" instance=ExtResource("decor_brazier")]
+position = Vector3(66.4, 0.04, 13.0)
+
+[node name="Brasero_Santuario2" parent="Ruinas" instance=ExtResource("decor_brazier")]
+position = Vector3(71.6, 0.04, 13.0)
+
+[node name="Pedestal_ArmaGrande" parent="Ruinas" instance=ExtResource("ruin_pedestal")]
+position = Vector3(69.0, 0.04, 12.6)
+
+[node name="EspadaVisual" type="Sprite3D" parent="Ruinas/Pedestal_ArmaGrande"]
+position = Vector3(0, 2.22, 0)
+pixel_size = 0.0022
+billboard = 2
+texture_filter = 0
+alpha_cut = 1
+texture = SubResource("Atlas_greatsword")
+
+[node name="LuzPedestal" type="OmniLight3D" parent="Ruinas/Pedestal_ArmaGrande"]
+position = Vector3(0, 2.1, 0.4)
+light_color = Color(0.45, 0.9, 1.0, 1)
+light_energy = 1.65
+omni_range = 6.5
+
+[node name="InteraccionDialogo" type="Area3D" parent="Ruinas/Pedestal_ArmaGrande"]
+script = ExtResource("script_dialogo")
+nombre_hablante = "Altar del Gran Santuario"
+lineas_rapidas = Array[String](["Sobre el altar del Gran Santuario reposa el [Mandoble de las Ruinas], grabado con runas boreales.", "Al empuñarlo, una corriente cálida recorre tus brazos. ¡Obtuviste el Mandoble de las Ruinas (+4 ATQ y Salud restaurada)!"])
+texto_indicador = "[E] Empuñar Mandoble"
+offset_indicador = Vector3(0, 2.8, 0)
+radio_interaccion = 2.6
+
+[node name="InscripcionesRuinas" type="Node3D" parent="."]
+
+[node name="Estela_RuinaSE" parent="InscripcionesRuinas" instance=ExtResource("decor_runestone")]
+position = Vector3(68.2, 0.04, 56.2)
+
+[node name="InteraccionDialogo" type="Area3D" parent="InscripcionesRuinas/Estela_RuinaSE"]
+script = ExtResource("script_dialogo")
+nombre_hablante = "Estela del Claro Sur"
+lineas_rapidas = Array[String](["Las runas están cubiertas de escarcha, pero aún pueden leerse:", "«Quienes buscan el Gran Santuario del Este deben templar su espíritu entre las ruinas antiguas.»", "«Cada guardián caído despeja el camino hacia los tesoros olvidados del Norte.»"])
+texto_indicador = "[E] Leer inscripción"
+offset_indicador = Vector3(0, 2.1, 0)
+radio_interaccion = 2.3
+
+[node name="Estela_ColiseoSur" parent="InscripcionesRuinas" instance=ExtResource("decor_runestone")]
+position = Vector3(35.2, 0.04, 51.3)
+
+[node name="InteraccionDialogo" type="Area3D" parent="InscripcionesRuinas/Estela_ColiseoSur"]
+script = ExtResource("script_dialogo")
+nombre_hablante = "Columna Grabada"
+lineas_rapidas = Array[String](["Un relieve erosionado muestra un antiguo corredor de columnas acanaladas.", "«Al este descansan las ofrendas de los leñadores; al oeste, las ánforas centinelas aún vigilan.»"])
+texto_indicador = "[E] Leer inscripción"
+offset_indicador = Vector3(0, 2.1, 0)
+radio_interaccion = 2.3
+
+[node name="Estela_RuinaEste" parent="InscripcionesRuinas" instance=ExtResource("decor_runestone")]
+position = Vector3(51.8, 0.04, 44.2)
+
+[node name="InteraccionDialogo" type="Area3D" parent="InscripcionesRuinas/Estela_RuinaEste"]
+script = ExtResource("script_dialogo")
+nombre_hablante = "Altar del Claro Este"
+lineas_rapidas = Array[String](["«Ofrenda de los viajeros del bosque: que el pan y el hierro fortalezcan a quien desafíe la sombra.»"])
+texto_indicador = "[E] Leer inscripción"
+offset_indicador = Vector3(0, 2.1, 0)
+radio_interaccion = 2.3
+
+[node name="Estela_RuinaOeste" parent="InscripcionesRuinas" instance=ExtResource("decor_runestone")]
+position = Vector3(24.2, 0.04, 36.4)
+
+[node name="InteraccionDialogo" type="Area3D" parent="InscripcionesRuinas/Estela_RuinaOeste"]
+script = ExtResource("script_dialogo")
+nombre_hablante = "Lápida Musgosa"
+lineas_rapidas = Array[String](["«Al noroeste yace la triple cámara de los vigías; al noreste, el Gran Templo donde duerme el Mandoble.»"])
+texto_indicador = "[E] Leer inscripción"
+offset_indicador = Vector3(0, 2.1, 0)
+radio_interaccion = 2.3
+
+[node name="Estela_RuinasNO" parent="InscripcionesRuinas" instance=ExtResource("decor_runestone")]
+position = Vector3(19.0, 0.04, 8.4)
+
+[node name="InteraccionDialogo" type="Area3D" parent="InscripcionesRuinas/Estela_RuinasNO"]
+script = ExtResource("script_dialogo")
+nombre_hablante = "Monolito del Noroeste"
+lineas_rapidas = Array[String](["«Tres muros alzaron los antiguos para custodiar sus reliquias del frío eterno.»", "«Solo el Mandoble consagrado en el Gran Templo del Este puede quebrar la coraza del Coloso.»"])
+texto_indicador = "[E] Leer inscripción"
+offset_indicador = Vector3(0, 2.1, 0)
+radio_interaccion = 2.3
+
+[node name="Estela_RuinaGrande" parent="InscripcionesRuinas" instance=ExtResource("decor_runestone")]
+position = Vector3(62.8, 0.04, 13.5)
+
+[node name="InteraccionDialogo" type="Area3D" parent="InscripcionesRuinas/Estela_RuinaGrande"]
+script = ExtResource("script_dialogo")
+nombre_hablante = "Crónica del Santuario"
+lineas_rapidas = Array[String](["«Ante este altar fue depositado el Mandoble de las Ruinas.»", "«Tómalo si tu voluntad es firme: más allá del umbral oriental aguarda el Coloso Carmesí.»"])
+texto_indicador = "[E] Leer inscripción"
+offset_indicador = Vector3(0, 2.1, 0)
+radio_interaccion = 2.3
+
+[node name="CofresRuinas" type="Node3D" parent="."]
+
+[node name="Cofre_RuinaSE" parent="CofresRuinas" instance=ExtResource("scene_chest")]
+position = Vector3(72.0, 0.04, 62.6)
+contiene_rata = false
+item_recompensa = ExtResource("item_cristal")
+cantidad_item = 1
+pool_items = ExtResource("pool_general")
+soltar_como_pickup_3d = false
+
+[node name="Cofre_RuinaEste" parent="CofresRuinas" instance=ExtResource("scene_chest")]
+position = Vector3(50.5, 0.04, 48.2)
+contiene_rata = false
+item_recompensa = ExtResource("item_hacha")
+cantidad_item = 1
+pool_items = ExtResource("pool_general")
+soltar_como_pickup_3d = false
+
+[node name="Cofre_RuinasNO" parent="CofresRuinas" instance=ExtResource("scene_chest")]
+position = Vector3(12.0, 0.04, 10.0)
+contiene_rata = false
+item_recompensa = ExtResource("item_espada")
+cantidad_item = 1
+pool_items = ExtResource("pool_general")
+soltar_como_pickup_3d = false
+
+[node name="Pickup_BayasOeste" parent="CofresRuinas" instance=ExtResource("scene_item_pickup")]
+position = Vector3(23.8, 0.08, 41.2)
+item = ExtResource("item_bayas")
+cantidad = 2
+
+[node name="Pickup_PanSantuario" parent="CofresRuinas" instance=ExtResource("scene_item_pickup")]
+position = Vector3(74.2, 0.08, 22.0)
+item = ExtResource("item_pan")
+cantidad = 2
+
+[node name="EncuentrosRuinas" type="Node3D" parent="."]
+
+[node name="Jarrito_SenderoSur" parent="EncuentrosRuinas" instance=ExtResource("scene_jarrito")]
+position = Vector3(59.2, 0.04, 61.0)
+radio_deteccion = 4.5
+distancia_perdida = 10.0
+
+[node name="Jarrito_RuinaOeste" parent="EncuentrosRuinas" instance=ExtResource("scene_jarrito")]
+position = Vector3(25.8, 0.04, 39.8)
+radio_deteccion = 4.0
+distancia_perdida = 9.0
+
+[node name="Jarrito_RuinasNO_1" parent="EncuentrosRuinas" instance=ExtResource("scene_jarrito")]
+position = Vector3(16.2, 0.04, 13.8)
+grupo_encuentro = &"duo_ruinas_no"
+radio_deteccion = 4.5
+distancia_perdida = 10.0
+
+[node name="Jarrito_RuinasNO_2" parent="EncuentrosRuinas" instance=ExtResource("scene_jarrito")]
+position = Vector3(14.8, 0.04, 15.0)
+grupo_encuentro = &"duo_ruinas_no"
+radio_deteccion = 4.5
+distancia_perdida = 10.0
+
+[node name="Jarrito_RuinaGrande_1" parent="EncuentrosRuinas" instance=ExtResource("scene_jarrito")]
+position = Vector3(59.5, 0.04, 21.6)
+grupo_encuentro = &"guardianes_ruina_grande"
+radio_deteccion = 4.5
+distancia_perdida = 10.0
+
+[node name="Jarrito_RuinaGrande_2" parent="EncuentrosRuinas" instance=ExtResource("scene_jarrito")]
+position = Vector3(61.0, 0.04, 20.2)
+grupo_encuentro = &"guardianes_ruina_grande"
+radio_deteccion = 4.5
+distancia_perdida = 10.0
+
+[node name="JefeRuinas" type="Node3D" parent="."]
+
+[node name="Monolito_Jefe_Izq" parent="JefeRuinas" instance=ExtResource("ruin_monolito_jefe")]
+position = Vector3(86.2, 0.04, 12.2)
+rotation_degrees = Vector3(0, 18, 12)
+
+[node name="Monolito_Jefe_Der" parent="JefeRuinas" instance=ExtResource("ruin_monolito_jefe")]
+position = Vector3(92.4, 0.04, 12.2)
+rotation_degrees = Vector3(0, -15, 14)
+
+[node name="LuzMonolitoIzq" type="OmniLight3D" parent="JefeRuinas"]
+position = Vector3(86.2, 2.2, 13.0)
+light_color = Color(0.95, 0.25, 0.22, 1)
+light_energy = 1.4
+omni_range = 7.0
+
+[node name="LuzMonolitoDer" type="OmniLight3D" parent="JefeRuinas"]
+position = Vector3(92.4, 2.2, 13.0)
+light_color = Color(0.95, 0.25, 0.22, 1)
+light_energy = 1.4
+omni_range = 7.0
+
+[node name="PilarArenaJefe1" parent="JefeRuinas" instance=ExtResource("ruin_pilar_bajo")]
+position = Vector3(83.5, 0.04, 21.8)
+
+[node name="PilarArenaJefe2" parent="JefeRuinas" instance=ExtResource("ruin_pilar_medio")]
+position = Vector3(94.5, 0.04, 21.8)
+
+[node name="Guardian_Jefe" type="Node3D" parent="JefeRuinas"]
+position = Vector3(88.8, 0.04, 18.2)
+
+[node name="Visual" type="Sprite3D" parent="JefeRuinas/Guardian_Jefe"]
+position = Vector3(0, 1.38, 0)
+pixel_size = 0.00315
+billboard = 2
+texture_filter = 0
+alpha_cut = 1
+shaded = true
+texture = SubResource("Atlas_boss_world")
+
+[node name="InteraccionDialogo" type="Area3D" parent="JefeRuinas/Guardian_Jefe"]
+script = ExtResource("script_dialogo")
+nombre_hablante = "Coloso de las Ruinas"
+lineas_rapidas = Array[String](["...Siglos de letargo bajo la escarcha... y al fin despierta el fulgor del Mandoble de las Ruinas...", "Portador del acero antiguo: ¡demuestra tu determinación en combate!"])
+texto_indicador = "[E] Desafiar al Coloso"
+offset_indicador = Vector3(0, 2.9, 0)
+radio_interaccion = 3.2
+
+[node name="EncuentroCombate" type="Node" parent="JefeRuinas/Guardian_Jefe"]
+script = ExtResource("script_encuentro")
+enemigos = Array[PackedScene]([ExtResource("scene_boss_battler")])
+exp_recompensa = 100
+texto_recompensas = "¡Victoria ancestral!\n\n+100 EXP\nHas liberado el Santuario del Norte."
+texto_inicio_combate = "¡El Coloso de las Ruinas despierta!"
+texto_victoria = "¡Derrotaste al Coloso de las Ruinas!"
+
+[node name="TriggerCinematicaJefe" type="Area3D" parent="JefeRuinas"]
+position = Vector3(85.2, 1.2, 17.5)
+collision_layer = 0
+collision_mask = 1
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="JefeRuinas/TriggerCinematicaJefe"]
+shape = SubResource("Shape_trigger_jefe")
+
+[node name="Altar_SantuarioEste" parent="JefeRuinas" instance=ExtResource("decor_runestone")]
+position = Vector3(94.5, 0.04, 13.5)
+
+[node name="InteraccionDialogo" type="Area3D" parent="JefeRuinas/Altar_SantuarioEste"]
+script = ExtResource("script_dialogo")
+nombre_hablante = "Sello del Horizonte Norte"
+lineas_rapidas = Array[String](["«Aquí concluye el sendero de las Ruinas del Bosque.»", "«Quien derrote al Coloso y porte el Mandoble abrirá el paso hacia las tierras altas del Norte.»"])
+texto_indicador = "[E] Examinar Sello del Norte"
+offset_indicador = Vector3(0, 2.1, 0)
+radio_interaccion = 2.4
 
 
 [node name="Sector_Entrada" type="Camera3D" parent="Cameras"]

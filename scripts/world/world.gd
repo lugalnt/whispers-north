@@ -114,34 +114,48 @@ func _setup_camera_switches() -> void:
 			push_warning("La zona %s referencia una cámara que no existe" % zone.name)
 			continue
 		
-		var cb = _on_camera_switch_entered.bind(cam_a, cam_b)
-		if not zone.body_entered.is_connected(cb):
-			zone.body_entered.connect(cb)
+		var cb_enter = _on_camera_switch_entered.bind(zone, cam_a, cam_b)
+		if not zone.body_entered.is_connected(cb_enter):
+			zone.body_entered.connect(cb_enter)
+		var cb_exit = _on_camera_switch_exited.bind(zone, cam_a, cam_b)
+		if not zone.body_exited.is_connected(cb_exit):
+			zone.body_exited.connect(cb_exit)
 
 # Alterna entre las dos cámaras de la zona (solo reacciona al jugador activo)
-func _on_camera_switch_entered(body: Node3D, cam_a: Camera3D, cam_b: Camera3D) -> void:
+func _on_camera_switch_entered(body: Node3D, zone: Area3D, cam_a: Camera3D, cam_b: Camera3D) -> void:
 	if body != get_active_player():
 		return
-	var candidata: Camera3D = null
 	if cam_a.current:
-		candidata = cam_b
+		cam_b.make_current()
 	elif cam_b.current:
-		candidata = cam_a
-	elif "velocity" in body and body.velocity.length_squared() > 0.1:
-		var vel: Vector3 = body.velocity.normalized()
-		var dot_a := (cam_a.global_position - body.global_position).dot(vel)
-		var dot_b := (cam_b.global_position - body.global_position).dot(vel)
-		candidata = cam_a if dot_a > dot_b else cam_b
+		cam_a.make_current()
 	else:
-		var dist_a := cam_a.global_position.distance_squared_to(body.global_position)
-		var dist_b := cam_b.global_position.distance_squared_to(body.global_position)
-		candidata = cam_a if dist_a < dist_b else cam_b
-	if candidata and get_viewport():
-		var rect := get_viewport().get_visible_rect().grow(-20.0)
-		var p_pies := body.global_position + Vector3.UP * -0.8
-		var p_cab := body.global_position + Vector3.UP * 1.1
-		if not candidata.is_position_behind(p_pies) and not candidata.is_position_behind(p_cab) and rect.has_point(candidata.unproject_position(p_pies)) and rect.has_point(candidata.unproject_position(p_cab)):
-			candidata.make_current()
+		_aplicar_camara_por_lado(body, zone, cam_a, cam_b)
+
+func _on_camera_switch_exited(body: Node3D, zone: Area3D, cam_a: Camera3D, cam_b: Camera3D) -> void:
+	if body != get_active_player():
+		return
+	_aplicar_camara_por_lado(body, zone, cam_a, cam_b)
+
+func _aplicar_camara_por_lado(body: Node3D, zone: Area3D, cam_a: Camera3D, cam_b: Camera3D) -> void:
+	var shape_node := zone.get_node_or_null("CollisionShape3D") as Node3D
+	var centro: Vector3 = shape_node.global_position if shape_node else zone.global_position
+	var pos: Vector3 = body.global_position
+	if zone.name == "SwitchC_1_2":
+		if pos.z < centro.z:
+			cam_a.make_current()
+		else:
+			cam_b.make_current()
+	elif zone.name in ["SwitchC_2_3", "SwitchC_3_4"]:
+		if pos.x < centro.x:
+			cam_a.make_current()
+		else:
+			cam_b.make_current()
+	elif zone.name in ["SwitchC_2_5", "SwitchC_5_6"]:
+		if pos.x > centro.x:
+			cam_a.make_current()
+		else:
+			cam_b.make_current()
 
 # Devuelve el nodo del jugador activo (16x16 o 32x32)
 func get_active_player() -> CharacterBody3D:

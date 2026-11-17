@@ -41,11 +41,23 @@ func ejecutar() -> void:
 	muro.position = Vector3(4, 2, 0)
 	muro.use_collision = true
 	mundo.add_child(muro)
+	await cuadros(10)
+	comprobar(is_equal_approx(jarrito.radio_deteccion, 4.5), "Radio de detección predeterminado reducido a 4.5 m")
+	muro.queue_free()
+	await cuadros(10)
+	comprobar(jarrito.estado == Jarrito.Estado.IDLE, "Con radio 4.5 m no detecta al jugador a 8 m")
+	muro = CSGBox3D.new()
+	muro.size = Vector3(0.5, 6, 8)
+	muro.position = Vector3(4, 2, 0)
+	muro.use_collision = true
+	mundo.add_child(muro)
+	jarrito.radio_deteccion = 9.0
+	jarrito.distancia_perdida = 18.0
 	await cuadros(60)
 	comprobar(jarrito.estado == Jarrito.Estado.IDLE, "Muro bloquea detección")
 	muro.queue_free()
 	await cuadros(150)
-	comprobar(jarrito.estado == Jarrito.Estado.WALK and jarrito.position.x > 0.5, "Detecta a 8 m y persigue físicamente")
+	comprobar(jarrito.estado == Jarrito.Estado.WALK and jarrito.position.x > 0.5, "Al subir slider a 9 m detecta a 8 m y persigue físicamente")
 	jugador.is_interacting = true
 	var posicion := jarrito.position
 	await cuadros(20)

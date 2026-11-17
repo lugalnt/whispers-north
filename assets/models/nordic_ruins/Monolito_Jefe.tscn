@@ -1,0 +1,162 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_surfaces_v2/ruin_masonry.png" id="tex_masonry"]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_surfaces_v2/fractured_rock.png" id="tex_fractured"]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_v1/village_stone.png" id="tex_village"]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_surfaces_v2/packed_snow.png" id="tex_snow"]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/materials/nordic_wood_v1/mossy_old_timber.png" id="tex_timber"]
+
+[sub_resource type="StandardMaterial3D" id="mat_stone_light"]
+albedo_color = Color(0.86, 0.83, 0.75, 1)
+albedo_texture = ExtResource("tex_masonry")
+roughness = 0.95
+uv1_triplanar = true
+uv1_scale = Vector3(0.5500, 0.5500, 0.5500)
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="mat_stone_mid"]
+albedo_color = Color(0.76, 0.73, 0.65, 1)
+albedo_texture = ExtResource("tex_masonry")
+roughness = 0.95
+uv1_triplanar = true
+uv1_scale = Vector3(0.6000, 0.6000, 0.6000)
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="mat_stone_dark"]
+albedo_color = Color(0.52, 0.5, 0.45, 1)
+albedo_texture = ExtResource("tex_fractured")
+roughness = 0.95
+uv1_triplanar = true
+uv1_scale = Vector3(0.5000, 0.5000, 0.5000)
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="mat_stone_moss"]
+albedo_color = Color(0.56, 0.66, 0.52, 1)
+albedo_texture = ExtResource("tex_masonry")
+roughness = 0.95
+uv1_triplanar = true
+uv1_scale = Vector3(0.6000, 0.6000, 0.6000)
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="mat_stone_cap"]
+albedo_color = Color(0.82, 0.78, 0.68, 1)
+albedo_texture = ExtResource("tex_village")
+roughness = 0.95
+uv1_triplanar = true
+uv1_scale = Vector3(0.5000, 0.5000, 0.5000)
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="mat_snow_cap"]
+albedo_color = Color(0.92, 0.95, 0.98, 1)
+albedo_texture = ExtResource("tex_snow")
+roughness = 0.95
+uv1_triplanar = true
+uv1_scale = Vector3(0.6000, 0.6000, 0.6000)
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="mat_crimson_rock"]
+albedo_color = Color(0.46, 0.14, 0.16, 1)
+albedo_texture = ExtResource("tex_fractured")
+roughness = 0.95
+uv1_triplanar = true
+uv1_scale = Vector3(0.4500, 0.4500, 0.4500)
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="mat_crimson_dark"]
+albedo_color = Color(0.3, 0.09, 0.11, 1)
+albedo_texture = ExtResource("tex_masonry")
+roughness = 0.95
+uv1_triplanar = true
+uv1_scale = Vector3(0.5000, 0.5000, 0.5000)
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="mat_rune_cyan"]
+albedo_color = Color(0.45, 0.88, 0.98, 1)
+emission_enabled = true
+emission = Color(0.35, 0.78, 0.95, 1)
+emission_energy_multiplier = 1.8
+roughness = 0.4
+
+[sub_resource type="StandardMaterial3D" id="mat_rune_crimson"]
+albedo_color = Color(0.95, 0.25, 0.22, 1)
+emission_enabled = true
+emission = Color(0.88, 0.18, 0.15, 1)
+emission_energy_multiplier = 2.0
+roughness = 0.4
+
+[sub_resource type="CylinderMesh" id="cyl_1_RockBase"]
+top_radius = 1.0500
+bottom_radius = 1.2500
+height = 0.4500
+radial_segments = 7
+rings = 1
+
+[sub_resource type="BoxMesh" id="box_2_LowerSpike"]
+size = Vector3(1.1000, 1.5500, 0.9500)
+
+[sub_resource type="BoxMesh" id="box_3_MidSpike"]
+size = Vector3(0.9200, 1.6500, 0.8200)
+
+[sub_resource type="PrismMesh" id="prism_4_TopJaggedPeak"]
+left_to_right = 0.20
+size = Vector3(0.8800, 1.4500, 0.7800)
+
+[sub_resource type="BoxMesh" id="box_5_RuneVein1"]
+size = Vector3(0.1400, 1.3500, 0.9800)
+
+[sub_resource type="BoxMesh" id="box_6_RuneVein2"]
+size = Vector3(0.1200, 1.3000, 0.8600)
+
+[sub_resource type="CylinderShape3D" id="col_cyl_1"]
+radius = 0.8500
+height = 3.6000
+
+[node name="Monolito_Jefe" type="Node3D"]
+
+[node name="RockBase" type="MeshInstance3D" parent="."]
+position = Vector3(0.0000, 0.2200, 0.0000)
+rotation = Vector3(0.0000, 0.0000, 0.0000)
+mesh = SubResource("cyl_1_RockBase")
+material_override = SubResource("mat_stone_dark")
+
+[node name="LowerSpike" type="MeshInstance3D" parent="."]
+position = Vector3(-0.1000, 1.1000, 0.0000)
+rotation = Vector3(0.0600, 0.1500, 0.1800)
+mesh = SubResource("box_2_LowerSpike")
+material_override = SubResource("mat_crimson_dark")
+
+[node name="MidSpike" type="MeshInstance3D" parent="."]
+position = Vector3(-0.3600, 2.3500, 0.0400)
+rotation = Vector3(0.0800, -0.1000, 0.2400)
+mesh = SubResource("box_3_MidSpike")
+material_override = SubResource("mat_crimson_rock")
+
+[node name="TopJaggedPeak" type="MeshInstance3D" parent="."]
+position = Vector3(-0.6400, 3.6000, 0.0800)
+rotation = Vector3(0.0500, 0.1200, 0.2800)
+mesh = SubResource("prism_4_TopJaggedPeak")
+material_override = SubResource("mat_crimson_rock")
+
+[node name="RuneVein1" type="MeshInstance3D" parent="."]
+position = Vector3(-0.1200, 1.1500, 0.0000)
+rotation = Vector3(0.0600, 0.1500, 0.1800)
+mesh = SubResource("box_5_RuneVein1")
+material_override = SubResource("mat_rune_crimson")
+
+[node name="RuneVein2" type="MeshInstance3D" parent="."]
+position = Vector3(-0.3800, 2.4000, 0.0400)
+rotation = Vector3(0.0800, -0.1000, 0.2400)
+mesh = SubResource("box_6_RuneVein2")
+material_override = SubResource("mat_rune_crimson")
+
+[node name="Body" type="StaticBody3D" parent="."]
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body"]
+position = Vector3(0.0000, 1.8000, 0.0000)
+shape = SubResource("col_cyl_1")

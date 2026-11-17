@@ -1,5 +1,8 @@
 extends Node3D
 
+signal cofre_abierto(cofre: Node3D)
+signal recompensas_entregadas(items_entregados: Array[Dictionary], texto_resumen: String)
+
 # Sonidos requeridos para la interacción con el cofre y la rata
 @export var sonido_salida_rata: AudioStream = preload("res://assets/audio/sfx/higuys.mp3")
 @export var sonido_item: AudioStream = preload("res://assets/audio/sfx/snd_item.wav")
@@ -65,16 +68,16 @@ func abrir(jugador: CharacterBody3D = null) -> void:
 		return
 	if jugador:
 		jugador_actual = jugador
-	_fase_1_abrir_y_saltar()
+	await _fase_1_abrir_y_saltar()
 
 ## Interacción pública genérica con el cofre
 func interactuar(jugador: CharacterBody3D = null) -> void:
 	if jugador:
 		jugador_actual = jugador
 	if not esta_abierto and not rata_en_cabeza:
-		_fase_1_abrir_y_saltar()
+		await _fase_1_abrir_y_saltar()
 	elif esta_abierto and rata_en_cabeza and contiene_rata:
-		_fase_2_desvanecer_y_explotar_rata()
+		await _fase_2_desvanecer_y_explotar_rata()
 
 # Detecta cuando el jugador entra en el área del cofre
 func _on_area_3d_body_entered(body: Node3D) -> void:
@@ -109,6 +112,7 @@ func _fase_1_abrir_y_saltar() -> void:
 	# Cambiar visibilidad de los sprites del cofre
 	sprite_cerrado.hide()
 	sprite_abierto.show()
+	cofre_abierto.emit(self)
 	
 	# Entregar recompensas configuradas
 	_entregar_recompensas_cofre()
@@ -306,6 +310,8 @@ func _entregar_recompensas_cofre() -> void:
 			var cant_pool = pool_items.elegir_cantidad(item_pool)
 			items_a_dar.append({"item": item_pool, "cant": cant_pool})
 	
+	var entregados_reales: Array[Dictionary] = []
+	var partes_texto: Array[String] = []
 	for drop in items_a_dar:
 		var it: InventoryItem = drop["item"]
 		var cant: int = drop["cant"]
@@ -317,6 +323,8 @@ func _entregar_recompensas_cofre() -> void:
 				cant,
 				Vector3(randf_range(-0.5, 0.5), 2.5, randf_range(-0.5, 0.5))
 			)
+			entregados_reales.append({"item": it, "cant": cant})
+			partes_texto.append("+%d %s" % [cant, it.nombre])
 		else:
 			var gs = null
 			var GS = load("res://scripts/core/game_state.gd")
@@ -326,5 +334,43 @@ func _entregar_recompensas_cofre() -> void:
 				gs = Engine.get_singleton("GameState")
 			elif is_inside_tree() and get_tree() and get_tree().root.has_node("GameState"):
 				gs = get_tree().root.get_node("GameState")
+			var aceptada: int = cant
 			if gs and gs.has_method("agregar_item"):
-				gs.agregar_item(it, cant)
+				aceptada = gs.agregar_item(it, cant)
+			if aceptada > 0:
+				entregados_reales.append({"item": it, "cant": aceptada})
+				partes_texto.append("+%d %s" % [aceptada, it.nombre])
+			elif it != null:
+				partes_texto.append("Inventario lleno (%s)" % it.nombre)
+	
+	var resumen: String = "  ·  ".join(partes_texto)
+	if not resumen.is_empty() and is_inside_tree():
+		preload("res://scripts/vfx/nordic_vfx.gd").emitir(get_parent(), &"recogida", global_position + Vector3.UP * 0.55, 0.9)
+		_mostrar_texto_flotante_cofre(resumen, global_position + Vector3.UP * 1.1)
+	recompensas_entregadas.emit(entregados_reales, resumen)
+
+
+func _mostrar_texto_flotante_cofre(texto: String, pos_mundo: Vector3) -> void:
+	if not is_inside_tree() or get_tree() == null:
+		return
+	var canvas := CanvasLayer.new()
+	canvas.layer = 96
+	get_tree().root.add_child(canvas)
+
+	var lbl := Label.new()
+	lbl.text = texto
+	lbl.add_theme_font_size_override("font_size", 19)
+	lbl.add_theme_color_override("font_color", Color(1.0, 0.9, 0.35))
+	lbl.add_theme_color_override("font_outline_color", Color.BLACK)
+	lbl.add_theme_constant_override("outline_size", 6)
+	canvas.add_child(lbl)
+
+	var cam: Camera3D = get_viewport().get_camera_3d()
+	var pos_2d: Vector2 = cam.unproject_position(pos_mundo) if cam else (get_viewport().get_visible_rect().size * 0.5)
+	lbl.position = pos_2d - Vector2(110, 24)
+
+	var tw := lbl.create_tween()
+	tw.set_parallel(true)
+	tw.tween_property(lbl, "position:y", pos_2d.y - 68.0, 1.1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tw.tween_property(lbl, "modulate:a", 0.0, 0.45).set_delay(0.75)
+	tw.chain().tween_callback(canvas.queue_free)

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/inventory/inventory_item.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/items/nordic_v1/great_ruin_greatsword.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = "mandoble_ruinas"
+nombre = "Mandoble de las Ruinas"
+descripcion = "Gran arma ancestral forjada por los antiguos guardianes del Norte. Sus runas despiertan tu fuerza (+4 ATQ)."
+icono = ExtResource("2")
+categoria = 0
+curacion_hp = 0

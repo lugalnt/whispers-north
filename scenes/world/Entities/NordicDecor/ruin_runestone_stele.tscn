@@ -1,0 +1,21 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/nordic_decor_v1/ruin_runestone_stele.png" id="texture"]
+
+[sub_resource type="AtlasTexture" id="cropped"]
+atlas = ExtResource("texture")
+region = Rect2(226, 135, 562, 770)
+filter_clip = true
+
+[node name="ruin_runestone_stele" type="Node3D"]
+
+[node name="Visual" type="Sprite3D" parent="."]
+position = Vector3(0, 0.885, 0)
+texture = SubResource("cropped")
+pixel_size = 0.00233766
+billboard = 2
+texture_filter = 0
+alpha_cut = 1
+cast_shadow = 2
+shaded = true
+modulate = Color(0.92, 0.95, 0.98, 1)
