@@ -469,64 +469,64 @@ position = Vector3(72, 0, -2.65)
 scale = Vector3(0.65, 0.65, 0.65)
 
 [node name="Sector_BocaPueblo" type="Camera3D" parent="Cameras"]
-position = Vector3(2, 7.5, 11)
-rotation = Vector3(-0.55, 0, 0)
-fov = 55.0
+position = Vector3(2, 5.0, 11)
+rotation = Vector3(-0.4363323, 0, 0)
+fov = 60.0
 metadata/sector_centro = Vector2(2, 0)
 metadata/sector_radio = Vector2(9, 7)
 
 [node name="Sector_FarolUno" type="Camera3D" parent="Cameras"]
-position = Vector3(12, 7.5, 11)
-rotation = Vector3(-0.55, 0, 0)
-fov = 55.0
+position = Vector3(12, 5.0, 11)
+rotation = Vector3(-0.4363323, 0, 0)
+fov = 60.0
 metadata/sector_centro = Vector2(12, 0)
 metadata/sector_radio = Vector2(9, 7)
 
 [node name="Sector_PasoUno" type="Camera3D" parent="Cameras"]
-position = Vector3(23, 7.5, 11)
-rotation = Vector3(-0.55, 0, 0)
-fov = 55.0
+position = Vector3(23, 5.0, 11)
+rotation = Vector3(-0.4363323, 0, 0)
+fov = 60.0
 metadata/sector_centro = Vector2(23, 0)
 metadata/sector_radio = Vector2(9, 7)
 
 [node name="Sector_FarolDos" type="Camera3D" parent="Cameras"]
-position = Vector3(34, 7.5, 11)
-rotation = Vector3(-0.55, 0, 0)
-fov = 55.0
+position = Vector3(34, 5.0, 11)
+rotation = Vector3(-0.4363323, 0, 0)
+fov = 60.0
 metadata/sector_centro = Vector2(34, 0)
 metadata/sector_radio = Vector2(9, 7)
 
 [node name="Sector_PasoDos" type="Camera3D" parent="Cameras"]
-position = Vector3(45, 7.5, 11)
-rotation = Vector3(-0.55, 0, 0)
-fov = 55.0
+position = Vector3(45, 5.0, 11)
+rotation = Vector3(-0.4363323, 0, 0)
+fov = 60.0
 metadata/sector_centro = Vector2(45, 0)
 metadata/sector_radio = Vector2(9, 7)
 
 [node name="Sector_FarolTres" type="Camera3D" parent="Cameras"]
-position = Vector3(56, 7.5, 11)
-rotation = Vector3(-0.55, 0, 0)
-fov = 55.0
+position = Vector3(56, 5.0, 11)
+rotation = Vector3(-0.4363323, 0, 0)
+fov = 60.0
 metadata/sector_centro = Vector2(56, 0)
 metadata/sector_radio = Vector2(9, 7)
 
 [node name="Sector_PasoTres" type="Camera3D" parent="Cameras"]
-position = Vector3(67, 7.5, 11)
-rotation = Vector3(-0.55, 0, 0)
-fov = 55.0
+position = Vector3(67, 5.0, 11)
+rotation = Vector3(-0.4363323, 0, 0)
+fov = 60.0
 metadata/sector_centro = Vector2(67, 0)
 metadata/sector_radio = Vector2(9, 7)
 
 [node name="Sector_FarolCuatro" type="Camera3D" parent="Cameras"]
-position = Vector3(78, 7.5, 11)
-rotation = Vector3(-0.55, 0, 0)
-fov = 55.0
+position = Vector3(78, 5.0, 11)
+rotation = Vector3(-0.4363323, 0, 0)
+fov = 60.0
 metadata/sector_centro = Vector2(78, 0)
 metadata/sector_radio = Vector2(9, 7)
 
 [node name="Sector_BocaBosque" type="Camera3D" parent="Cameras"]
-position = Vector3(84, 7.5, 11)
-rotation = Vector3(-0.55, 0, 0)
-fov = 55.0
+position = Vector3(84, 5.0, 11)
+rotation = Vector3(-0.4363323, 0, 0)
+fov = 60.0
 metadata/sector_centro = Vector2(84, 0)
 metadata/sector_radio = Vector2(9, 7)

@@ -126,6 +126,10 @@ func _on_camera_switch_entered(body: Node3D, cam_a: Camera3D, cam_b: Camera3D) -
 		cam_b.make_current()
 	elif cam_b.current:
 		cam_a.make_current()
+	else:
+		var dist_a := cam_a.global_position.distance_squared_to(body.global_position)
+		var dist_b := cam_b.global_position.distance_squared_to(body.global_position)
+		(cam_a if dist_a < dist_b else cam_b).make_current()
 
 # Devuelve el nodo del jugador activo (16x16 o 32x32)
 func get_active_player() -> CharacterBody3D:

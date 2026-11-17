@@ -4,6 +4,8 @@ var vegetacion: Array[Sprite3D] = []
 var bases: Dictionary = {}
 var zona: Node3D
 var _espera_cambio := 0.0
+var _cam_previa: Camera3D = null
+var _pos_ancla_cam: Vector3 = Vector3.ZERO
 
 func _ready() -> void:
 	zona = get_parent()
@@ -48,21 +50,33 @@ func _process(_delta: float) -> void:
 	if jugador == null or cam == null or not jugador.is_visible_in_tree(): return
 	# Las cámaras de exploración pertenecen directamente a la zona.
 	if cam.get_parent() != zona and cam.get_parent().name != "Cameras": return
+	if cam != _cam_previa:
+		_cam_previa = cam
+		_pos_ancla_cam = jugador.global_position
+		if not cam.has_meta("sector_centro"):
+			_espera_cambio = maxf(_espera_cambio, 0.45)
+	elif jugador.global_position.distance_to(_pos_ancla_cam) > 1.5 and not _encuadra(cam, jugador, 0.04):
+		_espera_cambio = 0.0
 	# Encuadres inmutables: elegir otra cámara, nunca orientar hacia el jugador.
-	_espera_cambio = maxf(0.0, _espera_cambio - _delta)
+	if not ("is_interacting" in jugador and jugador.is_interacting):
+		_espera_cambio = maxf(0.0, _espera_cambio - _delta)
 	var centro := jugador.global_position + Vector3.UP * 0.45
-	# Elegir el encuadre del tramo, aunque la vista anterior aún vea al jugador.
-	var sector := _sector_preferido(jugador, cam)
+	# Conservar las cámaras principales diseñadas (Camera1..N) mientras encuadren al jugador;
+	# usar las cámaras de cobertura por sector cuando salga de su encuadre o ya esté en un sector.
+	var usar_sector: bool = cam.has_meta("sector_centro") or (_espera_cambio <= 0.0 and not _encuadra(cam, jugador, 0.04))
+	var sector := _sector_preferido(jugador, cam) if usar_sector else null
 	if sector != null and sector != cam and _espera_cambio <= 0.0:
 		sector.make_current()
 		cam = sector
+		_cam_previa = cam
+		_pos_ancla_cam = jugador.global_position
 		_espera_cambio = 0.45
 	if _espera_cambio <= 0.0 and not _encuadra(cam, jugador, 0.06):
 		var mejor: Camera3D = null
 		var puntuacion := INF
 		for candidata in zona.find_children("*", "Camera3D", true, false):
 			if candidata.get_parent() != zona and candidata.get_parent().name != "Cameras": continue
-			if candidata == cam or not _encuadra(candidata, jugador, 0.13): continue
+			if candidata == cam or not _encuadra(candidata, jugador, 0.06): continue
 			var uv: Vector2 = candidata.unproject_position(centro) / get_viewport().get_visible_rect().size
 			var valor: float = uv.distance_squared_to(Vector2(0.5, 0.5)) + candidata.global_position.distance_to(centro) * 0.001
 			if valor < puntuacion:
@@ -71,6 +85,8 @@ func _process(_delta: float) -> void:
 		if mejor != null:
 			mejor.make_current()
 			cam = mejor
+			_cam_previa = cam
+			_pos_ancla_cam = jugador.global_position
 			_espera_cambio = 0.65
 	# Atenuar vegetación que tapa al personaje, manteniendo el resto del bosque.
 	var pantalla := cam.unproject_position(centro)
