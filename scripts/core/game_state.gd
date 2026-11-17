@@ -47,6 +47,7 @@ const ESCENA_VECINDAD: String = "res://scenes/world/World.tscn"
 const ESCENA_PUEBLO: String = "res://scenes/world/World_Town.tscn"
 const ESCENA_CUEVA: String = "res://scenes/world/World_Cave.tscn"
 const ESCENA_BOSQUE: String = "res://scenes/world/World_ForestRuins.tscn"
+const ESCENA_PRUEBA_ARBOL: String = "res://scenes/world/Tests/tree_unused.tscn"
 
 ## Escena en la que empieza una Nueva partida.
 ## La demo comienza junto a la cama, con el diario como tutorial inicial.
@@ -63,6 +64,15 @@ const COFRE_CUEVA_OCULTO: StringName = &"cofre.cueva_oculto"
 const OBJETO_IMPORTANTE_RUINAS: StringName = &"evento.objeto_importante_ruinas"
 const JEFE_RUINAS_DERROTADO: StringName = &"jefe.ruinas_derrotado"
 const DEMO_COMPLETADA: StringName = &"demo.completada"
+const PROGRESO_EVENTO_ARBOL: StringName = &"mundo.evento_arbol"
+const PROGRESO_REGRESO_RUINAS: StringName = &"mundo.regreso_ruinas"
+const PROBABILIDAD_DESVIO_ARBOL: int = 70
+
+var _forzar_desvio_arbol: bool = false
+var ruta_retorno_escena: String = ESCENA_CUEVA
+var ruta_retorno_marcador: String = "Llegada_DesdeBosque"
+var ruta_retorno_camara: String = "Camera4"
+var _rng_evento_arbol := RandomNumberGenerator.new()
 
 ## Banderas de progresión: StringName -> Variant (normalmente bool).
 ## Solo vive en memoria durante la partida (sin guardado en disco).
@@ -113,6 +123,10 @@ func nueva_partida() -> void:
 	usar_personaje_32 = false
 	progreso.clear()
 	zona_actual = ""
+	_forzar_desvio_arbol = false
+	ruta_retorno_escena = ESCENA_CUEVA
+	ruta_retorno_marcador = "Llegada_DesdeBosque"
+	ruta_retorno_camara = "Camera4"
 	# Vaciar en el mismo recurso para conservar las conexiones de señales existentes
 	inventario.items.clear()
 	_cargar_items_iniciales()
@@ -159,6 +173,7 @@ func _enter_tree() -> void:
 func _ready() -> void:
 	if instancia == null or not is_instance_valid(instancia):
 		instancia = self
+	_rng_evento_arbol.randomize()
 	_inicializar_stats()
 	_cargar_items_iniciales()
 	inventario.inventario_actualizado.connect(func(): inventario_modificado.emit())
@@ -292,3 +307,44 @@ func desbloquear_accion(id_accion: String) -> void:
 ## Comprueba si el jugador tiene una acción de combate desbloqueada
 func tiene_accion(id_accion: String) -> bool:
 	return id_accion in acciones_desbloqueadas
+
+func es_enlace_cueva_ruinas(origen_escena: String, destino_escena: String) -> bool:
+	return (
+		(origen_escena == ESCENA_CUEVA and destino_escena == ESCENA_BOSQUE)
+		or (origen_escena == ESCENA_BOSQUE and destino_escena == ESCENA_CUEVA)
+	)
+
+func evento_arbol_completado() -> bool:
+	return tiene_progreso(PROGRESO_EVENTO_ARBOL) or inventario.obtener_cantidad("huevo") > 0
+
+func guardar_retorno_escena(escena: String, marcador: String, camara: String) -> void:
+	ruta_retorno_escena = escena if not escena.is_empty() else ESCENA_CUEVA
+	ruta_retorno_marcador = marcador if not marcador.is_empty() else "Llegada_DesdeBosque"
+	ruta_retorno_camara = camara if not camara.is_empty() else "Camera4"
+
+func evaluar_desvio_enlace(origen_escena: String, destino_escena: String) -> bool:
+	if evento_arbol_completado():
+		return false
+	if not es_enlace_cueva_ruinas(origen_escena, destino_escena):
+		return false
+	if not tiene_progreso(PROGRESO_REGRESO_RUINAS):
+		if origen_escena == ESCENA_BOSQUE and destino_escena == ESCENA_CUEVA:
+			marcar_progreso(PROGRESO_REGRESO_RUINAS, true)
+		else:
+			return false
+	if _forzar_desvio_arbol:
+		_forzar_desvio_arbol = false
+		return true
+	return _rng_evento_arbol.randi_range(1, maxi(1, PROBABILIDAD_DESVIO_ARBOL)) == 1
+
+func registrar_evento_arbol() -> bool:
+	if not reclamar_unico(PROGRESO_EVENTO_ARBOL):
+		return false
+	var item_res := ItemDatabase.obtener_item("huevo")
+	if item_res == null and ResourceLoader.exists("res://data/items/huevo.tres"):
+		item_res = load("res://data/items/huevo.tres") as InventoryItem
+	if item_res != null:
+		agregar_item(item_res, 1)
+	else:
+		agregar_item("huevo", 1)
+	return true

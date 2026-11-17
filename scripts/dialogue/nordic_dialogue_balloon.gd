@@ -164,10 +164,11 @@ func apply_dialogue_line() -> void:
 	elif dialogue_line.responses.size() > 0:
 		balloon.focus_mode = Control.FOCUS_NONE
 		responses_menu.show()
-		# Enfocar la primera opción para navegación con mando o teclado
-		var first_resp = responses_menu.get_child(0)
-		if first_resp is Control:
-			first_resp.grab_focus()
+		# Enfocar la primera opción visible (saltando el nodo plantilla oculto)
+		for child in responses_menu.get_children():
+			if child is Control and child.visible and child.focus_mode != Control.FOCUS_NONE:
+				child.grab_focus()
+				break
 	elif dialogue_line.time != "":
 		var time: float = dialogue_line.text.length() * 0.02 if dialogue_line.time == "auto" else dialogue_line.time.to_float()
 		await get_tree().create_timer(time).timeout

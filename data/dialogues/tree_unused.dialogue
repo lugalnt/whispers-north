@@ -1,0 +1,22 @@
+~ revisar_frente
+
+if estado_aplicado():
+	*(No hay nadie detrás del árbol.)
+	=> END
+*(Está detrás del árbol.)
+=> END
+
+~ revisar_detras
+
+if estado_aplicado():
+	*(Vaya, no hay nadie aquí.)
+	=> END
+*(Vaya, hay un hombre aquí.)
+*(Te ofreció algo.)
+- Sí
+	do aplicar_evento()
+	*(Recibiste un Huevo.)
+	=> END
+- No
+	*(No pareció importarle.)
+	=> END

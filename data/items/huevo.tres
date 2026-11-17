@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="InventoryItem" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/items/nordic_v1/ovoid_charm.png" id="1_item_tex"]
+[ext_resource type="Script" path="res://scripts/inventory/inventory_item.gd" id="2_item"]
+
+[resource]
+script = ExtResource("2_item")
+id = "huevo"
+nombre = "Huevo"
+descripcion = "No es demasiado importante, ni demasiado insignificante."
+icono = ExtResource("1_item_tex")
+categoria = 2
+cantidad_maxima = 1
+curacion_hp = 0

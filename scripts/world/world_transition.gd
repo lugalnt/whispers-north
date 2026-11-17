@@ -168,8 +168,31 @@ func _iniciar_transicion(jugador: Node3D) -> void:
 	if coordinador != null and not coordinador.bloquear_actividad(self):
 		return
 	_transicionando = true
-	transicion_iniciada.emit(escena_destino)
-	print("[WorldTransition] Cruzando hacia: %s (Marcador: %s)" % [escena_destino, nombre_marcador_destino])
+	var gs = _obtener_game_state()
+	var origen_escena: String = ""
+	if gs and "zona_actual" in gs and not gs.zona_actual.is_empty():
+		origen_escena = gs.zona_actual
+	elif get_tree().current_scene:
+		origen_escena = get_tree().current_scene.scene_file_path
+	var desvio_activo: bool = (
+		gs != null
+		and gs.has_method("evaluar_desvio_enlace")
+		and gs.evaluar_desvio_enlace(origen_escena, escena_destino)
+	)
+	var destino_final: String = escena_destino
+	var marcador_final: String = nombre_marcador_destino
+	var offset_final: Vector3 = offset_aparicion
+	var camara_final: String = camara_destino
+	if desvio_activo:
+		if gs.has_method("guardar_retorno_escena"):
+			gs.guardar_retorno_escena(escena_destino, nombre_marcador_destino, camara_destino)
+		destino_final = gs.ESCENA_PRUEBA_ARBOL
+		marcador_final = "Llegada_Sur"
+		offset_final = Vector3.ZERO
+		camara_final = "Camera1"
+
+	transicion_iniciada.emit(destino_final)
+	print("[WorldTransition] Cruzando hacia: %s (Marcador: %s)" % [destino_final, marcador_final])
 	
 	# 1. Bloquear movimiento del personaje durante el cambio de escena
 	if jugador is CharacterBody3D:
@@ -189,9 +212,8 @@ func _iniciar_transicion(jugador: Node3D) -> void:
 			sfx.finished.connect(sfx.queue_free)
 	
 	# 3. Guardar datos de aparición y estado en GameState
-	var gs = _obtener_game_state()
 	if gs:
-		gs.preparar_transicion(nombre_marcador_destino, offset_aparicion, camara_destino)
+		gs.preparar_transicion(marcador_final, offset_final, camara_final)
 		gs.tiene_rata = _jugador_tiene_rata(jugador)
 		gs.usar_personaje_32 = jugador.name.begins_with("Player32")
 	
@@ -211,7 +233,7 @@ func _iniciar_transicion(jugador: Node3D) -> void:
 	await tw.finished
 	
 	# 5. Cambiar a la escena de destino
-	var error: Error = get_tree().change_scene_to_file(escena_destino)
+	var error: Error = get_tree().change_scene_to_file(destino_final)
 	if error != OK:
 		_transicionando = false
 		if is_instance_valid(jugador) and "is_interacting" in jugador:
@@ -222,7 +244,7 @@ func _iniciar_transicion(jugador: Node3D) -> void:
 			gs.consumir_posicion_spawn(null)
 			gs.consumir_camara_spawn()
 		canvas.queue_free()
-		push_error("WorldTransition: no se pudo cargar %s" % escena_destino)
+		push_error("WorldTransition: no se pudo cargar %s" % destino_final)
 		return
 	
 	# La cortina se desvanece suavemente una vez que la nueva escena cargue

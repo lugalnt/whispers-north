@@ -1,0 +1,235 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/tree_unused_zone.gd" id="1_zone"]
+[ext_resource type="PackedScene" path="res://scenes/player/player_32.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://scenes/world/Entities/WorldTransition.tscn" id="3_trans"]
+[ext_resource type="PackedScene" path="res://scenes/dialogue/InteraccionDialogo.tscn" id="4_interact"]
+[ext_resource type="Resource" path="res://data/dialogues/tree_unused.dialogue" id="5_dialogue"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/trees/test/unused_floor.png" id="6_floor"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/trees/test/tree_canopy_b.png" id="7_back"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/trees/test/tree_trunk.png" id="8_trunk"]
+[ext_resource type="Texture2D" path="res://assets/sprites/environment/trees/test/tree_canopy_f.png" id="9_front"]
+[ext_resource type="AudioStream" path="res://assets/audio/music/Man_music.ogg" id="10_music"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/snd_item.wav" id="11_item_sfx"]
+
+[sub_resource type="Environment" id="Environment_test"]
+background_mode = 1
+background_color = Color(0, 0, 0, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.92, 0.88, 0.96, 1)
+ambient_light_energy = 0.72
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_piso"]
+size = Vector3(16, 1, 19.2)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_piso"]
+size = Vector2(16, 19.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_piso"]
+shading_mode = 0
+albedo_texture = ExtResource("6_floor")
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_negro"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pared_norte"]
+size = Vector3(24, 24, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pared_lateral"]
+size = Vector3(0.4, 24, 22)
+
+[sub_resource type="BoxMesh" id="BoxMesh_techo"]
+size = Vector3(24, 0.4, 22)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pasillo_lat"]
+size = Vector3(8, 3, 8.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_escalon"]
+size = Vector3(4.8, 3, 1.6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_claro_lat"]
+size = Vector3(4, 3, 6.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_claro_norte"]
+size = Vector3(16, 3, 1.6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tapon_sur"]
+size = Vector3(6, 3, 1.2)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_tronco"]
+height = 2.0
+radius = 0.52
+
+[node name="TreeUnused" type="Node3D"]
+script = ExtResource("1_zone")
+marcador_inicial = "Llegada_Sur"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_test")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.764842, 0.644218, 0, -0.644218, 0.764842, 0, 8, 6)
+light_energy = 0.45
+
+[node name="EscenarioBloque" type="Node3D" parent="."]
+
+[node name="Piso" type="StaticBody3D" parent="EscenarioBloque"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EscenarioBloque/Piso"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_piso")
+
+[node name="PisoVisual" type="MeshInstance3D" parent="EscenarioBloque"]
+mesh = SubResource("PlaneMesh_piso")
+surface_material_override/0 = SubResource("StandardMaterial3D_piso")
+
+[node name="ParedNorteVisual" type="MeshInstance3D" parent="EscenarioBloque"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12, -9.8)
+mesh = SubResource("BoxMesh_pared_norte")
+surface_material_override/0 = SubResource("StandardMaterial3D_negro")
+
+[node name="ParedOesteVisual" type="MeshInstance3D" parent="EscenarioBloque"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 12, 0)
+mesh = SubResource("BoxMesh_pared_lateral")
+surface_material_override/0 = SubResource("StandardMaterial3D_negro")
+
+[node name="ParedEsteVisual" type="MeshInstance3D" parent="EscenarioBloque"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 12, 0)
+mesh = SubResource("BoxMesh_pared_lateral")
+surface_material_override/0 = SubResource("StandardMaterial3D_negro")
+
+[node name="TechoVisual" type="MeshInstance3D" parent="EscenarioBloque"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24, 0)
+mesh = SubResource("BoxMesh_techo")
+surface_material_override/0 = SubResource("StandardMaterial3D_negro")
+
+[node name="LimitesCamino" type="StaticBody3D" parent="EscenarioBloque"]
+
+[node name="PasilloOeste" type="CollisionShape3D" parent="EscenarioBloque/LimitesCamino"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.6, 1.5, 5.8)
+shape = SubResource("BoxShape3D_pasillo_lat")
+
+[node name="PasilloEste" type="CollisionShape3D" parent="EscenarioBloque/LimitesCamino"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.6, 1.5, 5.8)
+shape = SubResource("BoxShape3D_pasillo_lat")
+
+[node name="EscalonSurOeste" type="CollisionShape3D" parent="EscenarioBloque/LimitesCamino"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.6, 1.5, 0.8)
+shape = SubResource("BoxShape3D_escalon")
+
+[node name="EscalonSurEste" type="CollisionShape3D" parent="EscenarioBloque/LimitesCamino"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.6, 1.5, 0.8)
+shape = SubResource("BoxShape3D_escalon")
+
+[node name="ClaroOeste" type="CollisionShape3D" parent="EscenarioBloque/LimitesCamino"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.8, 1.5, -3.2)
+shape = SubResource("BoxShape3D_claro_lat")
+
+[node name="ClaroEste" type="CollisionShape3D" parent="EscenarioBloque/LimitesCamino"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.8, 1.5, -3.2)
+shape = SubResource("BoxShape3D_claro_lat")
+
+[node name="EscalonNorteOeste" type="CollisionShape3D" parent="EscenarioBloque/LimitesCamino"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.6, 1.5, -7.2)
+shape = SubResource("BoxShape3D_escalon")
+
+[node name="EscalonNorteEste" type="CollisionShape3D" parent="EscenarioBloque/LimitesCamino"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.6, 1.5, -7.2)
+shape = SubResource("BoxShape3D_escalon")
+
+[node name="ClaroNorte" type="CollisionShape3D" parent="EscenarioBloque/LimitesCamino"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -8.8)
+shape = SubResource("BoxShape3D_claro_norte")
+
+[node name="TaponSur" type="CollisionShape3D" parent="EscenarioBloque/LimitesCamino"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 10.4)
+shape = SubResource("BoxShape3D_tapon_sur")
+
+[node name="ArbolTest" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.2)
+
+[node name="CapaFondo" type="Sprite3D" parent="ArbolTest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.02)
+centered = false
+offset = Vector2(-52.5, 0)
+pixel_size = 0.055
+shaded = false
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("7_back")
+
+[node name="Tronco" type="Sprite3D" parent="ArbolTest"]
+centered = false
+offset = Vector2(-52.5, 0)
+pixel_size = 0.055
+shaded = false
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("8_trunk")
+
+[node name="CapaFrente" type="Sprite3D" parent="ArbolTest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.02)
+centered = false
+offset = Vector2(-52.5, 0)
+pixel_size = 0.055
+shaded = false
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("9_front")
+
+[node name="TroncoColision" type="StaticBody3D" parent="ArbolTest"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ArbolTest/TroncoColision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CylinderShape3D_tronco")
+
+[node name="InteraccionFrente" parent="." instance=ExtResource("4_interact")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, -1.3)
+recurso_dialogo = ExtResource("5_dialogue")
+titulo_o_cue = "revisar_frente"
+orientar_npc_al_jugador = false
+texto_indicador = "[E] Revisar"
+offset_indicador = Vector3(0, 2.2, 0)
+radio_interaccion = 1.35
+sfx_iniciar = null
+
+[node name="InteraccionDetras" parent="." instance=ExtResource("4_interact")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, -5)
+recurso_dialogo = ExtResource("5_dialogue")
+titulo_o_cue = "revisar_detras"
+orientar_npc_al_jugador = false
+texto_indicador = "[E] Revisar"
+offset_indicador = Vector3(0, 3.3, 0.5)
+radio_interaccion = 1.35
+sfx_iniciar = null
+
+[node name="Llegada_Sur" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 5.4)
+
+[node name="Salida" parent="." instance=ExtResource("3_trans")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 8.8)
+escena_destino = "res://scenes/world/World_Cave.tscn"
+nombre_marcador_destino = "Llegada_DesdeBosque"
+camara_destino = "Camera4"
+tamano_zona = Vector3(3.4, 3, 1.8)
+mostrar_particulas_viento = false
+sonido_transicion = null
+
+[node name="Player32" parent="." instance=ExtResource("2_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 5.4)
+
+[node name="Camera1" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.719402, 0.694595, 0, -0.694595, 0.719402, 0, 15, 14)
+current = true
+fov = 44.0
+
+[node name="AudioEnv" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_music")
+volume_db = -3.0
+autoplay = true
+
+[node name="SfxProp" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_item_sfx")
+volume_db = -2.0

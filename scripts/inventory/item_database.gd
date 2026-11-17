@@ -18,6 +18,7 @@ static func inicializar() -> void:
 	_registrar_item_archivo("res://data/items/fragmento_ceramica.tres")
 	_registrar_item_archivo("res://data/items/queso_nordico.tres")
 	_registrar_item_archivo("res://data/items/llave_antigua.tres")
+	_registrar_item_archivo("res://data/items/huevo.tres")
 	
 	# 2. Escanear directorio para descubrir nuevos ítems creados por el usuario
 	if DirAccess.dir_exists_absolute(CARPETA_ITEMS):
